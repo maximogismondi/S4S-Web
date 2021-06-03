@@ -1,0 +1,376 @@
+<!--
+    CUANDO BAJAS HASTA CIERTO PUNTO T APARECE UN BOTON, EN EL NABVAR, EL CUAL TE MANDA AL LOGIN, ✔
+    HACER Q LOS BOTONES DE MAS INFO Y LAS FLECHAS ANDEN A LA PRIMERA ✔
+    HACER QUE LOS CUADRADOS SEAN TARJETAS QUE SE DAN VUELTA Y T MUESTRAN MAS INFO ✔
+    HACER QUE LOS CIRCULOS TENGAN LAS IMGS Q LE PASE A BUSTOS ✔
+    HACER UN CARROUSEL ✔
+    ARREGLAR EL S4S EN EL NAVBAR ✔
+    CAMBIAR TODAS LAS CARECTERISTICAS POR COSAS NUESTRAS Y EN LO POSIBLE AGREGAR IMAGENES/ICONS ✔
+    ARREGLAR LARGO DE LOS CUADRADOS ✔
+
+    HACER IMG INICIO SESION MAS ABAJO
+    ARREGLAR CARROUSEL TAMAÑO IMAGENES
+    
+    ARREGLAR EL FORM EN REGISTER
+    HACER EL ABM/CRUD EN FIRESTORE
+-->
+
+<!-- 
+    https://as.com/meristation/imagenes/2020/07/02/noticias/1593693800_960546_1593702225_noticia_normal.jpg style="background: url('https://r2.abcimg.es/resizer/resizer.php?imagen=https%3A%2F%2Fstatic4.abc.es%2Fmedia%2Fseries%2F000%2F001%2F943%2Fben-10-2.jpg&nuevoancho=690&medio=abc') no-repeat; background-size: cover;"
+    <img src="https://statics-cuidateplus.marca.com/sites/default/files/styles/natural/public/ninos-colegio-mascarillas.jpg?itok=aLIscqo" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+-->
+        
+<!--
+    <div class="container-fuid" style="opacity: 0;">
+        <div class="col-md-max mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <label style="color: white; text-align: center;">Bustos-Callipo-Dinapoli-Gaudio-Gismondi</label>
+                </div>
+            </div>
+        </div>
+    </div>
+-->
+
+<!--INICIO-->
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5 bg-light">
+        <div class="col-10 col-sm-8 col-lg-6">
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://statics-cuidateplus.marca.com/sites/default/files/styles/natural/public/ninos-colegio-mascarillas.jpg?itok=aLIscqo" class="d-block w-100">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://www.caracteristicas.co/wp-content/uploads/2017/03/buena-escuela-e1564423937636.jpg" class="d-block w-100">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://www.ceupe.com/images/easyblog_articles/1533/b2ap3_thumbnail_clase-escuela-negocios.jpg" class="d-block w-100">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://sintesis.com.mx/puebla/wp-content/uploads/2020/05/escuela-activa.jpg" class="d-block w-100">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://www.sanisidro.gob.ar/sites/default/files/img/67e93d9d00c72c3bfac2f7dc2a096396.jpg" class="d-block w-100">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">Crea un horario para tu instituto ya!</h1>
+            <p class="lead">
+                Comenzá hoy a diseñar tus horarios con nuestro avanzado algoritmo preparado para optimizar al máximo tu escuela.
+                Utiliza el botón de "EMPEZAR" para comenzar ahora y en el caso de que no te sientas seguro o aún tengas algunas dudas,
+                clickea en "MÁS INFO" para saber mas al respecto.
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <button type="button" (click)="gotoLogin()" class="btn btn-primary btn-lg px-5 me-md-2">Empezar</button>
+                <button type="button" (click)="functionScrollToDownMoreInfo()" id="buttonScrollToDownMoreInfo" class="btn btn-outline-secondary btn-lg px-4 mx-3">Más info</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+    CREAR HORARIO Y MAS INFO
+    <div class="container">
+        <h1 style="color: white; text-align: center;">Crea un horario para tu instituto</h1>
+        <div class="row my-5">
+            <div class="col-md-5 mx-auto mt-5 my-5">
+                <div class="card" style="opacity: 0.95">
+                    <div class="card-body">
+                        <div>
+                            <h4 class="card-title" style="font-weight: bold;">Organizador de Horarios</h4>
+                            <h6>IMG DE UN HORARIO ESCOLAR</h6>
+                            <p class="card-text">
+                                Con nuestro Software, podras crear tus propios horarios escolares para tu institucion.
+                                Empieza ahora mismo con tan solo un click.
+                            </p>
+                            <button type="button" (click)="gotoList()" class="btn btn-primary">Empezar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 mx-auto mt-5 my-5">
+                <div class="card" style="opacity: 0.95">
+                    <div class="card-body">
+                        <div>
+                            <h4 class="card-title" style="font-weight: bold;">Empresa</h4>
+                            <h6>IMG DE NUESTRO LOGO</h6>
+                            <p class="card-text">
+                                Todo lo que te gusta de S4S.
+                                Conoce todo sobre nosotros, precionando el siguiente boton.
+                            </p>
+                            <button type="button" class="btn btn-primary">Mas informacion</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+-->
+
+<!--FLECHA-->
+<div style="display: flex; justify-content: center; align-items: center;" >
+    <a (click)="functionScrollToDown()" id="buttonScrollToDown" style="-webkit-animation: nod 3s ease infinite;-moz-animation: nod 3s ease infinite;-o-animation: nod 3s ease infinite;animation: nod 3s ease infinite;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+            <path d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
+            </svg>
+    </a>
+</div>
+
+<!--SEPARADOR-->
+<div class="container-fuid">
+    <div class="col-md-max mx-auto mt-4">
+        <div class="bg-dark" style="opacity: 90%;">
+            <div class="card-body"></div>
+        </div>
+    </div>
+</div>
+
+<!--HORARIO EJEMPLO-->
+<div class="container-fuid bg-light">
+    <div class="container marketing" style="text-align: center;">
+        <div class="col-lg-8 mx-auto p-3 py-md-5" >
+            <h2 class="pb-2 border-bottom">Descarga horario de ejemplo</h2>
+            <img src="https://i.pinimg.com/originals/9b/94/11/9b94113dd02c92fd142bbc755afd6947.jpg" class="d-block mx-lg-auto img-fluid py-4" alt="Bootstrap Themes" width="500" height="500" loading="lazy">
+            <p>
+                Asi se vera el horario escolar, hecho en nuestra pagina. Si quiere puede descargarlo para verlo mejor,
+                pero no le servira para fines de lucro, ya que este tiene marca de agua y solo es una muestra,
+                si quiere crear un horario precione el boton "EMPEZAR"
+            </p>
+            <div class="mb-5 py-3">
+                <button type="button" class="btn btn-primary btn-lg px-4">Descargar ejemplo</button>
+                <button type="button" (click)="gotoLogin()" class="btn btn-outline-secondary btn-lg px-4 mx-3">Empezar</button>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<!--SEPARADOR-->
+<div class="container-fuid">
+    <div class="col-md-max mx-auto mt-5 ">
+        <div class="bg-dark" style="opacity: 90%;">
+            <div class="card-body"></div>
+        </div>
+    </div>
+</div>
+
+<!--COMO FUNCIONA-->
+<div class="container-fuid bg-light">
+    <div class="container marketing py-5" style="text-align: center;">
+        <h3 class="pb-2 border-bottom">¿Como Funciona?</h3>
+        <div class="row py-5">
+            <div class="col-lg-4" style="text-align: center;">
+                <div class="circulo mx-auto" id="circulo1"></div>
+                <h4 class="py-2">INICIA SESION</h4>
+                <p>
+                    INICIA SESION CON TU CUENTA DE GOOGLE, MICROSOFT O REGISTRATE EN NUESTRA PAGINA WEB Y UNETE A UN COLEGIO O CREA EL TUYO
+                </p>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="circulo mx-auto" id="circulo2"></div>
+                <h4 class="py-2">CREA TU HORARIO</h4>
+                <p>INGRESA LOS DATOS DE TU INSTITUTO, RELLENANDO TODOS LOS ESPACIOS EN LA GRILLA</p>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="circulo mx-auto" id="circulo3"></div>
+                <h4 class="py-2">DESCARGALO</h4>
+                <p>UNA VEZ HECHO TU HORARIO, PAGA CON TARJETA DE CREDITO O DEBITO, DESCARGALO Y LISTO</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--SEPARADOR-->
+<div class="container-fuid">
+    <div class="col-md-max mx-auto mt-5 ">
+        <div class="bg-dark" style="opacity: 90%;">
+            <div class="card-body"></div>
+        </div>
+    </div>
+</div>
+
+<!--MAS SOBRE S4S-->
+<div class="container-fuid bg-light">
+    <div class="container px-1 py-5" id="custom-cards">
+        <h2 class="pb-2 border-bottom" style="text-align: center;">Más sobre S4S</h2>
+    
+        <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-3" style="text-align: center;">
+
+          <div class="col">
+                <div class="tarjeta-wrap">
+                    <div class="d-flex flex-column h-100 p-5 text-white text-shadow-1 bg-dark tarjeta card1">
+                        <h2 class="display-6 lh-1 fw-bold adelante">EXTENSION</h2>
+                        <div class="atras">
+                            <p class="h-100 text-white text-shadow-1">
+                                Podras tener hasta 5 usuarios, extendidos de tu cuenta, que accederan a la misma informacion ingresada en la grilla
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col">
+                <div class="tarjeta-wrap">
+                    <div class="d-flex flex-column h-100 p-5 text-white text-shadow-1 bg-dark tarjeta card2">
+                        <h2 class="display-6 lh-1 fw-bold adelante">GUARDADO</h2>
+                        <div class="atras">
+                            <p class="h-100 text-white text-shadow-1">
+                                Los datos ingresados en los espacios de la grilla, para hacer el horario de tu escuela, se guardaran en nuestra base de datos 
+                            </p>
+                        </div>
+                        
+                    </div>
+                
+                </div>
+            </div>
+    
+            <div class="col">
+                <div class="tarjeta-wrap">
+                    <div class="d-flex flex-column h-100 p-5 text-white text-shadow-1 bg-dark tarjeta card3">
+                        <h2 class="display-6 lh-1 fw-bold adelante">PAGO</h2>
+                        <div class="atras">
+                            <p class="h-100 text-white text-shadow-1">
+                                Una vez ingresados todos los datos en la grilla, si quieres finalizar con la creacion de tu horario escolar,
+                                deberas pagar por el procesamiento utilizado.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+        <div class="py-5" style="text-align: center;">
+            <h2>Empieza ahora mismo con tan solo un click</h2>
+            <button type="button" (click)="gotoLogin()" class="btn btn-primary btn-lg px-5 me-md-2">Empezar</button>
+        </div>
+        
+    </div>
+</div>
+
+<!--SEPARADOR-->
+<div class="container-fuid">
+    <div class="col-md-max mx-auto mt-5 ">
+        <div class="bg-dark" style="opacity: 90%;">
+            <div class="card-body"></div>
+        </div>
+    </div>
+</div>
+
+<!--CARACTERISTICAS ALGORITMO-->
+<div class="container-fuid bg-light">
+    <div class="container px-4 py-5" id="icon-grid">
+        <h2 class="pb-2 border-bottom" style="text-align: center;">Caracteristicas del Algoritmo</h2>
+    
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 py-5">
+          <div class="col d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor" class="bi bi-back px-1" viewBox="0 0 16 16">
+                <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2z"/>
+            </svg>
+            <div>
+              <h4 class="fw-bold mb-0">GENETICO</h4>
+              <p>Mejor solapamiento de cursos</p>
+            </div>
+          </div>
+          <div class="col d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor" class="bi bi-calendar3 px-1" viewBox="0 0 16 16">
+                <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+                <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+            </svg>
+            <div>
+              <h4 class="fw-bold mb-0">GRAN ADAPTABILIDAD</h4>
+              <p>Adaptable a todos sus problemas</p>
+            </div>
+          </div>
+          <div class="col d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor" class="bi bi-save2 px-1" viewBox="0 0 16 16">
+                <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v4.5h2a.5.5 0 0 1 .354.854l-2.5 2.5a.5.5 0 0 1-.708 0l-2.5-2.5A.5.5 0 0 1 5.5 6.5h2V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
+            </svg>
+            <div>
+              <h4 class="fw-bold mb-0">GUARDADO AUTOMATICO</h4>
+              <p>Guardado automatico en nuestra Base de Datos</p>
+            </div>
+          </div>
+          <div class="col d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor" class="bi bi-speedometer px-1" viewBox="0 0 16 16">
+                <path d="M8 2a.5.5 0 0 1 .5.5V4a.5.5 0 0 1-1 0V2.5A.5.5 0 0 1 8 2zM3.732 3.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 8a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 7.31A.91.91 0 1 0 8.85 8.569l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
+                <path fill-rule="evenodd" d="M6.664 15.889A8 8 0 1 1 9.336.11a8 8 0 0 1-2.672 15.78zm-4.665-4.283A11.945 11.945 0 0 1 8 10c2.186 0 4.236.585 6.001 1.606a7 7 0 1 0-12.002 0z"/>
+            </svg>
+            <div>
+              <h4 class="fw-bold mb-0">ALTA VELOCIDAD</h4>
+              <p>Procesamiento en altas velocidades</p>
+            </div>
+          </div>
+          <div class="col d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor" class="bi bi-award px-1" viewBox="0 0 16 16">
+                <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"/>
+                <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
+            </svg>
+            <div>
+              <h4 class="fw-bold mb-0">RESULTADOS OPTIMOS</h4>
+              <p>Mejores resultados para su horario escolar</p>
+            </div>
+          </div>
+          <div class="col d-flex align-items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.75em" height="1.75em" fill="currentColor" class="bi bi-cpu px-1" viewBox="0 0 16 16">
+                <path d="M5 0a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2A2.5 2.5 0 0 1 14 4.5h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14a2.5 2.5 0 0 1-2.5 2.5v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14A2.5 2.5 0 0 1 2 11.5H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2A2.5 2.5 0 0 1 4.5 2V.5A.5.5 0 0 1 5 0zm-.5 3A1.5 1.5 0 0 0 3 4.5v7A1.5 1.5 0 0 0 4.5 13h7a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 11.5 3h-7zM5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3zM6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
+            </svg>
+            <div>
+              <h4 class="fw-bold mb-0">EJECUCION 2º PLANO</h4>
+              <p>Procesamiento realizado en segundo plano</p>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+<!--FLECHA-->
+<div style="display: flex; justify-content: center; align-items: center;    " >
+    <a (click)="functionScrollToUp()" id="buttonScrollToUp" style="-webkit-animation: nod2 3s ease infinite;-moz-animation: nod2 3s ease infinite;-o-animation: nod2 3s ease infinite;animation: nod2 3s ease infinite;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-caret-up" viewBox="0 0 16 16">
+            <path d="M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
+        </svg>
+    </a>
+</div>
+
+<!--FOOTER-->
+<div class="container-fuid">
+    <div class="col-md-max mx-auto mt-5 ">
+        <div class="bg-dark" style="text-align: center;opacity: 90%;">
+            <div class="card-body">
+                <span class="text-muted">
+                    Copyright © 2021 The S4S Company
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--FOOTER 2
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    
+  
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link">Scheduler</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" >For</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">School</a>
+        </li>
+      </ul>
+    </div>
+    <i class="bi bi-arrow-up-square-fill"></i>
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
+      <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z"/>
+    </svg>
+  </nav>
+-->

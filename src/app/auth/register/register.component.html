@@ -1,0 +1,62 @@
+<!--
+    HACER EL REGISTER EN FORMA DE PAGINAS
+-->
+<div class="col-md-6 mx-auto mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="text-center">REGISTRARSE</h1>
+            <!--[formGroup]="registerForm" (ngSubmit)="onRegister()"-->
+            <form >
+                <div class="form-group mt-4">
+                    <label for="email">Email</label>
+                    <input type="email" id="email-register" class="form-control" formControlName="email">
+                </div>
+                
+                <div class="form-group mt-4">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password-register" class="form-control" formControlName="password">
+                </div>
+                <!--
+                    <div class="form-group">
+                        <label for="nombre de usuario">Nombre de usuario</label>
+                        <input type="email" class="form-control" formControlName="nombre de usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="dni">Dni</label>
+                        <input type="email" class="form-control" formControlName="dni">
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre institucion">Nombre Institucion</label>
+                        <input type="email" class="form-control" formControlName="nombre institucion">
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion institucion">Direccion Institucion</label>
+                        <input type="email" class="form-control" formControlName="direccion institucion">
+                    </div>
+                    <div class="form-group">
+                        <label for="localidad">Localidad</label>
+                        <input type="email" class="form-control" formControlName="localidad">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono institucion">Telefono Institucion</label>
+                        <input type="email" class="form-control" formControlName="telefono institucion">
+                    </div>
+                -->
+                <div class="d-grid">
+                    <button type="submit" (click)="gotoEleccion()" class="btn btn-primary btn-lg mt-4">Registrarse</button>
+                    <!---->
+                </div>
+            </form>
+            <div class="form-group mt-4">
+                <p>
+                    ¿Ya tienes cuenta?
+                    <a href="/login"> Logueate</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

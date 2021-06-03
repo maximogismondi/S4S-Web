@@ -1,0 +1,32 @@
+
+<div class="col-md-6 mx-auto mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="text-center">INICIAR SESION</h1>
+            <!--[formGroup]="loginForm" ARREGLARLO (ngSubmit)="onLogin()"-->
+            <form > 
+                <div class="form-group mt-4">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" formControlName="email">
+                </div>
+                <div class="form-group mt-4">
+                    <label for="password">Contraseña</label>
+                    <input type="password" class="form-control" formControlName="password">
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg mt-4">Iniciar Sesion</button>
+                </div>
+               
+            </form>
+            <div class="form-group mt-4">
+                <p>
+                    ¿No tienes cuenta?
+                    <a href="/register"> Registrate</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+
