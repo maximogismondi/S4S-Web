@@ -1,13 +1,47 @@
-<!--NAVBAR-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" style="opacity: 0.95; height: 70px;">
-    <a class="navbar-brand" style="margin-left: 20px;" href="">S4S</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<!--
+    -ARREGLAR EL BOTON HAMBURGUESA
 
-    <div class="collapse navbar-collapse" id="navbarColor02">
-        <div class="navbar-nav mr-auto">
-            <label class="nav-link">Scheduler For School</label> <!--NO PUEDO PONER LA FUNCION Q T MANDA AL LOGIN, METER ESTE BOTON DE ALGUNA MANERA EN ESTE DIV PERO DESDE LA PAG HOME-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" style="opacity: 0.95; height: 70px;">
+        <a class="navbar-brand" style="margin-left: 20px;" href="">S4S</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <div class="navbar-nav mr-auto">
+                <label class="nav-link">Scheduler For School</label>
+            </div>
+        </div>
+    </nav>
+
+
+
+ -->
+ <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #222 !important; box-shadow: none; border: none; opacity: 0.95; background-image: none;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">S4S</a>
+        <button *ngIf="user$ | async as user; else login" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <div class="navbar-nav mr-auto">
+                <label class="nav-link">Scheduler For School</label>
+            </div>
+            <ul class="navbar-nav mx-auto"></ul>
+            <ul class="navbar-nav" *ngIf="user$ | async as user; else login">
+                <li class="nav-item" *ngIf="user">
+                    <a href="" class="nav-link" (click)="onLogout()">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">{{user?.email}}</a>
+                    <!--.split("@")[0]-->
+                </li>
+            </ul>
+            
+            <ng-template #login>
+                <ul class="navbar-nav"></ul>
+            </ng-template>
         </div>
     </div>
 </nav>

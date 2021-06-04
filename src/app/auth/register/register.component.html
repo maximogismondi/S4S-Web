@@ -5,8 +5,7 @@
     <div class="card">
         <div class="card-body">
             <h1 class="text-center">REGISTRARSE</h1>
-            <!--[formGroup]="registerForm" (ngSubmit)="onRegister()"-->
-            <form >
+            <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
                 <div class="form-group mt-4">
                     <label for="email">Email</label>
                     <input type="email" id="email-register" class="form-control" formControlName="email">
@@ -43,8 +42,8 @@
                     </div>
                 -->
                 <div class="d-grid">
-                    <button type="submit" (click)="gotoEleccion()" class="btn btn-primary btn-lg mt-4">Registrarse</button>
-                    <!---->
+                    <button type="submit"  class="btn btn-primary btn-lg mt-4">Registrarse</button>
+                    <!--(click)="gotoEleccion()"-->
                 </div>
             </form>
             <div class="form-group mt-4">

@@ -13,8 +13,14 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  gotoLogin() {
-    this.router.navigate(['/login']);
+  gotoLogin(){
+    if(1){
+      this.router.navigate(['/login']);
+    }
+    else{
+      this.router.navigate(['/eleccion']);
+    }
+    
   }
 
   functionScrollToDownMoreInfo(){

@@ -3,8 +3,8 @@
     <div class="card">
         <div class="card-body">
             <h1 class="text-center">INICIAR SESION</h1>
-            <!--[formGroup]="loginForm" ARREGLARLO (ngSubmit)="onLogin()"-->
-            <form > 
+            <!---->
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
                 <div class="form-group mt-4">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" formControlName="email">
