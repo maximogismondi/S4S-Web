@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { SendEmailComponent } from './auth/send-email/send-email.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
+    SendEmailComponent
   ],
   imports: [
     BrowserModule,

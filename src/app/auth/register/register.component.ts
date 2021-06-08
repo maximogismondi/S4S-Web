@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
     const{email, password} =this.registerForm.value;
       const user = await this.authSvc.register(email, password);
       if(user){
-        this.router.navigate(['/eleccion']);
+        this.router.navigate(['/verificacion-email']);
       }
   }
 }

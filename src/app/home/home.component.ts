@@ -8,16 +8,23 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
   }
 
   gotoLogin(){
+    
     if(1){
       this.router.navigate(['/login']);
     }
-    else{
+    /*else if(user no hizo verificacion){
+      this.router.navigate(['/verificacion-email']);
+    } */
+    /*else if(user ya eligio){
+      this.router.navigate(['/paginaPrincipal']);
+    } */
+    else{ 
       this.router.navigate(['/eleccion']);
     }
     
@@ -37,7 +44,7 @@ export class HomeComponent implements OnInit {
     //window.scrollTo(0,0);
     
     window.scrollTo({
-      top: 660,
+      top: 623,
       left: 0,
       behavior: "smooth"
     });

@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SendEmailComponent } from './auth/send-email/send-email.component';
 import { EleccionComponent } from './colegio/eleccion/eleccion.component'; //sirve para esto component: EleccionComponent 
 
 const routes: Routes = [
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'eleccion',
     loadChildren: () => import('./colegio/eleccion/eleccion.module').then(m => m.EleccionModule)
+  },
+  {
+    path: 'verificacion-email',
+    component: SendEmailComponent
   }
 ];
 
