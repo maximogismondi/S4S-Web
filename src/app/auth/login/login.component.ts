@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -7,29 +12,37 @@ import { AuthService } from '../services/auth.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers:[AuthService]
+  providers: [AuthService]
 })
 export class LoginComponent implements OnInit {
-
   loginForm: FormGroup;
 
-  constructor(private router: Router, private fb: FormBuilder, private authSvc:AuthService) { }
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private authSvc: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-			email: ['', Validators.required],
-			password: ['', Validators.required]
-		});
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+    });
   }
 
-  async onLogin(){
-    const{email, password} =this.loginForm.value;
-      const user = await this.authSvc.login(email, password);
-      if(user && user.user?.emailVerified){
-        this.router.navigate(['/eleccion']);
-      }
-      else if(user){
-        this.router.navigate(['/verificacion-email']);
-      }
+  async onLogin() {
+    const { email, password } = this.loginForm.value;
+    const user = await this.authSvc.login(email, password);
+    if (user && user.emailVerified) {
+      this.router.navigate(['/eleccion']);
+    } else if (user) {
+      this.router.navigate(['/verificacion-email']);
+    }
+  }
+
+  async onGoogleLogin() {
+    if (await this.authSvc.loginGoogle()) {
+      this.router.navigate(['/eleccion']);
+    }
   }
 }

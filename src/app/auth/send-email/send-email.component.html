@@ -1,23 +1,28 @@
 <div class="col-md-6 mx-auto mt-5">
-    <div class="card mt-5" *ngIf="user$ | async as user;">
-        <div class="card-body">
-            <h3 class="card-title text-center">GRACIAS POR REGISTRARTE!</h3>
-            <div class="form-group mt-3">
-                <p class="text-center">
-                    Te enviamos un mensaje a <strong>{{user?.email}}</strong> para que confirme su email
-                </p>
-                <p class="text-center">
-                    Por favor fijese en su bandeja de entrada y clickee en el link de verificar mi email.
-                </p>
-            </div>
-            <div class="form-group  text-center mt-3">
-                <button class="btn btn-primary mx-3" (click)="goToPage()">
+  <div class="card mt-5" *ngIf="user$ | async as user">
+    <div class="card-body">
+      <h3 class="card-title text-center">GRACIAS POR REGISTRARTE!</h3>
+      <div class="form-group mt-3">
+        <p class="text-center">
+          Te enviamos un mensaje a <strong>{{ user?.email }}</strong> para que
+          confirme su email
+        </p>
+        <p class="text-center">
+          Por favor fijese en su bandeja de entrada y clickee en el link de
+          verificar mi email.
+        </p>
+      </div>
+      <div class="form-group text-center mt-3">
+        <!-- <button class="btn btn-primary mx-3" (click)="goToPage()">
                     ACCEDER A LA PAGINA
-                </button>
-                <button class="btn btn-outline-secondary" (click)="onSendEmail()">
-                    REENVIAR VERIFICACION DE EMAIL
-                </button>
-            </div>
-        </div>
-    </div>  
+        </button> -->
+        <button class="btn btn-primary" (click)="onSendEmail()">
+          REENVIAR VERIFICACION DE EMAIL
+        </button>
+      </div>
+      <div class="text-center mt-3">
+        <a href="/login">Volver a la pagina de iniciar sesion</a>
+      </div>
+    </div>
+  </div>
 </div>

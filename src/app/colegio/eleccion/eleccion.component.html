@@ -1,106 +1,169 @@
-
 <div class="col-md-6 mx-auto mt-5 py-5">
-    <div class="card">
-        <div class="card-body">
-            <h1 class="text-center">COLEGIO</h1>
-            <h6 class="text-center ">Scheduler For School</h6>
-            <!---->
-            <div id="botonesEleccionCrear">
-                <div class="d-grid">
-                    <button (click)="irCrear()" class="btn btn-primary btn-lg mt-4 py-4">
-                        CREAR
-                        <svg xmlns="http://www.w3.org/2000/svg" width="0.7em" height="0.7em" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                            <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <!---->
-            <div id="crear" style="display: none;">
-                <div class="mx-auto mt-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <h1 class="text-center">CREAR COLEGIO</h1>
-                            <!--[formGroup]="loginForm" ARREGLARLO (ngSubmit)="onLogin()"-->
-                            <!--CAMBIAR LUGARE DONDE DICE EMAIL POR SU RESPECTIVO COSO-->
-                            <form > 
-                                <div class="form-group mt-4">
-                                    <label for="email">Nombre del Colegio</label>
-                                    <input type="email" class="form-control" formControlName="email">
-                                </div>
-                                <div class="form-group mt-4">
-                                    <label for="email">Direccion del Colegio</label>
-                                    <input type="email" class="form-control" formControlName="email">
-                                </div>
-                                <div class="form-group mt-4">
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>Localidad</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="0">0</option>
-                                </select>
-                                </div>
-                                <div class="form-group mt-4">
-                                    <label for="email">Telefono del Colegio</label>
-                                    <input type="email" class="form-control" formControlName="email">
-                                </div>
-                                <div class="d-grid">
-                                    <button type="submit" (click)="irCrear()" class="btn btn-primary btn-lg mt-4 py-4">
-                                        CREAR
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="0.7em" height="0.7em" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                            <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                            
-                            </form>
-                        </div>
-                    </div>
-                </div>  
-            </div>
-            <div id="botonesEleccionUnirse"> 
-                <div class="d-grid">
-                    <button (click)="irUnirse()" class="btn btn-primary btn-lg mt-4">
-                        UNIRSE
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1.10em" height="1.10em" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>   
-            <!---->
-            <div id="unirse" style="display: none;">
-                <div class="mx-auto mt-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <h1 class="text-center">UNIRSE A COLEGIO</h1>
-                            <!--[formGroup]="loginForm" ARREGLARLO (ngSubmit)="onLogin()"-->
-                            <!--CAMBIAR LUGARE DONDE DICE EMAIL POR SU RESPECTIVO COSO-->
-                            <form > 
-                                <div class="form-group mt-4">
-                                    <label for="email">Ingresar Nombre del Colegio</label>
-                                    <input type="email" class="form-control" formControlName="email">
-                                </div>
-                                <div class="d-grid">
-                                    <button type="submit" (click)="irUnirse()" class="btn btn-primary btn-lg mt-4">
-                                        UNIRSE
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.10em" height="1.10em" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>  
-            </div>
+  <div class="card">
+    <div class="card-body">
+      <h1 class="text-center">COLEGIO</h1>
+      <h6 class="text-center">Scheduler For School</h6>
+      <!---->
+      <div id="botonesEleccionCrear">
+        <div class="d-grid">
+          <button (click)="irCrear()" class="btn btn-primary btn-lg mt-4 py-4">
+            CREAR
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="0.7em"
+              height="0.7em"
+              fill="currentColor"
+              class="bi bi-plus-lg"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
+              />
+            </svg>
+          </button>
         </div>
+      </div>
+      <!---->
+      <div id="crear" style="display: none">
+        <div class="mx-auto mt-5">
+          <div class="card">
+            <div class="card-body">
+              <h1 class="text-center">CREAR COLEGIO</h1>
+              <!--[formGroup]="loginForm" ARREGLARLO (ngSubmit)="onLogin()"-->
+              <!--CAMBIAR LUGARE DONDE DICE EMAIL POR SU RESPECTIVO COSO-->
+              <form>
+                <div class="form-group mt-4">
+                  <label for="email">Nombre del Colegio</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    formControlName="email"
+                  />
+                </div>
+                <div class="form-group mt-4">
+                  <label for="email">Direccion del Colegio</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    formControlName="email"
+                  />
+                </div>
+                <div class="form-group mt-4">
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                  >
+                    <option selected>Localidad</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="0">0</option>
+                  </select>
+                </div>
+                <div class="form-group mt-4">
+                  <label for="email">Telefono del Colegio</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    formControlName="email"
+                  />
+                </div>
+                <div class="d-grid">
+                  <button
+                    type="submit"
+                    (click)="gotoCrear()"
+                    class="btn btn-primary btn-lg mt-4 py-4"
+                  >
+                    CREAR
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="0.7em"
+                      height="0.7em"
+                      fill="currentColor"
+                      class="bi bi-plus-lg"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="botonesEleccionUnirse">
+        <div class="d-grid">
+          <button (click)="irUnirse()" class="btn btn-primary btn-lg mt-4">
+            UNIRSE
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.10em"
+              height="1.10em"
+              fill="currentColor"
+              class="bi bi-arrow-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <!---->
+      <div id="unirse" style="display: none">
+        <div class="mx-auto mt-5">
+          <div class="card">
+            <div class="card-body">
+              <h1 class="text-center">UNIRSE A COLEGIO</h1>
+              <!--[formGroup]="loginForm" ARREGLARLO (ngSubmit)="onLogin()"-->
+              <!--CAMBIAR LUGARE DONDE DICE EMAIL POR SU RESPECTIVO COSO-->
+              <form>
+                <div class="form-group mt-4">
+                  <label for="email">Ingresar Nombre del Colegio</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    formControlName="email"
+                  />
+                </div>
+                <div class="d-grid">
+                  <button
+                    type="submit"
+                    (click)="irUnirse()"
+                    class="btn btn-primary btn-lg mt-4"
+                  >
+                    UNIRSE
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="1.10em"
+                      height="1.10em"
+                      fill="currentColor"
+                      class="bi bi-arrow-right"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

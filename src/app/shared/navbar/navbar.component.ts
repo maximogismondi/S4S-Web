@@ -7,16 +7,20 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  providers:[AuthService]
+  providers: [AuthService],
 })
-export class NavbarComponent{
-  
+export class NavbarComponent {
   public user$: Observable<any> = this.authSvc.afAuth.user;
 
   constructor(private authSvc: AuthService, private router: Router) {}
 
-  async onLogout(){
+  async onLogout() {
     await this.authSvc.logout();
     this.router.navigate(['/home']);
   }
+
+  // navbarCollapse(){
+  //   document.getElementById('buttonNavbarColor02')?.getAttribute('aria-expanded');
+    
+  // }
 }

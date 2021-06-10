@@ -7,27 +7,25 @@ import { AuthService } from '../services/auth.service';
   selector: 'app-send-email',
   templateUrl: './send-email.component.html',
   styleUrls: ['./send-email.component.scss'],
-  providers:[AuthService]
+  providers: [AuthService],
 })
 export class SendEmailComponent implements OnInit {
-
   public user$: Observable<any> = this.authSvc.afAuth.user;
-  
-  constructor(private authSvc: AuthService,private router: Router) { }
 
-  ngOnInit(): void {
-  }
+  constructor(private authSvc: AuthService, private router: Router) {}
 
-  onSendEmail(){
+  ngOnInit(): void {}
+
+  onSendEmail() {
     this.authSvc.sendVerificationEmail();
   }
 
-  async goToPage(){
-    if(1){
-      this.router.navigate(['/eleccion']);
-    }
-    else{
-      alert("No se ha verificado el email");
-    }
-  }
+  // async goToPage() {
+  //   const user = await this.authSvc.user$;user && user.user?.emailVerified
+  //   if (1) {
+  //     this.router.navigate(['/eleccion']);
+  //   } else {
+  //     alert('No se ha verificado el email');
+  //   }
+  // }
 }

@@ -1,13 +1,19 @@
 import { first, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { AngularFireAuth} from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'src/app/shared/interface/user.interface';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+} from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
+import firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService {
   user$: any;
+  // public user$: Observable<User>;
+
   constructor(public afAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
@@ -19,27 +25,49 @@ export class AuthService {
     );
   }
 
-  async login(email:string, password:string){
-    const result = await this.afAuth.signInWithEmailAndPassword(email, password);
-    return result;
+  async login(email: string, password: string) {
+    const { user } = await this.afAuth.signInWithEmailAndPassword(
+      email,
+      password
+    );
+    // if (user?.emailVerified) {
+    //   this.updateUserData(user);
+    // }
+    return user;
   }
 
-  async register(email:string, password:string){
-    const result = await this.afAuth.createUserWithEmailAndPassword(email, password);
+  async loginGoogle() {
+    const { user } = await this.afAuth.signInWithPopup(
+      new firebase.auth.GoogleAuthProvider()
+    );
+    // this.updateUserData(user);
+    return user;
+  }
+
+  //joya
+  async register(email: string, password: string) {
+    const user = await this.afAuth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
     this.sendVerificationEmail();
-    return result;
+    return user;
   }
 
-  async sendVerificationEmail(){
+  //joya
+  async sendVerificationEmail() {
     return (await this.afAuth.currentUser)?.sendEmailVerification();
   }
 
-  async logout(){
+  //joya
+  async logout() {
     await this.afAuth.signOut();
   }
 
   private updateUserData(user: User) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
+      `users/${user.uid}`
+    );
 
     const data: User = {
       uid: user.uid,
@@ -50,5 +78,4 @@ export class AuthService {
 
     return userRef.set(data, { merge: true });
   }
-
 }

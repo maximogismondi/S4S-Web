@@ -1,32 +1,58 @@
-
 <div class="col-md-6 mx-auto mt-5">
-    <div class="card">
-        <div class="card-body">
-            <h1 class="text-center">INICIAR SESION</h1>
-            <!---->
-            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-                <div class="form-group mt-4">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" formControlName="email">
-                </div>
-                <div class="form-group mt-4">
-                    <label for="password">Contraseña</label>
-                    <input type="password" class="form-control" formControlName="password">
-                </div>
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary btn-lg mt-4">Iniciar Sesion</button>
-                </div>
-               
-            </form>
-            <div class="form-group mt-4">
-                <p>
-                    ¿No tienes cuenta?
-                    <a href="/register"> Registrate</a>
-                </p>
-            </div>
+  <div class="card">
+    <div class="card-body">
+      <h1 class="text-center">INICIAR SESION</h1>
+      <!---->
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div class="form-group mt-4">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" formControlName="email" />
         </div>
+        <div class="form-group mt-4">
+          <label for="password">Contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+          />
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg mt-4">
+            Iniciar Sesion
+          </button>
+        </div>
+      </form>
+      <div
+        class="
+          d-grid
+          gap-2
+          d-md-flex
+          justify-content-md-startd-grid
+          text-center
+        "
+      >
+        <button
+          (click)="onGoogleLogin()"
+          type="submit"
+          class="btn btn-lg mt-4"
+          style="background-color: #dd4b39; color: #fff; width: 100%"
+        >
+          Google
+        </button>
+        <button
+          type="submit"
+          class="btn btn-outline-secondary btn-lg mt-4"
+          style="width: 100%"
+        >
+          Microsoft
+        </button>
+      </div>
+      <div class="form-group mt-4">
+        <p>
+          ¿No tienes cuenta?
+          <a href="/register"> Registrate</a>
+        </p>
+      </div>
     </div>
+  </div>
 </div>
-    
-
-
