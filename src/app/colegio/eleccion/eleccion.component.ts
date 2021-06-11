@@ -11,13 +11,13 @@ export class EleccionComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  gotoEleccion() {
-    this.router.navigate(['/eleccion']);
-    document.getElementById('botonesEleccionCrear')!.style.display = 'block';
-    document.getElementById('botonesEleccionUnirse')!.style.display = 'block';
-    document.getElementById('crear')!.style.display = 'none';
-    document.getElementById('unirse')!.style.display = 'none';
-  }
+  // gotoEleccion() {
+  //   this.router.navigate(['/eleccion']);
+  //   document.getElementById('botonesEleccionCrear')!.style.display = 'block';
+  //   document.getElementById('botonesEleccionUnirse')!.style.display = 'block';
+  //   document.getElementById('crear')!.style.display = 'none';
+  //   document.getElementById('unirse')!.style.display = 'none';
+  // }
 
   irCrear() {
     document.getElementById('crear')!.style.display = 'block';
