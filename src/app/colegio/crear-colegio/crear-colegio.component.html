@@ -1,8 +1,27 @@
 <div class="col-md-6 mx-auto mt-5 py-5">
   <div class="card">
     <div class="card-body">
+      <div class="d-grid">
+        <!-- <div
+          class="
+            d-grid
+            gap-2
+            d-md-flex
+            justify-content-md-startd-grid
+            text-center
+          "
+        >
+          <button type="submit" class="btn btn-primary btn-lg mt-4">
+            INFORMACION GENERAL
+          </button>
+          <button type="submit" class="btn btn-lg mt-4">AULAS</button>
+          <button type="submit" class="btn btn-lg mt-4">CURSOS</button>
+          <button type="submit" class="btn btn-lg mt-4">PROFESORES</button>
+          <button type="submit" class="btn btn-lg mt-4">MATERIAS</button>
+        </div>
+      </div> -->
         <!-- CAMBIAR TODOS LOS TYPE EMAIL POR SU CORRESPONDIENTE Y HACER BIEN LOS CUADRADOS DE ARRIBA DE CADA GRILLA Y HACER SU RESPECTIVA FUNCION -->
-      <!-- <div>
+        <!-- <div>
         <ul class="pagination pagination-lg">
           <li class="page-item">
             <label class="page-link">Info General</label>
@@ -21,135 +40,154 @@
           </li>
         </ul>
       </div> -->
-      <h1 class="text-center">NOMBRE COLEGIO</h1>
-      <div>
-        <!---->
-        <div class="d-grid" id="infoGral">
-          <form style="display: none">
-            <div class="form-group mt-4">
-              <label for="email">Duracion de cada modulo</label>
-              <input
-                type="email"
-                class="form-control"
-                formControlName="email"
-              />
-            </div>
-            <div class="form-group mt-4">
-              <label for="email">Inicio Horario</label>
-              <input
-                type="email"
-                class="form-control"
-                formControlName="email"
-              />
-            </div>
-            <div class="form-group mt-4">
-              <label for="email">Finalizacion de horario</label>
-              <input
-                type="email"
-                class="form-control"
-                formControlName="email"
-              />
-            </div>
-            <div class="d-grid">
-              <button class="btn btn-primary btn-lg mt-4">
-                SIGUIENTE
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="1.10em"
-                  height="1.10em"
-                  fill="currentColor"
-                  class="bi bi-arrow-right"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </form>
-        </div>
-        <!---->
-        <div class="d-grid" id="aulas">
-          <form style="display: none">
-            <div class="form-group mt-4">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Cantidad de aulas</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="0">0</option>
-              </select>
-            </div>
-            <div class="form-group mt-4">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Cuantas aulas normales</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="0">0</option>
-              </select>
-            </div>
-            <div class="form-group mt-4">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Cuantas aulas especiales</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="0">0</option>
-              </select>
-            </div>
-            <div class="d-grid">
-              <button class="btn btn-primary btn-lg mt-4">
-                SIGUIENTE
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="1.10em"
-                  height="1.10em"
-                  fill="currentColor"
-                  class="bi bi-arrow-right"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </form>
-        </div>
-        <!---->
-        <div class="d-grid" id="cursos">
-          <form>
-            <div class="form-group mt-4">
-              <label for="email">Nombre</label>
-              <input
-                type="email"
-                class="form-control"
-                formControlName="email"
-              />
-            </div>
-            <div class="form-group mt-4">
+        <h1 class="text-center mt-4">NOMBRE COLEGIO</h1>
+        <div>
+          <!---->
+          <div class="d-grid" id="infoGral">
+            <form style="display: block">
+              <div class="form-group mt-4">
+                <input
+                  type="email"
+                  placeholder="Duracion de cada modulo"
+                  required
+                  class="form-control"
+                  formControlName="email"
+                />
+              </div>
+              <div class="form-group mt-4">
+                <input
+                  type="email"
+                  placeholder="Inicio Horario"
+                  required
+                  class="form-control"
+                  formControlName="email"
+                />
+              </div>
+              <div class="form-group mt-4">
+                <input
+                  type="email"
+                  placeholder="Finalizacion de horario"
+                  required
+                  class="form-control"
+                  formControlName="email"
+                />
+              </div>
+              <div class="d-grid">
+                <button class="btn btn-primary btn-lg mt-4">
+                  SIGUIENTE
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.10em"
+                    height="1.10em"
+                    fill="currentColor"
+                    class="bi bi-arrow-right"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
+          <!---->
+          <div class="d-grid" id="aulas">
+            <form style="display: none">
+              <div class="form-group mt-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Cantidad de aulas</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="0">0</option>
+                </select>
+              </div>
+              <div class="form-group mt-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Cuantas aulas normales</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="0">0</option>
+                </select>
+              </div>
+              <div class="form-group mt-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Cuantas aulas especiales</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="0">0</option>
+                </select>
+              </div>
+              <div class="d-grid">
+                <button class="btn btn-primary btn-lg mt-4">
+                  SIGUIENTE
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.10em"
+                    height="1.10em"
+                    fill="currentColor"
+                    class="bi bi-arrow-right"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
+          <!---->
+          <div class="d-grid" id="cursos">
+            <form style="display: none">
+              <div class="form-group mt-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Cantidad de cursos</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="0">0</option>
+                </select>
+              </div>
+              <!-- Hacer una grilla para q rellene tantas veces como cursos haya puesto -->
+              <div class="form-group mt-4">
+                <label for="email">Nombre</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  formControlName="email"
+                />
+              </div>
+              <div class="form-group mt-4">
                 <select class="form-select" aria-label="Default select example">
                   <option selected>Turno preferido</option>
                   <option value="1">Mañana</option>
@@ -157,7 +195,7 @@
                   <option value="3">Noche</option>
                 </select>
               </div>
-            <div class="form-group mt-4">
+              <div class="form-group mt-4">
                 <select class="form-select" aria-label="Default select example">
                   <option selected>Cantidad de aulumnos</option>
                   <option value="1">1</option>
@@ -187,30 +225,250 @@
                   <option value="0">0</option>
                 </select>
               </div>
-            <div class="d-grid">
-              <button class="btn btn-primary btn-lg mt-4">
-                SIGUIENTE
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="1.10em"
-                  height="1.10em"
-                  fill="currentColor"
-                  class="bi bi-arrow-right"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </form>
+              <div class="d-grid">
+                <button class="btn btn-primary btn-lg mt-4">
+                  SIGUIENTE
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.10em"
+                    height="1.10em"
+                    fill="currentColor"
+                    class="bi bi-arrow-right"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
+          <!---->
+          <div class="d-grid" id="profesores">
+            <form style="display: none">
+              <div class="form-group mt-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Cantidad de profesores</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="0">0</option>
+                </select>
+              </div>
+              <!-- Hacer una grilla para q rellene tantas veces como profes haya puesto -->
+              <div class="form-group mt-4">
+                <label for="email">Nombre</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  formControlName="email"
+                />
+              </div>
+              <div class="form-group mt-4">
+                <label for="email">Dni</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  formControlName="email"
+                />
+              </div>
+              <div class="form-group mt-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Materias capacitado</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="0">0</option>
+                </select>
+              </div>
+              <div class="form-group mt-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Turno preferido</option>
+                  <option value="1">Mañana</option>
+                  <option value="2">Tarde</option>
+                  <option value="3">Noche</option>
+                </select>
+              </div>
+              <div class="form-group mt-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Cantidad de materias</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="0">0</option>
+                </select>
+              </div>
+              <div class="form-group mt-4">
+                <label for="email">Condiciones</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  formControlName="email"
+                />
+              </div>
+              <div class="d-grid">
+                <button class="btn btn-primary btn-lg mt-4">
+                  SIGUIENTE
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.10em"
+                    height="1.10em"
+                    fill="currentColor"
+                    class="bi bi-arrow-right"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
+          <!---->
+          <div class="d-grid" id="materias">
+            <form style="display: none">
+              <div class="form-group mt-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Cantidad de materias</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="0">0</option>
+                </select>
+              </div>
+              <!-- Hacer una grilla para q rellene tantas veces como materias haya puesto -->
+              <div class="form-group mt-4">
+                <label for="email">Nombre</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  formControlName="email"
+                />
+              </div>
+              <div class="form-group mt-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Cantidad de modulos</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="0">0</option>
+                </select>
+              </div>
+              <div class="form-group mt-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Profesores</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="0">0</option>
+                </select>
+              </div>
+              <div class="form-group mt-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Tipo Aula</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="0">0</option>
+                </select>
+              </div>
+              <div class="form-group mt-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Espacion entre dias</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="0">0</option>
+                </select>
+              </div>
+              <div class="form-group mt-4">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Cantida maxima de modulos continuos</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="0">0</option>
+                </select>
+              </div>
+              <div class="d-grid">
+                <button class="btn btn-primary btn-lg mt-4">
+                  SIGUIENTE
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.10em"
+                    height="1.10em"
+                    fill="currentColor"
+                    class="bi bi-arrow-right"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-        <!---->
-        <div class="d-grid" id="profesores"></div>
-        <!---->
-        <div class="d-grid" id="materias"></div>
       </div>
     </div>
   </div>

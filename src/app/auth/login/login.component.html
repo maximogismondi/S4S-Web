@@ -5,14 +5,20 @@
       <!---->
       <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <div class="form-group mt-4">
-          <label for="email">Email</label>
-          <input type="email" class="form-control" formControlName="email" />
+          <input
+            type="email"
+            placeholder="Email"
+            required
+            class="form-control"
+            formControlName="email"
+          />
         </div>
         <div class="form-group mt-4">
-          <label for="password">Contraseña</label>
           <input
             type="password"
             class="form-control"
+            placeholder="Contraseña"
+            required
             formControlName="password"
           />
         </div>
@@ -34,14 +40,14 @@
         <button
           (click)="onGoogleLogin()"
           type="submit"
-          class="btn btn-lg mt-4"
-          style="background-color: #dd4b39; color: #fff; width: 100%"
+          class="btn btn-lg btn-outline-danger mt-4"
+          style="width: 100%"
         >
           Google
         </button>
         <button
           type="submit"
-          class="btn btn-outline-secondary btn-lg mt-4"
+          class="btn btn-outline-dark btn-lg mt-4"
           style="width: 100%"
         >
           Microsoft

@@ -11,8 +11,8 @@ import firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService {
-  user$: any;
-  // public user$: Observable<User>;
+  // user$: any;
+  public user$: Observable<User>;
 
   constructor(public afAuth: AngularFireAuth, private afs: AngularFirestore) {
     // this.user$ = this.afAuth.authState.pipe(
@@ -25,22 +25,25 @@ export class AuthService {
     // );
   }
 
+  //joya
   async login(email: string, password: string) {
     const { user } = await this.afAuth.signInWithEmailAndPassword(
       email,
       password
     );
-    // if (user?.emailVerified) {
-    //   this.updateUserData(user);
-    // }
+    if (user?.emailVerified) {
+      this.updateUserData(user);
+    }
     return user;
   }
-
+  //joya
   async loginGoogle() {
     const { user } = await this.afAuth.signInWithPopup(
       new firebase.auth.GoogleAuthProvider()
     );
-    // this.updateUserData(user);
+    if (user) {
+      this.updateUserData(user);
+    }
     return user;
   }
 
@@ -63,19 +66,19 @@ export class AuthService {
   async logout() {
     await this.afAuth.signOut();
   }
+  //joya
+  private updateUserData(user: any) {
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
+      `users/${user.uid}`
+    );
 
-  // private updateUserData(user: User) {
-  //   const userRef: AngularFirestoreDocument<User> = this.afs.doc(
-  //     `users/${user.uid}`
-  //   );
+    const data: User = {
+      uid: user.uid,
+      email: user.email,
+      emailVerified: user.emailVerified,
+      displayName: user.displayName,
+    };
 
-  //   const data: User = {
-  //     uid: user.uid,
-  //     email: user.email,
-  //     emailVerified: user.emailVerified,
-  //     displayName: user.displayName,
-  //   };
-
-  //   return userRef.set(data, { merge: true });
-  // }
+    return userRef.set(data, { merge: true });
+  }
 }
