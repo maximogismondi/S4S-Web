@@ -9,6 +9,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { SendEmailComponent } from './auth/send-email/send-email.component';
+// import { AuthGuard } from './shared/guards/auth.guard';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, SendEmailComponent],
@@ -20,6 +21,7 @@ import { SendEmailComponent } from './auth/send-email/send-email.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
   ],
+  // AuthGuard
   providers: [],
   bootstrap: [AppComponent],
 })

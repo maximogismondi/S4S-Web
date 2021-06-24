@@ -1,28 +1,36 @@
-import { first, switchMap } from 'rxjs/operators';
+import { first, switchMap, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { User } from 'src/app/shared/interface/user.interface';
+import { Colegio, User } from 'src/app/shared/interface/user.interface';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import firebase from 'firebase/app';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
-  // user$: any;
-  public user$: Observable<User>;
+  public userData: any;
 
-  constructor(public afAuth: AngularFireAuth, private afs: AngularFirestore) {
-    // this.user$ = this.afAuth.authState.pipe(
-    //   switchMap((user) => {
-    //     if (user) {
-    //       return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-    //     }
-    //     return of(null);
-    //   })
-    // );
+  //revisar
+  constructor(public afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.afs
+          .doc<User>(`users/${user.uid}`)
+          .snapshotChanges()
+          .pipe(
+            map((res) => {
+              this.userData = res;
+            })
+          );
+      } else {
+        this.userData = null;
+      }
+      // console.log(this.userData.uid);
+    });
   }
 
   //joya
@@ -36,6 +44,7 @@ export class AuthService {
     }
     return user;
   }
+
   //joya
   async loginGoogle() {
     const { user } = await this.afAuth.signInWithPopup(
@@ -66,6 +75,29 @@ export class AuthService {
   async logout() {
     await this.afAuth.signOut();
   }
+
+  //revisar
+  async createSchool(
+    nombre: string,
+    direccion: string,
+    localidad: string,
+    telefono: string
+  ) {
+    const school: Colegio = {
+      nombre: nombre,
+      direccion: direccion,
+      localidad: localidad,
+      telefono: telefono,
+      usuariosExtensiones: [],
+      // userAdmin: this.userData.uid,
+    };
+    if(school.nombre!="" && school.direccion!="" && school.localidad!="" && school.telefono!=""){
+      this.SchoolData(school);
+      this.router.navigate(['/crear-colegio']);
+    }
+    
+  }
+
   //joya
   private updateUserData(user: any) {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
@@ -76,9 +108,30 @@ export class AuthService {
       uid: user.uid,
       email: user.email,
       emailVerified: user.emailVerified,
-      displayName: user.displayName,
+      displayName: user.email.split('@')[0],
+      // colegios: user.colegio,
+      // eleccion: user.eleccion,
     };
 
     return userRef.set(data, { merge: true });
+  }
+  
+  //revisar
+  private SchoolData(school: any) {
+    const schoolRef: AngularFirestoreDocument<Colegio> = this.afs.doc(
+      `schools/${school.nombre}`
+    );
+
+    const data: Colegio = {
+      nombre: school.nombre,
+      direccion: school.direccion,
+      localidad: school.localidad,
+      telefono: school.telefono,
+      usuariosExtensiones: [],
+      // codigo_Id: school.codigo_Id,
+      // userAdmin: school.userAdmin,
+    };
+
+    return schoolRef.set(data, { merge: true });
   }
 }

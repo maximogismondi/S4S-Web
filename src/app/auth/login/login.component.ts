@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     const { email, password } = this.loginForm.value;
     const user = await this.authSvc.login(email, password);
     if (user && user.emailVerified) {
-      this.router.navigate(['/eleccion']);
+      this.router.navigate(['/menu-principal']);
     } else if (user) {
       this.router.navigate(['/verificacion-email']);
     }
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
 
   async onGoogleLogin() {
     if (await this.authSvc.loginGoogle()) {
-      this.router.navigate(['/eleccion']);
+      this.router.navigate(['/menu-principal']);
     }
   }
 }

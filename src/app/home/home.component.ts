@@ -1,30 +1,43 @@
 import { Component, OnInit } from '@angular/core';
+import { emailVerified } from '@angular/fire/auth-guard';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  providers: [AuthService]
 })
 export class HomeComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private aServ: AuthService) {}
 
   ngOnInit(): void {}
 
   gotoLogin() {
-    if (1) {
+    if (this.aServ.userData){
       this.router.navigate(['/login']);
     }
-      /*else if(user no hizo verificacion){
-      this.router.navigate(['/verificacion-email']);
-    } */
+    //revisar
+    //  else if(this.aServ.userData.emailVerified){
+       
+    //    this.router.navigate(['/verificacion-email']);
+    //  }
       /*else if(user ya eligio){
+        if(){}
+        else{}
       this.router.navigate(['/paginaPrincipal']);
     } */
     else {
-      this.router.navigate(['/eleccion']);
+      this.router.navigate(['/menu-principal']);
     }
   }
+
+  // get isLoggedIn(): boolean { 
+  //   const user = this.aServ.userData;
+  //   if(user === null || user === undefined) return false
+  //   return user.emailVerified;
+  // }
 
   functionScrollToDownMoreInfo() {
     window.scrollTo({

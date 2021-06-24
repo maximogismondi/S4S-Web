@@ -2,7 +2,11 @@ import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SendEmailComponent } from './auth/send-email/send-email.component';
 import { EleccionComponent } from './colegio/eleccion/eleccion.component'; //sirve para esto component: EleccionComponent
-import { AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import {
+  AngularFireAuthGuard,
+  redirectLoggedInTo,
+  redirectUnauthorizedTo,
+} from '@angular/fire/auth-guard';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const routes: Routes = [
@@ -27,23 +31,32 @@ const routes: Routes = [
       import('./colegio/eleccion/eleccion.module').then(
         (m) => m.EleccionModule
       ),
-      canActivate: [AngularFireAuthGuard],
-      data: { authGuardPipe: redirectUnauthorizedToLogin }
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'verificacion-email',
     component: SendEmailComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin }
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'crear-colegio',
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
     loadChildren: () =>
       import('./colegio/crear-colegio/crear-colegio.module').then(
         (m) => m.CrearColegioModule
       ),
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
+  },
+  {
+    path: 'menu-principal',
+    loadChildren: () =>
+      import('./colegio/menu-principal/menu-principal.module').then(
+        (m) => m.MenuPrincipalModule
+      ),
+      canActivate: [AngularFireAuthGuard],
+      data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
 ];
 

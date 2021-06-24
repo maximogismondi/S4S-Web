@@ -28,31 +28,30 @@
           <div class="card">
             <div class="card-body">
               <h1 class="text-center">CREAR COLEGIO</h1>
-              <!--[formGroup]="loginForm" ARREGLARLO (ngSubmit)="onLogin()"-->
-              <!--CAMBIAR LUGARE DONDE DICE EMAIL POR SU RESPECTIVO COSO-->
-              <form>
+              <form [formGroup]="crearColegioForm" (ngSubmit)="onCrear()">
                 <div class="form-group mt-4">
                   <input
-                    type="email"
+                    type="text"
                     placeholder="Nombre del Colegio"
                     required
                     class="form-control"
-                    formControlName="email"
+                    formControlName="nombre"
                   />
                 </div>
                 <div class="form-group mt-4">
                   <input
-                    type="email"
+                    type="text"
                     placeholder="Direccion del Colegio"
                     required
                     class="form-control"
-                    formControlName="email"
+                    formControlName="direccion"
                   />
                 </div>
                 <div class="form-group mt-4">
                   <select
                     class="form-select"
                     aria-label="Default select example"
+                    formControlName="localidad"
                     required
                   >
                     <option selected>Localidad</option>
@@ -70,17 +69,17 @@
                 </div>
                 <div class="form-group mt-4">
                   <input
-                    type="email"
+                    type="number"
                     placeholder="Telefono del Colegio"
                     required
                     class="form-control"
-                    formControlName="email"
+                    formControlName="telefono"
                   />
                 </div>
+                <!-- (click)="gotoCrear()" -->
                 <div class="d-grid">
                   <button
                     type="submit"
-                    (click)="gotoCrear()"
                     class="btn btn-primary btn-lg mt-4 py-4"
                   >
                     CREAR
@@ -135,7 +134,7 @@
                 <div class="form-group mt-4">
                   <input
                     type="email"
-                    placeholder="Ingresar Nombre del Colegio"
+                    placeholder="Ingresar Codigo del Colegio"
                     required
                     class="form-control"
                     formControlName="email"
