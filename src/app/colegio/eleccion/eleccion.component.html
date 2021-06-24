@@ -130,14 +130,14 @@
               <h1 class="text-center">UNIRSE A COLEGIO</h1>
               <!--[formGroup]="loginForm" ARREGLARLO (ngSubmit)="onLogin()"-->
               <!--CAMBIAR LUGARE DONDE DICE EMAIL POR SU RESPECTIVO COSO-->
-              <form>
+              <form [formGroup]="unirseColegioForm" (ngSubmit)="onUnirse()">
                 <div class="form-group mt-4">
                   <input
-                    type="email"
+                    type="text"
                     placeholder="Ingresar Codigo del Colegio"
                     required
                     class="form-control"
-                    formControlName="email"
+                    formControlName="codigoColegio"
                   />
                 </div>
                 <div class="d-grid">

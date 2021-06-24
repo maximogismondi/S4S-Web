@@ -17,6 +17,6 @@ export interface Colegio{
   localidad: string;
   telefono: string;
   usuariosExtensiones: Array<string>;
-  // codigo_Id: string;
-  // userAdmin: string;
+  codigo_Id: string;
+  userAdmin: string;
 }

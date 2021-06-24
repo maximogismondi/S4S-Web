@@ -7,7 +7,7 @@ import { AuthService } from '../auth/services/auth.service';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  providers: [AuthService]
+  providers: [AuthService],
 })
 export class HomeComponent implements OnInit {
   constructor(private router: Router, private aServ: AuthService) {}
@@ -15,25 +15,24 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {}
 
   gotoLogin() {
-    if (this.aServ.userData){
+    if (this.aServ.userData) {
+      this.router.navigate(['/menu-principal']);
+    } else {
       this.router.navigate(['/login']);
     }
     //revisar
-    //  else if(this.aServ.userData.emailVerified){
-       
-    //    this.router.navigate(['/verificacion-email']);
-    //  }
-      /*else if(user ya eligio){
+    // else if (this.aServ.userData.emailVerified) {
+    //   this.router.navigate(['/verificacion-email']);
+    // }
+
+    /*else if(user ya eligio){
         if(){}
         else{}
       this.router.navigate(['/paginaPrincipal']);
     } */
-    else {
-      this.router.navigate(['/menu-principal']);
-    }
   }
 
-  // get isLoggedIn(): boolean { 
+  // get isLoggedIn(): boolean {
   //   const user = this.aServ.userData;
   //   if(user === null || user === undefined) return false
   //   return user.emailVerified;

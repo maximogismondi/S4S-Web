@@ -14,22 +14,26 @@ import { Router } from '@angular/router';
 export class AuthService {
   public userData: any;
 
-  //revisar
-  constructor(public afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
+  //joya
+  constructor(
+    public afAuth: AngularFireAuth,
+    private afs: AngularFirestore,
+    private router: Router
+  ) {
+    
     this.afAuth.authState.subscribe((user) => {
       if (user) {
+        // console.log("hola");
         this.afs
-          .doc<User>(`users/${user.uid}`)
-          .snapshotChanges()
-          .pipe(
-            map((res) => {
-              this.userData = res;
-            })
+          .doc<User>(`users/${user.uid}`).get().toPromise().then((res) => {
+              this.userData = res.data();
+              // console.log(this.userData);
+            }
           );
       } else {
         this.userData = null;
       }
-      // console.log(this.userData.uid);
+      
     });
   }
 
@@ -76,12 +80,13 @@ export class AuthService {
     await this.afAuth.signOut();
   }
 
-  //revisar
+  //joya
   async createSchool(
     nombre: string,
     direccion: string,
     localidad: string,
-    telefono: string
+    telefono: string,
+    codigo_Id: string,
   ) {
     const school: Colegio = {
       nombre: nombre,
@@ -89,14 +94,36 @@ export class AuthService {
       localidad: localidad,
       telefono: telefono,
       usuariosExtensiones: [],
-      // userAdmin: this.userData.uid,
+      codigo_Id: codigo_Id,
+      userAdmin: this.userData.uid,
     };
-    if(school.nombre!="" && school.direccion!="" && school.localidad!="" && school.telefono!=""){
+    if (
+      school.nombre != '' &&
+      school.direccion != '' &&
+      school.localidad != '' &&
+      school.telefono != ''
+    ) {
       this.SchoolData(school);
       this.router.navigate(['/crear-colegio']);
     }
-    
   }
+
+  // async joinSchool(
+  //   codigoColegio: string
+  // ) {
+  //   if(codigoColegio == this.school.codigo_Id){
+  //     const school: Colegio = {
+  //     // codigoColegio: codigoColegio
+  //   };
+  //   // if (
+  //   //   school.codigoColegio != ''
+  //   // ) {
+  //   //   this.SchoolData(school);
+  //   //   this.router.navigate(['/crear-colegio']);
+  //   // }
+  //   }
+    
+  // }
 
   //joya
   private updateUserData(user: any) {
@@ -115,11 +142,11 @@ export class AuthService {
 
     return userRef.set(data, { merge: true });
   }
-  
-  //revisar
+
+  //joya
   private SchoolData(school: any) {
     const schoolRef: AngularFirestoreDocument<Colegio> = this.afs.doc(
-      `schools/${school.nombre}`
+      `schools/${school.codigo_Id}`
     );
 
     const data: Colegio = {
@@ -128,8 +155,8 @@ export class AuthService {
       localidad: school.localidad,
       telefono: school.telefono,
       usuariosExtensiones: [],
-      // codigo_Id: school.codigo_Id,
-      // userAdmin: school.userAdmin,
+      codigo_Id: school.codigo_Id,
+      userAdmin: school.userAdmin,
     };
 
     return schoolRef.set(data, { merge: true });

@@ -17,6 +17,7 @@ export class EleccionComponent implements OnInit {
   ) {}
 
   crearColegioForm: FormGroup;
+  unirseColegioForm: FormGroup;
 
   ngOnInit(): void {
     this.crearColegioForm = this.fb.group({
@@ -25,18 +26,43 @@ export class EleccionComponent implements OnInit {
       localidad: ['', Validators.required],
       telefono: ['', Validators.required],
     });
+
+    // this.unirseColegioForm = this.fb.group({
+    //   codigoColegio: ['', Validators.required],
+    // });
   }
+
+  async generaNss() {
+    let result = '';
+    const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < characters.length; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return result;
+  }
+
+  codigo_Id = this.generaNss();
 
   //joya
   async onCrear() {
-    const { nombre, direccion, localidad, telefono } = this.crearColegioForm.value;
+    const { nombre, direccion, localidad, telefono} = this.crearColegioForm.value;
     const school = await this.authSvc.createSchool(
       nombre,
       direccion,
       localidad,
-      telefono
+      telefono,
+      await this.codigo_Id
     );
   }
+
+  // async onUnirse(){
+  //   const { codigoColegio } = this.unirseColegioForm.value;
+  //   const school = await this.authSvc.joinSchool(
+  //     codigoColegio
+  //   );
+  // }
 
   irCrear() {
     document.getElementById('crear')!.style.display = 'block';
