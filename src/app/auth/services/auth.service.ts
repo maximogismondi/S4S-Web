@@ -1,7 +1,7 @@
 import { first, switchMap, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Colegio, User } from 'src/app/shared/interface/user.interface';
+import { Aula, Colegio, User } from 'src/app/shared/interface/user.interface';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
@@ -9,10 +9,13 @@ import {
 import { Observable, of } from 'rxjs';
 import firebase from 'firebase/app';
 import { Router } from '@angular/router';
+import { Time } from '@angular/common';
 
 @Injectable()
 export class AuthService {
   public userData: any;
+
+  
 
   //joya
   constructor(
@@ -20,21 +23,25 @@ export class AuthService {
     private afs: AngularFirestore,
     private router: Router
   ) {
-    
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         // console.log("hola");
         this.afs
-          .doc<User>(`users/${user.uid}`).get().toPromise().then((res) => {
-              this.userData = res.data();
-              // console.log(this.userData);
-            }
-          );
+          .doc<User>(`users/${user.uid}`)
+          .get()
+          .toPromise()
+          .then((res) => {
+            this.userData = res.data();
+            // console.log(this.userData);
+          });
       } else {
         this.userData = null;
       }
-      
     });
+
+    // var schoolRef = db.collection('schools');
+
+    // var query = schoolRef.where('userAdmin', '==', this.userData.uid);
   }
 
   //joya
@@ -86,32 +93,78 @@ export class AuthService {
     direccion: string,
     localidad: string,
     telefono: string,
-    codigo_Id: string,
+    duracionModulo: number,
+    inicioHorario: Time,
+    finalizacionHorario: Time,
+    id: string
   ) {
     const school: Colegio = {
+      id: id,
+      userAdmin: this.userData.uid,
       nombre: nombre,
       direccion: direccion,
       localidad: localidad,
       telefono: telefono,
+      duracionModulo: duracionModulo,
+      inicioHorario: inicioHorario,
+      finalizacionHorario: finalizacionHorario,
       usuariosExtensiones: [],
-      codigo_Id: codigo_Id,
-      userAdmin: this.userData.uid,
+      aulas: [],
+      modulos: [],
+      cursos: [],
+      profes: [],
     };
     if (
       school.nombre != '' &&
       school.direccion != '' &&
       school.localidad != '' &&
-      school.telefono != ''
+      school.telefono != '' &&
+      school.duracionModulo != null &&
+      school.inicioHorario != null &&
+      school.finalizacionHorario != null &&
+      school.inicioHorario < school.finalizacionHorario
     ) {
       this.SchoolData(school);
       this.router.navigate(['/crear-colegio']);
     }
   }
 
+  // async infoSchoolGeneral(
+  //   duracionModulo: number,
+  //   InicioHorario: string,
+  //   FinalizacionHorario: string,
+  //   cantCursos: number,
+  //   cantProfes: number,
+  //   cantMaterias: number,
+  //   id: string,
+  // ) {
+  //   const schoolDataGeneral: InfoColegio = {
+  //     id: id,
+  //    // codigoColegioCorrespondiente: this.userData. conseguir el id del colegio q creo el usuario
+  //     duracionModulo: duracionModulo,
+  //     InicioHorario: InicioHorario,
+  //     FinalizacionHorario: FinalizacionHorario,
+  //     cantCursos: cantCursos,
+  //     cantProfes: cantProfes,
+  //     cantMaterias: cantMaterias,
+  //   };
+  //   if (
+  //     schoolDataGeneral.duracionModulo != null &&
+  //     schoolDataGeneral.InicioHorario != '' &&
+  //     schoolDataGeneral.FinalizacionHorario != '' &&
+  //     schoolDataGeneral.cantCursos != null &&
+  //     schoolDataGeneral.cantProfes != null &&
+  //     schoolDataGeneral.cantMaterias != null
+  //   ) {
+  //     this.SchoolDataTotal(schoolDataGeneral);
+
+  //   }
+  // }
+
   // async joinSchool(
   //   codigoColegio: string
   // ) {
-  //   if(codigoColegio == this.school.codigo_Id){
+  //   if(codigoColegio == ){
   //     const school: Colegio = {
   //     // codigoColegio: codigoColegio
   //   };
@@ -122,7 +175,7 @@ export class AuthService {
   //   //   this.router.navigate(['/crear-colegio']);
   //   // }
   //   }
-    
+
   // }
 
   //joya
@@ -146,19 +199,66 @@ export class AuthService {
   //joya
   private SchoolData(school: any) {
     const schoolRef: AngularFirestoreDocument<Colegio> = this.afs.doc(
-      `schools/${school.codigo_Id}`
+      `schools/${school.id}`
     );
 
     const data: Colegio = {
+      id: school.id,
+      userAdmin: school.userAdmin,
       nombre: school.nombre,
       direccion: school.direccion,
       localidad: school.localidad,
       telefono: school.telefono,
+      duracionModulo: school.duracionModulo,
+      inicioHorario: school.inicioHorario,
+      finalizacionHorario: school.finalizacionHorario,
       usuariosExtensiones: [],
-      codigo_Id: school.codigo_Id,
-      userAdmin: school.userAdmin,
+      aulas: [],
+      modulos: [],
+      cursos: [],
+      profes: [],
     };
 
     return schoolRef.set(data, { merge: true });
   }
+
+  // private SchoolDataTotal(school: any) {
+  //   const schoolRef: AngularFirestoreDocument<InfoColegio> = this.afs.doc(
+  //     `dataSchools/${school.id}`
+  //   );
+
+  //   let contador = 0;
+
+  //   if(contador == 0){
+  //     const dataGral: InfoColegio = {
+  //       duracionModulo: school.duracionModulo,
+  //       InicioHorario: school.InicioHorario,
+  //       FinalizacionHorario: school.FinalizacionHorario,
+  //       cantCursos: school.cantCursos,
+  //       cantProfes: school.cantProfes,
+  //       cantMaterias: school.cantMaterias,
+  //       id: school.id,
+  //       codigoColegioCorrespondiente: school.codigoColegioCorrespondiente,
+  //     };
+  //     contador += 1;
+  //   }
+  //   else if(contador == 1){
+
+  //     contador += 1;
+  //   }
+  //   else if(contador == 2){
+
+  //     contador += 1;
+  //   }
+  //   else if(contador == 3){
+
+  //     contador += 1;
+  //   }
+  //   else if(contador == 4){
+
+  //     contador = 0;
+  //   }
+
+  //   return schoolRef.set(dataGral, { merge: true });
+  // }
 }

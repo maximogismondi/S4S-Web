@@ -10,14 +10,14 @@ import { AuthService } from '../auth/services/auth.service';
   providers: [AuthService],
 })
 export class HomeComponent implements OnInit {
-  constructor(private router: Router, private aServ: AuthService) {}
+  constructor(private router: Router, private authSvc: AuthService) {}
 
   ngOnInit(): void {}
 
   gotoLogin() {
-    if (this.aServ.userData) {
+    if (this.authSvc.userData) {
       this.router.navigate(['/menu-principal']);
-    } else {
+    }else{
       this.router.navigate(['/login']);
     }
     //revisar

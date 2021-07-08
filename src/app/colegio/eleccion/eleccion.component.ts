@@ -25,6 +25,9 @@ export class EleccionComponent implements OnInit {
       direccion: ['', Validators.required],
       localidad: ['', Validators.required],
       telefono: ['', Validators.required],
+      duracionModulo: ['', Validators.required],
+      inicioHorario: ['', Validators.required],
+      finalizacionHorario: ['', Validators.required],
     });
 
     // this.unirseColegioForm = this.fb.group({
@@ -43,17 +46,20 @@ export class EleccionComponent implements OnInit {
     return result;
   }
 
-  codigo_Id = this.generaNss();
+  id = this.generaNss();
 
   //joya
   async onCrear() {
-    const { nombre, direccion, localidad, telefono} = this.crearColegioForm.value;
+    const { nombre, direccion, localidad, telefono, duracionModulo, inicioHorario, finalizacionHorario} = this.crearColegioForm.value;
     const school = await this.authSvc.createSchool(
       nombre,
       direccion,
       localidad,
       telefono,
-      await this.codigo_Id
+      duracionModulo,
+      inicioHorario,
+      finalizacionHorario,
+      await this.id
     );
   }
 
