@@ -5,22 +5,15 @@
       <h6 class="text-center">Scheduler For School</h6>
       <div id="botonesEleccionCrear">
         <div class="d-grid">
-          <button (click)="irCrear()" class="btn btn-primary btn-lg mt-4 py-4">
+          <button *ngIf="NombreColegio == null; else bloquearBoton" (click)="irCrear()" class="btn btn-primary btn-lg mt-4 py-4">
             CREAR
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="0.7em"
-              height="0.7em"
-              fill="currentColor"
-              class="bi bi-plus-lg"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
-              />
-            </svg>
           </button>
         </div>
+        <ng-template #bloquearBoton>
+          <button class="btn btn-primary disabled btn-lg mt-4 py-4">
+            CREAR
+          </button>
+        </ng-template>
       </div>
       <!---->
       <div id="crear" style="display: none">
@@ -48,13 +41,13 @@
                   />
                 </div>
                 <div class="form-group mt-3">
+                  <label>Localidad</label>
                   <select
                     class="form-select"
                     aria-label="Default select example"
                     formControlName="localidad"
                     required
                   >
-                    <option selected>Localidad</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>

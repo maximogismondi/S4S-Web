@@ -15,8 +15,6 @@ import { Time } from '@angular/common';
 export class AuthService {
   public userData: any;
 
-  
-
   //joya
   constructor(
     public afAuth: AngularFireAuth,
@@ -111,6 +109,7 @@ export class AuthService {
       usuariosExtensiones: [],
       aulas: [],
       modulos: [],
+      materias: [],
       cursos: [],
       profes: [],
     };
@@ -215,12 +214,17 @@ export class AuthService {
       usuariosExtensiones: [],
       aulas: [],
       modulos: [],
+      materias: [],
       cursos: [],
       profes: [],
     };
 
     return schoolRef.set(data, { merge: true });
   }
+
+
+
+  
 
   // private SchoolDataTotal(school: any) {
   //   const schoolRef: AngularFirestoreDocument<InfoColegio> = this.afs.doc(

@@ -26,8 +26,15 @@ export interface Colegio {
   usuariosExtensiones: Array<string>;
   aulas: Array<Aula>;
   modulos: Array<Modulo>;
+  materias: Array<Materia>;
   cursos: Array<Curso>;
   profes: Array<Profesor>;
+}
+
+export class Modulo {
+  id: number = 0;
+  dia: string;
+  inicio: Time;
 }
 
 export class Aula {
@@ -36,14 +43,18 @@ export class Aula {
   tipo: number;
 }
 
-export interface Modulo {
-  id: string;
-  dia: string;
-  inicio: number;
+export class Materia {
+  id: number = 0;
+  nombre: string;
+  cantModulos: number;
+  cantProfesores: number;
+  espacioEntreDias: number;
+  tipoAula: number;
+  cantidadModulosContinuos: number;
 }
 
-export interface Curso {
-  id: string;
+export class Curso {
+  id: number = 0;
   nombre: string;
   turnoPreferido: number;
   cantAlumnos: number;
@@ -54,17 +65,7 @@ export interface Profesor {
   id: string;
   nombre: string;
   dni: number;
-  materiasCapacitado: Array<string>;
+  materiasCapacitado: Array<Materia>;
   turnoPreferido: number;
   condiciones: Map<string, any>;
-}
-
-export interface Materia {
-  id: string;
-  nombre: string;
-  cantModulos: number;
-  cantProfesores: number;
-  espacioEntreDias: number;
-  tipoAula: number;
-  cantidadModulosContinuos: number;
 }

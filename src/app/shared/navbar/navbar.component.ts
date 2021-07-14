@@ -18,6 +18,7 @@ export class NavbarComponent {
     await this.authSvc.logout();
     this.router.navigate(['/home']);
   }
+  
 
   // navbarCollapse(){
   //   document.getElementById('buttonNavbarColor02')?.getAttribute('aria-expanded');

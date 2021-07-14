@@ -14,22 +14,49 @@
 
  -->
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" style="box-shadow: none; opacity: 0.95; border: none; background-image: none;">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="">S4S</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <div class="collapse navbar-collapse" id="navbarColor02">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link">Scheduler For School</a>
-          </li>
-        </ul>
-      </div>
+<nav
+  class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top"
+  style="box-shadow: none; opacity: 0.95; border: none; background-image: none"
+>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="">S4S</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarColor02"
+      aria-controls="navbarColor02"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link">Scheduler For School</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav mx-auto"></ul>
+      <!--else login -->
+      <ul class="navbar-nav" *ngIf="user$ | async as user">
+        <li class="nav-item">
+          <a class="nav-link">{{ user.email }}</a>
+          <!-- .split("@")[0] -->
+        </li>
+        <li class="nav-item" *ngIf="user">
+          <a href="" class="nav-link" (click)="onLogout()">Cerrar Sesion</a>
+        </li>
+        
+      </ul>
+
+      <!-- <ng-template #login>
+        <ul class="navbar-nav"></ul>
+      </ng-template> -->
     </div>
-  </nav>
+  </div>
+</nav>
 <!--<nav
   class="navbar navbar-expand-lg bg-dark sticky-top"
 >

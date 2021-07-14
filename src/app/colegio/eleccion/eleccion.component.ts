@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -10,11 +11,25 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   providers: [AuthService],
 })
 export class EleccionComponent implements OnInit {
+  NombreColegio: string;
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authSvc: AuthService
-  ) {}
+    private authSvc: AuthService,
+    private afs: AngularFirestore
+  ) {
+    authSvc.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.afs.firestore
+          .collection('schools')
+          .where('userAdmin', '==', user.uid)
+          .get()
+          .then((data) => {
+            this.NombreColegio = data.docs[0].data().nombre;
+          });
+      }
+    });
+  }
 
   crearColegioForm: FormGroup;
   unirseColegioForm: FormGroup;
@@ -37,7 +52,8 @@ export class EleccionComponent implements OnInit {
 
   async generaNss() {
     let result = '';
-    const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     for (let i = 0; i < characters.length; i++) {
       result += characters.charAt(
         Math.floor(Math.random() * characters.length)
@@ -50,7 +66,15 @@ export class EleccionComponent implements OnInit {
 
   //joya
   async onCrear() {
-    const { nombre, direccion, localidad, telefono, duracionModulo, inicioHorario, finalizacionHorario} = this.crearColegioForm.value;
+    const {
+      nombre,
+      direccion,
+      localidad,
+      telefono,
+      duracionModulo,
+      inicioHorario,
+      finalizacionHorario,
+    } = this.crearColegioForm.value;
     const school = await this.authSvc.createSchool(
       nombre,
       direccion,
