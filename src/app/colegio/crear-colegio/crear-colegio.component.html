@@ -3,20 +3,130 @@
     <div class="col-md-7 mx-auto">
       <div class="card">
         <div class="card-body">
-          <h3 class="text-center mt-2">NOMBRE COLEGIO</h3>
+          <h3 class="text-center mt-2">{{ nombreColegio }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mt-4 mx-auto">
+    <div class="card">
+      <div class="progress" style="height: 20px">
+        <div
+          id="barraDeProgreso"
+          class="progress-bar"
+          role="progressbar"
+          style="width: 15%"
+          aria-valuenow="25"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          {{ paradoActualmente }}
+        </div>
+        <!-- <div  id="barraDeProgreso" class="progress-bar" role="progressbar" style="width: 28%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Aulas</div>
+        <div  id="barraDeProgreso" class="progress-bar" role="progressbar" style="width: 47%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Materias</div>
+        <div  id="barraDeProgreso" class="progress-bar" role="progressbar" style="width: 61%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Cursos</div>
+        <div  id="barraDeProgreso" class="progress-bar" role="progressbar" style="width: 81%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Profesores</div> -->
+        <!-- <div  *ngIf="cursos == 0" id="barraDeProgreso" class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Finalizar</div> -->
+      </div>
+      <div class="card-body">
+        <div class="row align-items-end">
+          <div class="col">Modulos</div>
+          <div class="col">Aulas</div>
+          <div class="col">Materias</div>
+          <div class="col">Cursos</div>
+          <div class="col">Profesores</div>
+          <div class="col">Finalizar</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="container mx-auto my-5">
+<!-- *ngIf="modulos == 0" *ngIf="aulas == 0 && modulos != 0" *ngIf="materias == 0 && aulas != 0" *ngIf="cursos == 0 && materias != 0" *ngIf="profes == 0 && cursos != 0"-->
+
+<div class="container mx-auto my-4" id="divModulo" style="display: block">
+  <div class="col-md-6 mx-auto">
+    <ul class="list-group">
+      <li
+        *ngFor="let modulo of moduloArray"
+        class="list-group-item list-group-item-action"
+        (click)="openForEditModulo(modulo)"
+        [class.active]="modulo == selectedModulo"
+      >
+        <span class="badge bg-primary">{{ modulo.id }}</span>
+        Dia: {{ modulo.dia }} / Hora de inico: {{ modulo.inicio }}
+      </li>
+      <!-- - Hora de finalizacion {{finalizacionModulo}} -->
+    </ul>
+    <div class="card mt-4">
+      <div class="card-body">
+        <div class="card-title"><h5>Insertar Modulos</h5></div>
+        <div class="text-secondary">
+          <h6>Duracion de cada modulo: {{ duracionModulo }} min</h6>
+        </div>
+
+        <div class="form-group">
+          <label class="mt-2">Dia de la semana</label>
+          <select class="form-select" [(ngModel)]="selectedModulo.dia">
+            <option value="1">Lunes</option>
+            <option value="2">Martes</option>
+            <option value="3">Miercoles</option>
+            <option value="4">Jueves</option>
+            <option value="5">Viernes</option>
+          </select>
+
+          <label class="mt-3">Insertar hora de inicio del modulo</label>
+          <input
+            type="Time"
+            [(ngModel)]="selectedModulo.inicio"
+            class="form-control"
+          />
+
+          <button (click)="addOrEditModulo()" class="btn btn-primary mt-4">
+            Añadir / Editar
+          </button>
+          <button
+            *ngIf="selectedModulo.id != 0"
+            class="btn btn-danger mt-4 ms-4"
+            (click)="deleteModulo()"
+          >
+            Eliminar
+          </button>
+        </div>
+        <div class="d-grid">
+          <button
+            *ngIf="moduloArray.length != 0"
+            (click)="goFormAula()"
+            class="btn btn-primary btn-lg mt-4"
+          >
+            SIGUIENTE
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.10em"
+              height="1.10em"
+              fill="currentColor"
+              class="bi bi-arrow-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mx-auto my-4" id="divAula" style="display: none">
   <div class="col-md-6 mx-auto">
     <ul class="list-group">
       <li
         *ngFor="let aula of aulaArray"
         class="list-group-item list-group-item-action"
-        (click)="openForEdit(aula)"
+        (click)="openForEditAula(aula)"
         [class.active]="aula == selectedAula"
       >
         <span class="badge bg-primary">{{ aula.id }}</span>
@@ -25,7 +135,7 @@
     </ul>
     <div class="card mt-4">
       <div class="card-body">
-        <div class="card-title"><h5>Insertar Aula</h5></div>
+        <div class="card-title"><h5>Insertar Aulas</h5></div>
         <div class="form-group">
           <input
             type="text"
@@ -34,26 +144,358 @@
             class="form-control"
           />
 
+          <label class="mt-2">Tipo de aula</label>
           <select class="form-select" [(ngModel)]="selectedAula.tipo">
             <option value="1">Normal</option>
             <option value="2">Especial</option>
             <option value="3">Otro</option>
           </select>
 
-          <button (click)="addOrEdit()" class="btn btn-primary mt-4">
+          <button (click)="addOrEditAula()" class="btn btn-primary mt-4">
             Añadir / Editar
           </button>
           <button
-            *ngIf="selectedAula.id !== 0"
+            *ngIf="selectedAula.id != 0"
             class="btn btn-danger mt-4 ms-4"
-            (click)="delete()"
+            (click)="deleteAula()"
           >
             Eliminar
+          </button>
+        </div>
+        <div class="d-grid">
+          <button
+            *ngIf="moduloArray.length != 0"
+            (click)="goFormMateria()"
+            class="btn btn-primary btn-lg mt-4"
+          >
+            SIGUIENTE
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.10em"
+              height="1.10em"
+              fill="currentColor"
+              class="bi bi-arrow-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+              />
+            </svg>
           </button>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<div class="container mx-auto my-4" id="divMateria" style="display: none">
+  <div class="col-md-6 mx-auto">
+    <ul class="list-group">
+      <li
+        *ngFor="let materia of materiaArray"
+        class="list-group-item list-group-item-action"
+        (click)="openForEditMateria(materia)"
+        [class.active]="materia == selectedMateria"
+      >
+        <span class="badge bg-primary">{{ materia.id }}</span>
+        Nombre: {{ materia.nombre }} / Cantidad de modulo:
+        {{ materia.cantModulos }} / Cantidad de modulos continuos:
+        {{ materia.cantidadModulosContinuos }} / Cantidad de profesores que la
+        dan: {{ materia.cantProfesores }} / Espacio entre cada dia:
+        {{ materia.espacioEntreDias }} / Tipo de aula: {{ materia.tipoAula }}
+      </li>
+    </ul>
+    <div class="card mt-4">
+      <div class="card-body">
+        <div class="card-title"><h5>Insertar Materias</h5></div>
+        <div class="form-group">
+          <input
+            type="text"
+            [(ngModel)]="selectedMateria.nombre"
+            placeholder="Insertar nombre"
+            class="form-control"
+          />
+
+          <input
+            type="number"
+            min="1"
+            max="9"
+            [(ngModel)]="selectedMateria.cantModulos"
+            placeholder="Insertar cantidad de modulos"
+            class="form-control"
+          />
+
+          <input
+            type="number"
+            min="0"
+            [(ngModel)]="selectedMateria.cantidadModulosContinuos"
+            placeholder="Insertar cantidad de modulos continuos"
+            class="form-control"
+          />
+
+          <input
+            type="number"
+            min="1"
+            [(ngModel)]="selectedMateria.cantProfesores"
+            placeholder="Insertar cantidad de profesores"
+            class="form-control"
+          />
+
+          <input
+            type="number"
+            min="0"
+            [(ngModel)]="selectedMateria.espacioEntreDias"
+            placeholder="Insertar espacio entre cada dia"
+            class="form-control"
+          />
+
+          <label class="mt-2">Tipo de aula</label>
+          <select class="form-select" [(ngModel)]="selectedMateria.tipoAula">
+            <option value="1">Normal</option>
+            <option value="2">Especial</option>
+            <option value="3">Otro</option>
+          </select>
+
+          <button (click)="addOrEditMateria()" class="btn btn-primary mt-4">
+            Añadir / Editar
+          </button>
+          <button
+            *ngIf="selectedMateria.id != 0"
+            class="btn btn-danger mt-4 ms-4"
+            (click)="deleteMateria()"
+          >
+            Eliminar
+          </button>
+        </div>
+        <div class="d-grid">
+          <button
+            *ngIf="materiaArray.length != 0"
+            (click)="goFormCurso()"
+            class="btn btn-primary btn-lg mt-4"
+          >
+            SIGUIENTE
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.10em"
+              height="1.10em"
+              fill="currentColor"
+              class="bi bi-arrow-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mx-auto my-4" id="divCurso" style="display: none">
+  <div class="col-md-6 mx-auto">
+    <ul class="list-group">
+      <li
+        *ngFor="let curso of cursoArray"
+        class="list-group-item list-group-item-action"
+        (click)="openForEditCurso(curso)"
+        [class.active]="curso == selectedCurso"
+      >
+        <span class="badge bg-primary">{{ curso.id }}</span>
+        Nombre: {{ curso.nombre }} / Turno preferido:
+        {{ curso.turnoPreferido }} / Cantidad de alumnos:
+        {{ curso.cantAlumnos }} / Materias en el curso:{{ curso.materiasCurso }}
+      </li>
+    </ul>
+    <div class="card mt-4">
+      <div class="card-body">
+        <div class="card-title"><h5>Insertar Cursos</h5></div>
+        <div class="form-group">
+          <input
+            type="text"
+            placeholder="Insertar nombre"
+            [(ngModel)]="selectedCurso.nombre"
+            class="form-control"
+          />
+
+          <label class="mt-2">Turno preferido</label>
+          <select
+            class="form-select"
+            [(ngModel)]="selectedCurso.turnoPreferido"
+          >
+            <option value="1">Mañana</option>
+            <option value="2">Tarde</option>
+            <option value="3">Noche</option>
+          </select>
+
+          <input
+            type="number"
+            placeholder="Insertar cantidad de alumnos"
+            [(ngModel)]="selectedCurso.cantAlumnos"
+            class="form-control"
+          />
+
+          <label class="mt-2">Materias</label>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Default checkbox
+            </label>
+          </div>
+
+          <button (click)="addOrEditCurso()" class="btn btn-primary mt-4">
+            Añadir / Editar
+          </button>
+          <button
+            *ngIf="selectedCurso.id != 0"
+            class="btn btn-danger mt-4 ms-4"
+            (click)="deleteCurso()"
+          >
+            Eliminar
+          </button>
+        </div>
+        <div class="d-grid">
+          <button
+            *ngIf="cursoArray.length != 0"
+            (click)="goFormProfesor()"
+            class="btn btn-primary btn-lg mt-4"
+          >
+            SIGUIENTE
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.10em"
+              height="1.10em"
+              fill="currentColor"
+              class="bi bi-arrow-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mx-auto my-4" id="divProfesor" style="display: none">
+  <div class="col-md-6 mx-auto">
+    <ul class="list-group">
+      <li
+        *ngFor="let profesor of profesorArray"
+        class="list-group-item list-group-item-action"
+        (click)="openForEditProfesor(profesor)"
+        [class.active]="profesor == selectedProfesor"
+      >
+        <span class="badge bg-primary">{{ profesor.id }}</span>
+        Nombre: {{ profesor.nombre }} / Dni:
+        {{ profesor.dni }} / Materias capacitado:
+        {{ profesor.materiasCapacitado }} / Turno preferido:{{ profesor.turnoPreferido }} / Condiciones: {{profesor.condiciones}}
+      </li>
+    </ul>
+    <div class="card mt-4">
+      <div class="card-body">
+        <div class="card-title"><h5>Insertar Profesores</h5></div>
+        <div class="form-group">
+          <input
+            type="text"
+            placeholder="Insertar nombre"
+            [(ngModel)]="selectedProfesor.nombre"
+            class="form-control"
+          />
+
+          <input
+            type="text"
+            placeholder="Insertar dni"
+            [(ngModel)]="selectedProfesor.dni"
+            class="form-control"
+          />
+
+          <label class="mt-2">Materias capacitado</label>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Default checkbox
+            </label>
+          </div>
+
+          <label class="mt-2">Turno preferido</label>
+          <select
+            class="form-select"
+            [(ngModel)]="selectedProfesor.turnoPreferido"
+          >
+            <option value="1">Mañana</option>
+            <option value="2">Tarde</option>
+            <option value="3">Noche</option>
+          </select>
+
+          <div class="mb-3">
+            <textarea type="text" class="form-control" rows="3" placeholder="Insertar condiciones" [(ngModel)]="selectedProfesor.condiciones"></textarea>
+          </div>
+
+          <!-- <input
+            type="text"
+            placeholder="Insertar condiciones"
+            [(ngModel)]="selectedProfesor.condiciones"
+            class="form-control"
+          /> -->
+
+          <button (click)="addOrEditProfesor()" class="btn btn-primary mt-4">
+            Añadir / Editar
+          </button>
+          <button
+            *ngIf="selectedProfesor.id != 0"
+            class="btn btn-danger mt-4 ms-4"
+            (click)="deleteProfesor()"
+          >
+            Eliminar
+          </button>
+        </div>
+        <div class="d-grid">
+          <button
+            *ngIf="profesorArray.length != 0"
+            (click)="goFormFinalizar()"
+            class="btn btn-primary btn-lg mt-4"
+          >
+            SIGUIENTE
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.10em"
+              height="1.10em"
+              fill="currentColor"
+              class="bi bi-arrow-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mx-auto my-4" id="divFinalizar" style="display: none">
+  <h1>FINALIZAR</h1>
 </div>
 
 <!-- <div class="col-md-6 mx-auto py-5">

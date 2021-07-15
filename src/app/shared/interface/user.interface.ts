@@ -58,14 +58,15 @@ export class Curso {
   nombre: string;
   turnoPreferido: number;
   cantAlumnos: number;
-  materiasCurso: Array<Materia>;
+  materiasCurso: Array<string>;
 }
 
-export interface Profesor {
-  id: string;
+export class Profesor {
+  id: number = 0;
   nombre: string;
   dni: number;
-  materiasCapacitado: Array<Materia>;
+  materiasCapacitado: Array<string>;
   turnoPreferido: number;
-  condiciones: Map<string, any>;
+  condiciones: Array<string>;
+  // condiciones: Map<string, any>;
 }
