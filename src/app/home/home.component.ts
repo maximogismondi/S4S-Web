@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { emailVerified } from '@angular/fire/auth-guard';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
 
@@ -10,14 +11,29 @@ import { AuthService } from '../auth/services/auth.service';
   providers: [AuthService],
 })
 export class HomeComponent implements OnInit {
-  constructor(private router: Router, private authSvc: AuthService) {}
+  // noVerificado: boolean = true;
+
+  constructor(
+    private router: Router,
+    private authSvc: AuthService,
+    private afs: AngularFirestore
+  ) {
+    // authSvc.afAuth.authState.subscribe((user) => {
+    //   if (!user) {
+    //     this.noVerificado = false;
+    //   }
+    // });
+  }
 
   ngOnInit(): void {}
 
   gotoLogin() {
+    // if (!this.noVerificado) {
+    //   this.router.navigate(['/verificacion-email']);
+    // } else 
     if (this.authSvc.userData) {
       this.router.navigate(['/menu-principal']);
-    }else{
+    } else {
       this.router.navigate(['/login']);
     }
     //revisar
@@ -65,5 +81,4 @@ export class HomeComponent implements OnInit {
       behavior: 'smooth',
     });
   }
-
 }

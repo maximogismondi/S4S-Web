@@ -1,15 +1,16 @@
 <div class="col-md-6 mx-auto mt-5">
   <div class="card mt-5" *ngIf="user$ | async as user">
     <div class="card-body">
-      <h3 class="card-title text-center">GRACIAS POR REGISTRARTE!</h3>
+      <h3 class="card-title text-center">¡GRACIAS POR REGISTRARSE!</h3>
       <div class="form-group mt-3">
         <p class="text-center">
-          Te enviamos un mensaje a <strong>{{ user?.email }}</strong> para que
-          confirme su email
+          Le enviamos un mensaje a <strong>{{ user?.email }}</strong> para que
+          confirme su email.
         </p>
         <p class="text-center">
           Por favor fijese en su bandeja de entrada y clickee en el link de
-          verificar mi email.
+          verificar mi email. <br>
+          Una vez verificado/a vuelva al inico de sesion e ingrese con su cuenta verificada.
         </p>
       </div>
       <div class="form-group text-center mt-3">

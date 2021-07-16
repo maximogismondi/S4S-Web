@@ -45,9 +45,6 @@ export class EleccionComponent implements OnInit {
       finalizacionHorario: ['', Validators.required],
     });
 
-    // this.unirseColegioForm = this.fb.group({
-    //   codigoColegio: ['', Validators.required],
-    // });
   }
 
   async generaNss() {
@@ -87,13 +84,7 @@ export class EleccionComponent implements OnInit {
     );
   }
 
-  // async onUnirse(){
-  //   const { codigoColegio } = this.unirseColegioForm.value;
-  //   const school = await this.authSvc.joinSchool(
-  //     codigoColegio
-  //   );
-  // }
-
+  //joya
   irCrear() {
     document.getElementById('crear')!.style.display = 'block';
     document.getElementById('unirse')!.style.display = 'none';
@@ -101,6 +92,7 @@ export class EleccionComponent implements OnInit {
     document.getElementById('botonesEleccionUnirse')!.style.display = 'block';
   }
 
+  //joya
   irUnirse() {
     document.getElementById('crear')!.style.display = 'none';
     document.getElementById('unirse')!.style.display = 'block';
@@ -108,15 +100,4 @@ export class EleccionComponent implements OnInit {
     document.getElementById('botonesEleccionUnirse')!.style.display = 'none';
   }
 
-  // gotoCrear() {
-  //   this.router.navigate(['/crear-colegio']);
-  // }
-
-  // gotoEleccion() {
-  //   this.router.navigate(['/eleccion']);
-  //   document.getElementById('botonesEleccionCrear')!.style.display = 'block';
-  //   document.getElementById('botonesEleccionUnirse')!.style.display = 'block';
-  //   document.getElementById('crear')!.style.display = 'none';
-  //   document.getElementById('unirse')!.style.display = 'none';
-  // }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import {
   FormBuilder,
   FormGroup,
@@ -16,12 +17,20 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  noVerificado: boolean = true;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authSvc: AuthService
-  ) {}
+    private authSvc: AuthService,
+    private afs: AngularFirestore
+    ) {
+      authSvc.afAuth.authState.subscribe((user) => {
+        if (!user) {
+          this.noVerificado = false;
+        }
+      });
+  }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({

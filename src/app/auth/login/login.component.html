@@ -38,6 +38,7 @@
         "
       >
         <button
+        *ngIf="!noVerificado"
           (click)="onGoogleLogin()"
           type="submit"
           class="btn btn-lg btn-outline-danger mt-4"
@@ -45,19 +46,16 @@
         >
           Google
         </button>
-        <button
-          type="submit"
-          class="btn btn-outline-dark btn-lg mt-4"
-          style="width: 100%"
-        >
-          Microsoft
-        </button>
       </div>
-      <div class="form-group mt-4">
+      <div *ngIf="!noVerificado" class="form-group mt-4">
         <p>
           ¿No tienes cuenta?
           <a href="/register"> Registrate</a>
         </p>
+      </div>
+      <div *ngIf="noVerificado" class="alert alert-light mt-4" role="alert">
+          -¿TIENES QUE VERIFICAR TU CUENTA TODAVIA? <br>
+          -Revisa tu email o presiona <a href="/verificacion-email">aqui</a> para que te reenviemos un email.
       </div>
     </div>
   </div>

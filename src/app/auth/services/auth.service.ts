@@ -15,7 +15,6 @@ import { Time } from '@angular/common';
 export class AuthService {
   public userData: any;
 
-  //joya
   constructor(
     public afAuth: AngularFireAuth,
     private afs: AngularFirestore,
@@ -23,23 +22,18 @@ export class AuthService {
   ) {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
-        // console.log("hola");
         this.afs
           .doc<User>(`users/${user.uid}`)
           .get()
           .toPromise()
           .then((res) => {
             this.userData = res.data();
-            // console.log(this.userData);
           });
       } else {
         this.userData = null;
       }
     });
 
-    // var schoolRef = db.collection('schools');
-
-    // var query = schoolRef.where('userAdmin', '==', this.userData.uid);
   }
 
   //joya
@@ -67,10 +61,12 @@ export class AuthService {
 
   //joya
   async register(email: string, password: string) {
+    
     const user = await this.afAuth.createUserWithEmailAndPassword(
       email,
       password
     );
+    
     this.sendVerificationEmail();
     return user;
   }
@@ -128,55 +124,6 @@ export class AuthService {
     }
   }
 
-  // async infoSchoolGeneral(
-  //   duracionModulo: number,
-  //   InicioHorario: string,
-  //   FinalizacionHorario: string,
-  //   cantCursos: number,
-  //   cantProfes: number,
-  //   cantMaterias: number,
-  //   id: string,
-  // ) {
-  //   const schoolDataGeneral: InfoColegio = {
-  //     id: id,
-  //    // codigoColegioCorrespondiente: this.userData. conseguir el id del colegio q creo el usuario
-  //     duracionModulo: duracionModulo,
-  //     InicioHorario: InicioHorario,
-  //     FinalizacionHorario: FinalizacionHorario,
-  //     cantCursos: cantCursos,
-  //     cantProfes: cantProfes,
-  //     cantMaterias: cantMaterias,
-  //   };
-  //   if (
-  //     schoolDataGeneral.duracionModulo != null &&
-  //     schoolDataGeneral.InicioHorario != '' &&
-  //     schoolDataGeneral.FinalizacionHorario != '' &&
-  //     schoolDataGeneral.cantCursos != null &&
-  //     schoolDataGeneral.cantProfes != null &&
-  //     schoolDataGeneral.cantMaterias != null
-  //   ) {
-  //     this.SchoolDataTotal(schoolDataGeneral);
-
-  //   }
-  // }
-
-  // async joinSchool(
-  //   codigoColegio: string
-  // ) {
-  //   if(codigoColegio == ){
-  //     const school: Colegio = {
-  //     // codigoColegio: codigoColegio
-  //   };
-  //   // if (
-  //   //   school.codigoColegio != ''
-  //   // ) {
-  //   //   this.SchoolData(school);
-  //   //   this.router.navigate(['/crear-colegio']);
-  //   // }
-  //   }
-
-  // }
-
   //joya
   private updateUserData(user: any) {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
@@ -222,47 +169,4 @@ export class AuthService {
     return schoolRef.set(data, { merge: true });
   }
 
-
-
-  
-
-  // private SchoolDataTotal(school: any) {
-  //   const schoolRef: AngularFirestoreDocument<InfoColegio> = this.afs.doc(
-  //     `dataSchools/${school.id}`
-  //   );
-
-  //   let contador = 0;
-
-  //   if(contador == 0){
-  //     const dataGral: InfoColegio = {
-  //       duracionModulo: school.duracionModulo,
-  //       InicioHorario: school.InicioHorario,
-  //       FinalizacionHorario: school.FinalizacionHorario,
-  //       cantCursos: school.cantCursos,
-  //       cantProfes: school.cantProfes,
-  //       cantMaterias: school.cantMaterias,
-  //       id: school.id,
-  //       codigoColegioCorrespondiente: school.codigoColegioCorrespondiente,
-  //     };
-  //     contador += 1;
-  //   }
-  //   else if(contador == 1){
-
-  //     contador += 1;
-  //   }
-  //   else if(contador == 2){
-
-  //     contador += 1;
-  //   }
-  //   else if(contador == 3){
-
-  //     contador += 1;
-  //   }
-  //   else if(contador == 4){
-
-  //     contador = 0;
-  //   }
-
-  //   return schoolRef.set(dataGral, { merge: true });
-  // }
 }

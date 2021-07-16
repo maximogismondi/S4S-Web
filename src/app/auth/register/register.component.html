@@ -24,44 +24,23 @@
             formControlName="password"
           />
         </div>
-        <!--
-                    <div class="form-group">
-                        <label for="nombre de usuario">Nombre de usuario</label>
-                        <input type="email" class="form-control" formControlName="nombre de usuario">
-                    </div>
-                    <div class="form-group">
-                        <label for="dni">Dni</label>
-                        <input type="email" class="form-control" formControlName="dni">
-                    </div>
-                    <div class="form-group">
-                        <label for="nombre institucion">Nombre Institucion</label>
-                        <input type="email" class="form-control" formControlName="nombre institucion">
-                    </div>
-                    <div class="form-group">
-                        <label for="direccion institucion">Direccion Institucion</label>
-                        <input type="email" class="form-control" formControlName="direccion institucion">
-                    </div>
-                    <div class="form-group">
-                        <label for="localidad">Localidad</label>
-                        <input type="email" class="form-control" formControlName="localidad">
-                    </div>
-                    <div class="form-group">
-                        <label for="telefono institucion">Telefono Institucion</label>
-                        <input type="email" class="form-control" formControlName="telefono institucion">
-                    </div>
-                -->
+        
         <div class="d-grid">
           <button type="submit" class="btn btn-primary btn-lg mt-4">
             Registrarse
           </button>
-          <!--(click)="gotoEleccion()"-->
         </div>
       </form>
       <div class="form-group mt-4">
         <p>
           ¿Ya tienes cuenta?
-          <a href="/login"> Logueate</a>
+          <a href="/login"> Inicia sesion</a>
         </p>
+      </div>
+      <div class="alert alert-light mt-4" role="alert">
+        -La contraseña debe tener un minimo de 6 digitos. <br>
+        -Si ya tienes cuenta y aun no estas verificado, dirigite al inicio de sesion y sigue los pasos.
+        <!-- -Si no accedes a la pagina una vez puesto tu email y contraseña debe ser porque algo esta mal. -->
       </div>
     </div>
   </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import {
   FormBuilder,
   FormGroup,
@@ -16,18 +17,20 @@ import { AuthService } from '../services/auth.service';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  // noVerificado: boolean = true;
 
-  /*
-  registerForm= new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
-  });
-*/
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authSvc: AuthService
-  ) {}
+    private authSvc: AuthService,
+    private afs: AngularFirestore
+  ) {
+    // authSvc.afAuth.authState.subscribe((user) => {
+    //   if (!user) {
+    //     this.noVerificado = false;
+    //   }
+    // });
+  }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -35,16 +38,13 @@ export class RegisterComponent implements OnInit {
       password: ['', Validators.required],
     });
   }
-  /* 
-  gotoEleccion() {
-    this.router.navigate(['/eleccion']);
-  }
-*/
+
   async onRegister() {
     const { email, password } = this.registerForm.value;
     const user = await this.authSvc.register(email, password);
     if (user) {
       this.router.navigate(['/verificacion-email']);
     }
+    
   }
 }
