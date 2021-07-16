@@ -54,4 +54,8 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/menu-principal']);
     }
   }
+
+  onSendEmail() {
+    this.authSvc.sendVerificationEmail();
+  }
 }

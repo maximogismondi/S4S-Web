@@ -3,8 +3,16 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Aula, Curso, Materia, Modulo, Profesor } from 'src/app/shared/interface/user.interface';
+import {
+  Aula,
+  Colegio,
+  Curso,
+  Materia,
+  Modulo,
+  Profesor,
+} from 'src/app/shared/interface/user.interface';
 
 @Component({
   selector: 'app-crear-colegio',
@@ -16,15 +24,14 @@ export class CrearColegioComponent implements OnInit {
   nombreColegio: string;
   nombreDocumento: string;
   duracionModulo: number;
-  finalizacionModulo: Time;
-  paradoActualmente: string = 'Modulos';
-  // modulos: number;
-  // aulas: number;
-  // materias: number;
-  // cursos: number;
-  // profes: number;
-  
-  
+  minutos: number;
+  horas: number;
+  horarioFinalizacionModulo: string = '';
+  modulos: number;
+  aulas: number;
+  materias: number;
+  cursos: number;
+  profes: number;
 
   constructor(
     private router: Router,
@@ -34,27 +41,31 @@ export class CrearColegioComponent implements OnInit {
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.afs.firestore
-          .collection('schools')
-          .where('userAdmin', '==', user.uid)
-          .get()
-          .then((data) => {
-            this.nombreColegio = data.docs[0].data().nombre;
-            this.nombreDocumento = data.docs[0].data().id;
-            this.duracionModulo = data.docs[0].data().duracionModulo;
-            // this.modulos = data.docs[0].data().modulos.length;
-            // this.aulas = data.docs[0].data().aulas.length;
-            // this.materias = data.docs[0].data().materias.length;
-            // this.cursos = data.docs[0].data().cursos.length;
-            // this.profes = data.docs[0].data().profes.length;
-          });
+        this.afs
+          .collection('schools', (ref) =>
+            ref.where('userAdmin', '==', user.uid)
+          )
+          .snapshotChanges()
+          .pipe(
+            map((schools) => {
+              const school = schools[0].payload.doc.data() as Colegio;
+              this.nombreColegio = school.nombre;
+              this.nombreDocumento = school.id;
+              this.duracionModulo = school.duracionModulo;
+              this.modulos = school.modulos.length;
+              this.aulas = school.aulas.length;
+              this.materias = school.materias.length;
+              this.cursos = school.cursos.length;
+              this.profes = school.profes.length;
+            })
+          )
+          .subscribe();
       }
     });
-
-    // this.afs.collection("schools").doc(this.nombreDocumento).update({emailVerified: true,aulas:this.aulaArray});
   }
 
-  // infoGralForm: FormGroup;
+  ngOnInit(): void {}
+
 
   // _______________________________________MODULOS______________________________________________________________
 
@@ -67,9 +78,27 @@ export class CrearColegioComponent implements OnInit {
   }
 
   addOrEditModulo() {
+    this.horarioFinalizacionModulo = String(this.selectedModulo.inicio);
+    this.horas = Number(this.horarioFinalizacionModulo.split(':')[0]);
+    this.minutos =
+      Number(this.horarioFinalizacionModulo.split(':')[1]) +
+      this.duracionModulo;
+
+    while (this.minutos >= 60) {
+      this.minutos = this.minutos - 60;
+      this.horas = this.horas + 1;
+      if (this.horas == 24) {
+        this.horas = 0;
+      }
+    }
+
+    this.horarioFinalizacionModulo =
+      String(this.horas) + ':' + String(this.minutos);
     if (this.selectedModulo.id == 0) {
       this.selectedModulo.id = this.moduloArray.length + 1;
       this.moduloArray.push(this.selectedModulo);
+
+      // console.log(this.horarioFinalizacionModulo);
     }
     this.selectedModulo = new Modulo();
   }
@@ -84,26 +113,22 @@ export class CrearColegioComponent implements OnInit {
   }
 
   async goFormAula() {
-    document.getElementById('divModulo')!.style.display = 'none'; //cambiar esto
-    document.getElementById('divAula')!.style.display = 'block';
-    document.getElementById('barraDeProgreso')!.style.width = '28%';
-    this.paradoActualmente = 'Aulas';
-    let moduloArrayDiccionario:Array<any> = [];
-    this.moduloArray.forEach(modulo => {
-      moduloArrayDiccionario.push({"id": modulo.id,"dia": modulo.dia, "inicio": modulo.inicio})
+    let moduloArrayDiccionario: Array<any> = [];
+    this.moduloArray.forEach((modulo) => {
+      moduloArrayDiccionario.push({
+        id: modulo.id,
+        dia: modulo.dia,
+        inicio: modulo.inicio,
+      });
     });
     this.afs.collection('schools').doc(this.nombreDocumento).update({
-      modulos: moduloArrayDiccionario
+      modulos: moduloArrayDiccionario,
     });
   }
 
   // _________________________________________AULAS____________________________________________________________
 
-  aulaArray: Aula[] = [
-    // {id:1, nombre: "1A", tipo:1},
-    // {id:2, nombre: "1B", tipo:1},
-    // {id:3, nombre: "1C", tipo:1}
-  ];
+  aulaArray: Aula[] = [];
 
   selectedAula: Aula = new Aula();
 
@@ -126,17 +151,17 @@ export class CrearColegioComponent implements OnInit {
     }
   }
 
-  async goFormMateria(){
-    document.getElementById('divAula')!.style.display = 'none';
-    document.getElementById('divMateria')!.style.display = 'block';
-    document.getElementById('barraDeProgreso')!.style.width = '47%';
-    this.paradoActualmente = 'Materias';
-    let aulaArrayDiccionario:Array<any> = [];
-    this.aulaArray.forEach(aula => {
-      aulaArrayDiccionario.push({"id": aula.id,"nombre": aula.nombre, "tipo": aula.tipo})
+  async goFormMateria() {
+    let aulaArrayDiccionario: Array<any> = [];
+    this.aulaArray.forEach((aula) => {
+      aulaArrayDiccionario.push({
+        id: aula.id,
+        nombre: aula.nombre,
+        tipo: aula.tipo,
+      });
     });
     this.afs.collection('schools').doc(this.nombreDocumento).update({
-      aulas: aulaArrayDiccionario
+      aulas: aulaArrayDiccionario,
     });
   }
 
@@ -160,22 +185,28 @@ export class CrearColegioComponent implements OnInit {
 
   deleteMateria() {
     if (confirm('¿Estas seguro/a que quieres eliminar esta materia?')) {
-      this.materiaArray = this.materiaArray.filter((x) => x != this.selectedMateria);
+      this.materiaArray = this.materiaArray.filter(
+        (x) => x != this.selectedMateria
+      );
       this.selectedMateria = new Materia();
     }
   }
 
-  async goFormCurso(){
-    document.getElementById('divMateria')!.style.display = 'none';
-    document.getElementById('divCurso')!.style.display = 'block';
-    document.getElementById('barraDeProgreso')!.style.width = '61%';
-    this.paradoActualmente = 'Cursos';
-    let materiaArrayDiccionario:Array<any> = [];
-    this.materiaArray.forEach(materia => {
-      materiaArrayDiccionario.push({"id": materia.id,"nombre": materia.nombre, "cantModulos": materia.cantModulos, "cantProfesores": materia.cantProfesores, "espacioEntreDias": materia.espacioEntreDias, "tipoAula": materia.tipoAula, "cantidadModulosContinuos": materia.cantidadModulosContinuos})
+  async goFormCurso() {
+    let materiaArrayDiccionario: Array<any> = [];
+    this.materiaArray.forEach((materia) => {
+      materiaArrayDiccionario.push({
+        id: materia.id,
+        nombre: materia.nombre,
+        cantModulos: materia.cantModulos,
+        cantProfesores: materia.cantProfesores,
+        espacioEntreDias: materia.espacioEntreDias,
+        tipoAula: materia.tipoAula,
+        cantidadModulosContinuos: materia.cantidadModulosContinuos,
+      });
     });
     this.afs.collection('schools').doc(this.nombreDocumento).update({
-      materias: materiaArrayDiccionario
+      materias: materiaArrayDiccionario,
     });
   }
 
@@ -199,24 +230,24 @@ export class CrearColegioComponent implements OnInit {
 
   deleteCurso() {
     if (confirm('¿Estas seguro/a que quieres eliminar este curso?')) {
-      this.cursoArray = this.cursoArray.filter(
-        (x) => x != this.selectedCurso
-      );
+      this.cursoArray = this.cursoArray.filter((x) => x != this.selectedCurso);
       this.selectedCurso = new Curso();
     }
   }
 
   async goFormProfesor() {
-    document.getElementById('divCurso')!.style.display = 'none';
-    document.getElementById('divProfesor')!.style.display = 'block';
-    document.getElementById('barraDeProgreso')!.style.width = '82%';
-    this.paradoActualmente = 'Profesores';
-    let CursoArrayDiccionario:Array<any> = [];
-    this.cursoArray.forEach(curso => {
-      CursoArrayDiccionario.push({"id": curso.id,"nombre": curso.nombre, "turnoPreferido": curso.turnoPreferido, "cantAlumnos": curso.cantAlumnos, "materiasCurso": curso.materiasCurso})
+    let CursoArrayDiccionario: Array<any> = [];
+    this.cursoArray.forEach((curso) => {
+      CursoArrayDiccionario.push({
+        id: curso.id,
+        nombre: curso.nombre,
+        turnoPreferido: curso.turnoPreferido,
+        cantAlumnos: curso.cantAlumnos,
+        materiasCurso: curso.materiasCurso,
+      });
     });
     this.afs.collection('schools').doc(this.nombreDocumento).update({
-      modulos: CursoArrayDiccionario
+      modulos: CursoArrayDiccionario,
     });
   }
 
@@ -239,7 +270,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteProfesor() {
-    if (confirm('¿Estas seguro/a que quieres eliminar este curso?')) {
+    if (confirm('¿Estas seguro/a que quieres eliminar este profesor/a?')) {
       this.profesorArray = this.profesorArray.filter(
         (x) => x != this.selectedProfesor
       );
@@ -248,40 +279,19 @@ export class CrearColegioComponent implements OnInit {
   }
 
   async goFormFinalizar() {
-    document.getElementById('divProfesor')!.style.display = 'none';
-    document.getElementById('divFinalizar')!.style.display = 'block';
-    document.getElementById('barraDeProgreso')!.style.width = '100%';
-    this.paradoActualmente = 'Finalizar';
-    let ProfesorArrayDiccionario:Array<any> = [];
-    this.profesorArray.forEach(profesor => {
-      ProfesorArrayDiccionario.push({"id": profesor.id,"nombre": profesor.nombre, "dni": profesor.dni, "materias capacitado": profesor.materiasCapacitado, "turnoPreferido": profesor.turnoPreferido, "condiciones": profesor.condiciones})
+    let ProfesorArrayDiccionario: Array<any> = [];
+    this.profesorArray.forEach((profesor) => {
+      ProfesorArrayDiccionario.push({
+        id: profesor.id,
+        nombre: profesor.nombre,
+        dni: profesor.dni,
+        'materias capacitado': profesor.materiasCapacitado,
+        turnoPreferido: profesor.turnoPreferido,
+        condiciones: profesor.condiciones,
+      });
     });
     this.afs.collection('schools').doc(this.nombreDocumento).update({
-      modulos: ProfesorArrayDiccionario
+      modulos: ProfesorArrayDiccionario,
     });
   }
-
-  ngOnInit(): void {
-    // this.infoGralForm = this.fb.group({
-    //   duracionModulo: ['', Validators.required],
-    //   InicioHorario: ['', Validators.required],
-    //   FinalizacionHorario: ['', Validators.required],
-    //   cantCursos: ['', Validators.required],
-    //   cantProfes: ['', Validators.required],
-    //   cantMaterias: ['', Validators.required]
-    // });
-  }
-
-  // async infoGralNext(){
-  //   const { duracionModulo, InicioHorario, FinalizacionHorario, cantCursos, cantProfes, cantMaterias} = this.infoGralForm.value;
-  //   const infoSchool = await this.authSvc.infoSchoolGeneral(
-  //     duracionModulo,
-  //     InicioHorario,
-  //     FinalizacionHorario,
-  //     cantCursos,
-  //     cantProfes,
-  //     cantMaterias,
-  //     await this.id
-  //   );
-  // }
 }

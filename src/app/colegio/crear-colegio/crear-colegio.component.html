@@ -12,6 +12,7 @@
     <div class="card">
       <div class="progress" style="height: 20px">
         <div
+          *ngIf="modulos == 0"
           id="barraDeProgreso"
           class="progress-bar"
           role="progressbar"
@@ -20,14 +21,81 @@
           aria-valuemin="0"
           aria-valuemax="100"
         >
-          {{ paradoActualmente }}
+          Modulos
         </div>
-        <!-- <div  id="barraDeProgreso" class="progress-bar" role="progressbar" style="width: 28%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Aulas</div>
-        <div  id="barraDeProgreso" class="progress-bar" role="progressbar" style="width: 47%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Materias</div>
-        <div  id="barraDeProgreso" class="progress-bar" role="progressbar" style="width: 61%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Cursos</div>
-        <div  id="barraDeProgreso" class="progress-bar" role="progressbar" style="width: 81%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Profesores</div> -->
-        <!-- <div  *ngIf="cursos == 0" id="barraDeProgreso" class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Finalizar</div> -->
+
+        <div
+          *ngIf="aulas == 0 && modulos != 0"
+          id="barraDeProgreso"
+          class="progress-bar"
+          role="progressbar"
+          style="width: 28%"
+          aria-valuenow="25"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          Aulas
+        </div>
+
+        <div
+          *ngIf="materias == 0 && aulas != 0"
+          id="barraDeProgreso"
+          class="progress-bar"
+          role="progressbar"
+          style="width: 47%"
+          aria-valuenow="25"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          Materias
+        </div>
+
+        <div
+          *ngIf="cursos == 0 && materias != 0"
+          id="barraDeProgreso"
+          class="progress-bar"
+          role="progressbar"
+          style="width: 61%"
+          aria-valuenow="25"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          Cursos
+        </div>
+
+        <div
+          *ngIf="profes == 0 && cursos != 0"
+          id="barraDeProgreso"
+          class="progress-bar"
+          role="progressbar"
+          style="width: 82%"
+          aria-valuenow="25"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          Profesores
+        </div>
+
+        <div
+          *ngIf="
+            modulos != 0 &&
+            aulas != 0 &&
+            materias != 0 &&
+            cursos != 0 &&
+            profes != 0
+          "
+          id="barraDeProgreso"
+          class="progress-bar"
+          role="progressbar"
+          style="width: 100%"
+          aria-valuenow="25"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          Finalizar
+        </div>
       </div>
+
       <div class="card-body">
         <div class="row align-items-end">
           <div class="col">Modulos</div>
@@ -44,7 +112,7 @@
 
 <!-- *ngIf="modulos == 0" *ngIf="aulas == 0 && modulos != 0" *ngIf="materias == 0 && aulas != 0" *ngIf="cursos == 0 && materias != 0" *ngIf="profes == 0 && cursos != 0"-->
 
-<div class="container mx-auto my-4" id="divModulo" style="display: block">
+<div *ngIf="modulos == 0" class="container mx-auto my-4" id="divModulo">
   <div class="col-md-6 mx-auto">
     <ul class="list-group">
       <li
@@ -54,9 +122,8 @@
         [class.active]="modulo == selectedModulo"
       >
         <span class="badge bg-primary">{{ modulo.id }}</span>
-        Dia: {{ modulo.dia }} / Hora de inico: {{ modulo.inicio }}
+        Dia: {{ modulo.dia }} / Hora de inico: {{ modulo.inicio }} - Hora de finalizacion: {{horarioFinalizacionModulo}}
       </li>
-      <!-- - Hora de finalizacion {{finalizacionModulo}} -->
     </ul>
     <div class="card mt-4">
       <div class="card-body">
@@ -120,7 +187,11 @@
   </div>
 </div>
 
-<div class="container mx-auto my-4" id="divAula" style="display: none">
+<div
+  *ngIf="aulas == 0 && modulos != 0"
+  class="container mx-auto my-4"
+  id="divAula"
+>
   <div class="col-md-6 mx-auto">
     <ul class="list-group">
       <li
@@ -189,7 +260,11 @@
   </div>
 </div>
 
-<div class="container mx-auto my-4" id="divMateria" style="display: none">
+<div
+  *ngIf="materias == 0 && aulas != 0"
+  class="container mx-auto my-4"
+  id="divMateria"
+>
   <div class="col-md-6 mx-auto">
     <ul class="list-group">
       <li
@@ -295,7 +370,11 @@
   </div>
 </div>
 
-<div class="container mx-auto my-4" id="divCurso" style="display: none">
+<div
+  *ngIf="cursos == 0 && materias != 0"
+  class="container mx-auto my-4"
+  id="divCurso"
+>
   <div class="col-md-6 mx-auto">
     <ul class="list-group">
       <li
@@ -389,7 +468,11 @@
   </div>
 </div>
 
-<div class="container mx-auto my-4" id="divProfesor" style="display: none">
+<div
+  *ngIf="profes == 0 && cursos != 0"
+  class="container mx-auto my-4"
+  id="divProfesor"
+>
   <div class="col-md-6 mx-auto">
     <ul class="list-group">
       <li
@@ -399,9 +482,11 @@
         [class.active]="profesor == selectedProfesor"
       >
         <span class="badge bg-primary">{{ profesor.id }}</span>
-        Nombre: {{ profesor.nombre }} / Dni:
-        {{ profesor.dni }} / Materias capacitado:
-        {{ profesor.materiasCapacitado }} / Turno preferido:{{ profesor.turnoPreferido }} / Condiciones: {{profesor.condiciones}}
+        Nombre: {{ profesor.nombre }} / Dni: {{ profesor.dni }} / Materias
+        capacitado: {{ profesor.materiasCapacitado }} / Turno preferido:{{
+          profesor.turnoPreferido
+        }}
+        / Condiciones: {{ profesor.condiciones }}
       </li>
     </ul>
     <div class="card mt-4">
@@ -446,7 +531,13 @@
           </select>
 
           <div class="mb-3">
-            <textarea type="text" class="form-control" rows="3" placeholder="Insertar condiciones" [(ngModel)]="selectedProfesor.condiciones"></textarea>
+            <textarea
+              type="text"
+              class="form-control"
+              rows="3"
+              placeholder="Insertar condiciones"
+              [(ngModel)]="selectedProfesor.condiciones"
+            ></textarea>
           </div>
 
           <!-- <input
@@ -494,227 +585,13 @@
   </div>
 </div>
 
-<div class="container mx-auto my-4" id="divFinalizar" style="display: none">
+<div
+  *ngIf="
+    modulos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profes != 0
+  "
+  class="container mx-auto my-4"
+  id="divFinalizar"
+  style="display: none"
+>
   <h1>FINALIZAR</h1>
 </div>
-
-<!-- <div class="col-md-6 mx-auto py-5">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-grid"> 
-        <div
-            class="
-              d-grid
-              gap-2
-              d-md-flex
-              justify-content-md-startd-grid
-              text-center
-            "
-          >
-            <button type="submit" class="btn btn-primary btn-lg mt-4">
-              INFORMACION GENERAL
-            </button>
-            <button type="submit" class="btn btn-lg mt-4">AULAS</button>
-            <button type="submit" class="btn btn-lg mt-4">CURSOS</button>
-            <button type="submit" class="btn btn-lg mt-4">PROFESORES</button>
-            <button type="submit" class="btn btn-lg mt-4">MATERIAS</button>
-          </div>
-        </div> 
-          CAMBIAR TODOS LOS TYPE EMAIL POR SU CORRESPONDIENTE Y HACER BIEN LOS CUADRADOS DE ARRIBA DE CADA GRILLA Y HACER SU RESPECTIVA FUNCION 
-           <div>
-          <ul class="pagination pagination-lg">
-            <li class="page-item">
-              <label class="page-link">Info General</label>
-            </li>
-            <li class="page-item">
-              <label class="page-link">Aulas</label>
-            </li>
-            <li class="page-item">
-              <label class="page-link">Cursos</label>
-            </li>
-            <li class="page-item">
-              <label class="page-link">Profesores</label>
-            </li>
-            <li class="page-item">
-              <label class="page-link">Materias</label>
-            </li>
-          </ul>
-        </div> 
-
-
-
-                    <div class="d-grid" id="profesores">
-                      <form style="display: block">
-                         Hacer una grilla para q rellene tantas veces como profes haya puesto 
-                        <div class="form-group mt-2">
-                          <input
-                            type="email"
-                            class="form-control"
-                            placeholder="Nombre"
-                            formControlName="email"
-                          />
-                        </div>
-                        <div class="form-group mt-2">
-                          <input
-                            type="email"
-                            placeholder="Dni"
-                            class="form-control"
-                            formControlName="email"
-                          />
-                        </div>
-                        <div class="form-group mt-2">
-                          <select
-                            class="form-select"
-                            aria-label="Default select example"
-                          >
-                            <option selected>Materias capacitado</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="0">0</option>
-                          </select>
-                        </div>
-                        <div class="form-group mt-2">
-                          <select
-                            class="form-select"
-                            aria-label="Default select example"
-                          >
-                            <option selected>Turno preferido</option>
-                            <option value="1">Mañana</option>
-                            <option value="2">Tarde</option>
-                            <option value="3">Noche</option>
-                          </select>
-                        </div>
-                        <div class="form-group mt-2">
-                          <select
-                            class="form-select"
-                            aria-label="Default select example"
-                          >
-                            <option selected>Cantidad de materias</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="0">0</option>
-                          </select>
-                        </div>
-                        <div class="form-group mt-2">
-                          
-                          <input
-                            type="email"
-                            placeholder="Condiciones"
-                            class="form-control"
-                            formControlName="email"
-                          />
-                        </div>
-                        <div class="d-grid">
-                          <button class="btn btn-primary btn-lg mt-2">
-                            SIGUIENTE
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="1.10em"
-                              height="1.10em"
-                              fill="currentColor"
-                              class="bi bi-arrow-right"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-
-
-</div>
-        </div>
-      </div>
-    </div> -->
-
-<!-- <div class="col-md-2 text-center">
-      <label
-        class="page-link bg-primary"
-        id="infoGral_label"
-        style="color: #fff"
-        >Info General</label
-      >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-caret-down-fill"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
-        />
-      </svg>
-      <label class="page-link bg-primary" style="color: #fff">Aulas</label>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-caret-down"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"
-        />
-      </svg>
-      <label class="page-link bg-light">Cursos</label>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-caret-down"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"
-        />
-      </svg>
-      <label class="page-link bg-light">Profesores</label>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-caret-down"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"
-        />
-      </svg>
-      <label class="page-link bg-light">Materias</label>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-caret-down"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"
-        />
-      </svg>
-      <label class="page-link bg-light">Finalizar</label>
-    </div> -->
