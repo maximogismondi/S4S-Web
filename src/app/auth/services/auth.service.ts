@@ -135,8 +135,6 @@ export class AuthService {
       email: user.email,
       emailVerified: user.emailVerified,
       displayName: user.email.split('@')[0],
-      // colegios: user.colegio,
-      // eleccion: user.eleccion,
     };
 
     return userRef.set(data, { merge: true });

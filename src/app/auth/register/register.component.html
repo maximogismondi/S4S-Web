@@ -1,7 +1,13 @@
-<div class="col-md-6 mx-auto mt-5">
+<div class="col-md-6 mx-auto my-5">
   <div class="card">
     <div class="card-body">
-      <h1 class="text-center">REGISTRARSE</h1>
+      <h1 class="text-center mt-4">REGISTRARSE</h1>
+      <div class="alert alert-light mt-4" role="alert">
+        <h6 class="text-danger">Importante</h6>
+        - La contraseña debe tener un minimo de 6 digitos. <br>
+        <!-- - Si ya tienes cuenta y aun no estas verificado, dirigite al inicio de sesion y sigue los pasos. -->
+        <!-- -Si no accedes a la pagina una vez puesto tu email y contraseña debe ser porque algo esta mal. -->
+      </div>
       <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
         <div class="form-group mt-4">
           <input
@@ -36,11 +42,6 @@
           ¿Ya tienes cuenta?
           <a href="/login"> Inicia sesion</a>
         </p>
-      </div>
-      <div class="alert alert-light mt-4" role="alert">
-        -La contraseña debe tener un minimo de 6 digitos. <br>
-        -Si ya tienes cuenta y aun no estas verificado, dirigite al inicio de sesion y sigue los pasos.
-        <!-- -Si no accedes a la pagina una vez puesto tu email y contraseña debe ser porque algo esta mal. -->
       </div>
     </div>
   </div>

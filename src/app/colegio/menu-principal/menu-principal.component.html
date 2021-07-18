@@ -25,14 +25,9 @@
         </div>
       </div>
     </div>
-    <div *ngIf="nombreColegio != null" class="col">
-      <div class="card">
+    <div *ngIf="borroColegio" class="col">
+      <div class="card" style="height:100%">
         <div class="card-body">
-           <button class="btn btn-danger" (click)="deleteSchool()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-              <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
-            </svg>
-          </button>
           
           <div class="d-grid">
             <button
@@ -43,6 +38,12 @@
               {{ nombreColegio }}
             </button>
           </div>
+          <button class="alert btn btn-danger mt-4 text-center" style="width: 100%" (click)="deleteSchool()">
+            ELIMINAR COLEGIO 
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+            </svg>
+          </button>
         </div>
       </div>
     </div>

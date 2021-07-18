@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { emailVerified } from '@angular/fire/auth-guard';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';

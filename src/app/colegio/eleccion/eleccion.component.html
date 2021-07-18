@@ -1,11 +1,18 @@
 <div class="col-md-6 mx-auto mt-5 py-5">
   <div class="card">
     <div class="card-body">
-      <h1 class="text-center">COLEGIO</h1>
+      <h1 class="text-center mt-4">COLEGIO</h1>
       <h6 class="text-center">Scheduler For School</h6>
+      <div class="alert alert-light mt-4 text-danger" role="alert">
+        *Obligatorio
+      </div>
       <div id="botonesEleccionCrear">
         <div class="d-grid">
-          <button *ngIf="NombreColegio == null; else bloquearBoton" (click)="irCrear()" class="btn btn-primary btn-lg mt-4 py-4">
+          <button
+            *ngIf="NombreColegio == null; else bloquearBoton"
+            (click)="irCrear()"
+            class="btn btn-primary btn-lg mt-4 py-4"
+          >
             CREAR
           </button>
         </div>
@@ -23,6 +30,7 @@
               <h1 class="text-center">CREAR COLEGIO</h1>
               <form [formGroup]="crearColegioForm" (ngSubmit)="onCrear()">
                 <div class="form-group mt-3">
+                  <h6 class="text-danger d-inline-block">*</h6>
                   <input
                     type="text"
                     placeholder="Nombre del Colegio"
@@ -32,6 +40,7 @@
                   />
                 </div>
                 <div class="form-group mt-3">
+                  <h6 class="text-danger d-inline-block">*</h6>
                   <input
                     type="text"
                     placeholder="Direccion del Colegio"
@@ -41,7 +50,7 @@
                   />
                 </div>
                 <div class="form-group mt-3">
-                  <label>Localidad</label>
+                  <label>Localidad <h6 class="text-danger d-inline-block">*</h6></label>
                   <select
                     class="form-select"
                     aria-label="Default select example"
@@ -61,6 +70,7 @@
                   </select>
                 </div>
                 <div class="form-group mt-3">
+                  <h6 class="text-danger d-inline-block">*</h6>
                   <input
                     type="number"
                     min="11111111"
@@ -72,6 +82,7 @@
                   />
                 </div>
                 <div class="form-group mt-3">
+                  <h6 class="text-danger d-inline-block">*</h6>
                   <input
                     type="number"
                     min="1"
@@ -83,7 +94,7 @@
                   />
                 </div>
                 <div class="form-group mt-3">
-                  <label>Hora inicio del primer Modulo del dia</label>
+                  <label>Hora inicio del primer Modulo del dia <h6 class="text-danger d-inline-block">*</h6></label>
                   <input
                     type="Time"
                     required
@@ -92,7 +103,7 @@
                   />
                 </div>
                 <div class="form-group mt-3">
-                  <label>Hora final del ultimo modulo del dia</label>
+                  <label>Hora final del ultimo modulo del dia <h6 class="text-danger d-inline-block">*</h6></label>
                   <input
                     type="Time"
                     required
@@ -100,7 +111,7 @@
                     formControlName="finalizacionHorario"
                   />
                 </div>
-                
+
                 <div class="d-grid">
                   <button
                     type="submit"
@@ -153,8 +164,9 @@
             <div class="card-body">
               <h1 class="text-center">UNIRSE A COLEGIO</h1>
               <!-- [formGroup]="unirseColegioForm" (ngSubmit)="onUnirse()" -->
-              <form >
+              <form>
                 <div class="form-group mt-4">
+                  <h6 class="text-danger d-inline-block">*</h6>
                   <input
                     type="text"
                     placeholder="Ingresar Codigo del Colegio"

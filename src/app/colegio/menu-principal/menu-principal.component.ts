@@ -14,6 +14,8 @@ import { Colegio } from 'src/app/shared/interface/user.interface';
 export class MenuPrincipalComponent implements OnInit {
   nombreColegio: string;
   nombreDocumento: string;
+  borroColegio: boolean = true;
+  // duracionModulo: number;
 
   constructor(
     private router: Router,
@@ -21,17 +23,17 @@ export class MenuPrincipalComponent implements OnInit {
     private afs: AngularFirestore
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
-    //   if (user) {
-    //     this.afs.firestore
-    //       .collection('schools')
-    //       .where('userAdmin', '==', user.uid)
-    //       .get()
-    //       .then((data) => {
-    //         this.nombreColegio = data.docs[0].data().nombre;
-    //         this.nombreDocumento = data.docs[0].data().id;
-    //       });
-    //   }
-    // });
+      //   if (user) {
+      //     this.afs.firestore
+      //       .collection('schools')
+      //       .where('userAdmin', '==', user.uid)
+      //       .get()
+      //       .then((data) => {
+      //         this.nombreColegio = data.docs[0].data().nombre;
+      //         this.nombreDocumento = data.docs[0].data().id;
+      //       });
+      //   }
+      // });
       if (user) {
         this.afs
           .collection('schools', (ref) =>
@@ -40,9 +42,15 @@ export class MenuPrincipalComponent implements OnInit {
           .snapshotChanges()
           .pipe(
             map((schools) => {
-              const school = schools[0].payload.doc.data() as Colegio;
-              this.nombreColegio = school.nombre;
-              this.nombreDocumento = school.id;
+              if (schools[0] != null) {
+                const school = schools[0].payload.doc.data() as Colegio;
+                this.nombreColegio = school.nombre;
+                this.nombreDocumento = school.id;
+                // this.duracionModulo = school.duracionModulo;
+              }
+              else{
+                this.borroColegio = false;
+              }
             })
           )
           .subscribe();

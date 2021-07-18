@@ -17,7 +17,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  noVerificado: boolean = true;
+  verificado: boolean = true;
 
   constructor(
     private router: Router,
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     ) {
       authSvc.afAuth.authState.subscribe((user) => {
         if (!user) {
-          this.noVerificado = false;
+          this.verificado = false;
         }
       });
   }

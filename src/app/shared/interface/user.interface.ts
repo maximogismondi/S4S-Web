@@ -5,8 +5,6 @@ export interface User {
   email: string;
   emailVerified: boolean;
   displayName: string;
-  // eleccion: boolean;
-  // colegios: Array<string>;
 }
 
 // export interface UserData extends User {
