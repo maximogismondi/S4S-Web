@@ -55,8 +55,17 @@ const routes: Routes = [
       import('./colegio/menu-principal/menu-principal.module').then(
         (m) => m.MenuPrincipalModule
       ),
-      canActivate: [AngularFireAuthGuard],
-      data: { authGuardPipe: redirectUnauthorizedToLogin }
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
+  },
+  {
+    path: 'configuracion',
+    loadChildren: () =>
+      import('./configuraciones/setting/setting.module').then(
+        (m) => m.SettingModule
+      ),
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
 ];
 

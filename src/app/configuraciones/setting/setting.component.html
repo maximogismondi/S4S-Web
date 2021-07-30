@@ -1,0 +1,89 @@
+<div class="col-md-6 mx-auto my-5">
+  <div class="card">
+    <div class="card-body">
+      <h1 class="text-center mt-4">CONFIGURACIONES</h1>
+      <div class="alert alert-light mt-4" role="alert">
+        <h5 class="text-dark text-center">
+          Bienvenido {{ userData.displayName }}
+        </h5>
+      </div>
+      <!---->
+      <div class="card mt-4">
+        <div class="card-body">
+            <label class="badge bg-light text-wrap"
+              >Cambiar nombre de usuario</label
+            >
+            <div class="form-group">
+              <input
+                type="text"
+                [(ngModel)]="nuevoNombre.displayName"
+                placeholder="Nuevo nombre"
+                class="form-control"
+              />
+            </div>
+
+            <button (click)="cambiarNombre()" type="submit" class="btn btn-primary mt-3">
+              Cambiar
+            </button>
+          
+        </div>
+      </div>
+      <!--
+      <div class="card mt-4">
+        <div class="card-body">
+          <label class="badge bg-light text-wrap mb-3">Cambiar de idioma</label>
+          <select class="form-select">
+            <option value="1">Español</option>
+            <option value="2">Ingles</option>
+            <option value="3">Portugues</option>
+          </select>
+        </div>
+      </div>-->
+      <!---->
+      <div class="card mt-4">
+        <div class="card-body">
+          <label class="badge bg-light text-wrap mb-3">Cambiar de tema</label>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="exampleRadios"
+              id="exampleRadios1"
+              value="option1"
+              checked
+            />
+            <label class="form-check-label" for="exampleRadios1">
+              Tema Claro
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="exampleRadios"
+              id="exampleRadios2"
+              value="option2"
+            />
+            <label class="form-check-label" for="exampleRadios2">
+              Tema Oscuro
+            </label>
+          </div>
+        </div>
+      </div>
+      <!---->
+      <div class="card mt-4">
+        <div class="card-body">
+          <a href="" class="nav-link text-dark" (click)="onLogout()"
+            >Cerrar Sesion</a
+          >
+        </div>
+      </div>
+      <!---->
+      <div class="d-grid">
+        <button type="submit" class="btn btn-danger btn-lg mt-4" (click)="borrarCuenta()">
+          Eliminar cuenta
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

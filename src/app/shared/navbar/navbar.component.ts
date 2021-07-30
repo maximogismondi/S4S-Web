@@ -39,10 +39,10 @@ export class NavbarComponent {
     });
   }
 
-  async onLogout() {
-    await this.authSvc.logout();
-    this.router.navigate(['/home']);
-  }
+  // async onLogout() {
+  //   await this.authSvc.logout();
+  //   this.router.navigate(['/home']);
+  // }
   
 
   // navbarCollapse(){

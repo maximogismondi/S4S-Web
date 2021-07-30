@@ -6,7 +6,8 @@
       <div class="alert alert-light mt-4 text-danger" role="alert">
         *Obligatorio
       </div>
-      <div id="botonesEleccionCrear">
+      <!-- id="botonesEleccionCrear" -->
+      <div  *ngIf="fueACrear == false" >
         <div class="d-grid">
           <button
             *ngIf="NombreColegio == null; else bloquearBoton"
@@ -22,8 +23,8 @@
           </button>
         </ng-template>
       </div>
-      <!---->
-      <div id="crear" style="display: none">
+      <!--id="crear" style="display: none"-->
+      <div *ngIf="fueACrear" >
         <div class="mx-auto mt-5">
           <div class="card">
             <div class="card-body">
@@ -137,7 +138,8 @@
           </div>
         </div>
       </div>
-      <div id="botonesEleccionUnirse">
+      <!-- id="botonesEleccionUnirse" -->
+      <div *ngIf="fueAUnirse == false">
         <div class="d-grid">
           <button (click)="irUnirse()" class="btn btn-primary btn-lg mt-4">
             UNIRSE
@@ -157,8 +159,8 @@
           </button>
         </div>
       </div>
-      <!---->
-      <div id="unirse" style="display: none">
+      <!--id="unirse" style="display: none"-->
+      <div *ngIf="fueAUnirse" >
         <div class="mx-auto mt-5">
           <div class="card">
             <div class="card-body">

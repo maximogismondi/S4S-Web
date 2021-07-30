@@ -12,6 +12,8 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 })
 export class EleccionComponent implements OnInit {
   NombreColegio: string;
+  fueACrear:boolean = false;
+  fueAUnirse:boolean = false;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -86,18 +88,22 @@ export class EleccionComponent implements OnInit {
 
   //joya
   irCrear() {
-    document.getElementById('crear')!.style.display = 'block';
-    document.getElementById('unirse')!.style.display = 'none';
-    document.getElementById('botonesEleccionCrear')!.style.display = 'none';
-    document.getElementById('botonesEleccionUnirse')!.style.display = 'block';
+    // document.getElementById('crear')!.style.display = 'block';
+    // document.getElementById('unirse')!.style.display = 'none';
+    // document.getElementById('botonesEleccionCrear')!.style.display = 'none';
+    // document.getElementById('botonesEleccionUnirse')!.style.display = 'block';
+    this.fueACrear = true;
+    this.fueAUnirse = false;
   }
 
   //joya
   irUnirse() {
-    document.getElementById('crear')!.style.display = 'none';
-    document.getElementById('unirse')!.style.display = 'block';
-    document.getElementById('botonesEleccionCrear')!.style.display = 'block';
-    document.getElementById('botonesEleccionUnirse')!.style.display = 'none';
+    // document.getElementById('crear')!.style.display = 'none';
+    // document.getElementById('unirse')!.style.display = 'block';
+    // document.getElementById('botonesEleccionCrear')!.style.display = 'block';
+    // document.getElementById('botonesEleccionUnirse')!.style.display = 'none';
+    this.fueAUnirse = true;
+    this.fueACrear = false;
   }
 
 }
