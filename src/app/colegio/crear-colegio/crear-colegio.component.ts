@@ -32,6 +32,7 @@ export class CrearColegioComponent implements OnInit {
   materias: number;
   cursos: number;
   profes: number;
+  materiasArray: Array<string> = [];
 
   constructor(
     private router: Router,
@@ -57,6 +58,9 @@ export class CrearColegioComponent implements OnInit {
               this.materias = school.materias.length;
               this.cursos = school.cursos.length;
               this.profes = school.profes.length;
+              for (let i = 0; i < school.materias.length; i++) {
+                this.materiasArray.push(school.materias[i].nombre);
+              }
             })
           )
           .subscribe();
@@ -65,7 +69,6 @@ export class CrearColegioComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-
 
   // _______________________________________MODULOS______________________________________________________________
 
@@ -145,7 +148,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteAula() {
-    if (confirm('¿Estas seguro/a que quieres eliminar esta aula?')) {
+    if (confirm('¿Estas seguro/a que quieres eliminar este aula?')) {
       this.aulaArray = this.aulaArray.filter((x) => x != this.selectedAula);
       this.selectedAula = new Aula();
     }
@@ -158,6 +161,7 @@ export class CrearColegioComponent implements OnInit {
         id: aula.id,
         nombre: aula.nombre,
         tipo: aula.tipo,
+        otro: aula.otro,
       });
     });
     this.afs.collection('schools').doc(this.nombreDocumento).update({
@@ -201,7 +205,8 @@ export class CrearColegioComponent implements OnInit {
         cantModulos: materia.cantModulos,
         cantProfesores: materia.cantProfesores,
         espacioEntreDias: materia.espacioEntreDias,
-        tipoAula: materia.tipoAula,
+        tipoAula: materia.tipo,
+        otro: materia.otro,
         cantidadModulosContinuos: materia.cantidadModulosContinuos,
       });
     });
@@ -226,6 +231,9 @@ export class CrearColegioComponent implements OnInit {
       this.cursoArray.push(this.selectedCurso);
     }
     this.selectedCurso = new Curso();
+    for (let i = 0; i < this.materiaArray.length; i++) {
+      console.log(this.materiasArray[i]);
+    }
   }
 
   deleteCurso() {

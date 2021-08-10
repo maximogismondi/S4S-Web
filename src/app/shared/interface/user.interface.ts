@@ -39,6 +39,7 @@ export class Aula {
   id: number = 0;
   nombre: string;
   tipo: number;
+  otro: number = 0;
 }
 
 export class Materia {
@@ -47,9 +48,15 @@ export class Materia {
   cantModulos: number;
   cantProfesores: number;
   espacioEntreDias: number;
-  tipoAula: number;
+  tipo: number;
+  otro: number = 0;
   cantidadModulosContinuos: number;
 }
+
+// export class MateriaReducido{
+//   nombre: string;
+//   presionado: boolean;
+// }
 
 export class Curso {
   id: number = 0;

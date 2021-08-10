@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <div class="row">
-    <div class="col-md-7 mx-auto">
+    <div class="col-md-6 mx-auto">
       <div class="card">
         <div class="card-body">
           <h3 class="text-center mt-2">{{ nombreColegio }}</h3>
@@ -201,7 +201,7 @@
         [class.active]="aula == selectedAula"
       >
         <span class="badge bg-primary">{{ aula.id }}</span>
-        Nombre: {{ aula.nombre }} / Tipo: {{ aula.tipo }}
+        Nombre: {{ aula.nombre }} / Tipo: {{ aula.tipo }} / Otro: {{ aula.otro }}
       </li>
     </ul>
     <div class="card mt-4">
@@ -218,9 +218,29 @@
           <label class="mt-2">Tipo de aula</label>
           <select class="form-select" [(ngModel)]="selectedAula.tipo">
             <option value="1">Normal</option>
-            <option value="2">Especial</option>
-            <option value="3">Otro</option>
+            <option value="2">Otro</option>
           </select>
+
+          <div class="mt-3" *ngIf="selectedAula.tipo == 2">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" [(ngModel)]="selectedAula.otro" value="1" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                  SUM
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" [(ngModel)]="selectedAula.otro" value="2" name="flexRadioDefault" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  TALLER
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" [(ngModel)]="selectedAula.otro" value="3" name="flexRadioDefault" id="flexRadioDefault3">
+                <label class="form-check-label" for="flexRadioDefault3">
+                  LABORATORIO
+                </label>
+              </div>
+          </div>
 
           <button (click)="addOrEditAula()" class="btn btn-primary mt-4">
             Añadir / Editar
@@ -235,7 +255,7 @@
         </div>
         <div class="d-grid">
           <button
-            *ngIf="moduloArray.length != 0"
+            *ngIf="aulaArray.length != 0"
             (click)="goFormMateria()"
             class="btn btn-primary btn-lg mt-4"
           >
@@ -278,7 +298,7 @@
         {{ materia.cantModulos }} / Cantidad de modulos continuos:
         {{ materia.cantidadModulosContinuos }} / Cantidad de profesores que la
         dan: {{ materia.cantProfesores }} / Espacio entre cada dia:
-        {{ materia.espacioEntreDias }} / Tipo de aula: {{ materia.tipoAula }}
+        {{ materia.espacioEntreDias }} / Tipo de aula: {{ materia.tipo }} / Otro: {{ materia.otro }}
       </li>
     </ul>
     <div class="card mt-4">
@@ -326,11 +346,31 @@
           />
 
           <label class="mt-2">Tipo de aula</label>
-          <select class="form-select" [(ngModel)]="selectedMateria.tipoAula">
+          <select class="form-select" [(ngModel)]="selectedMateria.tipo">
             <option value="1">Normal</option>
-            <option value="2">Especial</option>
-            <option value="3">Otro</option>
+            <option value="2">Otro</option>
           </select>
+
+          <div class="mt-3" *ngIf="selectedMateria.tipo == 2">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" [(ngModel)]="selectedMateria.otro" value="1" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                  SUM
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" [(ngModel)]="selectedMateria.otro" value="2" name="flexRadioDefault" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  TALLER
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" [(ngModel)]="selectedMateria.otro" value="3" name="flexRadioDefault" id="flexRadioDefault3">
+                <label class="form-check-label" for="flexRadioDefault3">
+                  LABORATORIO
+                </label>
+              </div>
+          </div>
 
           <button (click)="addOrEditMateria()" class="btn btn-primary mt-4">
             Añadir / Editar
@@ -418,17 +458,25 @@
           />
 
           <label class="mt-2">Materias</label>
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="flexCheckDefault"
-            />
-            <label class="form-check-label" for="flexCheckDefault">
-              Default checkbox
-            </label>
-          </div>
+          <table>
+            <tr *ngFor="let materiaColegio of materiasArray">
+              <td>
+                <div class="form-check mt-2">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="1"
+                    id="{{materiaColegio}}"
+                  />
+                  <label class="form-check-label" for="{{materiaColegio}}">
+                    {{materiaColegio}}
+                  </label>
+                </div>
+                
+            </td>
+              </tr>
+          </table>
+           
 
           <button (click)="addOrEditCurso()" class="btn btn-primary mt-4">
             Añadir / Editar
