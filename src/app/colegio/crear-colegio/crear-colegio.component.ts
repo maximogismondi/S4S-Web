@@ -10,6 +10,7 @@ import {
   Colegio,
   Curso,
   Materia,
+  MateriaReducido,
   Modulo,
   Profesor,
 } from 'src/app/shared/interface/user.interface';
@@ -32,7 +33,7 @@ export class CrearColegioComponent implements OnInit {
   materias: number;
   cursos: number;
   profes: number;
-  materiasArray: Array<string> = [];
+  materiasArray: Array<MateriaReducido> = [];
 
   constructor(
     private router: Router,
@@ -58,9 +59,13 @@ export class CrearColegioComponent implements OnInit {
               this.materias = school.materias.length;
               this.cursos = school.cursos.length;
               this.profes = school.profes.length;
-              for (let i = 0; i < school.materias.length; i++) {
-                this.materiasArray.push(school.materias[i].nombre);
-              }
+              school.materias.forEach(materia => {
+                let materiaAux:MateriaReducido = {
+                  nombre: materia.nombre,
+                  valor : false
+                }
+                this.materiasArray.push(materiaAux)
+              });
             })
           )
           .subscribe();
@@ -104,6 +109,14 @@ export class CrearColegioComponent implements OnInit {
       // console.log(this.horarioFinalizacionModulo);
     }
     this.selectedModulo = new Modulo();
+  }
+
+  clicked(nombreMateria: string){
+    for(let i = 0; i< this.materiasArray.length; i++){
+      if(this.materiasArray[i].nombre == nombreMateria){
+        this.materiasArray[i].valor=true;
+      }
+    }
   }
 
   deleteModulo() {
@@ -231,9 +244,9 @@ export class CrearColegioComponent implements OnInit {
       this.cursoArray.push(this.selectedCurso);
     }
     this.selectedCurso = new Curso();
-    for (let i = 0; i < this.materiaArray.length; i++) {
-      console.log(this.materiasArray[i]);
-    }
+    // for (let i = 0; i < this.materiaArray.length; i++) {
+    //   console.log(this.materiasArray[i]);
+    // }
   }
 
   deleteCurso() {
@@ -246,6 +259,7 @@ export class CrearColegioComponent implements OnInit {
   async goFormProfesor() {
     let CursoArrayDiccionario: Array<any> = [];
     this.cursoArray.forEach((curso) => {
+
       CursoArrayDiccionario.push({
         id: curso.id,
         nombre: curso.nombre,

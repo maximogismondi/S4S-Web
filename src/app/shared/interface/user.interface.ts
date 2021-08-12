@@ -53,10 +53,10 @@ export class Materia {
   cantidadModulosContinuos: number;
 }
 
-// export class MateriaReducido{
-//   nombre: string;
-//   presionado: boolean;
-// }
+export class MateriaReducido{
+  nombre: string;
+  valor: boolean;
+}
 
 export class Curso {
   id: number = 0;

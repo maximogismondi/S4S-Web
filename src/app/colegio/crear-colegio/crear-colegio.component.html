@@ -454,22 +454,22 @@
             type="number"
             placeholder="Cantidad de alumnos"
             [(ngModel)]="selectedCurso.cantAlumnos"
-            class="form-control"
+            class="form-control mt-2"
           />
 
           <label class="mt-2">Materias</label>
           <table>
-            <tr *ngFor="let materiaColegio of materiasArray">
+            <tr *ngFor="let materia of materiasArray">
               <td>
                 <div class="form-check mt-2">
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value="1"
-                    id="{{materiaColegio}}"
+                    (click)="clicked(materia.nombre)"
+                    id="{{materia.nombre}}"
                   />
-                  <label class="form-check-label" for="{{materiaColegio}}">
-                    {{materiaColegio}}
+                  <label class="form-check-label" for="{{materia.nombre}}">
+                    {{materia.nombre}}
                   </label>
                 </div>
                 
