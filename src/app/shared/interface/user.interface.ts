@@ -38,8 +38,8 @@ export class Modulo {
 export class Aula {
   id: number = 0;
   nombre: string;
-  tipo: number;
-  otro: number = 0;
+  tipo: string;
+  otro: string = "Se selecciono el tipo normal";
 }
 
 export class Materia {
@@ -48,8 +48,8 @@ export class Materia {
   cantModulos: number;
   cantProfesores: number;
   espacioEntreDias: number;
-  tipo: number;
-  otro: number = 0;
+  tipo: string;
+  otro: string = "Se selecciono el tipo normal";
   cantidadModulosContinuos: number;
 }
 

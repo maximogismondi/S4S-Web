@@ -111,7 +111,7 @@
 </div>
 
 <!-- *ngIf="modulos == 0" *ngIf="aulas == 0 && modulos != 0" *ngIf="materias == 0 && aulas != 0" *ngIf="cursos == 0 && materias != 0" *ngIf="profes == 0 && cursos != 0"-->
-
+<!-- Cambiar todo-->
 <div *ngIf="modulos == 0" class="container mx-auto my-4" id="divModulo">
   <div class="col-md-6 mx-auto">
     <ul class="list-group">
@@ -217,25 +217,25 @@
 
           <label class="mt-2">Tipo de aula</label>
           <select class="form-select" [(ngModel)]="selectedAula.tipo">
-            <option value="1">Normal</option>
-            <option value="2">Otro</option>
+            <option value="Normal">Normal</option>
+            <option value="Otro">Otro</option>
           </select>
 
           <div class="mt-3" *ngIf="selectedAula.tipo == 2">
               <div class="form-check">
-                <input class="form-check-input" type="radio" [(ngModel)]="selectedAula.otro" value="1" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                <input class="form-check-input" type="radio" [(ngModel)]="selectedAula.otro" value="SUM" name="flexRadioDefault" id="flexRadioDefault1" checked>
                 <label class="form-check-label" for="flexRadioDefault1">
                   SUM
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" [(ngModel)]="selectedAula.otro" value="2" name="flexRadioDefault" id="flexRadioDefault2">
+                <input class="form-check-input" type="radio" [(ngModel)]="selectedAula.otro" value="TALLER" name="flexRadioDefault" id="flexRadioDefault2">
                 <label class="form-check-label" for="flexRadioDefault2">
                   TALLER
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" [(ngModel)]="selectedAula.otro" value="3" name="flexRadioDefault" id="flexRadioDefault3">
+                <input class="form-check-input" type="radio" [(ngModel)]="selectedAula.otro" value="LABORATORIO" name="flexRadioDefault" id="flexRadioDefault3">
                 <label class="form-check-label" for="flexRadioDefault3">
                   LABORATORIO
                 </label>
@@ -315,7 +315,6 @@
           <input
             type="number"
             min="1"
-            max="9"
             [(ngModel)]="selectedMateria.cantModulos"
             placeholder="Cantidad de modulos"
             class="form-control"
@@ -347,25 +346,25 @@
 
           <label class="mt-2">Tipo de aula</label>
           <select class="form-select" [(ngModel)]="selectedMateria.tipo">
-            <option value="1">Normal</option>
-            <option value="2">Otro</option>
+            <option value="Normal">Normal</option>
+            <option value="Otro">Otro</option>
           </select>
 
           <div class="mt-3" *ngIf="selectedMateria.tipo == 2">
               <div class="form-check">
-                <input class="form-check-input" type="radio" [(ngModel)]="selectedMateria.otro" value="1" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                <input class="form-check-input" type="radio" [(ngModel)]="selectedMateria.otro" value="SUM" name="flexRadioDefault" id="flexRadioDefault1" checked>
                 <label class="form-check-label" for="flexRadioDefault1">
                   SUM
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" [(ngModel)]="selectedMateria.otro" value="2" name="flexRadioDefault" id="flexRadioDefault2">
+                <input class="form-check-input" type="radio" [(ngModel)]="selectedMateria.otro" value="TALLER" name="flexRadioDefault" id="flexRadioDefault2">
                 <label class="form-check-label" for="flexRadioDefault2">
                   TALLER
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" [(ngModel)]="selectedMateria.otro" value="3" name="flexRadioDefault" id="flexRadioDefault3">
+                <input class="form-check-input" type="radio" [(ngModel)]="selectedMateria.otro" value="LABORATORIO" name="flexRadioDefault" id="flexRadioDefault3">
                 <label class="form-check-label" for="flexRadioDefault3">
                   LABORATORIO
                 </label>
@@ -445,9 +444,9 @@
             class="form-select"
             [(ngModel)]="selectedCurso.turnoPreferido"
           >
-            <option value="1">Mañana</option>
-            <option value="2">Tarde</option>
-            <option value="3">Noche</option>
+            <option value="Mañana">Mañana</option>
+            <option value="Tarde">Tarde</option>
+            <option value="Noche">Noche</option>
           </select>
 
           <input
@@ -573,9 +572,9 @@
             class="form-select"
             [(ngModel)]="selectedProfesor.turnoPreferido"
           >
-            <option value="1">Mañana</option>
-            <option value="2">Tarde</option>
-            <option value="3">Noche</option>
+            <option value="Mañana">Mañana</option>
+            <option value="Tarde">Tarde</option>
+            <option value="Noche">Noche</option>
           </select>
 
           <div class="mb-3">
