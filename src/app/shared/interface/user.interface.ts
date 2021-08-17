@@ -24,17 +24,23 @@ export interface Colegio {
   finalizacionHorario: Time;
   usuariosExtensiones: Array<string>;
   aulas: Array<Aula>;
-  modulos: Array<Modulo>;
+  turnos: Array<Turno>;
+  // modulos: Array<Modulo>;
   materias: Array<Materia>;
   cursos: Array<Curso>;
   profes: Array<Profesor>;
 }
 
-export class Modulo {
-  id: number = 0;
-  dia: string;
-  inicio: Time;
+export class Turno{
+  cantModulos: number;
+  turno: string;
 }
+
+// export class Modulo {
+//   id: number = 0;
+//   dia: string;
+//   inicio: Time;
+// }
 
 export class Aula {
   id: number = 0;

@@ -11,7 +11,7 @@ import {
   Curso,
   Materia,
   MateriaReducido,
-  Modulo,
+  // Modulo,
   Profesor,
 } from 'src/app/shared/interface/user.interface';
 
@@ -54,7 +54,7 @@ export class CrearColegioComponent implements OnInit {
               this.nombreColegio = school.nombre;
               this.nombreDocumento = school.id;
               this.duracionModulo = school.duracionModulo;
-              this.modulos = school.modulos.length;
+              // this.modulos = school.modulos.length;
               this.aulas = school.aulas.length;
               this.materias = school.materias.length;
               this.cursos = school.cursos.length;
@@ -77,62 +77,62 @@ export class CrearColegioComponent implements OnInit {
 
   // _______________________________________MODULOS______________________________________________________________
 
-  moduloArray: Modulo[] = [];
+  // moduloArray: Modulo[] = [];
 
-  selectedModulo: Modulo = new Modulo();
+  // selectedModulo: Modulo = new Modulo();
 
-  openForEditModulo(modulo: Modulo) {
-    this.selectedModulo = modulo;
-  }
+  // openForEditModulo(modulo: Modulo) {
+  //   this.selectedModulo = modulo;
+  // }
 
-  addOrEditModulo() {
-    this.horarioFinalizacionModulo = String(this.selectedModulo.inicio);
-    this.horas = Number(this.horarioFinalizacionModulo.split(':')[0]);
-    this.minutos =
-      Number(this.horarioFinalizacionModulo.split(':')[1]) +
-      this.duracionModulo;
+  // addOrEditModulo() {
+  //   this.horarioFinalizacionModulo = String(this.selectedModulo.inicio);
+  //   this.horas = Number(this.horarioFinalizacionModulo.split(':')[0]);
+  //   this.minutos =
+  //     Number(this.horarioFinalizacionModulo.split(':')[1]) +
+  //     this.duracionModulo;
 
-    while (this.minutos >= 60) {
-      this.minutos = this.minutos - 60;
-      this.horas = this.horas + 1;
-      if (this.horas == 24) {
-        this.horas = 0;
-      }
-    }
+  //   while (this.minutos >= 60) {
+  //     this.minutos = this.minutos - 60;
+  //     this.horas = this.horas + 1;
+  //     if (this.horas == 24) {
+  //       this.horas = 0;
+  //     }
+  //   }
 
-    this.horarioFinalizacionModulo =
-      String(this.horas) + ':' + String(this.minutos);
-    if (this.selectedModulo.id == 0) {
-      this.selectedModulo.id = this.moduloArray.length + 1;
-      this.moduloArray.push(this.selectedModulo);
+  //   this.horarioFinalizacionModulo =
+  //     String(this.horas) + ':' + String(this.minutos);
+  //   if (this.selectedModulo.id == 0) {
+  //     this.selectedModulo.id = this.moduloArray.length + 1;
+  //     this.moduloArray.push(this.selectedModulo);
 
-      // console.log(this.horarioFinalizacionModulo);
-    }
-    this.selectedModulo = new Modulo();
-  }
+  //     // console.log(this.horarioFinalizacionModulo);
+  //   }
+  //   this.selectedModulo = new Modulo();
+  // }
 
-  deleteModulo() {
-    if (confirm('¿Estas seguro/a que quieres eliminar este modulo?')) {
-      this.moduloArray = this.moduloArray.filter(
-        (x) => x != this.selectedModulo
-      );
-      this.selectedModulo = new Modulo();
-    }
-  }
+  // deleteModulo() {
+  //   if (confirm('¿Estas seguro/a que quieres eliminar este modulo?')) {
+  //     this.moduloArray = this.moduloArray.filter(
+  //       (x) => x != this.selectedModulo
+  //     );
+  //     this.selectedModulo = new Modulo();
+  //   }
+  // }
 
-  async goFormAula() {
-    let moduloArrayDiccionario: Array<any> = [];
-    this.moduloArray.forEach((modulo) => {
-      moduloArrayDiccionario.push({
-        id: modulo.id,
-        dia: modulo.dia,
-        inicio: modulo.inicio,
-      });
-    });
-    this.afs.collection('schools').doc(this.nombreDocumento).update({
-      modulos: moduloArrayDiccionario,
-    });
-  }
+  // async goFormAula() {
+  //   let moduloArrayDiccionario: Array<any> = [];
+  //   this.moduloArray.forEach((modulo) => {
+  //     moduloArrayDiccionario.push({
+  //       id: modulo.id,
+  //       dia: modulo.dia,
+  //       inicio: modulo.inicio,
+  //     });
+  //   });
+  //   this.afs.collection('schools').doc(this.nombreDocumento).update({
+  //     modulos: moduloArrayDiccionario,
+  //   });
+  // }
 
   // _________________________________________AULAS____________________________________________________________
 
