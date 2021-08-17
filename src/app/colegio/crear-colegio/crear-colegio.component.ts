@@ -59,12 +59,12 @@ export class CrearColegioComponent implements OnInit {
               this.materias = school.materias.length;
               this.cursos = school.cursos.length;
               this.profes = school.profes.length;
-              school.materias.forEach(materia => {
-                let materiaAux:MateriaReducido = {
+              school.materias.forEach((materia) => {
+                let materiaAux: MateriaReducido = {
                   nombre: materia.nombre,
-                  valor : false
-                }
-                this.materiasArrayCursos.push(materiaAux)
+                  valor: false,
+                };
+                this.materiasArrayCursos.push(materiaAux);
               });
             })
           )
@@ -233,21 +233,31 @@ export class CrearColegioComponent implements OnInit {
   addOrEditCurso() {
     if (this.selectedCurso.id == 0) {
       this.selectedCurso.id = this.cursoArray.length + 1;
+      this.materiasArrayCursos.forEach((materia) => {
+        if (materia.valor == true) {
+          this.selectedCurso.materiasCurso.push(materia.nombre);
+        }
+      });
       this.cursoArray.push(this.selectedCurso);
     }
     this.selectedCurso = new Curso();
-    for (let i = 0; i < this.materiasArrayCursos.length; i++) {
-      console.log(this.materiasArrayCursos[i]);
+    for (let i = 0; i < this.cursoArray.length; i++) {
+      console.log(this.cursoArray[i]);
     }
   }
 
-  clicked(nombreMateria: string){
-    for(let i = 0; i< this.materiasArrayCursos.length; i++){
-      if(this.materiasArrayCursos[i].nombre == nombreMateria){
-        this.materiasArrayCursos[i].valor=true;
-      }
-      else if(this.materiasArrayCursos[i].nombre == nombreMateria && this.materiasArrayCursos[i].valor==true){
-        this.materiasArrayCursos[i].valor=false;
+  clicked(nombreMateria: string) {
+    for (let i = 0; i < this.materiasArrayCursos.length; i++) {
+      if (
+        this.materiasArrayCursos[i].nombre == nombreMateria &&
+        this.materiasArrayCursos[i].valor == false
+      ) {
+        this.materiasArrayCursos[i].valor = true;
+      } else if (
+        this.materiasArrayCursos[i].nombre == nombreMateria &&
+        this.materiasArrayCursos[i].valor == true
+      ) {
+        this.materiasArrayCursos[i].valor = false;
       }
     }
   }
@@ -262,7 +272,6 @@ export class CrearColegioComponent implements OnInit {
   async goFormProfesor() {
     let CursoArrayDiccionario: Array<any> = [];
     this.cursoArray.forEach((curso) => {
-
       CursoArrayDiccionario.push({
         id: curso.id,
         nombre: curso.nombre,

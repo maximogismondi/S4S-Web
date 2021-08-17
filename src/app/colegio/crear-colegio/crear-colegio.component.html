@@ -425,8 +425,8 @@
         <span class="badge bg-primary">{{ curso.id }}</span>
         Nombre: {{ curso.nombre }} / Turno preferido:
         {{ curso.turnoPreferido }} / Cantidad de alumnos:
-        {{ curso.cantAlumnos }} / Materias en el curso: <p *ngIf="materia.value" *ngFor="let materia of materiasArrayCursos">
-          - {{materia.nombre}}
+        {{ curso.cantAlumnos }} / Materias en el curso: <p *ngFor="let materia of curso.materiasCurso">
+            - {{materia}}   
         </p>
       </li>
     </ul>

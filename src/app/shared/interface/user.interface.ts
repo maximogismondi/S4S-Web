@@ -15,6 +15,7 @@ export interface Colegio {
   id: string;
   userAdmin: string;
   nombre: string;
+  ejecutado: string;
   direccion: string;
   localidad: string;
   telefono: string;
@@ -63,7 +64,7 @@ export class Curso {
   nombre: string;
   turnoPreferido: number;
   cantAlumnos: number;
-  materiasCurso: Array<string>;
+  materiasCurso: Array<string> = [];
 }
 
 export class Profesor {
