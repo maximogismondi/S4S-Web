@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as firebase from 'firebase';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/shared/interface/user.interface';
 
@@ -54,12 +55,10 @@ export class SettingComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  async borrarCuenta() {
-    this.userData.delete().then(() => {
-      console.log("hola");
-      // User deleted.
-    });
-  }
+  // async borrarCuenta() {
+  //   const user = firebase.auth().currentUser; 
+  //   user.delete().then(() => {})
+  // }
   // async borrarCuenta() {
   //   if (confirm('¿Estas seguro/a que quieres eliminar tu cuenta?')) {
   //     this.afs.collection('users').doc(this.idUsuarioAdmin).delete();

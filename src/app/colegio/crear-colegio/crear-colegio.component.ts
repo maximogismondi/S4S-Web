@@ -33,7 +33,7 @@ export class CrearColegioComponent implements OnInit {
   materias: number;
   cursos: number;
   profes: number;
-  materiasArray: Array<MateriaReducido> = [];
+  materiasArrayCursos: Array<MateriaReducido> = [];
 
   constructor(
     private router: Router,
@@ -64,7 +64,7 @@ export class CrearColegioComponent implements OnInit {
                   nombre: materia.nombre,
                   valor : false
                 }
-                this.materiasArray.push(materiaAux)
+                this.materiasArrayCursos.push(materiaAux)
               });
             })
           )
@@ -109,14 +109,6 @@ export class CrearColegioComponent implements OnInit {
       // console.log(this.horarioFinalizacionModulo);
     }
     this.selectedModulo = new Modulo();
-  }
-
-  clicked(nombreMateria: string){
-    for(let i = 0; i< this.materiasArray.length; i++){
-      if(this.materiasArray[i].nombre == nombreMateria){
-        this.materiasArray[i].valor=true;
-      }
-    }
   }
 
   deleteModulo() {
@@ -244,9 +236,20 @@ export class CrearColegioComponent implements OnInit {
       this.cursoArray.push(this.selectedCurso);
     }
     this.selectedCurso = new Curso();
-    // for (let i = 0; i < this.materiaArray.length; i++) {
-    //   console.log(this.materiasArray[i]);
-    // }
+    for (let i = 0; i < this.materiasArrayCursos.length; i++) {
+      console.log(this.materiasArrayCursos[i]);
+    }
+  }
+
+  clicked(nombreMateria: string){
+    for(let i = 0; i< this.materiasArrayCursos.length; i++){
+      if(this.materiasArrayCursos[i].nombre == nombreMateria){
+        this.materiasArrayCursos[i].valor=true;
+      }
+      else if(this.materiasArrayCursos[i].nombre == nombreMateria && this.materiasArrayCursos[i].valor==true){
+        this.materiasArrayCursos[i].valor=false;
+      }
+    }
   }
 
   deleteCurso() {
