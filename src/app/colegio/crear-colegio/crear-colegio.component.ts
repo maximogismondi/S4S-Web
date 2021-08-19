@@ -13,6 +13,7 @@ import {
   MateriaReducido,
   // Modulo,
   Profesor,
+  Turno,
 } from 'src/app/shared/interface/user.interface';
 
 @Component({
@@ -28,7 +29,10 @@ export class CrearColegioComponent implements OnInit {
   minutos: number;
   horas: number;
   horarioFinalizacionModulo: string = '';
-  modulos: number;
+  // modulos: number;
+  inicioHorario: Time;
+  finalizacionHorario: Time;
+  turnos: number;
   aulas: number;
   materias: number;
   cursos: number;
@@ -54,7 +58,10 @@ export class CrearColegioComponent implements OnInit {
               this.nombreColegio = school.nombre;
               this.nombreDocumento = school.id;
               this.duracionModulo = school.duracionModulo;
+              this.inicioHorario = school.inicioHorario;
+              this.finalizacionHorario = school.finalizacionHorario;
               // this.modulos = school.modulos.length;
+              this.turnos = school.turnos.length;
               this.aulas = school.aulas.length;
               this.materias = school.materias.length;
               this.cursos = school.cursos.length;
@@ -75,7 +82,7 @@ export class CrearColegioComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // _______________________________________MODULOS______________________________________________________________
+  // _______________________________________TURNOS______________________________________________________________
 
   // moduloArray: Modulo[] = [];
 
@@ -133,6 +140,11 @@ export class CrearColegioComponent implements OnInit {
   //     modulos: moduloArrayDiccionario,
   //   });
   // }
+
+  // _______________________________________MODULOS______________________________________________________________
+
+   turnoArray: Turno[] = [];
+   selectedTurno: Turno = new Turno();   
 
   // _________________________________________AULAS____________________________________________________________
 
