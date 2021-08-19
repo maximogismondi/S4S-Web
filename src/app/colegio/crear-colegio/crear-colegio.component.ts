@@ -9,6 +9,7 @@ import {
   Aula,
   Colegio,
   Curso,
+  HorarioModulo,
   Materia,
   MateriaReducido,
   // Modulo,
@@ -39,6 +40,7 @@ export class CrearColegioComponent implements OnInit {
   cursos: number;
   profes: number;
   materiasArrayCursos: Array<MateriaReducido> = [];
+  crearHorario: boolean = false;
 
   constructor(
     private router: Router,
@@ -147,8 +149,17 @@ export class CrearColegioComponent implements OnInit {
 
   // _______________________________________MODULOS______________________________________________________________
 
-   turnoArray: Turno[] = [];
-   selectedTurno: Turno = new Turno();
+   turnoArray: HorarioModulo[] = [];
+   selectedTurno: HorarioModulo = new HorarioModulo();
+
+   addOrEditTurno() {
+    this.turnoArray.push(this.selectedTurno);
+    this.selectedTurno = new HorarioModulo();
+    this.crearHorario = false;
+  }
+  makeScheduler(){
+    this.crearHorario = true;
+  }
 
   // _________________________________________AULAS____________________________________________________________
 

@@ -36,6 +36,11 @@ export class Turno{
   turno: string;
 }
 
+export class HorarioModulo{
+  inicio: Time;
+  fin: Time;
+}
+
 // export class Modulo {
 //   id: number = 0;
 //   dia: string;
