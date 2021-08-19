@@ -199,11 +199,14 @@
     <ul class="list-group">
       <div class="text-secondary">
         <h6>Duracion de cada modulo: {{ duracionModulo }} min</h6>
+        <!-- <h6>Inicio Horario: {{ inicioHorario }}</h6>
+        <h6>Fin Horario: {{ finalizacionHorario }}</h6> -->
       </div>
       <table class="table text-center">
         <thead>
           <tr class="table-dark">
             <th scope="col">Horarios</th>
+            <th scope="col"></th>
             <th scope="col">Lunes</th>
             <th scope="col">Martes</th>
             <th scope="col">Miercoles</th>
@@ -212,14 +215,16 @@
           </tr>
         </thead>
         <tbody>
+          <th *ngIf="12 >= horasI && horasI > 5" scope="row" class="align-middle">{{ inicioHorario }}</th>
+          <!-- <th scope="row" class="align-middle">{{ finalizacionHorario }}</th> -->
           <!-- MAÑANA -->
-          <tr>
-            <th scope="row" class="table-active"></th>
-            <td colspan="5" class="table-active">TURNO MAÑANA</td>
+          <tr *ngIf="12 >= horasI && horasI > 5">
+            <td colspan="7" class="table-active">TURNO MAÑANA</td>
           </tr>
-          <tr>
-            <th scope="row" class="align-middle">{{ inicioHorario }}</th>
-            <td colspan="5" class="table-light">
+          <tr *ngIf="12 >= horasI && horasI > 5"> 
+            <!-- <th scope="row" class="align-middle">{{ inicioHorario }}</th> -->
+            <!-- <th scope="row" class="align-middle"></th> -->
+            <td colspan="7" class="table-light">
               <button class="btn btn-primary">
                 <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -237,14 +242,13 @@
             </td>
           </tr>
           <!-- TARDE -->
-          <tr>
-            <th scope="row" class="table-active"></th>
-            <td colspan="5" class="table-active">TURNO TARDE</td>
+          <!-- <th *ngIf="18 >= horasI && horasI > 12" scope="row" class="align-middle">{{ inicioHorario }}</th> -->
+          <tr *ngIf="18 >= horasF && horasF > 12">
+            <td colspan="7" class="table-active">TURNO TARDE</td>
           </tr>
 
-          <tr>
-            <th scope="row" class="align-middle">{{ inicioHorario }}</th>
-            <td colspan="5" class="table-light">
+          <tr *ngIf="18 >= horasF && horasF > 12">
+            <td colspan="7" class="table-light">
               <button class="btn btn-primary">
                 <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -261,15 +265,15 @@
               </button>
             </td>
           </tr>
+          <th *ngIf="18 >= horasF && horasF > 12" scope="row" class="align-middle">{{ finalizacionHorario }}</th>
           <!-- NOCHE -->
-          <tr>
-            <th scope="row" class="table-active"></th>
-            <td colspan="5" class="table-active">TURNO NOCHE</td>
+          <!-- <th *ngIf="5 >= horasI && horasI > 18" scope="row" class="align-middle">{{ inicioHorario }}</th> -->
+          <tr *ngIf="5 >= horasF && horasF > 18">
+            <td colspan="7" class="table-active">TURNO NOCHE</td>
           </tr>
           
-          <tr>
-            <th scope="row" class="align-middle">{{ inicioHorario }}</th>
-            <td colspan="5" class="table-light">
+          <tr *ngIf="5 >= horasF && horasF > 18">
+            <td colspan="7" class="table-light">
               <button class="btn btn-primary">
                 <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -286,6 +290,7 @@
               </button>
             </td>
           </tr>
+          <th *ngIf="5 >= horasF && horasF > 18" scope="row" class="align-middle">{{ finalizacionHorario }}</th>
           <!-- <th scope="row">{{ finalizacionHorario }}</th> -->
         </tbody>
       </table>

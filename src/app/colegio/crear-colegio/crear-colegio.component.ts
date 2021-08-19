@@ -26,8 +26,9 @@ export class CrearColegioComponent implements OnInit {
   nombreColegio: string;
   nombreDocumento: string;
   duracionModulo: number;
-  minutos: number;
-  horas: number;
+  // minutos: number;
+  horasI: number;
+  horasF: number;
   horarioFinalizacionModulo: string = '';
   // modulos: number;
   inicioHorario: Time;
@@ -60,6 +61,9 @@ export class CrearColegioComponent implements OnInit {
               this.duracionModulo = school.duracionModulo;
               this.inicioHorario = school.inicioHorario;
               this.finalizacionHorario = school.finalizacionHorario;
+              this.horasI = Number(String(this.inicioHorario).split(':')[0]);
+              this.horasF = Number(String(this.finalizacionHorario).split(':')[0]);
+              // this.minutos = Number(String(this.inicioHorario).split(':')[1]);
               // this.modulos = school.modulos.length;
               this.turnos = school.turnos.length;
               this.aulas = school.aulas.length;
@@ -144,7 +148,7 @@ export class CrearColegioComponent implements OnInit {
   // _______________________________________MODULOS______________________________________________________________
 
    turnoArray: Turno[] = [];
-   selectedTurno: Turno = new Turno();   
+   selectedTurno: Turno = new Turno();
 
   // _________________________________________AULAS____________________________________________________________
 
