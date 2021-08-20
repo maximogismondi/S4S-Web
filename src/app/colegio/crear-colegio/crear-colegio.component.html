@@ -287,6 +287,34 @@
           >
             <td colspan="7" class="table-active">TURNO TARDE</td>
           </tr>
+          <tr>
+            <ul class="list-group">
+              <li
+                *ngFor="let turno of turnoArray"
+                class="list-group-item list-group-item-action"
+                [class.active]="turno == selectedTurno"
+              >
+              <td colspan="7">
+                <span *ngFor="let turnoFinal of turno.horariosFinal">{{ turnoFinal }}</span>
+                <!-- <span
+                >{{ this.selectedTurno.inicio }}</span>
+              / {{this.horarioFinalizacionModulo}} -->
+              </td>
+              </li>
+            </ul>
+          </tr>
+          <tr *ngIf="crearHorario">
+            <td colspan="3"></td>
+            <td colspan="2">
+              <div class="input-group">
+                <input type="Time" class="form-control" [(ngModel)]="selectedTurno.inicio"/>
+                <button class="btn btn-primary" (click)="addTurno()">
+                  Listo
+                </button>
+              </div>
+            </td>
+            <td colspan="3"></td>
+          </tr>
 
           <tr
             *ngIf="
@@ -294,7 +322,7 @@
             "
           >
             <td colspan="7" class="table-light">
-              <button class="btn btn-primary">
+              <button class="btn btn-primary" (click)="makeScheduler2()">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -323,9 +351,38 @@
             <td colspan="7" class="table-active">TURNO NOCHE</td>
           </tr>
 
+          <tr>
+            <ul class="list-group">
+              <li
+                *ngFor="let turno of turnoArray"
+                class="list-group-item list-group-item-action"
+                [class.active]="turno == selectedTurno"
+              >
+              <td colspan="7">
+                <span *ngFor="let turnoFinal of turno.horariosFinal">{{ turnoFinal }}</span>
+                <!-- <span
+                >{{ this.selectedTurno.inicio }}</span>
+              / {{this.horarioFinalizacionModulo}} -->
+              </td>
+              </li>
+            </ul>
+          </tr>
+          <tr *ngIf="crearHorario">
+            <td colspan="3"></td>
+            <td colspan="2">
+              <div class="input-group">
+                <input type="Time" class="form-control" [(ngModel)]="selectedTurno.inicio"/>
+                <button class="btn btn-primary" (click)="addTurno()">
+                  Listo
+                </button>
+              </div>
+            </td>
+            <td colspan="3"></td>
+          </tr>
+
           <tr *ngIf="5 >= horasF && horasF > 18">
             <td colspan="7" class="table-light">
-              <button class="btn btn-primary">
+              <button class="btn btn-primary" (click)="makeScheduler3()">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"

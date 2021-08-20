@@ -44,6 +44,9 @@ export class CrearColegioComponent implements OnInit {
   profes: number;
   materiasArrayCursos: Array<MateriaReducido> = [];
   crearHorario: boolean = false;
+  cantidadModulosMañana: Turno;
+  cantidadModulosTarde: Turno;
+  cantidadModulosNoche: Turno;
 
   constructor(
     private router: Router,
@@ -174,8 +177,14 @@ export class CrearColegioComponent implements OnInit {
           this.horas = 0;
         }
       }
+      
+      let hsAux:string   = String(this.horas);
+      let minsAux:string = String(this.minutos);
 
-      this.horarioFinalizacionModulo = String(this.horas) + ':' + String(this.minutos);
+      if(hsAux.length == 1)   hsAux = '0' + hsAux;
+      if(minsAux.length == 1) minsAux = '0' + minsAux;
+
+      this.horarioFinalizacionModulo = hsAux + ':' + minsAux;
       console.log(this.horarios[this.horarios.length-1]);
       this.horarios.push(this.horarioFinalizacionModulo);
       console.log(this.horarios[this.horarios.length-1]);
@@ -193,6 +202,20 @@ export class CrearColegioComponent implements OnInit {
   }
   makeScheduler() {
     this.crearHorario = true;
+    this.cantidadModulosMañana.turno = "manana";
+    this.cantidadModulosMañana.cantModulos += 1;
+  }
+
+  makeScheduler2() {
+    this.crearHorario = true;
+    this.cantidadModulosTarde.turno = "tarde";
+    this.cantidadModulosTarde.cantModulos += 1;
+  }
+
+  makeScheduler3() {
+    this.crearHorario = true;
+    this.cantidadModulosNoche.turno = "noche";
+    this.cantidadModulosNoche.cantModulos += 1;
   }
 
   // _________________________________________AULAS____________________________________________________________
