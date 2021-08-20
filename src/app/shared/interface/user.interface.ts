@@ -32,14 +32,16 @@ export interface Colegio {
 }
 
 export class Turno{
-  cantModulos: number;
-  turno: string;
+  cantModulos: number = 0;
+  turno: string = " ";
 }
 
 export class HorarioModulo{
   inicio: Time;
   fin: string;
-  horariosFinal: Array<string> = [];
+  horariosFinalManana: Array<string> = [];
+  horariosFinalTarde: Array<string> = [];
+  horariosFinalNoche: Array<string> = [];
 }
 
 // export class Modulo {

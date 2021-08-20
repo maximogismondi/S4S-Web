@@ -32,9 +32,9 @@ export class CrearColegioComponent implements OnInit {
   horasI: number;
   horasF: number;
   horarioFinalizacionModulo: string = '';
-  conjuntoDeTurnos : Array<HorarioModulo> = [];
-  horarios: Array<string> = [];
+  // conjuntoDeTurnos : Array<HorarioModulo> = [];
   // modulos: number;
+  horarios: Array<string> = [];
   inicioHorario: Time;
   finalizacionHorario: Time;
   turnos: number;
@@ -43,10 +43,10 @@ export class CrearColegioComponent implements OnInit {
   cursos: number;
   profes: number;
   materiasArrayCursos: Array<MateriaReducido> = [];
-  crearHorario: boolean = false;
-  cantidadModulosMañana: Turno;
-  cantidadModulosTarde: Turno;
-  cantidadModulosNoche: Turno;
+  crearHorarioManana: boolean = false;
+  crearHorarioTarde : boolean = false;
+  crearHorarioNoche : boolean = false;
+  cantidadTurnos: Array<Turno> = [];
 
   constructor(
     private router: Router,
@@ -69,11 +69,9 @@ export class CrearColegioComponent implements OnInit {
               this.duracionModulo = school.duracionModulo;
               this.inicioHorario = school.inicioHorario;
               this.finalizacionHorario = school.finalizacionHorario;
-              this.horasI = Number(String(this.inicioHorario).split(':')[0]);
-              this.horasF = Number(
-                String(this.finalizacionHorario).split(':')[0]
-              );
               this.horarios.push(String(this.inicioHorario));
+              this.horasI = Number(String(this.inicioHorario).split(':')[0]);
+              this.horasF = Number(String(this.finalizacionHorario).split(':')[0]);
               // this.minutos = Number(String(this.inicioHorario).split(':')[1]);
               // this.modulos = school.modulos.length;
               this.turnos = school.turnos.length;
@@ -162,10 +160,9 @@ export class CrearColegioComponent implements OnInit {
   selectedTurno: HorarioModulo = new HorarioModulo();
 
   addTurno() {
-    // console.log(this.horarios[this.horarios.length-1]);
-    // console.log(this.selectedTurno.inicio);
-    
+
     if (this.horarios[this.horarios.length-1] <= String(this.selectedTurno.inicio)){
+
       this.horarioFinalizacionModulo = String(this.selectedTurno.inicio);
       this.horas = Number(this.horarioFinalizacionModulo.split(':')[0]);
       this.minutos = Number(this.horarioFinalizacionModulo.split(':')[1]) + this.duracionModulo;
@@ -185,37 +182,61 @@ export class CrearColegioComponent implements OnInit {
       if(minsAux.length == 1) minsAux = '0' + minsAux;
 
       this.horarioFinalizacionModulo = hsAux + ':' + minsAux;
-      console.log(this.horarios[this.horarios.length-1]);
       this.horarios.push(this.horarioFinalizacionModulo);
-      console.log(this.horarios[this.horarios.length-1]);
-      // this.selectedTurno.fin = this.horarioFinalizacionModulo;
-      this.selectedTurno.horariosFinal.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
-      this.conjuntoDeTurnos.push(this.selectedTurno);
-      this.turnoArray.push(this.conjuntoDeTurnos[this.conjuntoDeTurnos.length-1]);
+
+      if(this.crearHorarioManana){
+        this.selectedTurno.horariosFinalManana.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
+      }
+      else if(this.crearHorarioTarde){
+        this.selectedTurno.horariosFinalTarde.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
+      }
+      else{
+        this.selectedTurno.horariosFinalNoche.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
+      }
+      // this.conjuntoDeTurnos.push(this.selectedTurno);
+      // this.turnoArray.push(this.conjuntoDeTurnos[this.conjuntoDeTurnos.length-1]);
+      this.turnoArray.push(this.selectedTurno)
       this.selectedTurno = new HorarioModulo();
     }
     else{
       confirm('Ingrese un horario mayor de inicio');
     }
 
-    this.crearHorario = false;
+    this.crearHorarioManana = false;
+    this.crearHorarioTarde = false;
+    this.crearHorarioNoche = false;
   }
-  makeScheduler() {
-    this.crearHorario = true;
-    this.cantidadModulosMañana.turno = "manana";
-    this.cantidadModulosMañana.cantModulos += 1;
-  }
-
-  makeScheduler2() {
-    this.crearHorario = true;
-    this.cantidadModulosTarde.turno = "tarde";
-    this.cantidadModulosTarde.cantModulos += 1;
+  makeSchedulerManana() {
+    this.crearHorarioManana = true;
+    this.cantidadTurnos[0].turno = "manana";
+    this.cantidadTurnos[0].cantModulos += 1;
   }
 
-  makeScheduler3() {
-    this.crearHorario = true;
-    this.cantidadModulosNoche.turno = "noche";
-    this.cantidadModulosNoche.cantModulos += 1;
+  makeSchedulerTarde() {
+    this.crearHorarioTarde = true;
+    this.cantidadTurnos[1].turno = "tarde";
+    this.cantidadTurnos[1].cantModulos += 1;
+    console.log(this.cantidadTurnos[1].turno);
+  }
+
+  makeSchedulerNoche() {
+    this.crearHorarioNoche = true;
+    this.cantidadTurnos[2].turno = "noche";
+    this.cantidadTurnos[2].cantModulos += 1;
+    console.log(this.cantidadTurnos);
+  }
+
+  async goFormAula() {
+    let turnoArrayDiccionario: Array<any> = [];
+    this.cantidadTurnos.forEach((turno) => {
+      turnoArrayDiccionario.push({
+        cantModulos: turno.cantModulos,
+        turno: turno.turno,
+      });
+    });
+    this.afs.collection('schools').doc(this.nombreDocumento).update({
+      turnos: turnoArrayDiccionario,
+    });
   }
 
   // _________________________________________AULAS____________________________________________________________
