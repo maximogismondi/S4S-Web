@@ -236,10 +236,10 @@
                 [class.active]="turno == selectedTurno"
               >
               <td colspan="7">
-                <span
-                >{{ turno.inicio }}</span
-              >
-              / {{ turno.fin }}
+                <span *ngFor="let turnoFinal of turno.horariosFinal">{{ turnoFinal }}</span>
+                <!-- <span
+                >{{ this.selectedTurno.inicio }}</span>
+              / {{this.horarioFinalizacionModulo}} -->
               </td>
               </li>
             </ul>
@@ -248,8 +248,8 @@
             <td colspan="3"></td>
             <td colspan="2">
               <div class="input-group">
-                <input type="Time" required class="form-control" />
-                <button class="btn btn-primary" (click)="addOrEditTurno()">
+                <input type="Time" class="form-control" [(ngModel)]="selectedTurno.inicio"/>
+                <button class="btn btn-primary" (click)="addTurno()">
                   Listo
                 </button>
               </div>

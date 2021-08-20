@@ -38,7 +38,8 @@ export class Turno{
 
 export class HorarioModulo{
   inicio: Time;
-  fin: Time;
+  fin: string;
+  horariosFinal: Array<string> = [];
 }
 
 // export class Modulo {
