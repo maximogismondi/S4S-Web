@@ -33,7 +33,7 @@ export interface Colegio {
 
 export class Turno{
   cantModulos: number = 0;
-  turno: string = " ";
+  turno: string;
 }
 
 export class HorarioModulo{

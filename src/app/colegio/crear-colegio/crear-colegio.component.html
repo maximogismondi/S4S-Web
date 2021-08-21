@@ -228,7 +228,7 @@
           <tr *ngIf="12 >= horasI && horasI > 5">
             <td colspan="7" class="table-active">TURNO MAÑANA</td>
           </tr>
-          <tr>
+          <tr *ngIf="12 >= horasI && horasI > 5">
             <ul class="list-group">
               <li
                 *ngFor="let turno of turnoArray"
@@ -283,7 +283,9 @@
           >
             <td colspan="7" class="table-active">TURNO TARDE</td>
           </tr>
-          <tr>
+          <tr *ngIf="
+          (18 >= horasF && horasF > 12) || (5 >= horasF && horasF > 18)
+        ">
             <ul class="list-group">
               <li
                 *ngFor="let turno of turnoArray"
@@ -291,7 +293,7 @@
                 [class.active]="turno == selectedTurno"
               >
               <td colspan="7">
-                <span *ngFor="let turnoFinalTarde of turno.horariosFinalTarde">{{ turnoFinalTarde }}</span>
+                <span *ngFor="let turnoFinalTarde of turno.horariosFinalTarde"> {{ turnoFinalTarde }} </span>
               </td>
               </li>
             </ul>
@@ -344,7 +346,7 @@
             <td colspan="7" class="table-active">TURNO NOCHE</td>
           </tr>
 
-          <tr>
+          <tr *ngIf="5 >= horasF && horasF > 18">
             <ul class="list-group">
               <li
                 *ngFor="let turno of turnoArray"

@@ -46,6 +46,12 @@ export class CrearColegioComponent implements OnInit {
   crearHorarioManana: boolean = false;
   crearHorarioTarde : boolean = false;
   crearHorarioNoche : boolean = false;
+  manana: Turno = new Turno();
+  tarde: Turno = new Turno();
+  noche: Turno = new Turno();
+  mananaPrimerHorario: boolean = true;
+  tardePrimerHorario: boolean = true;
+  nochePrimerHorario: boolean = true;
   cantidadTurnos: Array<Turno> = [];
 
   constructor(
@@ -186,12 +192,30 @@ export class CrearColegioComponent implements OnInit {
 
       if(this.crearHorarioManana){
         this.selectedTurno.horariosFinalManana.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
+        if(this.mananaPrimerHorario){
+          this.manana.turno = "manana";
+          this.cantidadTurnos.push(this.manana);
+          this.mananaPrimerHorario = false;
+        }
+        this.cantidadTurnos[0].cantModulos += 1;
       }
       else if(this.crearHorarioTarde){
         this.selectedTurno.horariosFinalTarde.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
+        if(this.tardePrimerHorario){
+          this.tarde.turno="tarde";
+          this.cantidadTurnos.push(this.tarde);
+          this.tardePrimerHorario = false;
+        }
+        this.cantidadTurnos[1].cantModulos += 1;
       }
       else{
         this.selectedTurno.horariosFinalNoche.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
+        if(this.nochePrimerHorario){
+          this.noche.turno="noche";
+          this.cantidadTurnos.push(this.noche);
+          this.nochePrimerHorario = false;
+        }
+        this.cantidadTurnos[2].cantModulos += 1;
       }
       // this.conjuntoDeTurnos.push(this.selectedTurno);
       // this.turnoArray.push(this.conjuntoDeTurnos[this.conjuntoDeTurnos.length-1]);
@@ -206,24 +230,18 @@ export class CrearColegioComponent implements OnInit {
     this.crearHorarioTarde = false;
     this.crearHorarioNoche = false;
   }
+
+  
   makeSchedulerManana() {
-    this.crearHorarioManana = true;
-    this.cantidadTurnos[0].turno = "manana";
-    this.cantidadTurnos[0].cantModulos += 1;
+    this.crearHorarioManana = true;    
   }
 
   makeSchedulerTarde() {
     this.crearHorarioTarde = true;
-    this.cantidadTurnos[1].turno = "tarde";
-    this.cantidadTurnos[1].cantModulos += 1;
-    console.log(this.cantidadTurnos[1].turno);
   }
 
   makeSchedulerNoche() {
     this.crearHorarioNoche = true;
-    this.cantidadTurnos[2].turno = "noche";
-    this.cantidadTurnos[2].cantModulos += 1;
-    console.log(this.cantidadTurnos);
   }
 
   async goFormAula() {
