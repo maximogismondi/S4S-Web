@@ -28,7 +28,7 @@ export interface Colegio {
   // modulos: Array<Modulo>;
   materias: Array<Materia>;
   cursos: Array<Curso>;
-  profes: Array<Profesor>;
+  profesores: Array<Profesor>;
 }
 
 export class Turno{
@@ -57,36 +57,37 @@ export class Aula {
   otro: string = "Se selecciono el tipo normal";
 }
 
-export class Materia {
-  id: number = 0;
-  nombre: string;
-  cantModulos: number;
-  cantProfesores: number;
-  espacioEntreDias: number;
-  tipo: string;
-  otro: string = "Se selecciono el tipo normal";
-  cantidadModulosContinuos: number;
-}
-
-export class MateriaReducido{
-  nombre: string;
-  valor: boolean;
-}
-
 export class Curso {
   id: number = 0;
   nombre: string;
-  turnoPreferido: number;
-  cantAlumnos: number;
-  materiasCurso: Array<string> = [];
+  // turnoPreferido: number;
+  // cantAlumnos: number;
+  // materiasCurso: Array<string> = [];
 }
 
 export class Profesor {
   id: number = 0;
   nombre: string;
-  dni: number;
-  materiasCapacitado: Array<string>;
-  turnoPreferido: number;
-  condiciones: Array<string>;
+  // dni: number;
+  // materiasCapacitado: Array<string>;
+  // turnoPreferido: number;
+  // condiciones: Array<string>;
   // condiciones: Map<string, any>;
+}
+
+export class Materia {
+  id: number = 0;
+  nombre: string;
+  cantidadDeModulosTotal: number;
+  // cantProfesores: number;
+  // espacioEntreDias: number;
+  // tipo: string;
+  // otro: string = "Se selecciono el tipo normal";
+  cantidadMaximaDeModulosPorDia: number;
+  profesoresCapacitados: Array<string> = [];
+}
+
+export class MateriaReducido{
+  nombre: string;
+  valor: boolean;
 }

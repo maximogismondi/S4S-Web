@@ -41,7 +41,7 @@ export class CrearColegioComponent implements OnInit {
   aulas: number;
   materias: number;
   cursos: number;
-  profes: number;
+  profesores: number;
   materiasArrayCursos: Array<MateriaReducido> = [];
   crearHorarioManana: boolean = false;
   crearHorarioTarde : boolean = false;
@@ -84,7 +84,7 @@ export class CrearColegioComponent implements OnInit {
               this.aulas = school.aulas.length;
               this.materias = school.materias.length;
               this.cursos = school.cursos.length;
-              this.profes = school.profes.length;
+              this.profesores = school.profesores.length;
               school.materias.forEach((materia) => {
                 let materiaAux: MateriaReducido = {
                   nombre: materia.nombre,
@@ -272,6 +272,9 @@ export class CrearColegioComponent implements OnInit {
       this.selectedAula.id = this.aulaArray.length + 1;
       this.aulaArray.push(this.selectedAula);
     }
+    if(this.selectedAula.tipo == "Normal"){
+      this.selectedAula.otro = "Se selecciono el tipo normal";
+    }
     this.selectedAula = new Aula();
   }
 
@@ -282,11 +285,11 @@ export class CrearColegioComponent implements OnInit {
     }
   }
 
-  async goFormMateria() {
+  async goFormCurso() {
     let aulaArrayDiccionario: Array<any> = [];
     this.aulaArray.forEach((aula) => {
       aulaArrayDiccionario.push({
-        id: aula.id,
+        // id: aula.id,
         nombre: aula.nombre,
         tipo: aula.tipo,
         otro: aula.otro,
@@ -294,52 +297,6 @@ export class CrearColegioComponent implements OnInit {
     });
     this.afs.collection('schools').doc(this.nombreDocumento).update({
       aulas: aulaArrayDiccionario,
-    });
-  }
-
-  // _______________________________________MATERIAS____________________________________________________________
-
-  materiaArray: Materia[] = [];
-
-  selectedMateria: Materia = new Materia();
-
-  openForEditMateria(materia: Materia) {
-    this.selectedMateria = materia;
-  }
-
-  addOrEditMateria() {
-    if (this.selectedMateria.id == 0) {
-      this.selectedMateria.id = this.materiaArray.length + 1;
-      this.materiaArray.push(this.selectedMateria);
-    }
-    this.selectedMateria = new Materia();
-  }
-
-  deleteMateria() {
-    if (confirm('¿Estas seguro/a que quieres eliminar esta materia?')) {
-      this.materiaArray = this.materiaArray.filter(
-        (x) => x != this.selectedMateria
-      );
-      this.selectedMateria = new Materia();
-    }
-  }
-
-  async goFormCurso() {
-    let materiaArrayDiccionario: Array<any> = [];
-    this.materiaArray.forEach((materia) => {
-      materiaArrayDiccionario.push({
-        id: materia.id,
-        nombre: materia.nombre,
-        cantModulos: materia.cantModulos,
-        cantProfesores: materia.cantProfesores,
-        espacioEntreDias: materia.espacioEntreDias,
-        tipoAula: materia.tipo,
-        otro: materia.otro,
-        cantidadModulosContinuos: materia.cantidadModulosContinuos,
-      });
-    });
-    this.afs.collection('schools').doc(this.nombreDocumento).update({
-      materias: materiaArrayDiccionario,
     });
   }
 
@@ -356,34 +313,31 @@ export class CrearColegioComponent implements OnInit {
   addOrEditCurso() {
     if (this.selectedCurso.id == 0) {
       this.selectedCurso.id = this.cursoArray.length + 1;
-      this.materiasArrayCursos.forEach((materia) => {
-        if (materia.valor == true) {
-          this.selectedCurso.materiasCurso.push(materia.nombre);
-        }
-      });
+      // this.materiasArrayCursos.forEach((materia) => {
+      //   if (materia.valor == true) {
+      //     this.selectedCurso.materiasCurso.push(materia.nombre);
+      //   }
+      // });
       this.cursoArray.push(this.selectedCurso);
     }
     this.selectedCurso = new Curso();
-    // for (let i = 0; i < this.cursoArray.length; i++) {
-    //   console.log(this.cursoArray[i]);
-    // }
   }
 
-  clicked(nombreMateria: string) {
-    for (let i = 0; i < this.materiasArrayCursos.length; i++) {
-      if (
-        this.materiasArrayCursos[i].nombre == nombreMateria &&
-        this.materiasArrayCursos[i].valor == false
-      ) {
-        this.materiasArrayCursos[i].valor = true;
-      } else if (
-        this.materiasArrayCursos[i].nombre == nombreMateria &&
-        this.materiasArrayCursos[i].valor == true
-      ) {
-        this.materiasArrayCursos[i].valor = false;
-      }
-    }
-  }
+  // clicked(nombreMateria: string) {
+  //   for (let i = 0; i < this.materiasArrayCursos.length; i++) {
+  //     if (
+  //       this.materiasArrayCursos[i].nombre == nombreMateria &&
+  //       this.materiasArrayCursos[i].valor == false
+  //     ) {
+  //       this.materiasArrayCursos[i].valor = true;
+  //     } else if (
+  //       this.materiasArrayCursos[i].nombre == nombreMateria &&
+  //       this.materiasArrayCursos[i].valor == true
+  //     ) {
+  //       this.materiasArrayCursos[i].valor = false;
+  //     }
+  //   }
+  // }
 
   deleteCurso() {
     if (confirm('¿Estas seguro/a que quieres eliminar este curso?')) {
@@ -396,15 +350,15 @@ export class CrearColegioComponent implements OnInit {
     let CursoArrayDiccionario: Array<any> = [];
     this.cursoArray.forEach((curso) => {
       CursoArrayDiccionario.push({
-        id: curso.id,
+        // id: curso.id,
         nombre: curso.nombre,
-        turnoPreferido: curso.turnoPreferido,
-        cantAlumnos: curso.cantAlumnos,
-        materiasCurso: curso.materiasCurso,
+        // turnoPreferido: curso.turnoPreferido,
+        // cantAlumnos: curso.cantAlumnos,
+        // materiasCurso: curso.materiasCurso,
       });
     });
     this.afs.collection('schools').doc(this.nombreDocumento).update({
-      modulos: CursoArrayDiccionario,
+      cursos: CursoArrayDiccionario,
     });
   }
 
@@ -435,20 +389,67 @@ export class CrearColegioComponent implements OnInit {
     }
   }
 
-  async goFormFinalizar() {
+  async goFormMateria() {
     let ProfesorArrayDiccionario: Array<any> = [];
     this.profesorArray.forEach((profesor) => {
       ProfesorArrayDiccionario.push({
-        id: profesor.id,
+        // id: profesor.id,
         nombre: profesor.nombre,
-        dni: profesor.dni,
-        'materias capacitado': profesor.materiasCapacitado,
-        turnoPreferido: profesor.turnoPreferido,
-        condiciones: profesor.condiciones,
+        // dni: profesor.dni,
+        // 'materias capacitado': profesor.materiasCapacitado,
+        // turnoPreferido: profesor.turnoPreferido,
+        // condiciones: profesor.condiciones,
       });
     });
     this.afs.collection('schools').doc(this.nombreDocumento).update({
-      modulos: ProfesorArrayDiccionario,
+      profesores: ProfesorArrayDiccionario,
     });
   }
+
+  // _______________________________________MATERIAS____________________________________________________________
+
+  materiaArray: Materia[] = [];
+
+  selectedMateria: Materia = new Materia();
+
+  openForEditMateria(materia: Materia) {
+    this.selectedMateria = materia;
+  }
+
+  addOrEditMateria() {
+    if (this.selectedMateria.id == 0) {
+      this.selectedMateria.id = this.materiaArray.length + 1;
+      this.materiaArray.push(this.selectedMateria);
+    }
+    this.selectedMateria = new Materia();
+  }
+
+  deleteMateria() {
+    if (confirm('¿Estas seguro/a que quieres eliminar esta materia?')) {
+      this.materiaArray = this.materiaArray.filter(
+        (x) => x != this.selectedMateria
+      );
+      this.selectedMateria = new Materia();
+    }
+  }
+
+  async goFormFinalizar() {
+    let materiaArrayDiccionario: Array<any> = [];
+    this.materiaArray.forEach((materia) => {
+      materiaArrayDiccionario.push({
+        id: materia.id,
+        nombre: materia.nombre,
+        cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
+        // cantProfesores: materia.cantProfesores,
+        // espacioEntreDias: materia.espacioEntreDias,
+        // tipoAula: materia.tipo,
+        // otro: materia.otro,
+        cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
+      });
+    });
+    this.afs.collection('schools').doc(this.nombreDocumento).update({
+      materias: materiaArrayDiccionario,
+    });
+  }
+
 }

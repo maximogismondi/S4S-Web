@@ -109,7 +109,7 @@ export class AuthService {
       // modulos: [],
       materias: [],
       cursos: [],
-      profes: [],
+      profesores: [],
     };
     if (
       school.nombre != '' &&
@@ -165,7 +165,7 @@ export class AuthService {
       // modulos: [],
       materias: [],
       cursos: [],
-      profes: [],
+      profesores: [],
     };
 
     return schoolRef.set(data, { merge: true });
