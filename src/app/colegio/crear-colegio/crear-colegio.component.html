@@ -219,7 +219,7 @@
           <th
             *ngIf="12 >= horasI && horasI > 5"
             scope="row"
-            class="align-middle"
+            class="align-middle bg-dark text-white"
           >
             {{ inicioHorario }}
           </th>
@@ -228,11 +228,11 @@
           <tr *ngIf="12 >= horasI && horasI > 5">
             <td colspan="7" class="table-active">TURNO MAÑANA</td>
           </tr>
-          <tr *ngIf="12 >= horasI && horasI > 5">
+          <tr *ngIf="12 >= horasI && horasI > 5" class="bg-dark">
             <ul class="list-group">
               <li
                 *ngFor="let turno of turnoArray"
-                class="list-group-item list-group-item-action"
+                class="list-group-item bg-dark text-white"
                 [class.active]="turno == selectedTurno"
               >
               <td colspan="7">
@@ -278,18 +278,18 @@
 
           <tr
             *ngIf="
-              (18 >= horasF && horasF > 12) || (5 >= horasF && horasF > 18)
+              18 >= horasF && horasF > 12 || horasF > 18
             "
           >
             <td colspan="7" class="table-active">TURNO TARDE</td>
           </tr>
           <tr *ngIf="
-          (18 >= horasF && horasF > 12) || (5 >= horasF && horasF > 18)
-        ">
+          18 >= horasF && horasF > 12 || horasF > 18
+        " class="bg-dark">
             <ul class="list-group">
               <li
                 *ngFor="let turno of turnoArray"
-                class="list-group-item list-group-item-action"
+                class="list-group-item bg-dark text-white"
                 [class.active]="turno == selectedTurno"
               >
               <td colspan="7">
@@ -313,7 +313,7 @@
 
           <tr
             *ngIf="
-              (18 >= horasF && horasF > 12) || (5 >= horasF && horasF > 18)
+            18 >= horasF && horasF > 12 || horasF > 18
             "
           >
             <td colspan="7" class="table-light">
@@ -336,21 +336,21 @@
           <th
             *ngIf="18 >= horasF && horasF > 12"
             scope="row"
-            class="align-middle"
+            class="align-middle bg-dark text-white"
           >
             {{ finalizacionHorario }}
           </th>
           <!-- NOCHE -->
           <!-- <th *ngIf="5 >= horasI && horasI > 18" scope="row" class="align-middle">{{ inicioHorario }}</th> -->
-          <tr *ngIf="5 >= horasF && horasF > 18">
+          <tr *ngIf="horasF > 18">
             <td colspan="7" class="table-active">TURNO NOCHE</td>
           </tr>
 
-          <tr *ngIf="5 >= horasF && horasF > 18">
+          <tr *ngIf="horasF > 18" class="bg-dark">
             <ul class="list-group">
               <li
                 *ngFor="let turno of turnoArray"
-                class="list-group-item list-group-item-action"
+                class="list-group-item bg-dark text-white"
                 [class.active]="turno == selectedTurno"
               >
               <td colspan="7">
@@ -375,7 +375,7 @@
             <td colspan="3"></td>
           </tr>
 
-          <tr *ngIf="5 >= horasF && horasF > 18">
+          <tr *ngIf="horasF > 18">
             <td colspan="7" class="table-light">
               <button class="btn btn-primary" (click)="makeSchedulerNoche()">
                 <svg
@@ -394,9 +394,9 @@
             </td>
           </tr>
           <th
-            *ngIf="5 >= horasF && horasF > 18"
+            *ngIf="horasF > 18"
             scope="row"
-            class="align-middle"
+            class="align-middle bg-dark text-white"
           >
             {{ finalizacionHorario }}
           </th>
@@ -953,7 +953,6 @@
   "
   class="container mx-auto my-4"
   id="divFinalizar"
-  style="display: none"
 >
   <h1>FINALIZAR</h1>
 </div>
