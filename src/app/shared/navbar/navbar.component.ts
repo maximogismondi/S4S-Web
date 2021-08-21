@@ -17,13 +17,20 @@ export class NavbarComponent {
   // user = this.authSvc.userData;
   // verificado: boolean = true;
   public userData: any;
+  nombreUsuario:string;
 
-  constructor(private authSvc: AuthService, private router: Router, private afs: AngularFirestore, public afAuth: AngularFireAuth,) {
+  constructor(
+    private authSvc: AuthService,
+    private router: Router,
+    private afs: AngularFirestore,
+    public afAuth: AngularFireAuth
+  ) {
     // authSvc.afAuth.authState.subscribe((user) => {
     //   if (!user) {
     //     this.verificado = false;
     //   }
     // });
+
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.afs
@@ -37,15 +44,27 @@ export class NavbarComponent {
         this.userData = null;
       }
     });
+
+    // authSvc.afAuth.authState.subscribe((user) => {
+    //   if (user) {
+    //     this.afs.collection('users', (ref) =>
+    //         ref.where(user.uid, '==', this.authSvc.userData.uid)
+    //       ).snapshotChanges().pipe(
+    //         map((users) => {
+    //           const usuario = users[0].payload.doc.data() as User;
+    //           this.nombreUsuario = usuario.displayName;
+    //         })
+    //       ).subscribe();
+    //   }
+    // });
   }
 
   async onLogout() {
     await this.authSvc.logout();
   }
-  
 
   // navbarCollapse(){
   //   document.getElementById('buttonNavbarColor02')?.getAttribute('aria-expanded');
-    
+
   // }
 }

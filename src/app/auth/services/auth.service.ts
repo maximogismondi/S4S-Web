@@ -111,6 +111,12 @@ export class AuthService {
       cursos: [],
       profesores: [],
     };
+    if(school.duracionModulo>60 || school.duracionModulo<1){
+      confirm("La duracion de cada modulo debe estar entre 1 a 60 min (incluidos los extremos)");
+    }
+    if(school.telefono.length == 8){
+      confirm("El numero de telefono no debe contener ningun espacio y ningun signo");
+    }
     if (
       school.nombre != '' &&
       school.direccion != '' &&
@@ -123,6 +129,9 @@ export class AuthService {
     ) {
       this.SchoolData(school);
       this.router.navigate(['/crear-colegio']);
+    }
+    else{
+      confirm("Poner valores que se piden");
     }
   }
 

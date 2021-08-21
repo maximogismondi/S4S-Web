@@ -229,7 +229,7 @@
             <td colspan="7" class="table-active">TURNO MAÑANA</td>
           </tr>
           <tr *ngIf="12 >= horasI && horasI > 5" class="bg-dark">
-            <ul class="list-group">
+            <ul class="list-group" *ngIf="mananaPrimerHorario == false">
               <li
                 *ngFor="let turno of turnoArray"
                 class="list-group-item bg-dark text-white"
@@ -286,7 +286,7 @@
           <tr *ngIf="
           18 >= horasF && horasF > 12 || horasF > 18
         " class="bg-dark">
-            <ul class="list-group">
+            <ul class="list-group" *ngIf="tardePrimerHorario == false">
               <li
                 *ngFor="let turno of turnoArray"
                 class="list-group-item bg-dark text-white"
@@ -347,7 +347,7 @@
           </tr>
 
           <tr *ngIf="horasF > 18" class="bg-dark">
-            <ul class="list-group">
+            <ul class="list-group" *ngIf="nochePrimerHorario == false">
               <li
                 *ngFor="let turno of turnoArray"
                 class="list-group-item bg-dark text-white"

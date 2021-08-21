@@ -121,7 +121,7 @@
                     type="number"
                     min="10000000"
                     max="99999999"
-                    placeholder="Telefono del Colegio"
+                    placeholder="Telefono del Colegio (sin espacion ni signos, solo numeros)"
                     required
                     class="form-control"
                     formControlName="telefono"
@@ -186,7 +186,7 @@
       <!-- id="botonesEleccionUnirse" -->
       <div *ngIf="fueAUnirse == false">
         <div class="d-grid">
-          <button (click)="irUnirse()" class="btn btn-primary btn-lg mt-4">
+          <button (click)="irUnirse()" disabled class="btn btn-primary btn-lg mt-4">
             UNIRSE
             <svg
               xmlns="http://www.w3.org/2000/svg"
