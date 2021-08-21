@@ -75,6 +75,11 @@ export class Profesor {
   // condiciones: Map<string, any>;
 }
 
+export class ProfesorReducido{
+  nombre: string;
+  valor: boolean;
+}
+
 export class Materia {
   id: number = 0;
   nombre: string;
@@ -84,10 +89,11 @@ export class Materia {
   // tipo: string;
   // otro: string = "Se selecciono el tipo normal";
   cantidadMaximaDeModulosPorDia: number;
+  cursoDado: string;
   profesoresCapacitados: Array<string> = [];
 }
 
-export class MateriaReducido{
-  nombre: string;
-  valor: boolean;
-}
+// export class MateriaReducido{
+//   nombre: string;
+//   valor: boolean;
+// }

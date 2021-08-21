@@ -783,10 +783,10 @@
         [class.active]="materia == selectedMateria"
       >
         <span class="badge bg-primary">{{ materia.id }}</span>
-        <!-- Nombre: {{ materia.nombre }} / Cantidad de modulo:
-        {{ materia.cantModulos }} / Cantidad de modulos continuos:
-        {{ materia.cantidadMaximaDeModulosPorDia }} / Cantidad de profesores que la
-        dan: {{ materia.cantProfesores }} / Espacio entre cada dia:
+         Nombre: {{ materia.nombre }} / Cantidad de modulo total: {{ materia.cantidadDeModulosTotal }}
+         / Cantidad maxima de modulos por dia: {{ materia.cantidadMaximaDeModulosPorDia }} / Curso: {{materia.cursoDado}}
+         / Profesores capacitados: <p *ngFor="let profesores of materia.profesoresCapacitados">- {{ profesores }}</p>
+       <!-- / Cantidad de profesores que la dan: {{ materia.cantProfesores }} / Espacio entre cada dia:
         {{ materia.espacioEntreDias }} / Tipo de aula: {{ materia.tipo }} /
         Otro: {{ materia.otro }} -->
       </li>
@@ -812,11 +812,37 @@
 
           <input
             type="number"
-            min="0"
+            min="1"
             [(ngModel)]="selectedMateria.cantidadMaximaDeModulosPorDia"
             placeholder="Cantidad maxima de modulos por dia"
             class="form-control"
           />
+
+          <p>
+            <label class="mt-2">Curso</label>
+            <select class="form-select" [(ngModel)]="selectedMateria.cursoDado">
+            <option value="{{curso}}" *ngFor=" let curso of totalCursosColegio"> {{ curso }} </option>
+            </select>
+          </p>
+
+          <label class="mt-2">Profesores:</label>
+          <table>
+            <tr *ngFor="let profesor of profesoresArrayMaterias">
+              <td>
+                <div class="form-check mt-2">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    (click)="clicked(profesor.nombre)"
+                    id="{{ profesor.nombre }}"
+                  />
+                  <label class="form-check-label" for="{{ profesor.nombre }}">
+                    {{ profesor.nombre }}
+                  </label>
+                </div>
+              </td>
+            </tr>
+          </table>
 
           <!-- <input
             type="number"

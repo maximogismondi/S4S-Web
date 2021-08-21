@@ -11,9 +11,10 @@ import {
   Curso,
   HorarioModulo,
   Materia,
-  MateriaReducido,
+  // MateriaReducido,
   // Modulo,
   Profesor,
+  ProfesorReducido,
   Turno,
 } from 'src/app/shared/interface/user.interface';
 
@@ -42,7 +43,8 @@ export class CrearColegioComponent implements OnInit {
   materias: number;
   cursos: number;
   profesores: number;
-  materiasArrayCursos: Array<MateriaReducido> = [];
+  // materiasArrayCursos: Array<MateriaReducido> = [];
+  profesoresArrayMaterias: Array<ProfesorReducido> = [];
   crearHorarioManana: boolean = false;
   crearHorarioTarde : boolean = false;
   crearHorarioNoche : boolean = false;
@@ -53,6 +55,7 @@ export class CrearColegioComponent implements OnInit {
   tardePrimerHorario: boolean = true;
   nochePrimerHorario: boolean = true;
   cantidadTurnos: Array<Turno> = [];
+  totalCursosColegio: Array<string> = [];
 
   constructor(
     private router: Router,
@@ -85,13 +88,16 @@ export class CrearColegioComponent implements OnInit {
               this.materias = school.materias.length;
               this.cursos = school.cursos.length;
               this.profesores = school.profesores.length;
-              school.materias.forEach((materia) => {
-                let materiaAux: MateriaReducido = {
-                  nombre: materia.nombre,
+              school.profesores.forEach((profesor) => {
+                let profesorAux: ProfesorReducido = {
+                  nombre: profesor.nombre,
                   valor: false,
                 };
-                this.materiasArrayCursos.push(materiaAux);
+                this.profesoresArrayMaterias.push(profesorAux);
               });
+              school.cursos.forEach((cursos) => {
+                this.totalCursosColegio.push(cursos.nombre);
+              })
             })
           )
           .subscribe();
@@ -362,7 +368,7 @@ export class CrearColegioComponent implements OnInit {
     });
   }
 
-  // _______________________________________PROFES______________________________________________________________
+  // _______________________________________PROFESORES__________________________________________________________
 
   profesorArray: Profesor[] = [];
 
@@ -419,9 +425,30 @@ export class CrearColegioComponent implements OnInit {
   addOrEditMateria() {
     if (this.selectedMateria.id == 0) {
       this.selectedMateria.id = this.materiaArray.length + 1;
+      this.profesoresArrayMaterias.forEach((profesor) => {
+        if (profesor.valor == true) {
+          this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
+        }
+      });
       this.materiaArray.push(this.selectedMateria);
     }
     this.selectedMateria = new Materia();
+  }
+
+  clicked(nombreProfesor: string) {
+    for (let i = 0; i < this.profesoresArrayMaterias.length; i++) {
+      if (
+        this.profesoresArrayMaterias[i].nombre == nombreProfesor &&
+        this.profesoresArrayMaterias[i].valor == false
+      ) {
+        this.profesoresArrayMaterias[i].valor = true;
+      } else if (
+        this.profesoresArrayMaterias[i].nombre == nombreProfesor &&
+        this.profesoresArrayMaterias[i].valor == true
+      ) {
+        this.profesoresArrayMaterias[i].valor = false;
+      }
+    }
   }
 
   deleteMateria() {
@@ -440,10 +467,12 @@ export class CrearColegioComponent implements OnInit {
         id: materia.id,
         nombre: materia.nombre,
         cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
+        curso: materia.cursoDado,
         // cantProfesores: materia.cantProfesores,
         // espacioEntreDias: materia.espacioEntreDias,
         // tipoAula: materia.tipo,
         // otro: materia.otro,
+        profesoresCapacitados: materia.profesoresCapacitados,
         cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
       });
     });
