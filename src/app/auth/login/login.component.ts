@@ -47,6 +47,11 @@ export class LoginComponent implements OnInit {
     } else if (user) {
       this.router.navigate(['/verificacion-email']);
     }
+    // else{
+    //  if(confirm("Este ususario no existe ¿Desea registrarse?")){
+    //   this.router.navigate(['/register']);
+    //   }
+    // }
   }
 
   async onGoogleLogin() {

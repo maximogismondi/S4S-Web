@@ -14,6 +14,7 @@ export class EleccionComponent implements OnInit {
   NombreColegio: string;
   fueACrear:boolean = false;
   fueAUnirse:boolean = false;
+  
   constructor(
     private router: Router,
     private fb: FormBuilder,
