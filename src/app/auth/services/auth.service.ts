@@ -111,30 +111,58 @@ export class AuthService {
       cursos: [],
       profesores: [],
     };
-    // if(String(school.telefono).length != 8){
-    //   console.log(school.telefono)
-    //   console.log(school.telefono.length)
-    //   confirm("El numero de telefono no es igual a los 8 digitos, recuerda que no debe contener ningun espacio y ningun signo");
-    // }
-    if(school.duracionModulo>60 || school.duracionModulo<1){
+    if (
+      String(school.nombre).length === 0 ||
+      String(school.direccion).length === 0 ||
+      String(school.localidad).length === 0 ||
+      String(school.telefono).length === 0 ||
+      String(school.duracionModulo).length === 0 ||
+      String(school.inicioHorario).length === 0 ||
+      String(school.finalizacionHorario).length === 0 ||
+      String(school.inicioHorario).length === 0 ||
+      String(school.finalizacionHorario).length === 0
+      // school.nombre != ' ' &&
+      // school.direccion != ' ' &&
+      // school.localidad != ' ' &&
+      // school.telefono != ' ' &&
+      // school.duracionModulo != null &&
+      // school.inicioHorario != null &&
+      // school.finalizacionHorario != null &&
+      // school.inicioHorario < school.finalizacionHorario
+    ){
+      confirm("Completar los casilleros obligatorios");
+      // Poner los valores que se piden
+    }
+    else if(String(school.telefono).length != 8){
+      // console.log(school.nombre)
+      // console.log(school.telefono)
+      // console.log(school.telefono.length)
+      confirm("El numero de telefono no es igual a los 8 digitos, recuerda que no debe contener ningun espacio, ningun signo y debe ser de tamaño 8");
+    }
+    else if(school.duracionModulo>60 || school.duracionModulo<1){
       // console.log(school.duracionModulo)
       confirm("La duracion de cada modulo debe estar entre 1 a 60 min (incluidos los extremos)");
     }
-    else if (
-      school.nombre != ' ' &&
-      school.direccion != ' ' &&
-      school.localidad != ' ' &&
-      school.telefono != ' ' &&
-      school.duracionModulo != null &&
-      school.inicioHorario != null &&
-      school.finalizacionHorario != null &&
-      school.inicioHorario < school.finalizacionHorario
-    ) {
+    else if(school.inicioHorario > school.finalizacionHorario){
+      confirm("El horario de finalizacion es mas chico que el de inicio");
+    }
+    // else if (
+    //   school.nombre != ' ' &&
+    //   school.direccion != ' ' &&
+    //   school.localidad != ' ' &&
+    //   school.telefono != ' ' &&
+    //   school.duracionModulo != null &&
+    //   school.inicioHorario != null &&
+    //   school.finalizacionHorario != null &&
+    //   school.inicioHorario < school.finalizacionHorario
+    // ) {
+    //   this.SchoolData(school);
+    //   this.router.navigate(['/crear-colegio']);
+    // }
+    else{
       this.SchoolData(school);
       this.router.navigate(['/crear-colegio']);
-    }
-    else{
-      confirm("Poner valores que se piden");
+      // confirm("Poner los valores que se piden");
     }
   }
 
