@@ -111,30 +111,31 @@ export class AuthService {
       cursos: [],
       profesores: [],
     };
-    // if(String(school.telefono).length != 8){
-    //   console.log(school.telefono)
-    //   console.log(school.telefono.length)
-    //   confirm("El numero de telefono no es igual a los 8 digitos, recuerda que no debe contener ningun espacio y ningun signo");
+
+    // if (
+      //school.nombre == ' ' &&
+      //school.direccion == ' ' &&
+      //school.localidad == ' ' &&
+      //school.telefono == ' '
+      //school.duracionModulo == null
+      //String(school.inicioHorario) == null &&
+      //String(school.finalizacionHorario) == null
+    // ){
+    //   confirm("Poner los valores que se piden");
     // }
-    if(school.duracionModulo>60 || school.duracionModulo<1){
+    if(String(school.telefono).length != 8){
+      console.log(school.inicioHorario)
+      // console.log(school.telefono.length)
+      confirm("El numero de telefono no es igual a los 8 digitos, recuerda que no debe contener ningun espacio, ningun signo y debe ser igual a 8");
+    }
+    
+    else if(school.duracionModulo>60 || school.duracionModulo<1){
       // console.log(school.duracionModulo)
       confirm("La duracion de cada modulo debe estar entre 1 a 60 min (incluidos los extremos)");
     }
-    else if (
-      school.nombre != ' ' &&
-      school.direccion != ' ' &&
-      school.localidad != ' ' &&
-      school.telefono != ' ' &&
-      school.duracionModulo != null &&
-      school.inicioHorario != null &&
-      school.finalizacionHorario != null &&
-      school.inicioHorario < school.finalizacionHorario
-    ) {
+    else {
       this.SchoolData(school);
       this.router.navigate(['/crear-colegio']);
-    }
-    else{
-      confirm("Poner valores que se piden");
     }
   }
 
