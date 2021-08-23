@@ -87,14 +87,20 @@ export class CrearColegioComponent implements OnInit {
               this.aulas = school.aulas.length;
               this.materias = school.materias.length;
               this.cursos = school.cursos.length;
+              // console.log(this.profesores)
               this.profesores = school.profesores.length;
+              // console.log(this.profesores)
+              this.profesoresArrayMaterias = [];
               school.profesores.forEach((profesor) => {
+                
                 let profesorAux: ProfesorReducido = {
                   nombre: profesor.nombre,
                   valor: false,
                 };
+                // console.log(profesorAux)
                 this.profesoresArrayMaterias.push(profesorAux);
               });
+              this.totalCursosColegio = [];
               school.cursos.forEach((cursos) => {
                 this.totalCursosColegio.push(cursos.nombre);
               })
