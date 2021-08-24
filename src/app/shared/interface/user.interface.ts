@@ -1,5 +1,3 @@
-import { Time } from "@angular/common";
-
 export class User {
   uid: string;
   email: string;
@@ -20,8 +18,8 @@ export interface Colegio {
   localidad: string;
   telefono: string;
   duracionModulo: number;
-  inicioHorario: Time;
-  finalizacionHorario: Time;
+  inicioHorario: string;
+  finalizacionHorario: string;
   usuariosExtensiones: Array<string>;
   aulas: Array<Aula>;
   turnos: Array<Turno>;
@@ -32,17 +30,38 @@ export interface Colegio {
 }
 
 export class Turno{
-  cantModulos: number = 0;
-  turno: string;
+  nombreTurno: string;
+  modulos: Array<Modulo> = [];
+  constructor(
+    nombreTurno : string
+  ) {
+    this.nombreTurno = nombreTurno;
+  }
 }
 
-export class HorarioModulo{
-  inicio: Time;
-  fin: string;
-  horariosFinalManana: Array<string> = [];
-  horariosFinalTarde: Array<string> = [];
-  horariosFinalNoche: Array<string> = [];
+export class Modulo{
+  inicio: string;
+  final: string;
+  constructor(
+    inicio : string, final : string
+  ) {
+    this.inicio = inicio;
+    this.final = final;
+  }
 }
+
+// export class Turno{
+//   cantModulos: number = 0;
+//   turno: string;
+// }
+
+// export class HorarioModulo{
+//   inicio: Time;
+//   fin: string;
+//   horariosFinalManana: Array<string> = [];
+//   horariosFinalTarde: Array<string> = [];
+//   horariosFinalNoche: Array<string> = [];
+// }
 
 // export class Modulo {
 //   id: number = 0;

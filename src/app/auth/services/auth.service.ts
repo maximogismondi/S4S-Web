@@ -88,8 +88,8 @@ export class AuthService {
     localidad: string,
     telefono: string,
     duracionModulo: number,
-    inicioHorario: Time,
-    finalizacionHorario: Time,
+    inicioHorario: string,
+    finalizacionHorario: string,
     id: string
   ) {
     const school: Colegio = {

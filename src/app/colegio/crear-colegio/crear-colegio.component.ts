@@ -1,4 +1,3 @@
-import { Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,13 +8,14 @@ import {
   Aula,
   Colegio,
   Curso,
-  HorarioModulo,
+  // HorarioModulo,
   Materia,
   // MateriaReducido,
   // Modulo,
   Profesor,
   ProfesorReducido,
   Turno,
+  Modulo,
 } from 'src/app/shared/interface/user.interface';
 
 @Component({
@@ -28,16 +28,14 @@ export class CrearColegioComponent implements OnInit {
   nombreColegio: string;
   nombreDocumento: string;
   duracionModulo: number;
-  minutos: number;
-  horas: number;
-  horasI: number;
-  horasF: number;
-  horarioFinalizacionModulo: string = '';
+  // minutos: number;
+  // horas: number;
+  // horarioFinalizacionModulo: string = '';
   // conjuntoDeTurnos : Array<HorarioModulo> = [];
   // modulos: number;
   horarios: Array<string> = [];
-  inicioHorario: Time;
-  finalizacionHorario: Time;
+  inicioHorario: string;
+  finalizacionHorario: string;
   turnos: number;
   aulas: number;
   materias: number;
@@ -45,17 +43,17 @@ export class CrearColegioComponent implements OnInit {
   profesores: number;
   // materiasArrayCursos: Array<MateriaReducido> = [];
   profesoresArrayMaterias: Array<ProfesorReducido> = [];
-  crearHorarioManana: boolean = false;
-  crearHorarioTarde : boolean = false;
-  crearHorarioNoche : boolean = false;
-  manana: Turno = new Turno();
-  tarde: Turno = new Turno();
-  noche: Turno = new Turno();
-  mananaPrimerHorario: boolean = true;
-  tardePrimerHorario: boolean = true;
-  nochePrimerHorario: boolean = true;
   cantidadTurnos: Array<Turno> = [];
   totalCursosColegio: Array<string> = [];
+  inicioModuloSeleccionado: string;
+  turnoSeleccionado: string;
+  // horasFinalSeleccionada: string;
+  // minutoFinalSeleccionado: string;
+  // horaInicialSeleccionada: string;
+  // minutosInicialSeleccionado: string;
+  horaInicial: number;
+  horaFinal: number;
+  turnosArray: Array<Turno> = [new Turno("manana"), new Turno("tarde"), new Turno("noche")];
 
   constructor(
     private router: Router,
@@ -78,9 +76,10 @@ export class CrearColegioComponent implements OnInit {
               this.duracionModulo = school.duracionModulo;
               this.inicioHorario = school.inicioHorario;
               this.finalizacionHorario = school.finalizacionHorario;
-              this.horarios.push(String(this.inicioHorario));
-              this.horasI = Number(String(this.inicioHorario).split(':')[0]);
-              this.horasF = Number(String(this.finalizacionHorario).split(':')[0]);
+              this.inicioModuloSeleccionado = school.inicioHorario;
+              // this.horarios.push(String(this.inicioHorario));
+              this.horaInicial = Number(String(this.inicioHorario).split(':')[0]);
+              this.horaFinal = Number(String(this.finalizacionHorario).split(':')[0]);
               // this.minutos = Number(String(this.inicioHorario).split(':')[1]);
               // this.modulos = school.modulos.length;
               this.turnos = school.turnos.length;
@@ -174,100 +173,118 @@ export class CrearColegioComponent implements OnInit {
 
   // _______________________________________MODULOS______________________________________________________________
 
-  turnoArray: HorarioModulo[] = [];
-  selectedTurno: HorarioModulo = new HorarioModulo();
+  moduloValido(horaInicial:number,minutosInicial:number,horaFinal:number,minutoFinal:number):boolean {
+    if (horaInicial < Number(this.inicioHorario.split(":")[0]) || (horaInicial == Number(this.inicioHorario.split(":")[0]) && minutosInicial < Number(this.inicioHorario.split(":")[1]))){
 
-  addTurno() {
+    }
 
-    if (this.horarios[this.horarios.length-1] <= String(this.selectedTurno.inicio)){
+    if (this.turnoSeleccionado == "manana"){
+      if (horaInicial < 5 || (horaInicial == 5 && minutosInicial != 0)){
+        return false;
+      }
+      if (horaFinal > 12 || (horaInicial == 12 && minutosInicial != 0)){
+        return false
+      }
+    } else if (this.turnoSeleccionado == "tarde"){
+      if (horaInicial < 12){
+        return false
+      }
+      if (horaFinalaobfvayfuas < 12){
+        return false
+      }
+    } else {
 
-      this.horarioFinalizacionModulo = String(this.selectedTurno.inicio);
-      this.horas = Number(this.horarioFinalizacionModulo.split(':')[0]);
-      this.minutos = Number(this.horarioFinalizacionModulo.split(':')[1]) + this.duracionModulo;
+    }
+    return true
+  }
 
-      while (this.minutos >= 60) {
-        this.minutos = this.minutos - 60;
-        this.horas = this.horas + 1;
-        if (this.horas == 24) {
-          this.horas = 0;
+  addModulo() {
+
+      let inicio = String(this.inicioModuloSeleccionado);
+
+      let horaInicial: string = inicio.split(':')[0]
+      let minutosInicial: string = inicio.split(':')[1]
+
+      let horasAux = Number(horaInicial);
+      let minutosAux = Number(minutosInicial) + this.duracionModulo;
+
+      while (minutosAux >= 60) {
+        minutosAux = minutosAux - 60;
+        horasAux++;
+        if (horasAux == 24) {
+          horasAux = 0;
         }
       }
       
-      let hsAux:string   = String(this.horas);
-      let minsAux:string = String(this.minutos);
+      let horaFinal: string = String(horasAux);
+      let minutoFinal: string = String(minutosAux);
 
-      if(hsAux.length == 1)   hsAux = '0' + hsAux;
-      if(minsAux.length == 1) minsAux = '0' + minsAux;
+      if(horaFinal.length == 1)   horaFinal = '0' + horaFinal;
+      if(minutoFinal.length == 1) minutoFinal = '0' + minutoFinal;
 
-      this.horarioFinalizacionModulo = hsAux + ':' + minsAux;
-      this.horarios.push(this.horarioFinalizacionModulo);
+      // if (this.moduloValido(horaInicial,minutosInicial,horaFinal,minutoFinal)){
+        
+      // }
+      this.turnosArray[this.turnoSeleccionado == "manana" ? 0 :this.turnoSeleccionado == "tarde" ? 1 : 2].modulos.push(new Modulo(horaInicial+":"+minutosInicial, horaFinal+":"+minutoFinal));
 
-      if(this.crearHorarioManana){
-        this.selectedTurno.horariosFinalManana.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
-        if(this.mananaPrimerHorario){
-          this.manana.turno = "manana";
-          this.cantidadTurnos.push(this.manana);
-          this.mananaPrimerHorario = false;
-        }
-        this.cantidadTurnos[0].cantModulos += 1;
-      }
-      else if(this.crearHorarioTarde){
-        this.selectedTurno.horariosFinalTarde.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
-        if(this.tardePrimerHorario){
-          this.tarde.turno="tarde";
-          this.cantidadTurnos.push(this.tarde);
-          this.tardePrimerHorario = false;
-        }
-        this.cantidadTurnos[1].cantModulos += 1;
-      }
-      else{
-        this.selectedTurno.horariosFinalNoche.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
-        if(this.nochePrimerHorario){
-          this.noche.turno="noche";
-          this.cantidadTurnos.push(this.noche);
-          this.nochePrimerHorario = false;
-        }
-        this.cantidadTurnos[2].cantModulos += 1;
-      }
-      // this.conjuntoDeTurnos.push(this.selectedTurno);
-      // this.turnoArray.push(this.conjuntoDeTurnos[this.conjuntoDeTurnos.length-1]);
-      this.turnoArray.push(this.selectedTurno)
-      this.selectedTurno = new HorarioModulo();
-    }
-    else{
-      confirm('Ingrese un horario mayor de inicio');
-    }
+      this.inicioModuloSeleccionado = horaFinal + ":" + minutoFinal
+      // confirm(String(this.inicioModuloSeleccionado));
+      // this.horarioFinalizacionModulo = hsAux + ':' + minsAux;
+      // this.horarios.push(this.horarioFinalizacionModulo);
 
-    this.crearHorarioManana = false;
-    this.crearHorarioTarde = false;
-    this.crearHorarioNoche = false;
+      // if(this.crearHorarioManana){
+      //   this.selectedTurno.horariosFinalManana.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
+      //   if(this.mananaPrimerHorario){
+      //     this.manana.turno = "manana";
+      //     this.cantidadTurnos.push(this.manana);
+      //     this.mananaPrimerHorario = false;
+      //   }
+      //   this.cantidadTurnos[0].cantModulos += 1;
+      // }
+      // else if(this.crearHorarioTarde){
+      //   this.selectedTurno.horariosFinalTarde.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
+      //   if(this.tardePrimerHorario){
+      //     this.tarde.turno="tarde";
+      //     this.cantidadTurnos.push(this.tarde);
+      //     this.tardePrimerHorario = false;
+      //   }
+      //   this.cantidadTurnos[1].cantModulos += 1;
+      // }
+      // else{
+      //   this.selectedTurno.horariosFinalNoche.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
+      //   if(this.nochePrimerHorario){
+      //     this.noche.turno="noche";
+      //     this.cantidadTurnos.push(this.noche);
+      //     this.nochePrimerHorario = false;
+      //   }
+      //   this.cantidadTurnos[2].cantModulos += 1;
+      // }
+      // // this.conjuntoDeTurnos.push(this.selectedTurno);
+      // // this.turnoArray.push(this.conjuntoDeTurnos[this.conjuntoDeTurnos.length-1]);
+      // this.turnoArray.push(this.selectedTurno)
+      // this.selectedTurno = new HorarioModulo();
+    
+    // else{
+    //   confirm('Ingrese un horario mayor de inicio');
+    // }
   }
 
-  
-  makeSchedulerManana() {
-    this.crearHorarioManana = true;    
+  turnoActual(turno: string){
+    this.turnoSeleccionado = turno
   }
 
-  makeSchedulerTarde() {
-    this.crearHorarioTarde = true;
-  }
-
-  makeSchedulerNoche() {
-    this.crearHorarioNoche = true;
-  }
-
-  async goFormAula() {
-    let turnoArrayDiccionario: Array<any> = [];
-    this.cantidadTurnos.forEach((turno) => {
-      turnoArrayDiccionario.push({
-        cantModulos: turno.cantModulos,
-        turno: turno.turno,
-      });
-    });
-    this.afs.collection('schools').doc(this.nombreDocumento).update({
-      turnos: turnoArrayDiccionario,
-    });
-  }
+  // async goFormAula() {
+  //   let turnoArrayDiccionario: Array<any> = [];
+  //   this.cantidadTurnos.forEach((turno) => {
+  //     turnoArrayDiccionario.push({
+  //       cantModulos: turno.cantModulos,
+  //       turno: turno.turno,
+  //     });
+  //   });
+  //   this.afs.collection('schools').doc(this.nombreDocumento).update({
+  //     turnos: turnoArrayDiccionario,
+  //   });
+  // }
 
   // _________________________________________AULAS____________________________________________________________
 
