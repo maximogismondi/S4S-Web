@@ -173,29 +173,29 @@ export class CrearColegioComponent implements OnInit {
 
   // _______________________________________MODULOS______________________________________________________________
 
-  moduloValido(horaInicial:number,minutosInicial:number,horaFinal:number,minutoFinal:number):string {
+  moduloValido(horaInicial:string,horaFinal:string):string {
     //fuera de horario
-    if (horaInicial < Number(this.inicioHorario.split(":")[0]) || (horaInicial == Number(this.inicioHorario.split(":")[0]) && minutosInicial < Number(this.inicioHorario.split(":")[1]))){
-      return "fuera de horario"
+    if (horaInicial < this.inicioHorario){
+      return "Fuera de Horario"
     }
-    if (horaFinal > Number(this.finalizacionHorario.split(":")[0]) || (horaFinal == Number(this.finalizacionHorario.split(":")[0]) && minutoFinal > Number(this.finalizacionHorario.split(":")[1]))){
-      return "fuera de horario"
+    if (horaFinal > this.finalizacionHorario){
+      return "Fuera de Horario"
     }
 
     //fuera de turno
     if (this.turnoSeleccionado == "manana"){
-      if (horaFinal > 12 || (horaFinal == 12 && minutoFinal != 0)){
+      if (horaFinal > "12:00"){
         return "Fuera de Turno"
       }
     } else if (this.turnoSeleccionado == "tarde"){
-      if (horaInicial < 12){
+      if (horaInicial < "12:00"){
         return "Fuera de Turno"
       }
-      if (horaFinal > 18 || (horaFinal == 18 && minutoFinal != 0)){
+      if (horaFinal > "18:00"){
         return "Fuera de Turno"
       }
     } else {
-      if (horaInicial < 18){
+      if (horaInicial < "18:00"){
         return "Fuera de Turno"
       }
     }
@@ -203,14 +203,10 @@ export class CrearColegioComponent implements OnInit {
     //modulos superpuestos
     for (let iModulos = 0; iModulos < this.turnosArray[this.turnoSeleccionado == "manana" ? 0 :this.turnoSeleccionado == "tarde" ? 1 : 2].modulos.length; iModulos++){
       let modulo: Modulo = this.turnosArray[this.turnoSeleccionado == "manana" ? 0 :this.turnoSeleccionado == "tarde" ? 1 : 2].modulos[iModulos];
-      let horaInicialModulo = Number(modulo.inicio.split(":")[0]);
-      let minutoInicialModulo = Number(modulo.inicio.split(":")[1]);
-      let horaFinalModulo = Number(modulo.final.split(":")[0]);
-      let minutoFinalModulo = Number(modulo.final.split(":")[1]);
-      if ((horaInicialModulo < horaInicial || (horaInicialModulo == horaInicial && minutoInicialModulo <= minutosInicial)) && (horaFinalModulo > horaInicial || (horaFinalModulo == horaInicial && minutoFinalModulo > minutosInicial))){
+      if (modulo.inicio <= horaInicial  && modulo.final > horaInicial){
         return "Modulos Superpuestos"
       }
-      if ((horaInicialModulo < horaFinal || (horaInicialModulo == horaFinal && minutoInicialModulo < minutoFinal)) && (horaFinalModulo > horaFinal || (horaFinalModulo == horaFinal && minutoFinalModulo >= minutoFinal))){
+      if (modulo.inicio < horaFinal && modulo.final >= horaFinal){
         return "Modulos Superpuestos"
       }
     }
@@ -221,13 +217,11 @@ export class CrearColegioComponent implements OnInit {
 
   addModulo() {
 
-      let inicio = String(this.inicioModuloSeleccionado);
+      let horaInicial: string = String(this.inicioModuloSeleccionado).split(':')[0]
+      let minutosInicial: string = String(this.inicioModuloSeleccionado).split(':')[1]
 
-      let horaInicial: string = inicio.split(':')[0]
-      let minutosInicial: string = inicio.split(':')[1]
-
-      let horasAux = Number(horaInicial);
-      let minutosAux = Number(minutosInicial) + this.duracionModulo;
+      let horasAux: number = Number(horaInicial);
+      let minutosAux: number = Number(minutosInicial) + this.duracionModulo;
 
       while (minutosAux >= 60) {
         minutosAux = minutosAux - 60;
@@ -243,12 +237,15 @@ export class CrearColegioComponent implements OnInit {
       if(horaFinal.length == 1)   horaFinal = '0' + horaFinal;
       if(minutoFinal.length == 1) minutoFinal = '0' + minutoFinal;
 
-      if (this.moduloValido(Number(horaInicial),Number(minutosInicial),Number(horaFinal),Number(minutoFinal)) == "valido"){
-        this.turnosArray[this.turnoSeleccionado == "manana" ? 0 :this.turnoSeleccionado == "tarde" ? 1 : 2].modulos.push(new Modulo(horaInicial+":"+minutosInicial, horaFinal+":"+minutoFinal));
+      let inicio = horaInicial+":"+minutosInicial;
+      let fin = horaFinal+":"+minutoFinal;
+
+      if (this.moduloValido(inicio, fin) == "valido"){
+        this.turnosArray[this.turnoSeleccionado == "manana" ? 0 :this.turnoSeleccionado == "tarde" ? 1 : 2].modulos.push(new Modulo(inicio, fin));
         this.inicioModuloSeleccionado = horaFinal + ":" + minutoFinal;
         this.turnosArray[this.turnoSeleccionado == "manana" ? 0 :this.turnoSeleccionado == "tarde" ? 1 : 2].modulos.sort((a, b) => (Number(a.inicio.split(':')[0])*60 + Number(a.inicio.split(':')[1]) > Number(b.inicio.split(':')[0])*60 + Number(b.inicio.split(':')[1]) ? 1 : -1));
       } else {
-        alert(this.moduloValido(Number(horaInicial),Number(minutosInicial),Number(horaFinal),Number(minutoFinal)));
+        alert(this.moduloValido(inicio, fin));
       }
       // confirm(String(this.inicioModuloSeleccionado));
       // this.horarioFinalizacionModulo = hsAux + ':' + minsAux;
@@ -295,18 +292,26 @@ export class CrearColegioComponent implements OnInit {
     this.turnoSeleccionado = turno
   }
 
-  // async goFormAula() {
-  //   let turnoArrayDiccionario: Array<any> = [];
-  //   this.cantidadTurnos.forEach((turno) => {
-  //     turnoArrayDiccionario.push({
-  //       cantModulos: turno.cantModulos,
-  //       turno: turno.turno,
-  //     });
-  //   });
-  //   this.afs.collection('schools').doc(this.nombreDocumento).update({
-  //     turnos: turnoArrayDiccionario,
-  //   });
-  // }
+ async goFormAula() {
+
+   let turnoArrayDiccionario: Array<any> = [];
+   this.turnosArray.forEach((turno) => {
+    let modulosTurno: Array<any> = [];
+    turno.modulos.forEach((modulo) => {
+      modulosTurno.push({
+        inicio: modulo.inicio,
+        final: modulo.final,
+      })
+    }) 
+    turnoArrayDiccionario.push({
+      turno: turno.turno,
+      modulos: modulosTurno
+    });
+   });
+   this.afs.collection('schools').doc(this.nombreDocumento).update({
+     turnos: turnoArrayDiccionario,
+   });
+ }
 
   // _________________________________________AULAS____________________________________________________________
 

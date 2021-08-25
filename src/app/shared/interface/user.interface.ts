@@ -30,12 +30,12 @@ export interface Colegio {
 }
 
 export class Turno{
-  nombreTurno: string;
+  turno: string;
   modulos: Array<Modulo> = [];
   constructor(
-    nombreTurno : string
+    turno : string
   ) {
-    this.nombreTurno = nombreTurno;
+    this.turno = turno;
   }
 }
 

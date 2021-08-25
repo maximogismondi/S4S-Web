@@ -217,18 +217,18 @@
         </thead>
         <tbody>
           <th
-            *ngIf="12 >= horaInicial && horaInicial > 5"
+            *ngIf="12 >= horaInicial && horaInicial >= 5"
             scope="row"
             class="align-middle bg-dark text-white"
           >
             {{ inicioHorario }}
           </th>
           <!-- MAÑANA -->
-          <!--*ngIf="(12 >= horaInicial && horaInicial > 5) || (12 >= horaFinal && horaFinal > 5)"-->
-          <tr *ngIf="12 >= horaInicial && horaInicial > 5">
+          <!--*ngIf="(12 >= horaInicial && horaInicial >= 5) || (12 >= horaFinal && horaFinal > 5)"-->
+          <tr *ngIf="12 >= horaInicial && horaInicial >= 5">
             <td colspan="7" class="table-active">TURNO MAÑANA (Hasta las 12:00 am)</td>
           </tr>
-          <tr *ngIf="12 >= horaInicial && horaInicial > 5" class="bg-dark">
+          <tr *ngIf="12 >= horaInicial && horaInicial >= 5" class="bg-dark">
             <ul class="list-group" *ngIf= "turnosArray[0].modulos.length > 0">
               <li
                 *ngFor="let turno of turnosArray[0].modulos"
@@ -256,7 +256,7 @@
             </td>
             <td colspan="3"></td>
           </tr>
-          <tr *ngIf="12 >= horaInicial && horaInicial > 5">
+          <tr *ngIf="12 >= horaInicial && horaInicial >= 5">
             <!-- <th scope="row" class="align-middle">{{ inicioHorario }}</th> -->
             <td colspan="7" class="table-light">
               <button class="btn btn-primary" (click)="turnoActual('manana')">
@@ -411,8 +411,8 @@
       </table>
     </ul>
     <div class="d-grid">
-      <!-- <button
-        *ngIf="turnoArray.length != 0"
+      <button
+        *ngIf="turnosArray[0].modulos.length > 0"
         (click)="goFormAula()"
         class="btn btn-primary btn-lg mt-4"
       >
@@ -430,7 +430,7 @@
             d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
           />
         </svg>
-      </button> -->
+      </button>
     </div>
   </div>
 </div>
