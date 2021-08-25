@@ -229,7 +229,7 @@
             <td colspan="7" class="table-active">TURNO MAÑANA (Hasta las 12:00 am)</td>
           </tr>
           <tr *ngIf="12 >= horaInicial && horaInicial > 5" class="bg-dark">
-            <ul class="list-group">
+            <ul class="list-group" *ngIf= "turnosArray[0].modulos.length > 0">
               <li
                 *ngFor="let turno of turnosArray[0].modulos"
                 class="list-group-item bg-dark text-white"
@@ -275,6 +275,13 @@
               </button>
             </td>
           </tr>
+          <th
+            *ngIf="12 == horaFinal"
+            scope="row"
+            class="align-middle bg-dark text-white"
+          >
+            {{ finalizacionHorario }}
+          </th>
           <!-- <th *ngIf="18 >= horaFinal && horaFinal > 12" scope="row" class="align-middle">{{ finalizacionHorario }}</th> -->
           <!-- TARDE -->
           <!-- <th *ngIf="18 >= horaInicial && horaInicial > 12" scope="row" class="align-middle">{{ inicioHorario }}</th> -->
@@ -286,7 +293,7 @@
             *ngIf="(18 >= horaFinal && horaFinal > 12) || horaFinal > 18"
             class="bg-dark"
           >
-            <ul class="list-group">
+            <ul class="list-group" *ngIf= "turnosArray[1].modulos.length > 0">
               <li
                 *ngFor="let turno of turnosArray[1].modulos"
                 class="list-group-item bg-dark text-white"
@@ -346,7 +353,7 @@
           </tr>
 
           <tr *ngIf="horaFinal > 18" class="bg-dark">
-            <ul class="list-group">
+            <ul class="list-group" *ngIf= "turnosArray[2].modulos.length > 0">
               <li
                 *ngFor="let turno of turnosArray[2].modulos"
                 class="list-group-item bg-dark text-white"

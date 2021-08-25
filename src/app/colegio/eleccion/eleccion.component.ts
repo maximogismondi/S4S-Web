@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   providers: [AuthService],
 })
 export class EleccionComponent implements OnInit {
-  NombreColegio: string;
+  nombreColegio: string;
   fueACrear:boolean = false;
   fueAUnirse:boolean = false;
   
@@ -28,7 +28,10 @@ export class EleccionComponent implements OnInit {
           .where('userAdmin', '==', user.uid)
           .get()
           .then((data) => {
-            this.NombreColegio = data.docs[0].data().nombre;
+            if( data.docs.length > 0 ) {
+              this.nombreColegio = data.docs[0].data().nombre;
+            }
+            
           });
       }
     });
