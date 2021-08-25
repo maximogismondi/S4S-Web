@@ -173,50 +173,50 @@ export class CrearColegioComponent implements OnInit {
 
   // _______________________________________MODULOS______________________________________________________________
 
-  moduloValido(horaInicial:number,minutosInicial:number,horaFinal:number,minutoFinal:number):boolean {
+  moduloValido(horaInicial:number,minutosInicial:number,horaFinal:number,minutoFinal:number):string {
     //fuera de horario
     if (horaInicial < Number(this.inicioHorario.split(":")[0]) || (horaInicial == Number(this.inicioHorario.split(":")[0]) && minutosInicial < Number(this.inicioHorario.split(":")[1]))){
-      return false
+      return "fuera de horario"
     }
     if (horaFinal > Number(this.finalizacionHorario.split(":")[0]) || (horaFinal == Number(this.finalizacionHorario.split(":")[0]) && minutoFinal > Number(this.finalizacionHorario.split(":")[1]))){
-      return false
+      return "fuera de horario"
     }
 
     //fuera de turno
     if (this.turnoSeleccionado == "manana"){
       if (horaFinal > 12 || (horaFinal == 12 && minutoFinal != 0)){
-        return false
+        return "fuera de turno"
       }
     } else if (this.turnoSeleccionado == "tarde"){
       if (horaInicial < 12){
-        return false
+        return "fuera de turno"
       }
       if (horaFinal > 18 || (horaFinal == 18 && minutoFinal != 0)){
-        return false
+        return "fuera de turno"
       }
     } else {
       if (horaInicial < 18){
-        return false
+        return "fuera de turno"
       }
     }
 
-    //modulos pisados
+    //modulos superpuestos
     for (let iModulos = 0; iModulos < this.turnosArray[this.turnoSeleccionado == "manana" ? 0 :this.turnoSeleccionado == "tarde" ? 1 : 2].modulos.length; iModulos++){
       let modulo: Modulo = this.turnosArray[this.turnoSeleccionado == "manana" ? 0 :this.turnoSeleccionado == "tarde" ? 1 : 2].modulos[iModulos];
       let horaInicialModulo = Number(modulo.inicio.split(":")[0]);
       let minutoInicialModulo = Number(modulo.inicio.split(":")[1]);
       let horaFinalModulo = Number(modulo.final.split(":")[0]);
       let minutoFinalModulo = Number(modulo.final.split(":")[1]);
-      if ((horaInicialModulo < horaInicial || (horaInicialModulo == horaInicial && minutoInicialModulo <= minutosInicial)) && (horaFinalModulo > horaInicial || (horaFinalModulo == horaInicial && minutoFinalModulo >= minutosInicial))){
-        return false;
+      if ((horaInicialModulo < horaInicial || (horaInicialModulo == horaInicial && minutoInicialModulo <= minutosInicial)) && (horaFinalModulo > horaInicial || (horaFinalModulo == horaInicial && minutoFinalModulo > minutosInicial))){
+        return "modulos superpuestos"
       }
-      if ((horaInicialModulo < horaFinal || (horaInicialModulo == horaFinal && minutoInicialModulo <= minutoFinal)) && (horaFinalModulo > horaFinal || (horaFinalModulo == horaFinal && minutoFinalModulo >= minutoFinal))){
-        return false;
+      if ((horaInicialModulo < horaFinal || (horaInicialModulo == horaFinal && minutoInicialModulo < minutoFinal)) && (horaFinalModulo > horaFinal || (horaFinalModulo == horaFinal && minutoFinalModulo >= minutoFinal))){
+        return "modulos superpuestos"
       }
     }
 
     //valido
-    return true
+    return "valido"
   }
 
   addModulo() {
@@ -243,11 +243,11 @@ export class CrearColegioComponent implements OnInit {
       if(horaFinal.length == 1)   horaFinal = '0' + horaFinal;
       if(minutoFinal.length == 1) minutoFinal = '0' + minutoFinal;
 
-      if (this.moduloValido(Number(horaInicial),Number(minutosInicial),Number(horaFinal),Number(minutoFinal))){
+      if (this.moduloValido(Number(horaInicial),Number(minutosInicial),Number(horaFinal),Number(minutoFinal)) == "Valido"){
         this.turnosArray[this.turnoSeleccionado == "manana" ? 0 :this.turnoSeleccionado == "tarde" ? 1 : 2].modulos.push(new Modulo(horaInicial+":"+minutosInicial, horaFinal+":"+minutoFinal));
         this.inicioModuloSeleccionado = horaFinal + ":" + minutoFinal;
       } else {
-        alert("moduloInvalido");
+        alert(this.moduloValido(Number(horaInicial),Number(minutosInicial),Number(horaFinal),Number(minutoFinal)));
       }
       // confirm(String(this.inicioModuloSeleccionado));
       // this.horarioFinalizacionModulo = hsAux + ':' + minsAux;
