@@ -226,7 +226,7 @@
           <!-- MAÑANA -->
           <!--*ngIf="(12 >= horaInicial && horaInicial > 5) || (12 >= horaFinal && horaFinal > 5)"-->
           <tr *ngIf="12 >= horaInicial && horaInicial > 5">
-            <td colspan="7" class="table-active">TURNO MAÑANA</td>
+            <td colspan="7" class="table-active">TURNO MAÑANA (Hasta las 12:00 am)</td>
           </tr>
           <tr *ngIf="12 >= horaInicial && horaInicial > 5" class="bg-dark">
             <ul class="list-group">
@@ -280,7 +280,7 @@
           <!-- <th *ngIf="18 >= horaInicial && horaInicial > 12" scope="row" class="align-middle">{{ inicioHorario }}</th> -->
 
           <tr *ngIf="(18 >= horaFinal && horaFinal > 12) || horaFinal > 18">
-            <td colspan="7" class="table-active">TURNO TARDE</td>
+            <td colspan="7" class="table-active">TURNO TARDE (Hasta las 17:00 pm)</td>
           </tr>
           <tr
             *ngIf="(18 >= horaFinal && horaFinal > 12) || horaFinal > 18"
@@ -342,7 +342,7 @@
           <!-- NOCHE -->
           <!-- <th *ngIf="5 >= horaInicial && horaInicial > 18" scope="row" class="align-middle">{{ inicioHorario }}</th> -->
           <tr *ngIf="horaFinal > 18">
-            <td colspan="7" class="table-active">TURNO NOCHE</td>
+            <td colspan="7" class="table-active">TURNO NOCHE (Despues de las 17:00 pm)</td>
           </tr>
 
           <tr *ngIf="horaFinal > 18" class="bg-dark">
