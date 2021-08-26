@@ -14,7 +14,7 @@ import { Colegio } from 'src/app/shared/interface/user.interface';
 export class MenuPrincipalComponent implements OnInit {
   nombreColegio: string;
   nombreDocumento: string;
-  noBorroColegio: boolean = true;
+  borroColegio: boolean = true;
   // duracionModulo: number;
 
   constructor(
@@ -49,7 +49,7 @@ export class MenuPrincipalComponent implements OnInit {
                 // this.duracionModulo = school.duracionModulo;
               }
               else{
-                this.noBorroColegio = false;
+                this.borroColegio = false;
               }
             })
           )
