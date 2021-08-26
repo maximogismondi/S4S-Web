@@ -140,14 +140,14 @@ export class AuthService {
       // console.log(school.telefono.length)
       confirm("El numero de telefono no es igual a los 8 digitos, recuerda que no debe contener ningun espacio, ningun signo y debe ser de tamaño 8");
     }
-    else if(school.duracionModulo>60 || school.duracionModulo<1){
+    else if(school.duracionModulo>60 || school.duracionModulo<20){
       // console.log(school.duracionModulo)
-      confirm("La duracion de cada modulo debe estar entre 1 a 60 min (incluidos los extremos)");
+      confirm("La duracion de cada modulo debe estar entre 20 a 60 min (incluidos los extremos)");
     }
-    else if(school.inicioHorario > school.finalizacionHorario){
+    else if(school.inicioHorario > school.finalizacionHorario && school.finalizacionHorario != " 00:00"){
       confirm("El horario de finalizacion es mas chico que el de inicio");
     }
-    else if(school.inicioHorario<"05:00" && school.inicioHorario>"00:00" || school.inicioHorario>"12:00"){
+    else if(school.inicioHorario<"05:00" && school.inicioHorario>"01:00" || school.inicioHorario>"12:00"){
       confirm("El horario de inicio debe ser entre 05:00 - 12:00 am");
     }
     else if(school.finalizacionHorario<"12:00"){

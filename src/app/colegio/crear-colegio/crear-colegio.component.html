@@ -216,17 +216,17 @@
           </tr>
         </thead>
         <tbody>
-          <th
+          <!-- <th
             *ngIf="12 >= horaInicial && horaInicial >= 5"
             scope="row"
             class="align-middle bg-dark text-white"
           >
             {{ inicioHorario }}
-          </th>
+          </th> -->
           <!-- MAÑANA -->
           <!--*ngIf="(12 >= horaInicial && horaInicial >= 5) || (12 >= horaFinal && horaFinal > 5)"-->
           <tr *ngIf="12 >= horaInicial && horaInicial >= 5">
-            <td colspan="7" class="table-active">TURNO MAÑANA (Hasta las 12:00 am)</td>
+            <td colspan="7" class="table-active">TURNO MAÑANA ({{ inicioHorario }} am - 12:00 am)</td>
           </tr>
           <tr *ngIf="12 >= horaInicial && horaInicial >= 5" class="bg-dark">
             <ul class="list-group" *ngIf= "turnosArray[0].modulos.length > 0">
@@ -250,13 +250,24 @@
                   [(ngModel)]="inicioModuloSeleccionado"
                 />
                 <button class="btn btn-primary" (click)="addModulo()">
-                  Listo
+                  <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-plus-lg"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
+                  />
+                </svg>
                 </button>
               </div>
             </td>
             <td colspan="3"></td>
           </tr>
-          <tr *ngIf="12 >= horaInicial && horaInicial >= 5">
+          <tr *ngIf="12 >= horaInicial && horaInicial >= 5 && turnoSeleccionado != 'manana'">
             <!-- <th scope="row" class="align-middle">{{ inicioHorario }}</th> -->
             <td colspan="7" class="table-light">
               <button class="btn btn-primary" (click)="turnoActual('manana')">
@@ -275,20 +286,25 @@
               </button>
             </td>
           </tr>
-          <th
+          <!-- <th
             *ngIf="12 == horaFinal"
             scope="row"
             class="align-middle bg-dark text-white"
           >
             {{ finalizacionHorario }}
-          </th>
+          </th> -->
           <!-- <th *ngIf="18 >= horaFinal && horaFinal > 12" scope="row" class="align-middle">{{ finalizacionHorario }}</th> -->
           <!-- TARDE -->
           <!-- <th *ngIf="18 >= horaInicial && horaInicial > 12" scope="row" class="align-middle">{{ inicioHorario }}</th> -->
 
-          <tr *ngIf="(18 >= horaFinal && horaFinal > 12) || horaFinal > 18">
-            <td colspan="7" class="table-active">TURNO TARDE (Hasta las 17:00 pm)</td>
+          <tr *ngIf="18 >= horaFinal && horaFinal > 12; else turnoNoche">
+            <td colspan="7" class="table-active">TURNO TARDE (12:00 am - {{ finalizacionHorario }} pm)</td>
           </tr>
+          <ng-template #turnoNoche>
+            <tr>
+              <td colspan="7" class="table-active">TURNO TARDE (12:00 am - 18:00 pm)</td>
+            </tr>
+          </ng-template>
           <tr
             *ngIf="(18 >= horaFinal && horaFinal > 12) || horaFinal > 18"
             class="bg-dark"
@@ -314,14 +330,25 @@
                   [(ngModel)]="inicioModuloSeleccionado"
                 />
                 <button class="btn btn-primary" (click)="addModulo()">
-                  Listo
+                  <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-plus-lg"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
+                  />
+                </svg>
                 </button>
               </div>
             </td>
             <td colspan="3"></td>
           </tr>
 
-          <tr *ngIf="(18 >= horaFinal && horaFinal > 12) || horaFinal > 18">
+          <tr *ngIf="(18 >= horaFinal && horaFinal > 12 && turnoSeleccionado != 'tarde') || horaFinal > 18 && turnoSeleccionado != 'tarde'">
             <td colspan="7" class="table-light">
               <button class="btn btn-primary" (click)="turnoActual('tarde')">
                 <svg
@@ -339,17 +366,17 @@
               </button>
             </td>
           </tr>
-          <th
+          <!-- <th
             *ngIf="18 >= horaFinal && horaFinal > 12"
             scope="row"
             class="align-middle bg-dark text-white"
           >
             {{ finalizacionHorario }}
-          </th>
+          </th> -->
           <!-- NOCHE -->
           <!-- <th *ngIf="5 >= horaInicial && horaInicial > 18" scope="row" class="align-middle">{{ inicioHorario }}</th> -->
           <tr *ngIf="horaFinal > 18">
-            <td colspan="7" class="table-active">TURNO NOCHE (Despues de las 17:00 pm)</td>
+            <td colspan="7" class="table-active">TURNO NOCHE (18:00 pm - {{ finalizacionHorario }} pm)</td>
           </tr>
 
           <tr *ngIf="horaFinal > 18" class="bg-dark">
@@ -374,14 +401,25 @@
                   [(ngModel)]="inicioModuloSeleccionado"
                 />
                 <button class="btn btn-primary" (click)="addModulo()">
-                  Listo
+                  <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-plus-lg"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
+                  />
+                </svg>
                 </button>
               </div>
             </td>
             <td colspan="3"></td>
           </tr>
 
-          <tr *ngIf="horaFinal > 18">
+          <tr *ngIf="horaFinal > 18 && turnoSeleccionado != 'noche'">
             <td colspan="7" class="table-light">
               <button class="btn btn-primary" (click)="turnoActual('noche')">
                 <svg
@@ -399,13 +437,13 @@
               </button>
             </td>
           </tr>
-          <th
+          <!-- <th
             *ngIf="horaFinal > 18"
             scope="row"
             class="align-middle bg-dark text-white"
           >
             {{ finalizacionHorario }}
-          </th>
+          </th> -->
           <!-- <th scope="row">{{ finalizacionHorario }}</th> -->
         </tbody>
       </table>

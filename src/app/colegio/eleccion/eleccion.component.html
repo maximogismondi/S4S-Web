@@ -1,11 +1,8 @@
 <div class="col-md-6 mx-auto mt-5 py-5">
   <div class="card">
     <div class="card-body">
-      <h1 class="text-center mt-4">COLEGIO</h1>
-      <h6 class="text-center">Scheduler For School</h6>
-      <div class="alert alert-light mt-4 text-danger" role="alert">
-        *Obligatorio
-      </div>
+      <!-- <h1 class="text-center mt-4">COLEGIO</h1> -->
+      <h3 class="text-center mt-3">Scheduler For School</h3>
       <!-- id="botonesEleccionCrear" -->
       <div  *ngIf="fueACrear == false" >
         <div class="d-grid">
@@ -29,22 +26,23 @@
           <div class="card">
             <div class="card-body">
               <h1 class="text-center">CREAR COLEGIO</h1>
+              <div class="alert alert-light mt-2 text-danger" role="alert">
+                *Obligatorio
+              </div>
               <form [formGroup]="crearColegioForm" (ngSubmit)="onCrear()">
                 <div class="form-group mt-3">
-                  <h6 class="text-danger d-inline-block">*</h6>
+                  <label>Nombre del Colegio<h6 class="text-danger d-inline-block">*</h6></label>
                   <input
                     type="text"
-                    placeholder="Nombre del Colegio"
                     required
                     class="form-control"
                     formControlName="nombre"
                   />
                 </div>
                 <div class="form-group mt-3">
-                  <h6 class="text-danger d-inline-block">*</h6>
+                  <label>Direccion del Colegio <h6 class="text-danger d-inline-block">*</h6></label>
                   <input
                     type="text"
-                    placeholder="Direccion del Colegio"
                     required
                     class="form-control"
                     formControlName="direccion"
@@ -116,14 +114,13 @@
                   </select>
                 </div>
                 <div class="form-group mt-3">
-                  <h6 class="text-danger d-inline-block">*</h6>
+                  <label>Telefono del Colegio (sin espacion ni signos, solo numeros)<h6 class="text-danger d-inline-block">*</h6></label>
                   <div class="input-group mb-3">
                     <span class="input-group-text rounded bg-light me-2">011-</span>
                     <input
                       type="number"
                       min="10000000"
                       max="99999999"
-                      placeholder="Telefono del Colegio (sin espacion ni signos, solo numeros)"
                       required
                       class="form-control"
                       formControlName="telefono"
@@ -131,12 +128,11 @@
                   </div>
                 </div>
                 <div class="form-group mt-3">
-                  <h6 class="text-danger d-inline-block">*</h6>
+                  <label>Duracion de cada modulo (en minutos)<h6 class="text-danger d-inline-block">*</h6></label>
                   <input
                     type="number"
-                    min="1"
+                    min="20"
                     max="60"
-                    placeholder="Duracion de cada modulo (en minutos)"
                     required
                     class="form-control"
                     formControlName="duracionModulo"
@@ -167,18 +163,6 @@
                     class="btn btn-primary btn-lg mt-4 py-4"
                   >
                     CREAR
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="0.7em"
-                      height="0.7em"
-                      fill="currentColor"
-                      class="bi bi-plus-lg"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
-                      />
-                    </svg>
                   </button>
                 </div>
               </form>

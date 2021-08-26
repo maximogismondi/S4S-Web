@@ -114,65 +114,6 @@ export class CrearColegioComponent implements OnInit {
 
   // _______________________________________TURNOS______________________________________________________________
 
-  // moduloArray: Modulo[] = [];
-
-  // selectedModulo: Modulo = new Modulo();
-
-  // openForEditModulo(modulo: Modulo) {
-  //   this.selectedModulo = modulo;
-  // }
-
-  // addOrEditModulo() {
-  //   this.horarioFinalizacionModulo = String(this.selectedModulo.inicio);
-  //   this.horas = Number(this.horarioFinalizacionModulo.split(':')[0]);
-  //   this.minutos =
-  //     Number(this.horarioFinalizacionModulo.split(':')[1]) +
-  //     this.duracionModulo;
-
-  //   while (this.minutos >= 60) {
-  //     this.minutos = this.minutos - 60;
-  //     this.horas = this.horas + 1;
-  //     if (this.horas == 24) {
-  //       this.horas = 0;
-  //     }
-  //   }
-
-  //   this.horarioFinalizacionModulo =
-  //     String(this.horas) + ':' + String(this.minutos);
-  //   if (this.selectedModulo.id == 0) {
-  //     this.selectedModulo.id = this.moduloArray.length + 1;
-  //     this.moduloArray.push(this.selectedModulo);
-
-  //     // console.log(this.horarioFinalizacionModulo);
-  //   }
-  //   this.selectedModulo = new Modulo();
-  // }
-
-  // deleteModulo() {
-  //   if (confirm('¿Estas seguro/a que quieres eliminar este modulo?')) {
-  //     this.moduloArray = this.moduloArray.filter(
-  //       (x) => x != this.selectedModulo
-  //     );
-  //     this.selectedModulo = new Modulo();
-  //   }
-  // }
-
-  // async goFormAula() {
-  //   let moduloArrayDiccionario: Array<any> = [];
-  //   this.moduloArray.forEach((modulo) => {
-  //     moduloArrayDiccionario.push({
-  //       id: modulo.id,
-  //       dia: modulo.dia,
-  //       inicio: modulo.inicio,
-  //     });
-  //   });
-  //   this.afs.collection('schools').doc(this.nombreDocumento).update({
-  //     modulos: moduloArrayDiccionario,
-  //   });
-  // }
-
-  // _______________________________________MODULOS______________________________________________________________
-
   moduloValido(horaInicial:string,horaFinal:string):string {
     //fuera de horario
     if (horaInicial < this.inicioHorario){
@@ -247,45 +188,6 @@ export class CrearColegioComponent implements OnInit {
       } else {
         alert(this.moduloValido(inicio, fin));
       }
-      // confirm(String(this.inicioModuloSeleccionado));
-      // this.horarioFinalizacionModulo = hsAux + ':' + minsAux;
-      // this.horarios.push(this.horarioFinalizacionModulo);
-
-      // if(this.crearHorarioManana){
-      //   this.selectedTurno.horariosFinalManana.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
-      //   if(this.mananaPrimerHorario){
-      //     this.manana.turno = "manana";
-      //     this.cantidadTurnos.push(this.manana);
-      //     this.mananaPrimerHorario = false;
-      //   }
-      //   this.cantidadTurnos[0].cantModulos += 1;
-      // }
-      // else if(this.crearHorarioTarde){
-      //   this.selectedTurno.horariosFinalTarde.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
-      //   if(this.tardePrimerHorario){
-      //     this.tarde.turno="tarde";
-      //     this.cantidadTurnos.push(this.tarde);
-      //     this.tardePrimerHorario = false;
-      //   }
-      //   this.cantidadTurnos[1].cantModulos += 1;
-      // }
-      // else{
-      //   this.selectedTurno.horariosFinalNoche.push(String(this.selectedTurno.inicio) + " - " + this.horarioFinalizacionModulo);
-      //   if(this.nochePrimerHorario){
-      //     this.noche.turno="noche";
-      //     this.cantidadTurnos.push(this.noche);
-      //     this.nochePrimerHorario = false;
-      //   }
-      //   this.cantidadTurnos[2].cantModulos += 1;
-      // }
-      // // this.conjuntoDeTurnos.push(this.selectedTurno);
-      // // this.turnoArray.push(this.conjuntoDeTurnos[this.conjuntoDeTurnos.length-1]);
-      // this.turnoArray.push(this.selectedTurno)
-      // this.selectedTurno = new HorarioModulo();
-    
-    // else{
-    //   confirm('Ingrese un horario mayor de inicio');
-    // }
   }
 
   turnoActual(turno: string){
@@ -369,31 +271,10 @@ export class CrearColegioComponent implements OnInit {
   addOrEditCurso() {
     if (this.selectedCurso.id == 0) {
       this.selectedCurso.id = this.cursoArray.length + 1;
-      // this.materiasArrayCursos.forEach((materia) => {
-      //   if (materia.valor == true) {
-      //     this.selectedCurso.materiasCurso.push(materia.nombre);
-      //   }
-      // });
       this.cursoArray.push(this.selectedCurso);
     }
     this.selectedCurso = new Curso();
   }
-
-  // clicked(nombreMateria: string) {
-  //   for (let i = 0; i < this.materiasArrayCursos.length; i++) {
-  //     if (
-  //       this.materiasArrayCursos[i].nombre == nombreMateria &&
-  //       this.materiasArrayCursos[i].valor == false
-  //     ) {
-  //       this.materiasArrayCursos[i].valor = true;
-  //     } else if (
-  //       this.materiasArrayCursos[i].nombre == nombreMateria &&
-  //       this.materiasArrayCursos[i].valor == true
-  //     ) {
-  //       this.materiasArrayCursos[i].valor = false;
-  //     }
-  //   }
-  // }
 
   deleteCurso() {
     if (confirm('¿Estas seguro/a que quieres eliminar este curso?')) {
