@@ -147,7 +147,7 @@ export class AuthService {
     else if(school.inicioHorario > school.finalizacionHorario && school.finalizacionHorario != " 00:00"){
       confirm("El horario de finalizacion es mas chico que el de inicio");
     }
-    else if(school.inicioHorario<"05:00" && school.inicioHorario>"01:00" || school.inicioHorario>"12:00"){
+    else if(school.inicioHorario<"05:00" && school.inicioHorario>="00:00" || school.inicioHorario>"12:00"){
       confirm("El horario de inicio debe ser entre 05:00 - 12:00 am");
     }
     else if(school.finalizacionHorario<"12:00"){

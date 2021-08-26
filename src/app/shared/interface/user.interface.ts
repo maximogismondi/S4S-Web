@@ -71,24 +71,24 @@ export class Modulo{
 
 export class Aula {
   id: number = 0;
-  nombre: string = " ";
-  tipo: string = " ";
+  nombre: string = "";
+  tipo: string = "";
   otro: string = "Se selecciono el tipo normal";
 }
 
 export class Curso {
   id: number = 0;
-  nombre: string = " ";
-  turnoPreferido: string = " "; 
-  cantAlumnos: number = 0;
+  nombre: string = "";
+  turnoPreferido: string = ""; 
+  cantAlumnos: string = "";
   // materiasCurso: Array<string> = [];
 }
 
 export class Profesor {
   id: number = 0;
-  nombre: string = " ";
-  apellido: string = " ";
-  dni: number = 1000000;
+  nombre: string = "";
+  apellido: string = "";
+  dni: string = "";
   // materiasCapacitado: Array<string>;
   // turnoPreferido: number;
   // condiciones: Array<string>;
@@ -102,14 +102,14 @@ export class ProfesorReducido{
 
 export class Materia {
   id: number = 0;
-  nombre: string = " ";
-  cantidadDeModulosTotal: number = 0;
+  nombre: string = "";
+  cantidadDeModulosTotal: string = "";
   // cantProfesores: number;
   // espacioEntreDias: number;
   // tipo: string;
   // otro: string = "Se selecciono el tipo normal";
-  cantidadMaximaDeModulosPorDia: number = 0;
-  cursoDado: string = " ";
+  cantidadMaximaDeModulosPorDia: string = "";
+  cursoDado: string = "";
   profesoresCapacitados: Array<string> = [];
 }
 
