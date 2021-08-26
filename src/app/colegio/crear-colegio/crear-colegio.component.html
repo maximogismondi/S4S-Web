@@ -117,89 +117,13 @@
 </div>
 
 <!-- *ngIf="modulos == 0" *ngIf="aulas == 0 && modulos != 0" *ngIf="materias == 0 && aulas != 0" *ngIf="cursos == 0 && materias != 0" *ngIf="profes == 0 && cursos != 0"-->
-<!-- Cambiar todo-->
-<!-- <div *ngIf="modulos == 0" class="container mx-auto my-4" id="divModulo">
-  <div class="col-md-6 mx-auto">
-    <ul class="list-group">
-      <li
-        *ngFor="let modulo of moduloArray"
-        class="list-group-item list-group-item-action"
-        (click)="openForEditModulo(modulo)"
-        [class.active]="modulo == selectedModulo"
-      >
-        <span class="badge bg-primary">{{ modulo.id }}</span>
-        Dia: {{ modulo.dia }} / Hora de inico: {{ modulo.inicio }} - Hora de
-        finalizacion: {{ horarioFinalizacionModulo }}
-      </li>
-    </ul>
-    <div class="card mt-4">
-      <div class="card-body">
-        <div class="card-title"><h5>Insertar Modulos</h5></div>
-        <div class="text-secondary">
-          <h6>Duracion de cada modulo: {{ duracionModulo }} min</h6>
-        </div>
-
-        <div class="form-group">
-          <label class="mt-2">Dia de la semana</label>
-          <select class="form-select" [(ngModel)]="selectedModulo.dia">
-            <option value="1">Lunes</option>
-            <option value="2">Martes</option>
-            <option value="3">Miercoles</option>
-            <option value="4">Jueves</option>
-            <option value="5">Viernes</option>
-          </select>
-
-          <label class="mt-3">Hora de inicio del modulo</label>
-          <input
-            type="Time"
-            [(ngModel)]="selectedModulo.inicio"
-            class="form-control"
-          />
-
-          <button (click)="addOrEditModulo()" class="btn btn-primary mt-4">
-            Añadir / Editar
-          </button>
-          <button
-            *ngIf="selectedModulo.id != 0"
-            class="btn btn-danger mt-4 ms-4"
-            (click)="deleteModulo()"
-          >
-            Eliminar
-          </button>
-        </div>
-        <div class="d-grid">
-          <button
-            *ngIf="moduloArray.length != 0"
-            (click)="goFormAula()"
-            class="btn btn-primary btn-lg mt-4"
-          >
-            SIGUIENTE
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1.10em"
-              height="1.10em"
-              fill="currentColor"
-              class="bi bi-arrow-right"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
 
 <div *ngIf="turnos == 0" class="container mx-auto my-4">
   <div class="col-md-6 mx-auto">
     <ul class="list-group">
       <div class="text-secondary">
+        <!-- <h6>De: {{ inicioHorario }} am a {{ finalizacionHorario }} pm</h6> -->
         <h6>Duracion de cada modulo: {{ duracionModulo }} min</h6>
-        <!-- De: {{ inicioHorario }} am a {{ finalizacionHorario }} pm  -->
         <!-- <h6>Inicio Horario: {{ inicioHorario }}</h6>
         <h6>Fin Horario: {{ finalizacionHorario }}</h6> -->
       </div>
@@ -625,13 +549,14 @@
             class="form-select"
             [(ngModel)]="selectedCurso.turnoPreferido"
           >
-            <option value="Mañana">Mañana</option>
-            <option value="Tarde">Tarde</option>
-            <option value="Noche">Noche</option>
+            <option value="manana">Mañana</option>
+            <option value="tarde">Tarde</option>
+            <option value="noche">Noche</option>
           </select>
 
           <input
             type="number"
+            min="1"
             placeholder="Cantidad de alumnos"
             [(ngModel)]="selectedCurso.cantAlumnos"
             class="form-control mt-2"
@@ -738,6 +663,7 @@
            <input
             type="number"
             placeholder="Dni"
+            min="1000000"
             [(ngModel)]="selectedProfesor.dni"
             class="form-control"
           />

@@ -226,14 +226,20 @@ export class CrearColegioComponent implements OnInit {
   }
 
   addOrEditAula() {
-    if (this.selectedAula.id == 0) {
-      this.selectedAula.id = this.aulaArray.length + 1;
-      this.aulaArray.push(this.selectedAula);
+    if(this.selectedAula.nombre!= " " && this.selectedAula.tipo != " "){
+      if (this.selectedAula.id == 0) {
+        this.selectedAula.id = this.aulaArray.length + 1;
+        this.aulaArray.push(this.selectedAula);
+      }
+      if(this.selectedAula.tipo == "Normal"){
+        this.selectedAula.otro = "Se selecciono el tipo normal";
+      }
+      this.selectedAula = new Aula();
     }
-    if(this.selectedAula.tipo == "Normal"){
-      this.selectedAula.otro = "Se selecciono el tipo normal";
+    else{
+      alert("Complete los campos vacios");
     }
-    this.selectedAula = new Aula();
+    
   }
 
   deleteAula() {
@@ -269,11 +275,16 @@ export class CrearColegioComponent implements OnInit {
   }
 
   addOrEditCurso() {
-    if (this.selectedCurso.id == 0) {
-      this.selectedCurso.id = this.cursoArray.length + 1;
-      this.cursoArray.push(this.selectedCurso);
+    if(this.selectedCurso.nombre!= " " && this.selectedCurso.turnoPreferido != " " && this.selectedCurso.cantAlumnos != 0){
+      if (this.selectedCurso.id == 0) {
+        this.selectedCurso.id = this.cursoArray.length + 1;
+        this.cursoArray.push(this.selectedCurso);
+      }
+      this.selectedCurso = new Curso();
     }
-    this.selectedCurso = new Curso();
+    else{
+      alert("Complete los campos vacios");
+    }
   }
 
   deleteCurso() {
@@ -310,11 +321,16 @@ export class CrearColegioComponent implements OnInit {
   }
 
   addOrEditProfesor() {
-    if (this.selectedProfesor.id == 0) {
-      this.selectedProfesor.id = this.profesorArray.length + 1;
-      this.profesorArray.push(this.selectedProfesor);
+    if(this.selectedProfesor.nombre != " " && this.selectedProfesor.apellido != " " && this.selectedProfesor.dni != 1000000){
+      if (this.selectedProfesor.id == 0) {
+        this.selectedProfesor.id = this.profesorArray.length + 1;
+        this.profesorArray.push(this.selectedProfesor);
+      }
+      this.selectedProfesor = new Profesor();
     }
-    this.selectedProfesor = new Profesor();
+    else{
+      alert("Complete los campos vacios");
+    }
   }
 
   deleteProfesor() {
@@ -355,16 +371,21 @@ export class CrearColegioComponent implements OnInit {
   }
 
   addOrEditMateria() {
-    if (this.selectedMateria.id == 0) {
-      this.selectedMateria.id = this.materiaArray.length + 1;
-      this.profesoresArrayMaterias.forEach((profesor) => {
-        if (profesor.valor == true) {
-          this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
-        }
-      });
-      this.materiaArray.push(this.selectedMateria);
+    if(this.selectedMateria.nombre != " " && this.selectedMateria.cantidadDeModulosTotal != 0 && this.selectedMateria.cursoDado != " " && this.selectedMateria.cantidadMaximaDeModulosPorDia != 0 && this.selectedMateria.profesoresCapacitados.length != 0){
+      if (this.selectedMateria.id == 0) {
+        this.selectedMateria.id = this.materiaArray.length + 1;
+        this.profesoresArrayMaterias.forEach((profesor) => {
+          if (profesor.valor == true) {
+            this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
+          }
+        });
+        this.materiaArray.push(this.selectedMateria);
+      }
+      this.selectedMateria = new Materia();
     }
-    this.selectedMateria = new Materia();
+    else{
+      alert("Complete los campos vacios");
+    }
   }
 
   clicked(nombreProfesor: string) {
