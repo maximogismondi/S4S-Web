@@ -565,11 +565,10 @@
         [class.active]="curso == selectedCurso"
       >
         <span class="badge bg-primary">{{ curso.id }}</span>
-        Nombre: {{ curso.nombre }}
-        <!-- / Turno preferido:
-        {{ curso.turnoPreferido }} / Cantidad de alumnos:
-        {{ curso.cantAlumnos }} / Materias en el curso:
-        <p *ngFor="let materia of curso.materiasCurso">- {{ materia }}</p> -->
+        Nombre: {{ curso.nombre }} / Turno preferido:
+        {{ curso.turnoPreferido }} / Cantidad de alumnos: {{ curso.cantAlumnos }}
+         <!--  / Materias en el curso:
+        <p *ngFor="let materia of curso.materiasCurso">- {{ materia }}</p>  -->
       </li>
     </ul>
     <div class="card mt-4">
@@ -583,7 +582,7 @@
             class="form-control"
           />
 
-          <!-- <label class="mt-2">Turno preferido</label>
+          <label class="mt-2">Turno preferido</label>
           <select
             class="form-select"
             [(ngModel)]="selectedCurso.turnoPreferido"
@@ -600,7 +599,7 @@
             class="form-control mt-2"
           />
 
-          <label class="mt-2">Materias</label>
+          <!-- <label class="mt-2">Materias</label>
           <table>
             <tr *ngFor="let materia of materiasArrayCursos">
               <td>
@@ -671,8 +670,9 @@
         [class.active]="profesor == selectedProfesor"
       >
         <span class="badge bg-primary">{{ profesor.id }}</span>
-        Nombre: {{ profesor.nombre }}
-        <!-- / Dni: {{ profesor.dni }} / Materias
+        Nombre: {{ profesor.nombre }} / Apellido: {{ profesor.apellido }} 
+        / Dni: {{ profesor.dni }}
+         <!-- / Materias
         capacitado: {{ profesor.materiasCapacitado }} / Turno preferido:{{
           profesor.turnoPreferido
         }}
@@ -690,14 +690,21 @@
             class="form-control"
           />
 
-          <!-- <input
+          <input
+            type="text"
+            placeholder="Apellido"
+            [(ngModel)]="selectedProfesor.apellido"
+            class="form-control"
+          />
+
+           <input
             type="text"
             placeholder="Dni"
             [(ngModel)]="selectedProfesor.dni"
             class="form-control"
           />
 
-          <label class="mt-2">Materias capacitado</label>
+          <!-- <label class="mt-2">Materias capacitado</label>
           <div class="form-check">
             <input
               class="form-check-input"
@@ -969,5 +976,5 @@
   class="container mx-auto my-4"
   id="divFinalizar"
 >
-  <h1>FINALIZAR</h1>
+  <h1>GRACIAS POR UTILIZAR TU TIEMPO EN S4S, A CONTINUACION FINALIZAREMOS CON EL PROCESO.</h1>
 </div>

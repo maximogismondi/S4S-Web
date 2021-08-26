@@ -203,7 +203,7 @@ export class CrearColegioComponent implements OnInit {
     //modulos superpuestos
     for (let iModulos = 0; iModulos < this.turnosArray[this.turnoSeleccionado == "manana" ? 0 :this.turnoSeleccionado == "tarde" ? 1 : 2].modulos.length; iModulos++){
       let modulo: Modulo = this.turnosArray[this.turnoSeleccionado == "manana" ? 0 :this.turnoSeleccionado == "tarde" ? 1 : 2].modulos[iModulos];
-      if (modulo.inicio <= horaInicial  && modulo.final > horaInicial){
+      if (modulo.inicio <= horaInicial && modulo.final > horaInicial){
         return "Modulos Superpuestos"
       }
       if (modulo.inicio < horaFinal && modulo.final >= horaFinal){
@@ -408,8 +408,8 @@ export class CrearColegioComponent implements OnInit {
       CursoArrayDiccionario.push({
         // id: curso.id,
         nombre: curso.nombre,
-        // turnoPreferido: curso.turnoPreferido,
-        // cantAlumnos: curso.cantAlumnos,
+        turnoPreferido: curso.turnoPreferido,
+        cantAlumnos: curso.cantAlumnos,
         // materiasCurso: curso.materiasCurso,
       });
     });
@@ -451,9 +451,10 @@ export class CrearColegioComponent implements OnInit {
       ProfesorArrayDiccionario.push({
         // id: profesor.id,
         nombre: profesor.nombre,
-        // dni: profesor.dni,
+        apellido: profesor.apellido,
+        dni: profesor.dni,
         // 'materias capacitado': profesor.materiasCapacitado,
-        // turnoPreferido: profesor.turnoPreferido,
+        //  turnoPreferido: profesor.turnoPreferido,
         // condiciones: profesor.condiciones,
       });
     });

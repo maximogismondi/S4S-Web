@@ -79,15 +79,16 @@ export class Aula {
 export class Curso {
   id: number = 0;
   nombre: string;
-  // turnoPreferido: number;
-  // cantAlumnos: number;
+  turnoPreferido: number;
+  cantAlumnos: number;
   // materiasCurso: Array<string> = [];
 }
 
 export class Profesor {
   id: number = 0;
   nombre: string;
-  // dni: number;
+  apellido: string;
+  dni: number;
   // materiasCapacitado: Array<string>;
   // turnoPreferido: number;
   // condiciones: Array<string>;
