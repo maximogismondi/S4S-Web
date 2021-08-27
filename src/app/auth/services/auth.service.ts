@@ -134,6 +134,12 @@ export class AuthService {
       confirm("Completar los casilleros obligatorios");
       // Poner los valores que se piden
     }
+    else if(String(school.nombre).length > 50){
+      // console.log(school.nombre)
+      // console.log(school.telefono)
+      // console.log(school.telefono.length)
+      confirm("El nombre del colegio debe ser menor a los 50 caracteres");
+    }
     else if(String(school.telefono).length != 8){
       // console.log(school.nombre)
       // console.log(school.telefono)
