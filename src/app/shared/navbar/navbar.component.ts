@@ -53,7 +53,7 @@ export class NavbarComponent {
           });
       } else {
         this.userData = null;
-        this.router.navigate(['/login']);
+        // this.router.navigate(['/login']);
       }
     });
     // authSvc.afAuth.authState.subscribe((user) => {
