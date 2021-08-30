@@ -134,6 +134,12 @@ export class AuthService {
       confirm("Completar los casilleros obligatorios");
       // Poner los valores que se piden
     }
+    else if(String(school.nombre).length > 50){
+      // console.log(school.nombre)
+      // console.log(school.telefono)
+      // console.log(school.telefono.length)
+      confirm("El nombre del colegio debe ser menor a los 50 caracteres");
+    }
     else if(String(school.telefono).length != 8){
       // console.log(school.nombre)
       // console.log(school.telefono)
@@ -147,7 +153,7 @@ export class AuthService {
     else if(school.inicioHorario > school.finalizacionHorario && school.finalizacionHorario != " 00:00"){
       confirm("El horario de finalizacion es mas chico que el de inicio");
     }
-    else if(school.inicioHorario<"05:00" && school.inicioHorario>"01:00" || school.inicioHorario>"12:00"){
+    else if(school.inicioHorario<"05:00" && school.inicioHorario>="00:00" || school.inicioHorario>"12:00"){
       confirm("El horario de inicio debe ser entre 05:00 - 12:00 am");
     }
     else if(school.finalizacionHorario<"12:00"){
