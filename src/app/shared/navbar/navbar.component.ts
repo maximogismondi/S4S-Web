@@ -53,21 +53,8 @@ export class NavbarComponent {
           });
       } else {
         this.userData = null;
-        // this.router.navigate(['/login']);
       }
     });
-    // authSvc.afAuth.authState.subscribe((user) => {
-    //   if (user) {
-    //     this.afs.collection('users', (ref) =>
-    //         ref.where(user.uid, '==', this.authSvc.userData.uid)
-    //       ).snapshotChanges().pipe(
-    //         map((users) => {
-    //           const usuario = users[0].payload.doc.data() as User;
-    //           this.nombreUsuario = usuario.displayName;
-    //         })
-    //       ).subscribe();
-    //   }
-    // });
   }
 
   async onLogout() {

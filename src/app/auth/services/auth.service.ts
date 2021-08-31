@@ -42,9 +42,9 @@ export class AuthService {
       email,
       password
     );
-    if (user?.emailVerified) {
-      this.updateUserData(user);
-    }
+    // if (user?.emailVerified) {
+    //   this.updateUserData(user);
+    // }
     return user;
   }
 
@@ -62,11 +62,12 @@ export class AuthService {
   //joya
   async register(email: string, password: string) {
     
-    const user = await this.afAuth.createUserWithEmailAndPassword(
+    const { user } = await this.afAuth.createUserWithEmailAndPassword(
       email,
       password
     );
     
+    this.updateUserData(user);
     this.sendVerificationEmail();
     return user;
   }

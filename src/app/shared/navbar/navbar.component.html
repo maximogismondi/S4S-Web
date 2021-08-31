@@ -65,7 +65,7 @@
       </ul>
       <ul class="navbar-nav mx-auto"></ul>
       <!--else login -->
-      <ul class="navbar-nav" *ngIf="userData">
+      <ul class="navbar-nav" *ngIf="userData && userData.emailVerified">
         <li class="nav-item me-3">
           <a class="nav-link" href="/menu-principal">{{userData.displayName}}
           </a>
