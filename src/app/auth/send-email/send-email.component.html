@@ -9,7 +9,7 @@
         </p>
         <p class="text-center">
           Por favor fijese en su bandeja de entrada y clickee en el link de
-          verificar mi email. <br>
+          verificar mi email. <br />
           <!-- Una vez verificado/a vuelva al inico de sesion e ingrese con su cuenta verificada. -->
         </p>
       </div>
@@ -22,11 +22,24 @@
         </button>
       </div>
       <div class="text-center mt-3">
+        <a (click)="changeEmail()">Cambiar direccion de correo electronico</a>
         <!-- <a href="/login">Volver a la pagina de iniciar sesion</a> -->
         <!-- <button class="btn btn-primary mx-3" (click)="goToPage()">
           ACCEDER A LA PAGINA
         </button> -->
       </div>
+    </div>
+  </div>
+  <div class="col-md-6 mx-auto mt-5">
+    <div
+      *ngIf="cambiarEmail"
+      class="form-group card-body"
+      style="text-align: center;"
+    >
+      <input type="email" placeholder="Email" required class="form-control" [(ngModel)]="usuarioEmail"/>
+      <button class="btn btn-primary mt-3" (click)="changeEmail()">
+        Cambiar email
+      </button>
     </div>
   </div>
 </div>

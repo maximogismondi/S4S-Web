@@ -9,7 +9,7 @@ import {
 import { Observable, of } from 'rxjs';
 import firebase from 'firebase/app';
 import { Router } from '@angular/router';
-import { Time } from '@angular/common';
+// import { Time } from '@angular/common';
 
 @Injectable()
 export class AuthService {
