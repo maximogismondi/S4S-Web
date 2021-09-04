@@ -4,7 +4,7 @@
       <h3 class="card-title text-center">¡GRACIAS POR REGISTRARSE!</h3>
       <div class="form-group mt-3">
         <p class="text-center">
-          Le enviamos un mensaje a <strong>{{ user?.email }}</strong> para que
+          Le enviamos un mensaje a <strong>{{ this.usuarioEmail }}</strong> para que
           confirme su email.
         </p>
         <p class="text-center">
@@ -22,7 +22,7 @@
         </button>
       </div>
       <div class="text-center mt-3">
-        <a (click)="changeEmail()">Cambiar direccion de correo electronico</a>
+        <button class="btn btn-outline-secondary" type="button" (click)="changeEmail()">Cambiar direccion de correo electronico</button>
         <!-- <a href="/login">Volver a la pagina de iniciar sesion</a> -->
         <!-- <button class="btn btn-primary mx-3" (click)="goToPage()">
           ACCEDER A LA PAGINA
@@ -36,7 +36,7 @@
       class="form-group card-body"
       style="text-align: center;"
     >
-      <input type="email" placeholder="Email" required class="form-control" [(ngModel)]="usuarioEmail"/>
+      <input type="email" placeholder="Nuevo email" required class="form-control" [(ngModel)]="usuarioEmail"/>
       <button class="btn btn-primary mt-3" (click)="changeEmail()">
         Cambiar email
       </button>

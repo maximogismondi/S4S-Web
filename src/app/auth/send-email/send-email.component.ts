@@ -19,6 +19,7 @@ export class SendEmailComponent implements OnInit {
   public userData: any;
   mandarAEleccion: boolean = true;
   cambiarEmail: boolean = false;
+  usuarioEmail: string = ' ';
   constructor(
     private authSvc: AuthService,
     private router: Router,
@@ -33,46 +34,12 @@ export class SendEmailComponent implements OnInit {
           .pipe()
           .subscribe((res) => {
             this.userData = res.payload.data();
+            this.usuarioEmail = this.userData.email;
           });
       } else {
         this.userData = null;
-        // this.router.navigate(['/login']);
       }
     });
-    // const user2 = firebase.auth().currentUser;
-    // user2?.reload().then(() => {
-    //   const refreshUser = firebase.auth().currentUser;
-    //   if(refreshUser?.emailVerified){
-    //     console.log("A")
-    //   }
-    //   else{
-    //     console.log("B")
-    //   }
-    // })
-
-    // this.authSvc.afAuth.user.subscribe((user) => {
-
-    //   if (user) {
-    //     this.afs
-    //       .doc<User>(`users/${user.uid}`)
-    //       .snapshotChanges()
-    //       .pipe()
-    //       .subscribe((res) => {
-    //         this.userData = res.payload.data();
-    //         console.log("a")
-    //         if (this.userData && this.userData.emailVerified){
-    //           this.router.navigate(['/eleccion']);
-    //         }
-    //       });
-    // if (this.userData) {
-    //   if (this.mandarAEleccion && this.userData.emailVerified) {
-    //     this.mandarAEleccion = false;
-    //   }
-    // } else {
-    //   this.userData = null;
-    // }
-    //   }
-    // });
     setInterval(() => {
       firebase
         .auth()
@@ -89,20 +56,21 @@ export class SendEmailComponent implements OnInit {
         });
     }, 1000);
   }
-  usuarioEmail: string;
 
-  changeEmail() {
+  async changeEmail() {
     if (this.cambiarEmail == false) {
       this.cambiarEmail = true;
     } else {
-      this.afs.collection('users').doc(this.userData).update({
-        email: this.usuarioEmail,
-      });
+      this.afs
+        .collection('users')
+        .doc(this.userData.uid)
+        .update({
+          email: this.usuarioEmail,
+          displayName: this.usuarioEmail.split('@')[0],
+        });
       this.cambiarEmail = false;
     }
   }
-
-  updateEmail(email: string) {}
 
   ngOnInit(): void {}
 
