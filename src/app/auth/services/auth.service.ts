@@ -61,7 +61,7 @@ export class AuthService {
 
   //joya
   async register(email: string, password: string) {
-    
+    email = email + "@gmail.com";
     const { user } = await this.afAuth.createUserWithEmailAndPassword(
       email,
       password

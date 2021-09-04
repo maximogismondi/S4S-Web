@@ -4,12 +4,12 @@
       <h1 class="text-center mt-4">REGISTRARSE</h1>
       <div class="alert alert-light mt-4" role="alert">
         <h6 class="text-danger">Importante</h6>
-        - La contraseña debe tener un minimo de 6 digitos. <br>
+        - La contraseña debe ser mayor a los 5 digitos. <br>
         <!-- - Si ya tienes cuenta y aun no estas verificado, dirigite al inicio de sesion y sigue los pasos. -->
         <!-- -Si no accedes a la pagina una vez puesto tu email y contraseña debe ser porque algo esta mal. -->
       </div>
       <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-        <div class="form-group mt-4">
+        <div class="input-group mt-4">
           <input
             type="email"
             placeholder="Email"
@@ -18,6 +18,7 @@
             class="form-control"
             formControlName="email"
           />
+          <span class="input-group-text rounded bg-light me-2">@gmail.com</span>
         </div>
 
         <div class="form-group mt-4">
