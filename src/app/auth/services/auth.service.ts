@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AuthService {
   public userData: any;
+  ingresoEmailCompleto: boolean = false;
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -38,6 +39,11 @@ export class AuthService {
 
   //joya
   async login(email: string, password: string) {
+    
+    // if(this.userData == null) {
+    //   alert("No existe una cuenta con ese email, por favor registrese");
+    //   this.router.navigate(['/register']);
+    // }
     const { user } = await this.afAuth.signInWithEmailAndPassword(
       email,
       password
@@ -61,7 +67,17 @@ export class AuthService {
 
   //joya
   async register(email: string, password: string) {
-    email = email + "@gmail.com";
+    for(let i=0; i<email.length; i++) {
+      if(email[i] == "@"){
+        if(email.split('@')[1] == "gmail.com"){
+          this.ingresoEmailCompleto = true;
+        }
+      }
+    }
+    if(this.ingresoEmailCompleto == false){
+      email = email + "@gmail.com";
+    }
+    
     const { user } = await this.afAuth.createUserWithEmailAndPassword(
       email,
       password

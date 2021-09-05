@@ -46,10 +46,6 @@ export class LoginComponent implements OnInit {
       if (user && user.emailVerified) {
         this.router.navigate(['/menu-principal']);
       }
-      else{
-        alert("No existe una cuenta con ese email, por favor registrese");
-        this.router.navigate(['/register']);
-      }
     }
     else{
       if(email.length == 0 && password.length == 0){
