@@ -13,7 +13,7 @@ import { AuthService } from '../services/auth.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [AuthService]
+  providers: [AuthService],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -24,12 +24,12 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authSvc: AuthService,
     private afs: AngularFirestore
-    ) {
-      authSvc.afAuth.authState.subscribe((user) => {
-        if (!user) {
-          this.verificado = false;
-        }
-      });
+  ) {
+    authSvc.afAuth.authState.subscribe((user) => {
+      if (!user) {
+        this.verificado = false;
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -41,24 +41,25 @@ export class LoginComponent implements OnInit {
 
   async onLogin() {
     const { email, password } = this.loginForm.value;
-    if(email.length > 10 && password.length > 5) {
+    if (email.length > 10 && password.length > 5) {
       const user = await this.authSvc.login(email, password);
       if (user && user.emailVerified) {
         this.router.navigate(['/menu-principal']);
+      } else {
+        alert('No existe una cuenta con ese email, por favor registrese');
+        this.router.navigate(['/register']);
       }
-    }
-    else{
-      if(email.length == 0 && password.length == 0){
-        alert("Rellene los campos vacios");
-      }
-      else if(email.length < 10){
-        alert("El email debe ser mayor a los 10 digitos");
-      }
-      else if(password.length < 5){
-        alert("La contraseña debe ser mayor a los 5 digitos");
-      }
-      else if(email.length < 10 && password.length < 5){
-        alert("El email debe ser mayor a los 10 digitos y la contraseña debe ser mayor a los 5 digitos");
+    } else {
+      if (email.length == 0 && password.length == 0) {
+        alert('Rellene los campos vacios');
+      } else if (email.length < 10) {
+        alert('El email debe ser mayor a los 10 digitos');
+      } else if (password.length < 5) {
+        alert('La contraseña debe ser mayor a los 5 digitos');
+      } else if (email.length < 10 && password.length < 5) {
+        alert(
+          'El email debe ser mayor a los 10 digitos y la contraseña debe ser mayor a los 5 digitos'
+        );
       }
     }
     // else if (user && user.emailVerified == false) {

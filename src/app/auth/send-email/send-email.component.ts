@@ -68,7 +68,12 @@ export class SendEmailComponent implements OnInit {
           email: this.usuarioEmail,
           displayName: this.usuarioEmail.split('@')[0],
         });
+      // .updateCurrentUser(this.userData.uid);
+      // const userNuevoEmail = this.afAuth.currentUser;
+      (await this.afAuth.currentUser)?.updateEmail(this.usuarioEmail);
       this.cambiarEmail = false;
+      this.router.navigate(['/verificacion-email']);
+      // (await this.afAuth.currentUser)?.sendEmailVerification();
     }
   }
 
