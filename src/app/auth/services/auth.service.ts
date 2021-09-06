@@ -44,10 +44,18 @@ export class AuthService {
     //   alert("No existe una cuenta con ese email, por favor registrese");
     //   this.router.navigate(['/register']);
     // }
+    firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
+      alert('No existe una cuenta con ese email, por favor registrese');
+      this.router.navigate(['/register']);
+      // console.log(error.code);
+      // console.log(error.message);
+    });
+    
     const { user } = await this.afAuth.signInWithEmailAndPassword(
       email,
       password
     );
+
     // if (user?.emailVerified) {
     //   this.updateUserData(user);
     // }
@@ -67,17 +75,6 @@ export class AuthService {
 
   //joya
   async register(email: string, password: string) {
-    for(let i=0; i<email.length; i++) {
-      if(email[i] == "@"){
-        if(email.split('@')[1] == "gmail.com"){
-          this.ingresoEmailCompleto = true;
-        }
-      }
-    }
-    if(this.ingresoEmailCompleto == false){
-      email = email + "@gmail.com";
-    }
-    
     const { user } = await this.afAuth.createUserWithEmailAndPassword(
       email,
       password
@@ -86,6 +83,13 @@ export class AuthService {
     this.updateUserData(user);
     this.sendVerificationEmail();
     return user;
+  }
+
+  resetPassword(email: string) {
+    var auth = firebase.auth();
+    return auth.sendPasswordResetEmail(email)
+      .then(() => console.log("email sent"))
+      .catch((error) => console.log(error))
   }
 
   //joya

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import {
   FormBuilder,
@@ -18,12 +19,15 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   verificado: boolean = true;
+  olvidoConrtrasena: boolean = false;
+  usuarioEmail: string = "";
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private authSvc: AuthService,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    public afAuth: AngularFireAuth
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (!user) {
@@ -45,10 +49,13 @@ export class LoginComponent implements OnInit {
       const user = await this.authSvc.login(email, password);
       if (user && user.emailVerified) {
         this.router.navigate(['/menu-principal']);
-      } else {
-        alert('No existe una cuenta con ese email, por favor registrese');
-        this.router.navigate(['/register']);
+      } else if (user && !user.emailVerified) {
+        this.router.navigate(['/verificacion-email']);
       }
+      // else {
+      //   alert('No existe una cuenta con ese email, por favor registrese');
+      //   this.router.navigate(['/register']);
+      // }
     } else {
       if (email.length == 0 && password.length == 0) {
         alert('Rellene los campos vacios');
@@ -75,6 +82,16 @@ export class LoginComponent implements OnInit {
   async onGoogleLogin() {
     if (await this.authSvc.loginGoogle()) {
       this.router.navigate(['/menu-principal']);
+    }
+  }
+
+  async forgotPassword(){
+    if (this.olvidoConrtrasena == false) {
+      this.olvidoConrtrasena = true;
+    } else {
+      this.authSvc.resetPassword(this.usuarioEmail);
+      alert("Verifique su email");
+      this.olvidoConrtrasena = false;
     }
   }
 
