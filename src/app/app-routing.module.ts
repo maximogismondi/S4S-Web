@@ -8,7 +8,7 @@ import {
   redirectUnauthorizedTo,
 } from '@angular/fire/auth-guard';
 
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
+// const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const routes: Routes = [
   {
     path: 'login',
@@ -32,13 +32,13 @@ const routes: Routes = [
         (m) => m.EleccionModule
       ),
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    // data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'verificacion-email',
     component: SendEmailComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    // data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'crear-colegio',
@@ -47,7 +47,7 @@ const routes: Routes = [
         (m) => m.CrearColegioModule
       ),
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    // data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'menu-principal',
@@ -56,17 +56,17 @@ const routes: Routes = [
         (m) => m.MenuPrincipalModule
       ),
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    // data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
-  {
-    path: 'configuracion',
-    loadChildren: () =>
-      import('./configuraciones/setting/setting.module').then(
-        (m) => m.SettingModule
-      ),
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
-  },
+  // {
+  //   path: 'configuracion',
+  //   loadChildren: () =>
+  //     import('./configuraciones/setting/setting.module').then(
+  //       (m) => m.SettingModule
+  //     ),
+  //   canActivate: [AngularFireAuthGuard],
+  //   data: { authGuardPipe: redirectUnauthorizedToLogin },
+  // },
 ];
 
 @NgModule({

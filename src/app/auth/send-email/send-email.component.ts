@@ -72,8 +72,8 @@ export class SendEmailComponent implements OnInit {
       // const userNuevoEmail = this.afAuth.currentUser;
       (await this.afAuth.currentUser)?.updateEmail(this.usuarioEmail);
       this.cambiarEmail = false;
-      // this.router.navigate(['/verificacion-email']);
       setTimeout(() => {this.onSendEmail()}, 1000);
+      await this.router.navigate(['/verificacion-email']);
     }
   }
 
