@@ -37,6 +37,28 @@ export class AuthService {
 
   }
 
+
+  async isLoggedIn():Promise<boolean> {
+      let user= await this.afAuth.authState.toPromise()
+      console.log(user);
+      if (!user) {
+        return false;
+      }
+      console.log("dsdsds")
+      let userData = await this.afs
+          .doc<User>(`users/${user.uid}`)
+          .get()
+          .toPromise()
+      console.log(userData.data()?.emailVerified);
+      if (userData.data()?.emailVerified){
+        return true;
+      }
+      return false;
+      
+      
+      
+  }
+
   //joya
   async login(email: string, password: string) {
     
