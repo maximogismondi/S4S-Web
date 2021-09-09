@@ -18,7 +18,7 @@ export class SendEmailComponent implements OnInit {
   public user$: Observable<any> = this.authSvc.afAuth.user;
   public userData: any;
   mandarAEleccion: boolean = true;
-  cambiarEmail: boolean = false;
+  cambiarEmail: number = 0;
   usuarioEmail: string = ' ';
   constructor(
     private authSvc: AuthService,
@@ -58,8 +58,8 @@ export class SendEmailComponent implements OnInit {
   }
 
   async changeEmail() {
-    if (this.cambiarEmail == false) {
-      this.cambiarEmail = true;
+    if (this.cambiarEmail == 0) {
+      this.cambiarEmail = 1;
     } else {
       this.afs
         .collection('users')
@@ -71,9 +71,9 @@ export class SendEmailComponent implements OnInit {
       // .updateCurrentUser(this.userData.uid);
       // const userNuevoEmail = this.afAuth.currentUser;
       (await this.afAuth.currentUser)?.updateEmail(this.usuarioEmail);
-      this.cambiarEmail = false;
+      this.cambiarEmail = 2;
       setTimeout(() => {this.onSendEmail()}, 1000);
-      await this.router.navigate(['/verificacion-email']);
+      // await this.router.navigate(['/verificacion-email']);
     }
   }
 

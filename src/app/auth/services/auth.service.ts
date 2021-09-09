@@ -166,28 +166,14 @@ export class AuthService {
       String(school.finalizacionHorario).length === 0 ||
       String(school.inicioHorario).length === 0 ||
       String(school.finalizacionHorario).length === 0
-      // school.nombre != ' ' &&
-      // school.direccion != ' ' &&
-      // school.localidad != ' ' &&
-      // school.telefono != ' ' &&
-      // school.duracionModulo != null &&
-      // school.inicioHorario != null &&
-      // school.finalizacionHorario != null &&
-      // school.inicioHorario < school.finalizacionHorario
     ){
       confirm("Completar los casilleros obligatorios");
       // Poner los valores que se piden
     }
     else if(String(school.nombre).length > 50){
-      // console.log(school.nombre)
-      // console.log(school.telefono)
-      // console.log(school.telefono.length)
       confirm("El nombre del colegio debe ser menor a los 50 caracteres");
     }
     else if(String(school.telefono).length != 8){
-      // console.log(school.nombre)
-      // console.log(school.telefono)
-      // console.log(school.telefono.length)
       confirm("El numero de telefono no es igual a los 8 digitos, recuerda que no debe contener ningun espacio, ningun signo y debe ser de tamaño 8");
     }
     else if(school.duracionModulo>60 || school.duracionModulo<20){
@@ -203,19 +189,6 @@ export class AuthService {
     else if(school.finalizacionHorario<"12:00"){
       confirm("El horario de finalizacion debe ser mayor que las 12:00 am");
     }
-    // else if (
-    //   school.nombre != ' ' &&
-    //   school.direccion != ' ' &&
-    //   school.localidad != ' ' &&
-    //   school.telefono != ' ' &&
-    //   school.duracionModulo != null &&
-    //   school.inicioHorario != null &&
-    //   school.finalizacionHorario != null &&
-    //   school.inicioHorario < school.finalizacionHorario
-    // ) {
-    //   this.SchoolData(school);
-    //   this.router.navigate(['/crear-colegio']);
-    // }
     else{
       this.SchoolData(school);
       this.router.navigate(['/crear-colegio']);

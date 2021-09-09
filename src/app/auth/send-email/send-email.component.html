@@ -22,17 +22,20 @@
         </button>
       </div>
       <div class="text-center mt-3">
-        <button class="btn btn-secondary" type="button" (click)="changeEmail()">Cambiar direccion de correo electronico</button>
+        <button *ngIf="cambiarEmail != 2; else bloquearBoton" class="btn btn-secondary" type="button" (click)="changeEmail()">Cambiar direccion de correo electronico</button>
         <!-- <a href="/login">Volver a la pagina de iniciar sesion</a> -->
         <!-- <button class="btn btn-primary mx-3" (click)="goToPage()">
           ACCEDER A LA PAGINA
         </button> -->
+        <ng-template #bloquearBoton>
+          <button class="btn btn-secondary disabled" type="button">Cambiar direccion de correo electronico</button>
+        </ng-template>
       </div>
     </div>
   </div>
   <div class="col-md-6 mx-auto mt-5">
     <div
-      *ngIf="cambiarEmail"
+      *ngIf="cambiarEmail == 1"
       class="form-group card-body"
       style="text-align: center;"
     >

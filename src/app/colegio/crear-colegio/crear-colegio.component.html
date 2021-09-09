@@ -130,13 +130,13 @@
       <table class="table text-center">
         <thead>
           <tr class="table-dark">
-            <th scope="col">Horarios</th>
+            <th class="rounded-start" scope="col">Horarios</th>
             <th scope="col"></th>
             <th scope="col">Lunes</th>
             <th scope="col">Martes</th>
             <th scope="col">Miercoles</th>
             <th scope="col">Jueves</th>
-            <th scope="col">Viernes</th>
+            <th class="rounded-end" scope="col">Viernes</th>
           </tr>
         </thead>
         <tbody>
@@ -154,11 +154,11 @@
               TURNO MAÑANA ({{ inicioHorario }} am - 12:00 am)
             </td>
           </tr>
-          <tr *ngIf="12 >= horaInicial && horaInicial >= 5" class="bg-dark">
+          <tr *ngIf="12 >= horaInicial && horaInicial >= 5" class="bg-dark rounded">
             <ul class="list-group" *ngIf="turnosArray[0].modulos.length > 0">
               <li
                 *ngFor="let turno of turnosArray[0].modulos"
-                class="list-group-item bg-dark text-white"
+                class="list-group-item bg-dark text-white rounded"
               >
                 <td colspan="7">
                   <span>{{ turno.inicio }} - {{ turno.final }}</span>
@@ -512,7 +512,7 @@
             </div>
           </td>
           <td>
-            <ul class="list-group">
+            <ul class="list-group shadow" style="max-height: 250px; overflow-y: scroll;">
               <li
                 *ngFor="let aula of aulaArray"
                 class="list-group-item list-group-item-action"
@@ -636,7 +636,7 @@
             </div>
           </td>
           <td>
-            <ul class="list-group">
+            <ul class="list-group shadow scrollbar scrollbar-primary" style="max-height: 250px; overflow-y: scroll;">
               <li
                 *ngFor="let curso of cursoArray"
                 class="list-group-item list-group-item-action"
@@ -741,7 +741,7 @@
             </div>
           </td>
           <td>
-            <ul class="list-group">
+            <ul class="list-group shadow" style="max-height: 250px; overflow-y: scroll;">
               <li
                 *ngFor="let profesor of profesorArray"
                 class="list-group-item list-group-item-action"
@@ -946,7 +946,7 @@
             </div>
           </td>
           <td>
-            <ul class="list-group">
+            <ul class="list-group shadow" style="max-height: 250px; overflow-y: scroll;">
               <li
                 *ngFor="let materia of materiaArray"
                 class="list-group-item list-group-item-action"
