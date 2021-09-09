@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <div class="row">
-    <div class="col-md-6 mx-auto">
+    <div class="col-md-8 mx-auto">
       <div class="card">
         <div class="card-body">
           <h3 class="text-center mt-2">{{ nombreColegio }}</h3>
@@ -8,7 +8,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6 mt-4 mx-auto">
+  <div class="col-md-8 mt-4 mx-auto">
     <div class="card">
       <div class="progress" style="height: 20px">
         <div
@@ -119,7 +119,7 @@
 <!-- *ngIf="modulos == 0" *ngIf="aulas == 0 && modulos != 0" *ngIf="materias == 0 && aulas != 0" *ngIf="cursos == 0 && materias != 0" *ngIf="profes == 0 && cursos != 0"-->
 
 <div *ngIf="turnos == 0" class="container mx-auto my-4">
-  <div class="col-md-6 mx-auto">
+  <div class="col-md-8 mx-auto">
     <ul class="list-group">
       <div class="text-secondary">
         <!-- <h6>De: {{ inicioHorario }} am a {{ finalizacionHorario }} pm</h6> -->
@@ -150,10 +150,12 @@
           <!-- MAÑANA -->
           <!--*ngIf="(12 >= horaInicial && horaInicial >= 5) || (12 >= horaFinal && horaFinal > 5)"-->
           <tr *ngIf="12 >= horaInicial && horaInicial >= 5">
-            <td colspan="7" class="table-active">TURNO MAÑANA ({{ inicioHorario }} am - 12:00 am)</td>
+            <td colspan="7" class="table-active">
+              TURNO MAÑANA ({{ inicioHorario }} am - 12:00 am)
+            </td>
           </tr>
           <tr *ngIf="12 >= horaInicial && horaInicial >= 5" class="bg-dark">
-            <ul class="list-group" *ngIf= "turnosArray[0].modulos.length > 0">
+            <ul class="list-group" *ngIf="turnosArray[0].modulos.length > 0">
               <li
                 *ngFor="let turno of turnosArray[0].modulos"
                 class="list-group-item bg-dark text-white"
@@ -175,23 +177,29 @@
                 />
                 <button class="btn btn-primary" (click)="addModulo()">
                   <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  class="bi bi-plus-lg"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
-                  />
-                </svg>
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    class="bi bi-plus-lg"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
+                    />
+                  </svg>
                 </button>
               </div>
             </td>
             <td colspan="3"></td>
           </tr>
-          <tr *ngIf="12 >= horaInicial && horaInicial >= 5 && turnoSeleccionado != 'manana'">
+          <tr
+            *ngIf="
+              12 >= horaInicial &&
+              horaInicial >= 5 &&
+              turnoSeleccionado != 'manana'
+            "
+          >
             <!-- <th scope="row" class="align-middle">{{ inicioHorario }}</th> -->
             <td colspan="7" class="table-light">
               <button class="btn btn-primary" (click)="turnoActual('manana')">
@@ -222,18 +230,22 @@
           <!-- <th *ngIf="18 >= horaInicial && horaInicial > 12" scope="row" class="align-middle">{{ inicioHorario }}</th> -->
 
           <tr *ngIf="18 >= horaFinal && horaFinal > 12; else turnoNoche">
-            <td colspan="7" class="table-active">TURNO TARDE (12:00 am - {{ finalizacionHorario }} pm)</td>
+            <td colspan="7" class="table-active">
+              TURNO TARDE (12:00 am - {{ finalizacionHorario }} pm)
+            </td>
           </tr>
           <ng-template #turnoNoche>
             <tr>
-              <td colspan="7" class="table-active">TURNO TARDE (12:00 am - 18:00 pm)</td>
+              <td colspan="7" class="table-active">
+                TURNO TARDE (12:00 am - 18:00 pm)
+              </td>
             </tr>
           </ng-template>
           <tr
             *ngIf="(18 >= horaFinal && horaFinal > 12) || horaFinal > 18"
             class="bg-dark"
           >
-            <ul class="list-group" *ngIf= "turnosArray[1].modulos.length > 0">
+            <ul class="list-group" *ngIf="turnosArray[1].modulos.length > 0">
               <li
                 *ngFor="let turno of turnosArray[1].modulos"
                 class="list-group-item bg-dark text-white"
@@ -255,24 +267,31 @@
                 />
                 <button class="btn btn-primary" (click)="addModulo()">
                   <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  class="bi bi-plus-lg"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
-                  />
-                </svg>
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    class="bi bi-plus-lg"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
+                    />
+                  </svg>
                 </button>
               </div>
             </td>
             <td colspan="3"></td>
           </tr>
 
-          <tr *ngIf="(18 >= horaFinal && horaFinal > 12 && turnoSeleccionado != 'tarde') || horaFinal > 18 && turnoSeleccionado != 'tarde'">
+          <tr
+            *ngIf="
+              (18 >= horaFinal &&
+                horaFinal > 12 &&
+                turnoSeleccionado != 'tarde') ||
+              (horaFinal > 18 && turnoSeleccionado != 'tarde')
+            "
+          >
             <td colspan="7" class="table-light">
               <button class="btn btn-primary" (click)="turnoActual('tarde')">
                 <svg
@@ -300,11 +319,13 @@
           <!-- NOCHE -->
           <!-- <th *ngIf="5 >= horaInicial && horaInicial > 18" scope="row" class="align-middle">{{ inicioHorario }}</th> -->
           <tr *ngIf="horaFinal > 18">
-            <td colspan="7" class="table-active">TURNO NOCHE (18:00 pm - {{ finalizacionHorario }} pm)</td>
+            <td colspan="7" class="table-active">
+              TURNO NOCHE (18:00 pm - {{ finalizacionHorario }} pm)
+            </td>
           </tr>
 
           <tr *ngIf="horaFinal > 18" class="bg-dark">
-            <ul class="list-group" *ngIf= "turnosArray[2].modulos.length > 0">
+            <ul class="list-group" *ngIf="turnosArray[2].modulos.length > 0">
               <li
                 *ngFor="let turno of turnosArray[2].modulos"
                 class="list-group-item bg-dark text-white"
@@ -326,17 +347,17 @@
                 />
                 <button class="btn btn-primary" (click)="addModulo()">
                   <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  class="bi bi-plus-lg"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
-                  />
-                </svg>
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    class="bi bi-plus-lg"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
+                    />
+                  </svg>
                 </button>
               </div>
             </td>
@@ -402,114 +423,135 @@
   class="container mx-auto my-4"
   id="divAula"
 >
-  <div class="col-md-6 mx-auto">
-    <ul class="list-group">
-      <li
-        *ngFor="let aula of aulaArray"
-        class="list-group-item list-group-item-action"
-        (click)="openForEditAula(aula)"
-        [class.active]="aula == selectedAula"
-      >
-        <span class="badge bg-primary">{{ aula.id }}</span>
-        Nombre: {{ aula.nombre }} / Tipo: {{ aula.tipo }} / Otro:
-        {{ aula.otro }}
-      </li>
-    </ul>
-    <div class="card mt-4">
-      <div class="card-body">
-        <div class="card-title"><h5>Insertar Aulas</h5></div>
-        <div class="form-group">
-          <input
-            type="text"
-            [(ngModel)]="selectedAula.nombre"
-            placeholder="Nombre"
-            class="form-control"
-          />
+  <div class="col-md-8 mx-auto">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Insertar Aulas</th>
+          <th scope="col">Aulas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="card">
+              <div class="card-body">
+                <!-- <div class="card-title"><h5>Insertar Aulas</h5></div> -->
+                <div class="form-group">
+                  <input
+                    type="text"
+                    [(ngModel)]="selectedAula.nombre"
+                    placeholder="Nombre"
+                    class="form-control"
+                  />
 
-          <label class="mt-2">Tipo de aula</label>
-          <select class="form-select" [(ngModel)]="selectedAula.tipo">
-            <option value="Normal">Normal</option>
-            <option value="Otro">Otro</option>
-          </select>
+                  <label class="mt-2">Tipo de aula</label>
+                  <select class="form-select" [(ngModel)]="selectedAula.tipo">
+                    <option value="Normal">Normal</option>
+                    <option value="Otro">Otro</option>
+                  </select>
 
-          <div class="mt-3" *ngIf="selectedAula.tipo == 'Otro'">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                [(ngModel)]="selectedAula.otro"
-                value="SUM"
-                name="flexRadioDefault"
-                id="flexRadioDefault1"
-                checked
-              />
-              <label class="form-check-label" for="flexRadioDefault1">
-                SUM
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                [(ngModel)]="selectedAula.otro"
-                value="TALLER"
-                name="flexRadioDefault"
-                id="flexRadioDefault2"
-              />
-              <label class="form-check-label" for="flexRadioDefault2">
-                TALLER
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                [(ngModel)]="selectedAula.otro"
-                value="LABORATORIO"
-                name="flexRadioDefault"
-                id="flexRadioDefault3"
-              />
-              <label class="form-check-label" for="flexRadioDefault3">
-                LABORATORIO
-              </label>
-            </div>
-          </div>
+                  <div class="mt-3" *ngIf="selectedAula.tipo == 'Otro'">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="SUM"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                        checked
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        SUM
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="TALLER"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault2"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault2">
+                        TALLER
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="LABORATORIO"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault3"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault3">
+                        LABORATORIO
+                      </label>
+                    </div>
+                  </div>
 
-          <button (click)="addOrEditAula()" class="btn btn-primary mt-4">
-            Añadir / Editar
-          </button>
-          <button
-            *ngIf="selectedAula.id != 0"
-            class="btn btn-danger mt-4 ms-4"
-            (click)="deleteAula()"
-          >
-            Eliminar
-          </button>
-        </div>
-        <div class="d-grid">
-          <button
-            *ngIf="aulaArray.length != 0"
-            (click)="goFormCurso()"
-            class="btn btn-primary btn-lg mt-4"
-          >
-            SIGUIENTE
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1.10em"
-              height="1.10em"
-              fill="currentColor"
-              class="bi bi-arrow-right"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
+                  <button
+                    (click)="addOrEditAula()"
+                    class="btn btn-primary mt-4"
+                  >
+                    Añadir / Editar
+                  </button>
+                  <button
+                    *ngIf="selectedAula.id != 0"
+                    class="btn btn-danger mt-4 ms-4"
+                    (click)="deleteAula()"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <ul class="list-group">
+              <li
+                *ngFor="let aula of aulaArray"
+                class="list-group-item list-group-item-action"
+                (click)="openForEditAula(aula)"
+                [class.active]="aula == selectedAula"
+              >
+                <span>{{ aula.nombre }}</span>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div class="d-grid">
+              <button
+                *ngIf="aulaArray.length != 0"
+                (click)="goFormCurso()"
+                class="btn btn-primary btn-lg mt-4"
+              >
+                SIGUIENTE
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1.10em"
+                  height="1.10em"
+                  fill="currentColor"
+                  class="bi bi-arrow-right"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
@@ -528,8 +570,9 @@
       >
         <span class="badge bg-primary">{{ curso.id }}</span>
         Nombre: {{ curso.nombre }} / Turno preferido:
-        {{ curso.turnoPreferido }} / Cantidad de alumnos: {{ curso.cantAlumnos }}
-         <!--  / Materias en el curso:
+        {{ curso.turnoPreferido }} / Cantidad de alumnos:
+        {{ curso.cantAlumnos }}
+        <!--  / Materias en el curso:
         <p *ngFor="let materia of curso.materiasCurso">- {{ materia }}</p>  -->
       </li>
     </ul>
@@ -633,9 +676,9 @@
         [class.active]="profesor == selectedProfesor"
       >
         <span class="badge bg-primary">{{ profesor.id }}</span>
-        Nombre: {{ profesor.nombre }} / Apellido: {{ profesor.apellido }} 
-        / Dni: {{ profesor.dni }}
-         <!-- / Materias
+        Nombre: {{ profesor.nombre }} / Apellido: {{ profesor.apellido }} / Dni:
+        {{ profesor.dni }}
+        <!-- / Materias
         capacitado: {{ profesor.materiasCapacitado }} / Turno preferido:{{
           profesor.turnoPreferido
         }}
@@ -660,7 +703,7 @@
             class="form-control"
           />
 
-           <input
+          <input
             type="number"
             placeholder="Dni"
             min="1000000"
@@ -940,5 +983,23 @@
   class="container mx-auto my-4"
   id="divFinalizar"
 >
-  <h1>GRACIAS POR UTILIZAR TU TIEMPO EN S4S, A CONTINUACION FINALIZAREMOS CON EL PROCESO.</h1>
+  <div class="col-md-6 mx-auto">
+    <div class="card mt-6">
+      <div class="card-body">
+        <div class="card-title">
+          <h5>
+            <p>
+              GRACIAS POR UTILIZAR TU TIEMPO EN S4S. <br />
+              A CONTINUACION FINALIZAREMOS CON EL PROCESO.
+            </p>
+          </h5>
+        </div>
+        <div class="d-grid">
+          <button (click)="finalizar()" class="btn btn-primary btn-lg mt-2">
+            FINALIZAR
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

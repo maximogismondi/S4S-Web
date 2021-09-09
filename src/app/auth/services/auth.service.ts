@@ -69,6 +69,7 @@ export class AuthService {
     firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
       alert('No existe una cuenta con ese email, por favor registrese');
       this.router.navigate(['/register']);
+      
       // console.log(error.code);
       // console.log(error.message);
     });

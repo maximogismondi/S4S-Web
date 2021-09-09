@@ -226,7 +226,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   addOrEditAula() {
-    if(this.selectedAula.nombre!= "" && this.selectedAula.tipo != ""){
+    // if(this.selectedAula.nombre!= "" && this.selectedAula.tipo != ""){}
       if (this.selectedAula.id == 0) {
         this.selectedAula.id = this.aulaArray.length + 1;
         this.aulaArray.push(this.selectedAula);
@@ -235,10 +235,10 @@ export class CrearColegioComponent implements OnInit {
         this.selectedAula.otro = "Se selecciono el tipo normal";
       }
       this.selectedAula = new Aula();
-    }
-    else{
-      alert("Complete los campos vacios");
-    }
+    
+    // else{
+    //   alert("Complete los campos vacios");
+    // }
     
   }
 
@@ -321,7 +321,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   addOrEditProfesor() {
-    if(this.selectedProfesor.nombre != "" && this.selectedProfesor.apellido != "" && this.selectedProfesor.dni != "" && this.selectedProfesor.dni > "1000000"){
+    if(this.selectedProfesor.nombre != "" && this.selectedProfesor.apellido != "" && this.selectedProfesor.dni != "" && this.selectedProfesor.dni >= "1000000"){
       if (this.selectedProfesor.id == 0) {
         this.selectedProfesor.id = this.profesorArray.length + 1;
         this.profesorArray.push(this.selectedProfesor);
@@ -438,6 +438,12 @@ export class CrearColegioComponent implements OnInit {
     this.afs.collection('schools').doc(this.nombreDocumento).update({
       materias: materiaArrayDiccionario,
     });
+  }
+
+  // _______________________________________FINALIZAR____________________________________________________________
+
+  async finalizar(){
+    alert("GRACIAS👍")
   }
 
 }
