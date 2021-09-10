@@ -20,6 +20,8 @@ export interface Colegio {
   duracionModulo: number;
   inicioHorario: string;
   finalizacionHorario: string;
+  botonesCrearColegioProgreso: number;
+  // botonesCrearColegio: number;
   usuariosExtensiones: Array<string>;
   aulas: Array<Aula>;
   turnos: Array<Turno>;

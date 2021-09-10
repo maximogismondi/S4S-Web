@@ -98,12 +98,53 @@
 
       <div class="card-body">
         <div class="row align-items-end">
-          <button [ngClass]="{'btn-primary': botonesCrearColegio == 1}" class="col btn mx-2" (click)="clickeoBotones('turnos')">Turnos</button>
-          <button *ngIf="botonesCrearColegioProgreso >= 2 else bloquearBoton"  [ngClass]="{'btn-primary': botonesCrearColegio == 2}" class="col btn me-2" (click)="clickeoBotones('aulas')">Aulas</button>
-          <button *ngIf="botonesCrearColegioProgreso >= 3 else bloquearBoton1" [ngClass]="{'btn-primary': botonesCrearColegio == 3}" class="col btn me-2" (click)="clickeoBotones('cursos')">Cursos</button>
-          <button *ngIf="botonesCrearColegioProgreso >= 4 else bloquearBoton2" [ngClass]="{'btn-primary': botonesCrearColegio == 4}" class="col btn me-2" (click)="clickeoBotones('profesores')">Profesores</button>
-          <button *ngIf="botonesCrearColegioProgreso >= 5 else bloquearBoton3" [ngClass]="{'btn-primary': botonesCrearColegio == 5}" class="col btn me-2" (click)="clickeoBotones('materias')">Materias</button>
-          <button *ngIf="botonesCrearColegioProgreso >= 6 else bloquearBoton4" [ngClass]="{'btn-primary': botonesCrearColegio == 6}" class="col btn me-2" (click)="clickeoBotones('finalizar')">Finalizar</button>
+          <button
+            [ngClass]="{ 'btn-primary': botonesCrearColegio == 1 }"
+            class="col btn mx-2"
+            (click)="clickeoBotones('turnos')"
+          >
+            Turnos
+          </button>
+          <button
+            *ngIf="botonesCrearColegioProgreso >= 2 && turnos != 0; else bloquearBoton"
+            [ngClass]="{ 'btn-primary': botonesCrearColegio == 2 }"
+            class="col btn me-2"
+            (click)="clickeoBotones('aulas')"
+          >
+            Aulas
+          </button>
+          <button
+            *ngIf="botonesCrearColegioProgreso >= 3 && turnos != 0 && aulas != 0; else bloquearBoton1"
+            [ngClass]="{ 'btn-primary': botonesCrearColegio == 3 }"
+            class="col btn me-2"
+            (click)="clickeoBotones('cursos')"
+          >
+            Cursos
+          </button>
+          <button
+            *ngIf="botonesCrearColegioProgreso >= 4 && turnos != 0 && aulas != 0 && cursos != 0; else bloquearBoton2"
+            [ngClass]="{ 'btn-primary': botonesCrearColegio == 4 }"
+            class="col btn me-2"
+            (click)="clickeoBotones('profesores')"
+          >
+            Profesores
+          </button>
+          <button
+            *ngIf="botonesCrearColegioProgreso >= 5 && turnos != 0 && aulas != 0 && cursos != 0 && profesores != 0; else bloquearBoton3"
+            [ngClass]="{ 'btn-primary': botonesCrearColegio == 5 }"
+            class="col btn me-2"
+            (click)="clickeoBotones('materias')"
+          >
+            Materias
+          </button>
+          <button
+            *ngIf="botonesCrearColegioProgreso >= 6 && turnos != 0 && aulas != 0 && cursos != 0 && profesores != 0 && materias != 0; else bloquearBoton4"
+            [ngClass]="{ 'btn-primary': botonesCrearColegio == 6 }"
+            class="col btn me-2"
+            (click)="clickeoBotones('finalizar')"
+          >
+            Finalizar
+          </button>
         </div>
         <ng-template #bloquearBoton>
           <button class="col btn btn-light me-2 disabled">Aulas</button>
@@ -120,7 +161,6 @@
         <ng-template #bloquearBoton4>
           <button class="col btn btn-light me-2 disabled">Finalizar</button>
         </ng-template>
-        
       </div>
     </div>
   </div>
@@ -152,14 +192,16 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           </tr>
         </thead>
         <tbody>
-
           <!-- MAÑANA -->
           <tr *ngIf="12 >= horaInicial && horaInicial >= 5">
             <td colspan="7" class="table-active">
               TURNO MAÑANA ({{ inicioHorario }} am - 12:00 am)
             </td>
           </tr>
-          <tr *ngIf="12 >= horaInicial && horaInicial >= 5" class="bg-dark rounded">
+          <tr
+            *ngIf="12 >= horaInicial && horaInicial >= 5"
+            class="bg-dark rounded"
+          >
             <ul class="list-group" *ngIf="turnoArray[0].modulos.length > 0">
               <li
                 *ngFor="let turno of turnoArray[0].modulos"
@@ -370,7 +412,6 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
               </button>
             </td>
           </tr>
-
         </tbody>
       </table>
     </ul>
@@ -400,7 +441,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
 </div>
 
 <div
-  *ngIf="botonesCrearColegio == 2"
+  *ngIf="botonesCrearColegio == 2 && turnos != 0"
   class="container mx-auto my-4"
   id="divAula"
 >
@@ -408,8 +449,8 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
     <table class="table">
       <thead>
         <tr class="table-dark">
-          <th scope="col">Insertar Aulas</th>
-          <th scope="col">Aulas</th>
+          <th scope="col" class="rounded-start">Insertar Aulas</th>
+          <th scope="col" class="rounded-end"  >Aulas</th>
         </tr>
       </thead>
       <tbody>
@@ -492,7 +533,10 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
             </div>
           </td>
           <td>
-            <ul class="list-group shadow" style="max-height: 250px; overflow-y: scroll;">
+            <ul
+              class="list-group shadow"
+              style="max-height: 250px; overflow-y: scroll"
+            >
               <li
                 *ngFor="let aula of aulaArray"
                 class="list-group-item list-group-item-action"
@@ -508,7 +552,9 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <td colspan="2">
             <div class="d-grid">
               <button
-                *ngIf="botonesCrearColegioProgreso <= 2 && aulaArray.length != 0"
+                *ngIf="
+                  botonesCrearColegioProgreso <= 2 && aulaArray.length != 0
+                "
                 (click)="goFormCurso()"
                 class="btn btn-primary btn-lg mt-4"
               >
@@ -536,7 +582,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
 </div>
 
 <div
-  *ngIf="botonesCrearColegio == 3"
+  *ngIf="botonesCrearColegio == 3 && turnos != 0 && aulas != 0"
   class="container mx-auto my-4"
   id="divCurso"
 >
@@ -544,8 +590,8 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
     <table class="table">
       <thead>
         <tr class="table-dark">
-          <th scope="col">Insertar Cursos</th>
-          <th scope="col">Cursos</th>
+          <th scope="col" class="rounded-start">Insertar Cursos</th>
+          <th scope="col" class="rounded-end"  >Cursos</th>
         </tr>
       </thead>
       <tbody>
@@ -597,7 +643,10 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
             </div>
           </td>
           <td>
-            <ul class="list-group shadow scrollbar scrollbar-primary" style="max-height: 250px; overflow-y: scroll;">
+            <ul
+              class="list-group shadow scrollbar scrollbar-primary"
+              style="max-height: 250px; overflow-y: scroll"
+            >
               <li
                 *ngFor="let curso of cursoArray"
                 class="list-group-item list-group-item-action"
@@ -616,7 +665,9 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <td colspan="2">
             <div class="d-grid">
               <button
-                *ngIf="botonesCrearColegioProgreso <= 3 && cursoArray.length != 0"
+                *ngIf="
+                  botonesCrearColegioProgreso <= 3 && cursoArray.length != 0
+                "
                 (click)="goFormProfesor()"
                 class="btn btn-primary btn-lg mt-4"
               >
@@ -644,7 +695,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
 </div>
 
 <div
-  *ngIf="botonesCrearColegio == 4"
+  *ngIf="botonesCrearColegio == 4 && turnos != 0 && aulas != 0 && cursos != 0"
   class="container mx-auto my-4"
   id="divProfesor"
 >
@@ -652,8 +703,8 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
     <table class="table">
       <thead>
         <tr class="table-dark">
-          <th scope="col">Insertar Profesores</th>
-          <th scope="col">Profesores</th>
+          <th scope="col" class="rounded-start">Insertar Profesores</th>
+          <th scope="col" class="rounded-end"  >Profesores</th>
         </tr>
       </thead>
       <tbody>
@@ -702,14 +753,17 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
             </div>
           </td>
           <td>
-            <ul class="list-group shadow" style="max-height: 250px; overflow-y: scroll;">
+            <ul
+              class="list-group shadow"
+              style="max-height: 250px; overflow-y: scroll"
+            >
               <li
                 *ngFor="let profesor of profesorArray"
                 class="list-group-item list-group-item-action"
                 (click)="openForEditProfesor(profesor)"
                 [class.active]="profesor == selectedProfesor"
               >
-                <span>{{ profesor.nombre }}</span>
+                <span>{{ profesor.nombre }} {{ profesor.apellido }}</span>
               </li>
             </ul>
           </td>
@@ -718,7 +772,9 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <td colspan="2">
             <div class="d-grid">
               <button
-                *ngIf="botonesCrearColegioProgreso <= 4 && profesorArray.length != 0"
+                *ngIf="
+                  botonesCrearColegioProgreso <= 4 && profesorArray.length != 0
+                "
                 (click)="goFormMateria()"
                 class="btn btn-primary btn-lg mt-4"
               >
@@ -746,7 +802,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
 </div>
 
 <div
-  *ngIf="botonesCrearColegio == 5"
+  *ngIf="botonesCrearColegio == 5 && turnos != 0 && aulas != 0 && cursos != 0 && profesores != 0"
   class="container mx-auto my-4"
   id="divMateria"
 >
@@ -754,8 +810,8 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
     <table class="table">
       <thead>
         <tr class="table-dark">
-          <th scope="col">Insertar Materias</th>
-          <th scope="col">Materias</th>
+          <th scope="col" class="rounded-start">Insertar Materias</th>
+          <th scope="col" class="rounded-end"  >Materias</th>
         </tr>
       </thead>
       <tbody>
@@ -907,7 +963,10 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
             </div>
           </td>
           <td>
-            <ul class="list-group shadow" style="max-height: 250px; overflow-y: scroll;">
+            <ul
+              class="list-group shadow"
+              style="max-height: 250px; overflow-y: scroll"
+            >
               <li
                 *ngFor="let materia of materiaArray"
                 class="list-group-item list-group-item-action"
@@ -923,7 +982,9 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <td colspan="2">
             <div class="d-grid">
               <button
-                *ngIf="botonesCrearColegioProgreso <= 5 && materiaArray.length != 0"
+                *ngIf="
+                  botonesCrearColegioProgreso <= 5 && materiaArray.length != 0
+                "
                 (click)="goFormFinalizar()"
                 class="btn btn-primary btn-lg mt-4"
               >
@@ -951,9 +1012,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
 </div>
 
 <div
-  *ngIf="
-    botonesCrearColegio == 6
-  "
+  *ngIf="botonesCrearColegio == 6 && turnos != 0 && aulas != 0 && cursos != 0 && profesores != 0 && materias != 0"
   class="container mx-auto my-4"
   id="divFinalizar"
 >
@@ -963,7 +1022,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
         <div class="card-title">
           <h5>
             <p>
-              GRACIAS POR UTILIZAR TU TIEMPO EN S4S. <br />
+              GRACIAS POR OPTIMIZAR TU TIEMPO CON S4S. <br />
               A CONTINUACION FINALIZAREMOS CON EL PROCESO.
             </p>
           </h5>

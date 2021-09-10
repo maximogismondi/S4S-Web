@@ -59,7 +59,7 @@ export class CrearColegioComponent implements OnInit {
     new Turno('noche'),
   ];
   botonesCrearColegio: number = 1;
-  botonesCrearColegioProgreso: number = 1;
+  botonesCrearColegioProgreso: number;
 
   constructor(
     private router: Router,
@@ -98,6 +98,10 @@ export class CrearColegioComponent implements OnInit {
               this.cursos = school.cursos.length;
               this.profesores = school.profesores.length;
 
+              this.botonesCrearColegioProgreso =
+                school.botonesCrearColegioProgreso;
+              // this.botonesCrearColegio = school.botonesCrearColegio;
+
               this.turnoArray = school.turnos;
 
               this.aulaArray = school.aulas;
@@ -130,7 +134,6 @@ export class CrearColegioComponent implements OnInit {
   ngOnInit(): void {}
 
   async clickeoBotones(boton: string) {
-
     if (boton == 'turnos' && this.turnos != 0) {
       this.botonesCrearColegio = 1;
     } else if (boton == 'aulas') {
@@ -285,8 +288,12 @@ export class CrearColegioComponent implements OnInit {
 
   async goFormAula() {
     this.botonesCrearColegio = 2;
-    if(this.botonesCrearColegioProgreso < 2){
+    if (this.botonesCrearColegioProgreso < 2) {
       this.botonesCrearColegioProgreso = 2;
+      this.afs.collection('schools').doc(this.nombreDocumento).update({
+        botonesCrearColegioProgreso: 2,
+        botonesCrearColegio: 2,
+      });
     }
   }
 
@@ -295,6 +302,22 @@ export class CrearColegioComponent implements OnInit {
   aulaArray: Aula[] = [];
 
   selectedAula: Aula = new Aula();
+
+  async updateDBAula() {
+    this.selectedAula = new Aula();
+    let aulaArrayDiccionario: Array<any> = [];
+    this.aulaArray.forEach((aula) => {
+      aulaArrayDiccionario.push({
+        // id: aula.id,
+        nombre: aula.nombre,
+        tipo: aula.tipo,
+        otro: aula.otro,
+      });
+    });
+    this.afs.collection('schools').doc(this.nombreDocumento).update({
+      aulas: aulaArrayDiccionario,
+    });
+  }
 
   openForEditAula(aula: Aula) {
     this.selectedAula = aula;
@@ -313,19 +336,7 @@ export class CrearColegioComponent implements OnInit {
       if (this.selectedAula.tipo == 'Normal') {
         this.selectedAula.otro = 'Se selecciono el tipo normal';
       }
-      this.selectedAula = new Aula();
-      let aulaArrayDiccionario: Array<any> = [];
-      this.aulaArray.forEach((aula) => {
-        aulaArrayDiccionario.push({
-          // id: aula.id,
-          nombre: aula.nombre,
-          tipo: aula.tipo,
-          otro: aula.otro,
-        });
-      });
-      this.afs.collection('schools').doc(this.nombreDocumento).update({
-        aulas: aulaArrayDiccionario,
-      });
+      this.updateDBAula();
     } else {
       if (this.selectedAula.nombre.length > 30) {
         alert('Pone un nombre menor a los 30 caracteres');
@@ -338,14 +349,18 @@ export class CrearColegioComponent implements OnInit {
   deleteAula() {
     if (confirm('¿Estas seguro/a que quieres eliminar este aula?')) {
       this.aulaArray = this.aulaArray.filter((x) => x != this.selectedAula);
-      this.selectedAula = new Aula();
+      this.updateDBAula();
     }
   }
 
   async goFormCurso() {
     this.botonesCrearColegio = 3;
-    if(this.botonesCrearColegioProgreso < 3){
+    if (this.botonesCrearColegioProgreso < 3) {
       this.botonesCrearColegioProgreso = 3;
+      this.afs.collection('schools').doc(this.nombreDocumento).update({
+        botonesCrearColegioProgreso: 3,
+        botonesCrearColegio: 3,
+      });
     }
   }
 
@@ -354,6 +369,23 @@ export class CrearColegioComponent implements OnInit {
   cursoArray: Curso[] = [];
 
   selectedCurso: Curso = new Curso();
+
+  async updateDBCurso() {
+    this.selectedCurso = new Curso();
+    let CursoArrayDiccionario: Array<any> = [];
+    this.cursoArray.forEach((curso) => {
+      CursoArrayDiccionario.push({
+        // id: curso.id,
+        nombre: curso.nombre,
+        turnoPreferido: curso.turnoPreferido,
+        cantAlumnos: curso.cantAlumnos,
+        // materiasCurso: curso.materiasCurso,
+      });
+    });
+    this.afs.collection('schools').doc(this.nombreDocumento).update({
+      cursos: CursoArrayDiccionario,
+    });
+  }
 
   openForEditCurso(curso: Curso) {
     this.selectedCurso = curso;
@@ -370,20 +402,7 @@ export class CrearColegioComponent implements OnInit {
         this.selectedCurso.id = this.cursoArray.length + 1;
         this.cursoArray.push(this.selectedCurso);
       }
-      this.selectedCurso = new Curso();
-      let CursoArrayDiccionario: Array<any> = [];
-      this.cursoArray.forEach((curso) => {
-        CursoArrayDiccionario.push({
-          // id: curso.id,
-          nombre: curso.nombre,
-          turnoPreferido: curso.turnoPreferido,
-          cantAlumnos: curso.cantAlumnos,
-          // materiasCurso: curso.materiasCurso,
-        });
-      });
-      this.afs.collection('schools').doc(this.nombreDocumento).update({
-        cursos: CursoArrayDiccionario,
-      });
+      this.updateDBCurso();
     } else {
       if (this.selectedCurso.nombre.length > 30) {
         alert('Pone un nombre menor a los 30 caracteres');
@@ -396,14 +415,18 @@ export class CrearColegioComponent implements OnInit {
   deleteCurso() {
     if (confirm('¿Estas seguro/a que quieres eliminar este curso?')) {
       this.cursoArray = this.cursoArray.filter((x) => x != this.selectedCurso);
-      this.selectedCurso = new Curso();
+      this.updateDBCurso();
     }
   }
 
   async goFormProfesor() {
     this.botonesCrearColegio = 4;
-    if(this.botonesCrearColegioProgreso < 4){
+    if (this.botonesCrearColegioProgreso < 4) {
       this.botonesCrearColegioProgreso = 4;
+      this.afs.collection('schools').doc(this.nombreDocumento).update({
+        botonesCrearColegioProgreso: 4,
+        botonesCrearColegio: 4,
+      });
     }
   }
 
@@ -412,6 +435,25 @@ export class CrearColegioComponent implements OnInit {
   profesorArray: Profesor[] = [];
 
   selectedProfesor: Profesor = new Profesor();
+
+  async updateDBProfesor() {
+    this.selectedProfesor = new Profesor();
+    let ProfesorArrayDiccionario: Array<any> = [];
+    this.profesorArray.forEach((profesor) => {
+      ProfesorArrayDiccionario.push({
+        // id: profesor.id,
+        nombre: profesor.nombre,
+        apellido: profesor.apellido,
+        dni: profesor.dni,
+        // 'materias capacitado': profesor.materiasCapacitado,
+        //  turnoPreferido: profesor.turnoPreferido,
+        // condiciones: profesor.condiciones,
+      });
+    });
+    this.afs.collection('schools').doc(this.nombreDocumento).update({
+      profesores: ProfesorArrayDiccionario,
+    });
+  }
 
   openForEditProfesor(profesor: Profesor) {
     this.selectedProfesor = profesor;
@@ -429,22 +471,7 @@ export class CrearColegioComponent implements OnInit {
         this.selectedProfesor.id = this.profesorArray.length + 1;
         this.profesorArray.push(this.selectedProfesor);
       }
-      this.selectedProfesor = new Profesor();
-      let ProfesorArrayDiccionario: Array<any> = [];
-      this.profesorArray.forEach((profesor) => {
-        ProfesorArrayDiccionario.push({
-          // id: profesor.id,
-          nombre: profesor.nombre,
-          apellido: profesor.apellido,
-          dni: profesor.dni,
-          // 'materias capacitado': profesor.materiasCapacitado,
-          //  turnoPreferido: profesor.turnoPreferido,
-          // condiciones: profesor.condiciones,
-        });
-      });
-      this.afs.collection('schools').doc(this.nombreDocumento).update({
-        profesores: ProfesorArrayDiccionario,
-      });
+      this.updateDBProfesor();
     } else {
       if (this.selectedProfesor.dni < '1000000') {
         alert('Ingrese un dni valido');
@@ -463,14 +490,18 @@ export class CrearColegioComponent implements OnInit {
       this.profesorArray = this.profesorArray.filter(
         (x) => x != this.selectedProfesor
       );
-      this.selectedProfesor = new Profesor();
+      this.updateDBProfesor();
     }
   }
 
   async goFormMateria() {
     this.botonesCrearColegio = 5;
-    if(this.botonesCrearColegioProgreso < 5){
+    if (this.botonesCrearColegioProgreso < 5) {
       this.botonesCrearColegioProgreso = 5;
+      this.afs.collection('schools').doc(this.nombreDocumento).update({
+        botonesCrearColegioProgreso: 5,
+        botonesCrearColegio: 5,
+      });
     }
   }
 
@@ -479,6 +510,28 @@ export class CrearColegioComponent implements OnInit {
   materiaArray: Materia[] = [];
 
   selectedMateria: Materia = new Materia();
+
+  async updateDBMateria() {
+    this.selectedMateria = new Materia();
+    let materiaArrayDiccionario: Array<any> = [];
+    this.materiaArray.forEach((materia) => {
+      materiaArrayDiccionario.push({
+        id: materia.id,
+        nombre: materia.nombre,
+        cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
+        curso: materia.cursoDado,
+        // cantProfesores: materia.cantProfesores,
+        // espacioEntreDias: materia.espacioEntreDias,
+        // tipoAula: materia.tipo,
+        // otro: materia.otro,
+        profesoresCapacitados: materia.profesoresCapacitados,
+        cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
+      });
+    });
+    this.afs.collection('schools').doc(this.nombreDocumento).update({
+      materias: materiaArrayDiccionario,
+    });
+  }
 
   openForEditMateria(materia: Materia) {
     this.selectedMateria = materia;
@@ -501,25 +554,7 @@ export class CrearColegioComponent implements OnInit {
         });
         this.materiaArray.push(this.selectedMateria);
       }
-      this.selectedMateria = new Materia();
-      let materiaArrayDiccionario: Array<any> = [];
-      this.materiaArray.forEach((materia) => {
-        materiaArrayDiccionario.push({
-          id: materia.id,
-          nombre: materia.nombre,
-          cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
-          curso: materia.cursoDado,
-          // cantProfesores: materia.cantProfesores,
-          // espacioEntreDias: materia.espacioEntreDias,
-          // tipoAula: materia.tipo,
-          // otro: materia.otro,
-          profesoresCapacitados: materia.profesoresCapacitados,
-          cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
-        });
-      });
-      this.afs.collection('schools').doc(this.nombreDocumento).update({
-        materias: materiaArrayDiccionario,
-      });
+      this.updateDBMateria();
     } else {
       if (this.selectedMateria.nombre.length > 30) {
         alert('Pone un nombre menor a los 30 caracteres');
@@ -550,14 +585,18 @@ export class CrearColegioComponent implements OnInit {
       this.materiaArray = this.materiaArray.filter(
         (x) => x != this.selectedMateria
       );
-      this.selectedMateria = new Materia();
+      this.updateDBMateria();
     }
   }
 
   async goFormFinalizar() {
     this.botonesCrearColegio = 6;
-    if(this.botonesCrearColegioProgreso < 6){
+    if (this.botonesCrearColegioProgreso < 6) {
       this.botonesCrearColegioProgreso = 6;
+      this.afs.collection('schools').doc(this.nombreDocumento).update({
+        botonesCrearColegioProgreso: 6,
+        botonesCrearColegio: 6,
+      });
     }
   }
 
