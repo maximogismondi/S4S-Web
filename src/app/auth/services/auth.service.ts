@@ -1,7 +1,7 @@
 import { first, switchMap, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Aula, Colegio, User } from 'src/app/shared/interface/user.interface';
+import { Aula, Colegio, Turno, User } from 'src/app/shared/interface/user.interface';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
@@ -54,8 +54,6 @@ export class AuthService {
         return true;
       }
       return false;
-      
-      
       
   }
 
@@ -111,7 +109,7 @@ export class AuthService {
   resetPassword(email: string) {
     var auth = firebase.auth();
     return auth.sendPasswordResetEmail(email)
-      .then(() => console.log("email sent"))
+      .then(() => console.log("email enviado"))
       .catch((error) => console.log(error))
   }
 
@@ -218,6 +216,23 @@ export class AuthService {
       `schools/${school.id}`
     );
 
+    
+
+    let turnoArrayDiccionario: Array<any> = [];
+      [new Turno("manana"),new Turno("tarde"),new Turno("noche")].forEach((turno) => {
+        let modulosTurno: Array<any> = [];
+        turno.modulos.forEach((modulo) => {
+          modulosTurno.push({
+            inicio: modulo.inicio,
+            final: modulo.final,
+          });
+        });
+        turnoArrayDiccionario.push({
+          turno: turno.turno,
+          modulos: modulosTurno,
+        });
+      });
+
     const data: Colegio = {
       id: school.id,
       userAdmin: school.userAdmin,
@@ -231,7 +246,7 @@ export class AuthService {
       finalizacionHorario: school.finalizacionHorario,
       usuariosExtensiones: [],
       aulas: [],
-      turnos: [],
+      turnos: turnoArrayDiccionario,
       // modulos: [],
       materias: [],
       cursos: [],

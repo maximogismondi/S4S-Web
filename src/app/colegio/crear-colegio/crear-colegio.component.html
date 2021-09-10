@@ -10,7 +10,7 @@
   </div>
   <div class="col-md-8 mt-4 mx-auto">
     <div class="card">
-      <div class="progress" style="height: 20px">
+      <!-- <div class="progress" style="height: 20px">
         <div
           *ngIf="turnos == 0"
           id="barraDeProgreso"
@@ -94,38 +94,50 @@
         >
           Finalizar
         </div>
-      </div>
+      </div> -->
 
       <div class="card-body">
         <div class="row align-items-end">
-          <div class="col">Turnos</div>
-          <div class="col">Aulas</div>
-          <div class="col">Cursos</div>
-          <div class="col">Profesores</div>
-          <div class="col">Materias</div>
-          <div class="col">Finalizar</div>
-          <!-- <div class="col">Modulos</div>
-          <div class="col">Aulas</div>
-          <div class="col">Materias</div>
-          <div class="col">Cursos</div>
-          <div class="col">Profesores</div>
-          <div class="col">Finalizar</div> -->
+          <button [ngClass]="{'btn-primary': botonesCrearColegio == 1}" class="col btn mx-2" (click)="clickeoBotones('turnos')">Turnos</button>
+          <button *ngIf="botonesCrearColegioProgreso >= 2 else bloquearBoton"  [ngClass]="{'btn-primary': botonesCrearColegio == 2}" class="col btn me-2" (click)="clickeoBotones('aulas')">Aulas</button>
+          <button *ngIf="botonesCrearColegioProgreso >= 3 else bloquearBoton1" [ngClass]="{'btn-primary': botonesCrearColegio == 3}" class="col btn me-2" (click)="clickeoBotones('cursos')">Cursos</button>
+          <button *ngIf="botonesCrearColegioProgreso >= 4 else bloquearBoton2" [ngClass]="{'btn-primary': botonesCrearColegio == 4}" class="col btn me-2" (click)="clickeoBotones('profesores')">Profesores</button>
+          <button *ngIf="botonesCrearColegioProgreso >= 5 else bloquearBoton3" [ngClass]="{'btn-primary': botonesCrearColegio == 5}" class="col btn me-2" (click)="clickeoBotones('materias')">Materias</button>
+          <button *ngIf="botonesCrearColegioProgreso >= 6 else bloquearBoton4" [ngClass]="{'btn-primary': botonesCrearColegio == 6}" class="col btn me-2" (click)="clickeoBotones('finalizar')">Finalizar</button>
         </div>
+        <ng-template #bloquearBoton>
+          <button class="col btn btn-light me-2 disabled">Aulas</button>
+        </ng-template>
+        <ng-template #bloquearBoton1>
+          <button class="col btn btn-light me-2 disabled">Cursos</button>
+        </ng-template>
+        <ng-template #bloquearBoton2>
+          <button class="col btn btn-light me-2 disabled">Profesores</button>
+        </ng-template>
+        <ng-template #bloquearBoton3>
+          <button class="col btn btn-light me-2 disabled">Materias</button>
+        </ng-template>
+        <ng-template #bloquearBoton4>
+          <button class="col btn btn-light me-2 disabled">Finalizar</button>
+        </ng-template>
+        
       </div>
     </div>
   </div>
 </div>
 
-<!-- *ngIf="modulos == 0" *ngIf="aulas == 0 && modulos != 0" *ngIf="materias == 0 && aulas != 0" *ngIf="cursos == 0 && materias != 0" *ngIf="profes == 0 && cursos != 0"-->
+<!-- turnos == 0 || 
+aulas == 0 && turnos != 0 ||
+cursos == 0 && aulas != 0 ||
+profesores == 0 && cursos != 0 ||
+materias == 0 && profesores != 0 || 
+turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || -->
 
-<div *ngIf="turnos == 0" class="container mx-auto my-4">
+<div *ngIf="botonesCrearColegio == 1" class="container mx-auto my-4">
   <div class="col-md-8 mx-auto">
     <ul class="list-group">
       <div class="text-secondary">
-        <!-- <h6>De: {{ inicioHorario }} am a {{ finalizacionHorario }} pm</h6> -->
         <h6>Duracion de cada modulo: {{ duracionModulo }} min</h6>
-        <!-- <h6>Inicio Horario: {{ inicioHorario }}</h6>
-        <h6>Fin Horario: {{ finalizacionHorario }}</h6> -->
       </div>
       <table class="table text-center">
         <thead>
@@ -140,24 +152,17 @@
           </tr>
         </thead>
         <tbody>
-          <!-- <th
-            *ngIf="12 >= horaInicial && horaInicial >= 5"
-            scope="row"
-            class="align-middle bg-dark text-white"
-          >
-            {{ inicioHorario }}
-          </th> -->
+
           <!-- MAÑANA -->
-          <!--*ngIf="(12 >= horaInicial && horaInicial >= 5) || (12 >= horaFinal && horaFinal > 5)"-->
           <tr *ngIf="12 >= horaInicial && horaInicial >= 5">
             <td colspan="7" class="table-active">
               TURNO MAÑANA ({{ inicioHorario }} am - 12:00 am)
             </td>
           </tr>
           <tr *ngIf="12 >= horaInicial && horaInicial >= 5" class="bg-dark rounded">
-            <ul class="list-group" *ngIf="turnosArray[0].modulos.length > 0">
+            <ul class="list-group" *ngIf="turnoArray[0].modulos.length > 0">
               <li
-                *ngFor="let turno of turnosArray[0].modulos"
+                *ngFor="let turno of turnoArray[0].modulos"
                 class="list-group-item bg-dark text-white rounded"
               >
                 <td colspan="7">
@@ -200,7 +205,6 @@
               turnoSeleccionado != 'manana'
             "
           >
-            <!-- <th scope="row" class="align-middle">{{ inicioHorario }}</th> -->
             <td colspan="7" class="table-light">
               <button class="btn btn-primary" (click)="turnoActual('manana')">
                 <svg
@@ -218,17 +222,8 @@
               </button>
             </td>
           </tr>
-          <!-- <th
-            *ngIf="12 == horaFinal"
-            scope="row"
-            class="align-middle bg-dark text-white"
-          >
-            {{ finalizacionHorario }}
-          </th> -->
-          <!-- <th *ngIf="18 >= horaFinal && horaFinal > 12" scope="row" class="align-middle">{{ finalizacionHorario }}</th> -->
-          <!-- TARDE -->
-          <!-- <th *ngIf="18 >= horaInicial && horaInicial > 12" scope="row" class="align-middle">{{ inicioHorario }}</th> -->
 
+          <!-- TARDE -->
           <tr *ngIf="18 >= horaFinal && horaFinal > 12; else turnoNoche">
             <td colspan="7" class="table-active">
               TURNO TARDE (12:00 am - {{ finalizacionHorario }} pm)
@@ -245,9 +240,9 @@
             *ngIf="(18 >= horaFinal && horaFinal > 12) || horaFinal > 18"
             class="bg-dark"
           >
-            <ul class="list-group" *ngIf="turnosArray[1].modulos.length > 0">
+            <ul class="list-group" *ngIf="turnoArray[1].modulos.length > 0">
               <li
-                *ngFor="let turno of turnosArray[1].modulos"
+                *ngFor="let turno of turnoArray[1].modulos"
                 class="list-group-item bg-dark text-white"
               >
                 <td colspan="7">
@@ -309,15 +304,8 @@
               </button>
             </td>
           </tr>
-          <!-- <th
-            *ngIf="18 >= horaFinal && horaFinal > 12"
-            scope="row"
-            class="align-middle bg-dark text-white"
-          >
-            {{ finalizacionHorario }}
-          </th> -->
+
           <!-- NOCHE -->
-          <!-- <th *ngIf="5 >= horaInicial && horaInicial > 18" scope="row" class="align-middle">{{ inicioHorario }}</th> -->
           <tr *ngIf="horaFinal > 18">
             <td colspan="7" class="table-active">
               TURNO NOCHE (18:00 pm - {{ finalizacionHorario }} pm)
@@ -325,9 +313,9 @@
           </tr>
 
           <tr *ngIf="horaFinal > 18" class="bg-dark">
-            <ul class="list-group" *ngIf="turnosArray[2].modulos.length > 0">
+            <ul class="list-group" *ngIf="turnoArray[2].modulos.length > 0">
               <li
-                *ngFor="let turno of turnosArray[2].modulos"
+                *ngFor="let turno of turnoArray[2].modulos"
                 class="list-group-item bg-dark text-white"
               >
                 <td colspan="7">
@@ -382,20 +370,13 @@
               </button>
             </td>
           </tr>
-          <!-- <th
-            *ngIf="horaFinal > 18"
-            scope="row"
-            class="align-middle bg-dark text-white"
-          >
-            {{ finalizacionHorario }}
-          </th> -->
-          <!-- <th scope="row">{{ finalizacionHorario }}</th> -->
+
         </tbody>
       </table>
     </ul>
     <div class="d-grid">
       <button
-        *ngIf="turnosArray[0].modulos.length > 0"
+        *ngIf="botonesCrearColegioProgreso <= 1 && turnoArray.length != 0"
         (click)="goFormAula()"
         class="btn btn-primary btn-lg mt-4"
       >
@@ -419,7 +400,7 @@
 </div>
 
 <div
-  *ngIf="aulas == 0 && turnos != 0"
+  *ngIf="botonesCrearColegio == 2"
   class="container mx-auto my-4"
   id="divAula"
 >
@@ -436,7 +417,6 @@
           <td>
             <div class="card">
               <div class="card-body">
-                <!-- <div class="card-title"><h5>Insertar Aulas</h5></div> -->
                 <div class="form-group">
                   <input
                     type="text"
@@ -528,7 +508,7 @@
           <td colspan="2">
             <div class="d-grid">
               <button
-                *ngIf="aulaArray.length != 0"
+                *ngIf="botonesCrearColegioProgreso <= 2 && aulaArray.length != 0"
                 (click)="goFormCurso()"
                 class="btn btn-primary btn-lg mt-4"
               >
@@ -556,14 +536,14 @@
 </div>
 
 <div
-  *ngIf="cursos == 0 && aulas != 0"
+  *ngIf="botonesCrearColegio == 3"
   class="container mx-auto my-4"
   id="divCurso"
 >
   <div class="col-md-8 mx-auto">
     <table class="table">
       <thead>
-        <tr>
+        <tr class="table-dark">
           <th scope="col">Insertar Cursos</th>
           <th scope="col">Cursos</th>
         </tr>
@@ -598,25 +578,6 @@
                     [(ngModel)]="selectedCurso.cantAlumnos"
                     class="form-control mt-2"
                   />
-
-                  <!-- <label class="mt-2">Materias</label>
-                  <table>
-                    <tr *ngFor="let materia of materiasArrayCursos">
-                      <td>
-                        <div class="form-check mt-2">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            (click)="clicked(materia.nombre)"
-                            id="{{ materia.nombre }}"
-                          />
-                          <label class="form-check-label" for="{{ materia.nombre }}">
-                            {{ materia.nombre }}
-                          </label>
-                        </div>
-                      </td>
-                    </tr>
-                  </table> -->
 
                   <button
                     (click)="addOrEditCurso()"
@@ -655,7 +616,7 @@
           <td colspan="2">
             <div class="d-grid">
               <button
-                *ngIf="cursoArray.length != 0"
+                *ngIf="botonesCrearColegioProgreso <= 3 && cursoArray.length != 0"
                 (click)="goFormProfesor()"
                 class="btn btn-primary btn-lg mt-4"
               >
@@ -683,14 +644,14 @@
 </div>
 
 <div
-  *ngIf="profesores == 0 && cursos != 0"
+  *ngIf="botonesCrearColegio == 4"
   class="container mx-auto my-4"
   id="divProfesor"
 >
   <div class="col-md-8 mx-auto">
     <table class="table">
       <thead>
-        <tr>
+        <tr class="table-dark">
           <th scope="col">Insertar Profesores</th>
           <th scope="col">Profesores</th>
         </tr>
@@ -757,7 +718,7 @@
           <td colspan="2">
             <div class="d-grid">
               <button
-                *ngIf="profesorArray.length != 0"
+                *ngIf="botonesCrearColegioProgreso <= 4 && profesorArray.length != 0"
                 (click)="goFormMateria()"
                 class="btn btn-primary btn-lg mt-4"
               >
@@ -785,14 +746,14 @@
 </div>
 
 <div
-  *ngIf="materias == 0 && profesores != 0"
+  *ngIf="botonesCrearColegio == 5"
   class="container mx-auto my-4"
   id="divMateria"
 >
   <div class="col-md-8 mx-auto">
     <table class="table">
       <thead>
-        <tr>
+        <tr class="table-dark">
           <th scope="col">Insertar Materias</th>
           <th scope="col">Materias</th>
         </tr>
@@ -962,7 +923,7 @@
           <td colspan="2">
             <div class="d-grid">
               <button
-                *ngIf="materiaArray.length != 0"
+                *ngIf="botonesCrearColegioProgreso <= 5 && materiaArray.length != 0"
                 (click)="goFormFinalizar()"
                 class="btn btn-primary btn-lg mt-4"
               >
@@ -991,7 +952,7 @@
 
 <div
   *ngIf="
-    turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0
+    botonesCrearColegio == 6
   "
   class="container mx-auto my-4"
   id="divFinalizar"
