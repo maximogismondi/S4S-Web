@@ -103,7 +103,7 @@ export class CrearColegioComponent implements OnInit {
               );
               // this.minutos = Number(String(this.inicioHorario).split(':')[1]);
               // this.modulos = school.modulos.length;
-              this.turnos = school.turnos.length;
+              this.turnos = school.turnos[0].modulos.length + school.turnos[1].modulos.length + school.turnos[2].modulos.length;
               this.aulas = school.aulas.length;
               this.materias = school.materias.length;
               this.cursos = school.cursos.length;

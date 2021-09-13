@@ -99,6 +99,10 @@
       <div class="card-body">
         <div class="row align-items-end">
           <button
+          *ngIf="
+              botonesCrearColegioProgreso >= 1;
+              else bloquearBoton
+            "
             [ngClass]="{ 'btn-primary': botonesCrearColegio == 1 }"
             class="col btn mx-2"
             (click)="clickeoBotones('turnos')"
@@ -108,7 +112,7 @@
           <button
             *ngIf="
               botonesCrearColegioProgreso >= 2 && turnos != 0;
-              else bloquearBoton
+              else bloquearBoton0
             "
             [ngClass]="{ 'btn-primary': botonesCrearColegio == 2 }"
             class="col btn me-2"
@@ -174,6 +178,9 @@
           </button>
         </div>
         <ng-template #bloquearBoton>
+          <button class="col btn btn-light me-2 disabled">Turnos</button>
+        </ng-template>
+        <ng-template #bloquearBoton0>
           <button class="col btn btn-light me-2 disabled">Aulas</button>
         </ng-template>
         <ng-template #bloquearBoton1>
@@ -458,6 +465,71 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                       />
                       <label class="form-check-label" for="flexRadioDefault2">
                         TALLER
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="TALLER"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault2"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault2">
+                        BIBLIOTECA
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="TALLER"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault2"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault2">
+                        ESTUDIO MUSICAL
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="TALLER"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault2"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault2">
+                        ESTUDIO ARTISTICO
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="TALLER"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault2"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault2">
+                        ESTUDIO DE RADIO
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="TALLER"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault2"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault2">
+                        SALA DE COMPUTACION
                       </label>
                     </div>
                     <div class="form-check">
