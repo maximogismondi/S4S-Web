@@ -13,7 +13,7 @@ export interface Colegio {
   id: string;
   userAdmin: string;
   nombre: string;
-  ejecutado: string;
+  // ejecutado: string;
   direccion: string;
   localidad: string;
   telefono: string;

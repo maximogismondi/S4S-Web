@@ -106,7 +106,10 @@
             Turnos
           </button>
           <button
-            *ngIf="botonesCrearColegioProgreso >= 2 && turnos != 0; else bloquearBoton"
+            *ngIf="
+              botonesCrearColegioProgreso >= 2 && turnos != 0;
+              else bloquearBoton
+            "
             [ngClass]="{ 'btn-primary': botonesCrearColegio == 2 }"
             class="col btn me-2"
             (click)="clickeoBotones('aulas')"
@@ -114,7 +117,10 @@
             Aulas
           </button>
           <button
-            *ngIf="botonesCrearColegioProgreso >= 3 && turnos != 0 && aulas != 0; else bloquearBoton1"
+            *ngIf="
+              botonesCrearColegioProgreso >= 3 && turnos != 0 && aulas != 0;
+              else bloquearBoton1
+            "
             [ngClass]="{ 'btn-primary': botonesCrearColegio == 3 }"
             class="col btn me-2"
             (click)="clickeoBotones('cursos')"
@@ -122,7 +128,13 @@
             Cursos
           </button>
           <button
-            *ngIf="botonesCrearColegioProgreso >= 4 && turnos != 0 && aulas != 0 && cursos != 0; else bloquearBoton2"
+            *ngIf="
+              botonesCrearColegioProgreso >= 4 &&
+                turnos != 0 &&
+                aulas != 0 &&
+                cursos != 0;
+              else bloquearBoton2
+            "
             [ngClass]="{ 'btn-primary': botonesCrearColegio == 4 }"
             class="col btn me-2"
             (click)="clickeoBotones('profesores')"
@@ -130,7 +142,14 @@
             Profesores
           </button>
           <button
-            *ngIf="botonesCrearColegioProgreso >= 5 && turnos != 0 && aulas != 0 && cursos != 0 && profesores != 0; else bloquearBoton3"
+            *ngIf="
+              botonesCrearColegioProgreso >= 5 &&
+                turnos != 0 &&
+                aulas != 0 &&
+                cursos != 0 &&
+                profesores != 0;
+              else bloquearBoton3
+            "
             [ngClass]="{ 'btn-primary': botonesCrearColegio == 5 }"
             class="col btn me-2"
             (click)="clickeoBotones('materias')"
@@ -138,7 +157,15 @@
             Materias
           </button>
           <button
-            *ngIf="botonesCrearColegioProgreso >= 6 && turnos != 0 && aulas != 0 && cursos != 0 && profesores != 0 && materias != 0; else bloquearBoton4"
+            *ngIf="
+              botonesCrearColegioProgreso >= 6 &&
+                turnos != 0 &&
+                aulas != 0 &&
+                cursos != 0 &&
+                profesores != 0 &&
+                materias != 0;
+              else bloquearBoton4
+            "
             [ngClass]="{ 'btn-primary': botonesCrearColegio == 6 }"
             class="col btn me-2"
             (click)="clickeoBotones('finalizar')"
@@ -195,34 +222,30 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <!-- MAÑANA -->
           <tr *ngIf="12 >= horaInicial && horaInicial >= 5">
             <td colspan="7" class="table-active">
-              TURNO MAÑANA ({{ inicioHorario }} am - 12:00 am)
+              TURNO MAÑANA ({{ inicioHorario }} am - 12:00 pm)
             </td>
           </tr>
-          <tr
-            *ngIf="12 >= horaInicial && horaInicial >= 5"
-            class="bg-dark rounded"
-          >
-            <ul class="list-group" *ngIf="turnoArray[0].modulos.length > 0">
-              <li
-                *ngFor="let turno of turnoArray[0].modulos"
-                class="list-group-item bg-dark text-white rounded"
-              >
-                <td colspan="7">
-                  <span>{{ turno.inicio }} - {{ turno.final }}</span>
-                </td>
-              </li>
-            </ul>
+          <tr *ngFor="let turno of turnoArray[0].modulos" class="bg-dark">
+            <td colspan="2" class="table-active text-white">
+              {{ turno.inicio }} - {{ turno.final }}
+            </td>
+            <td colspan="4" class="table-active text-white">CLASE</td>
+            <td>
+              <svg (click)="deleteModulo('manana', turno)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+              </svg>
+            </td>
           </tr>
-          <tr *ngIf="turnoSeleccionado == 'manana'">
+          <tr>
             <td colspan="3"></td>
             <td colspan="2">
               <div class="input-group">
                 <input
                   type="Time"
                   class="form-control"
-                  [(ngModel)]="inicioModuloSeleccionado"
+                  [(ngModel)]="inicioModuloSeleccionado[0]"
                 />
-                <button class="btn btn-primary" (click)="addModulo()">
+                <button class="btn btn-primary" (click)="addModulo('manana')">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -237,72 +260,53 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                   </svg>
                 </button>
               </div>
-            </td>
-            <td colspan="3"></td>
-          </tr>
-          <tr
-            *ngIf="
-              12 >= horaInicial &&
-              horaInicial >= 5 &&
-              turnoSeleccionado != 'manana'
-            "
-          >
-            <td colspan="7" class="table-light">
-              <button class="btn btn-primary" (click)="turnoActual('manana')">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  class="bi bi-plus-lg"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
-                  />
-                </svg>
-              </button>
             </td>
           </tr>
 
           <!-- TARDE -->
           <tr *ngIf="18 >= horaFinal && horaFinal > 12; else turnoNoche">
             <td colspan="7" class="table-active">
-              TURNO TARDE (12:00 am - {{ finalizacionHorario }} pm)
+              TURNO TARDE (12:00 pm - {{ finalizacionHorario }} pm)
             </td>
           </tr>
           <ng-template #turnoNoche>
-            <tr>
-              <td colspan="7" class="table-active">
-                TURNO TARDE (12:00 am - 18:00 pm)
-              </td>
-            </tr>
-          </ng-template>
-          <tr
-            *ngIf="(18 >= horaFinal && horaFinal > 12) || horaFinal > 18"
-            class="bg-dark"
-          >
-            <ul class="list-group" *ngIf="turnoArray[1].modulos.length > 0">
-              <li
-                *ngFor="let turno of turnoArray[1].modulos"
-                class="list-group-item bg-dark text-white"
-              >
-                <td colspan="7">
-                  <span>{{ turno.inicio }} - {{ turno.final }}</span>
+            <tr *ngIf="horaFinal == 12; else turnoNoche2"></tr>
+            <ng-template #turnoNoche2>
+              <tr>
+                <td colspan="7" class="table-active">
+                  TURNO TARDE (12:00 am - 18:00 pm)
                 </td>
-              </li>
-            </ul>
+              </tr>
+            </ng-template>
+          </ng-template>
+          
+          <tr *ngFor="let turno of turnoArray[1].modulos" class="bg-dark">
+            <td colspan="2" class="table-active text-white">
+              {{ turno.inicio }} - {{ turno.final }}
+            </td>
+            <td colspan="4" class="table-active text-white">CLASE</td>
+            <td>
+              <svg (click)="deleteModulo('tarde', turno)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+              </svg>
+            </td>
           </tr>
-          <tr *ngIf="turnoSeleccionado == 'tarde'">
+
+          <tr
+            *ngIf="
+              (18 >= horaFinal && horaFinal > 12) || 18 <= horaFinal;
+              else turnoNoche3
+            "
+          >
             <td colspan="3"></td>
             <td colspan="2">
               <div class="input-group">
                 <input
                   type="Time"
                   class="form-control"
-                  [(ngModel)]="inicioModuloSeleccionado"
+                  [(ngModel)]="inicioModuloSeleccionado[1]"
                 />
-                <button class="btn btn-primary" (click)="addModulo()">
+                <button class="btn btn-primary" (click)="addModulo('tarde')">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -318,34 +322,8 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                 </button>
               </div>
             </td>
-            <td colspan="3"></td>
           </tr>
-
-          <tr
-            *ngIf="
-              (18 >= horaFinal &&
-                horaFinal > 12 &&
-                turnoSeleccionado != 'tarde') ||
-              (horaFinal > 18 && turnoSeleccionado != 'tarde')
-            "
-          >
-            <td colspan="7" class="table-light">
-              <button class="btn btn-primary" (click)="turnoActual('tarde')">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  class="bi bi-plus-lg"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
-                  />
-                </svg>
-              </button>
-            </td>
-          </tr>
+          <ng-template #turnoNoche3></ng-template>
 
           <!-- NOCHE -->
           <tr *ngIf="horaFinal > 18">
@@ -354,28 +332,28 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
             </td>
           </tr>
 
-          <tr *ngIf="horaFinal > 18" class="bg-dark">
-            <ul class="list-group" *ngIf="turnoArray[2].modulos.length > 0">
-              <li
-                *ngFor="let turno of turnoArray[2].modulos"
-                class="list-group-item bg-dark text-white"
-              >
-                <td colspan="7">
-                  <span>{{ turno.inicio }} - {{ turno.final }}</span>
-                </td>
-              </li>
-            </ul>
+          <tr *ngFor="let turno of turnoArray[2].modulos" class="bg-dark">
+            <td colspan="2" class="table-active text-white">
+              {{ turno.inicio }} - {{ turno.final }}
+            </td>
+            <td colspan="4" class="table-active text-white">CLASE</td>
+            <td>
+              <svg (click)="deleteModulo('noche', turno)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+              </svg>
+            </td>
           </tr>
-          <tr *ngIf="turnoSeleccionado == 'noche'">
+
+          <tr *ngIf="horaFinal > 18">
             <td colspan="3"></td>
             <td colspan="2">
               <div class="input-group">
                 <input
                   type="Time"
                   class="form-control"
-                  [(ngModel)]="inicioModuloSeleccionado"
+                  [(ngModel)]="inicioModuloSeleccionado[2]"
                 />
-                <button class="btn btn-primary" (click)="addModulo()">
+                <button class="btn btn-primary" (click)="addModulo('noche')">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -391,33 +369,15 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                 </button>
               </div>
             </td>
-            <td colspan="3"></td>
-          </tr>
-
-          <tr *ngIf="horaFinal > 18 && turnoSeleccionado != 'noche'">
-            <td colspan="7" class="table-light">
-              <button class="btn btn-primary" (click)="turnoActual('noche')">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  class="bi bi-plus-lg"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
-                  />
-                </svg>
-              </button>
-            </td>
           </tr>
         </tbody>
       </table>
     </ul>
     <div class="d-grid">
       <button
-        *ngIf="botonesCrearColegioProgreso <= 1 && turnoArray.length != 0"
+        *ngIf="
+          botonesCrearColegioProgreso <= 1 && turnoArray[0].modulos.length != 0
+        "
         (click)="goFormAula()"
         class="btn btn-primary btn-lg mt-4"
       >
@@ -450,7 +410,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
       <thead>
         <tr class="table-dark">
           <th scope="col" class="rounded-start">Insertar Aulas</th>
-          <th scope="col" class="rounded-end"  >Aulas</th>
+          <th scope="col" class="rounded-end">Aulas</th>
         </tr>
       </thead>
       <tbody>
@@ -591,7 +551,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
       <thead>
         <tr class="table-dark">
           <th scope="col" class="rounded-start">Insertar Cursos</th>
-          <th scope="col" class="rounded-end"  >Cursos</th>
+          <th scope="col" class="rounded-end">Cursos</th>
         </tr>
       </thead>
       <tbody>
@@ -704,7 +664,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
       <thead>
         <tr class="table-dark">
           <th scope="col" class="rounded-start">Insertar Profesores</th>
-          <th scope="col" class="rounded-end"  >Profesores</th>
+          <th scope="col" class="rounded-end">Profesores</th>
         </tr>
       </thead>
       <tbody>
@@ -734,6 +694,8 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                     [(ngModel)]="selectedProfesor.dni"
                     class="form-control"
                   />
+
+                  <button>Disponibilidad</button>
 
                   <button
                     (click)="addOrEditProfesor()"
@@ -802,7 +764,13 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
 </div>
 
 <div
-  *ngIf="botonesCrearColegio == 5 && turnos != 0 && aulas != 0 && cursos != 0 && profesores != 0"
+  *ngIf="
+    botonesCrearColegio == 5 &&
+    turnos != 0 &&
+    aulas != 0 &&
+    cursos != 0 &&
+    profesores != 0
+  "
   class="container mx-auto my-4"
   id="divMateria"
 >
@@ -811,7 +779,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
       <thead>
         <tr class="table-dark">
           <th scope="col" class="rounded-start">Insertar Materias</th>
-          <th scope="col" class="rounded-end"  >Materias</th>
+          <th scope="col" class="rounded-end">Materias</th>
         </tr>
       </thead>
       <tbody>
@@ -1012,7 +980,14 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
 </div>
 
 <div
-  *ngIf="botonesCrearColegio == 6 && turnos != 0 && aulas != 0 && cursos != 0 && profesores != 0 && materias != 0"
+  *ngIf="
+    botonesCrearColegio == 6 &&
+    turnos != 0 &&
+    aulas != 0 &&
+    cursos != 0 &&
+    profesores != 0 &&
+    materias != 0
+  "
   class="container mx-auto my-4"
   id="divFinalizar"
 >

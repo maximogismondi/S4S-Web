@@ -138,7 +138,7 @@ export class AuthService {
       id: id,
       userAdmin: this.userData.uid,
       nombre: nombre,
-      ejecutado: "no",
+      // ejecutado: "no",
       direccion: direccion,
       localidad: localidad,
       telefono: telefono,
@@ -184,10 +184,10 @@ export class AuthService {
       confirm("El horario de finalizacion es mas chico que el de inicio");
     }
     else if(school.inicioHorario<"05:00" && school.inicioHorario>="00:00" || school.inicioHorario>"12:00"){
-      confirm("El horario de inicio debe ser entre 05:00 - 12:00 am");
+      confirm("El horario de inicio debe ser entre 05:00 - 12:00 pm");
     }
     else if(school.finalizacionHorario<"12:00"){
-      confirm("El horario de finalizacion debe ser mayor que las 12:00 am");
+      confirm("El horario de finalizacion debe ser mayor que las 12:00 pm");
     }
     else{
       this.SchoolData(school);
@@ -239,7 +239,7 @@ export class AuthService {
       id: school.id,
       userAdmin: school.userAdmin,
       nombre: school.nombre,
-      ejecutado: school.ejecutado,
+      // ejecutado: school.ejecutado,
       direccion: school.direccion,
       localidad: school.localidad,
       telefono: "11" + school.telefono,
