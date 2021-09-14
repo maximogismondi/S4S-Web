@@ -1,7 +1,12 @@
 import { first, switchMap, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Aula, Colegio, Turno, User } from 'src/app/shared/interface/user.interface';
+import {
+  Aula,
+  Colegio,
+  Turno,
+  User,
+} from 'src/app/shared/interface/user.interface';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
@@ -34,44 +39,43 @@ export class AuthService {
         this.userData = null;
       }
     });
-
   }
 
-
-  async isLoggedIn():Promise<boolean> {
-      let user= await this.afAuth.authState.toPromise()
-      console.log(user);
-      if (!user) {
-        return false;
-      }
-      console.log("dsdsds")
-      let userData = await this.afs
-          .doc<User>(`users/${user.uid}`)
-          .get()
-          .toPromise()
-      console.log(userData.data()?.emailVerified);
-      if (userData.data()?.emailVerified){
-        return true;
-      }
+  async isLoggedIn(): Promise<boolean> {
+    let user = await this.afAuth.authState.toPromise();
+    console.log(user);
+    if (!user) {
       return false;
-      
+    }
+    // console.log('dsdsds');
+    let userData = await this.afs
+      .doc<User>(`users/${user.uid}`)
+      .get()
+      .toPromise();
+    console.log(userData.data()?.emailVerified);
+    if (userData.data()?.emailVerified) {
+      return true;
+    }
+    return false;
   }
 
   //joya
   async login(email: string, password: string) {
-    
     // if(this.userData == null) {
     //   alert("No existe una cuenta con ese email, por favor registrese");
     //   this.router.navigate(['/register']);
     // }
-    firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
-      alert('No existe una cuenta con ese email, por favor registrese');
-      this.router.navigate(['/register']);
-      
-      // console.log(error.code);
-      // console.log(error.message);
-    });
-    
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch((error) => {
+        alert('No existe una cuenta con ese email, por favor registrese');
+        this.router.navigate(['/register']);
+
+        // console.log(error.code);
+        // console.log(error.message);
+      });
+
     const { user } = await this.afAuth.signInWithEmailAndPassword(
       email,
       password
@@ -96,11 +100,20 @@ export class AuthService {
 
   //joya
   async register(email: string, password: string) {
+    // const { user } = await firebase
+    //   .auth()
+    //   .createUserWithEmailAndPassword(email, password)
+    //   .catch((error) => {
+    //     alert(
+    //       'El email que esta ingresando ya esta siendo utilizado, por favor pruebe otro'
+    //     );
+    //   });
+
     const { user } = await this.afAuth.createUserWithEmailAndPassword(
       email,
       password
     );
-    
+
     this.updateUserData(user);
     this.sendVerificationEmail();
     return user;
@@ -108,9 +121,10 @@ export class AuthService {
 
   resetPassword(email: string) {
     var auth = firebase.auth();
-    return auth.sendPasswordResetEmail(email)
-      .then(() => console.log("email enviado"))
-      .catch((error) => console.log(error))
+    return auth
+      .sendPasswordResetEmail(email)
+      .then(() => console.log('email enviado'))
+      .catch((error) => console.log(error));
   }
 
   //joya
@@ -166,30 +180,33 @@ export class AuthService {
       String(school.finalizacionHorario).length === 0 ||
       String(school.inicioHorario).length === 0 ||
       String(school.finalizacionHorario).length === 0
-    ){
-      confirm("Completar los casilleros obligatorios");
+    ) {
+      confirm('Completar los casilleros obligatorios');
       // Poner los valores que se piden
-    }
-    else if(String(school.nombre).length > 50){
-      confirm("El nombre del colegio debe ser menor a los 50 caracteres");
-    }
-    else if(String(school.telefono).length != 8){
-      confirm("El numero de telefono no es igual a los 8 digitos, recuerda que no debe contener ningun espacio, ningun signo y debe ser de tamaño 8");
-    }
-    else if(school.duracionModulo>60 || school.duracionModulo<20){
+    } else if (String(school.nombre).length > 50) {
+      confirm('El nombre del colegio debe ser menor a los 50 caracteres');
+    } else if (String(school.telefono).length != 8) {
+      confirm(
+        'El numero de telefono no es igual a los 8 digitos, recuerda que no debe contener ningun espacio, ningun signo y debe ser de tamaño 8'
+      );
+    } else if (school.duracionModulo > 60 || school.duracionModulo < 20) {
       // console.log(school.duracionModulo)
-      confirm("La duracion de cada modulo debe estar entre 20 a 60 min (incluidos los extremos)");
-    }
-    else if(school.inicioHorario > school.finalizacionHorario && school.finalizacionHorario != " 00:00"){
-      confirm("El horario de finalizacion es mas chico que el de inicio");
-    }
-    else if(school.inicioHorario<"05:00" && school.inicioHorario>="00:00" || school.inicioHorario>"12:00"){
-      confirm("El horario de inicio debe ser entre 05:00 - 12:00 pm");
-    }
-    else if(school.finalizacionHorario<"12:00"){
-      confirm("El horario de finalizacion debe ser mayor que las 12:00 pm");
-    }
-    else{
+      confirm(
+        'La duracion de cada modulo debe estar entre 20 a 60 min (incluidos los extremos)'
+      );
+    } else if (
+      school.inicioHorario > school.finalizacionHorario &&
+      school.finalizacionHorario != ' 00:00'
+    ) {
+      confirm('El horario de finalizacion es mas chico que el de inicio');
+    } else if (
+      (school.inicioHorario < '05:00' && school.inicioHorario >= '00:00') ||
+      school.inicioHorario > '12:00'
+    ) {
+      confirm('El horario de inicio debe ser entre 05:00 - 12:00 pm');
+    } else if (school.finalizacionHorario < '12:00') {
+      confirm('El horario de finalizacion debe ser mayor que las 12:00 pm');
+    } else {
       this.SchoolData(school);
       this.router.navigate(['/crear-colegio']);
       // confirm("Poner los valores que se piden");
@@ -218,10 +235,9 @@ export class AuthService {
       `schools/${school.id}`
     );
 
-    
-
     let turnoArrayDiccionario: Array<any> = [];
-      [new Turno("manana"),new Turno("tarde"),new Turno("noche")].forEach((turno) => {
+    [new Turno('manana'), new Turno('tarde'), new Turno('noche')].forEach(
+      (turno) => {
         let modulosTurno: Array<any> = [];
         turno.modulos.forEach((modulo) => {
           modulosTurno.push({
@@ -233,7 +249,8 @@ export class AuthService {
           turno: turno.turno,
           modulos: modulosTurno,
         });
-      });
+      }
+    );
 
     const data: Colegio = {
       id: school.id,
@@ -242,7 +259,7 @@ export class AuthService {
       // ejecutado: school.ejecutado,
       direccion: school.direccion,
       localidad: school.localidad,
-      telefono: "11" + school.telefono,
+      telefono: '11' + school.telefono,
       duracionModulo: school.duracionModulo,
       inicioHorario: school.inicioHorario,
       finalizacionHorario: school.finalizacionHorario,
@@ -259,5 +276,4 @@ export class AuthService {
 
     return schoolRef.set(data, { merge: true });
   }
-
 }

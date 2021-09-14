@@ -61,6 +61,7 @@ export class CrearColegioComponent implements OnInit {
   ];
   botonesCrearColegio: number = 1;
   botonesCrearColegioProgreso: number;
+  disponibilidadProfesor: boolean = false;
 
   constructor(
     private router: Router,
@@ -373,7 +374,7 @@ export class CrearColegioComponent implements OnInit {
         this.aulaArray.push(this.selectedAula);
       }
       if (this.selectedAula.tipo == 'Normal') {
-        this.selectedAula.otro = 'Se selecciono el tipo normal';
+        this.selectedAula.otro = 'normal';
       }
       this.updateDBAula();
     } else {
@@ -530,6 +531,14 @@ export class CrearColegioComponent implements OnInit {
         (x) => x != this.selectedProfesor
       );
       this.updateDBProfesor();
+    }
+  }
+
+  availabilityProfesor(){
+    if (this.disponibilidadProfesor == false) {
+      this.disponibilidadProfesor = true;
+    } else {
+      this.disponibilidadProfesor = false;
     }
   }
 

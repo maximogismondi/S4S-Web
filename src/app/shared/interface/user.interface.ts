@@ -75,7 +75,8 @@ export class Aula {
   id: number = 0;
   nombre: string = "";
   tipo: string = "";
-  otro: string = "Se selecciono el tipo normal";
+  otro: string = "normal";
+  // Se selecciono el tipo normal
 }
 
 export class Curso {
@@ -91,6 +92,7 @@ export class Profesor {
   nombre: string = "";
   apellido: string = "";
   dni: string = "";
+  disponibilidad: Array<string> = [];
   // materiasCapacitado: Array<string>;
   // turnoPreferido: number;
   // condiciones: Array<string>;

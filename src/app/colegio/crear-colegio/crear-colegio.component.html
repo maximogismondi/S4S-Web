@@ -99,10 +99,7 @@
       <div class="card-body">
         <div class="row align-items-end">
           <button
-          *ngIf="
-              botonesCrearColegioProgreso >= 1;
-              else bloquearBoton
-            "
+            *ngIf="botonesCrearColegioProgreso >= 1; else bloquearBoton"
             [ngClass]="{ 'btn-primary': botonesCrearColegio == 1 }"
             class="col btn mx-2"
             (click)="clickeoBotones('turnos')"
@@ -238,8 +235,18 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
             </td>
             <td colspan="4" class="table-active text-white">CLASE</td>
             <td>
-              <svg (click)="deleteModulo('manana', turno)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+              <svg
+                (click)="deleteModulo('manana', turno)"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-trash-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+                />
               </svg>
             </td>
           </tr>
@@ -286,15 +293,25 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
               </tr>
             </ng-template>
           </ng-template>
-          
+
           <tr *ngFor="let turno of turnoArray[1].modulos" class="bg-dark">
             <td colspan="2" class="table-active text-white">
               {{ turno.inicio }} - {{ turno.final }}
             </td>
             <td colspan="4" class="table-active text-white">CLASE</td>
             <td>
-              <svg (click)="deleteModulo('tarde', turno)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+              <svg
+                (click)="deleteModulo('tarde', turno)"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-trash-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+                />
               </svg>
             </td>
           </tr>
@@ -345,8 +362,18 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
             </td>
             <td colspan="4" class="table-active text-white">CLASE</td>
             <td>
-              <svg (click)="deleteModulo('noche', turno)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+              <svg
+                (click)="deleteModulo('noche', turno)"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-trash-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+                />
               </svg>
             </td>
           </tr>
@@ -472,7 +499,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                         class="form-check-input"
                         type="radio"
                         [(ngModel)]="selectedAula.otro"
-                        value="TALLER"
+                        value="BIBLIOTECA"
                         name="flexRadioDefault"
                         id="flexRadioDefault2"
                       />
@@ -485,7 +512,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                         class="form-check-input"
                         type="radio"
                         [(ngModel)]="selectedAula.otro"
-                        value="TALLER"
+                        value="ESTUDIO MUSICAL"
                         name="flexRadioDefault"
                         id="flexRadioDefault2"
                       />
@@ -498,7 +525,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                         class="form-check-input"
                         type="radio"
                         [(ngModel)]="selectedAula.otro"
-                        value="TALLER"
+                        value="ESTUDIO ARTISTICO"
                         name="flexRadioDefault"
                         id="flexRadioDefault2"
                       />
@@ -511,7 +538,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                         class="form-check-input"
                         type="radio"
                         [(ngModel)]="selectedAula.otro"
-                        value="TALLER"
+                        value="ESTUDIO DE RADIO"
                         name="flexRadioDefault"
                         id="flexRadioDefault2"
                       />
@@ -524,7 +551,20 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                         class="form-check-input"
                         type="radio"
                         [(ngModel)]="selectedAula.otro"
-                        value="TALLER"
+                        value="ESTUDIO DE VIDEO"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault2"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault2">
+                        ESTUDIO DE VIDEO
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="SALA DE COMPUTACION"
                         name="flexRadioDefault"
                         id="flexRadioDefault2"
                       />
@@ -744,7 +784,13 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <td>
             <div class="card">
               <div class="card-body">
-                <div class="form-group">
+                <div
+                  *ngIf="
+                    disponibilidadProfesor == false;
+                    else disponibilidadTabla
+                  "
+                  class="form-group"
+                >
                   <input
                     type="text"
                     placeholder="Nombre"
@@ -767,7 +813,20 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                     class="form-control"
                   />
 
-                  <button>Disponibilidad</button>
+                  <div
+                    class="form-check form-switch mt-3"
+                    (click)="availabilityProfesor()"
+                  >
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="flexSwitchCheckDefault"
+                      placeholder="Disponibilidad"
+                    />
+                    <label class="form-check-label" for="flexSwitchCheckDefault"
+                      >Disponibilidad</label
+                    >
+                  </div>
 
                   <button
                     (click)="addOrEditProfesor()"
@@ -783,6 +842,208 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                     Eliminar
                   </button>
                 </div>
+                <ng-template #disponibilidadTabla>
+                  <div class="text-secondary text-center">
+                    <h4>Disponibilidad del profesor</h4>
+                  </div>
+                  <table class="table text-center">
+                    <thead>
+                      <tr class="table-dark">
+                        <th class="rounded-start" scope="col">Horarios</th>
+                        <th scope="col"></th>
+                        <th scope="col">Lunes</th>
+                        <th scope="col">Martes</th>
+                        <th scope="col">Miercoles</th>
+                        <th scope="col">Jueves</th>
+                        <th class="rounded-end" scope="col">Viernes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let turno of turnoArray[0].modulos"
+                        class="bg-dark"
+                      >
+                        <td colspan="2" class="table-active text-white">
+                          {{ turno.inicio }} - {{ turno.final }}
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / LUNES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / MARTES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / MIERCOLES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / JUEVES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / VIERNES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr
+                        *ngFor="let turno of turnoArray[1].modulos"
+                        class="bg-dark"
+                      >
+                        <td colspan="2" class="table-active text-white">
+                          {{ turno.inicio }} - {{ turno.final }}
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / LUNES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / MARTES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / MIERCOLES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / JUEVES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / VIERNES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr
+                        *ngFor="let turno of turnoArray[2].modulos"
+                        class="bg-dark"
+                      >
+                        <td colspan="2" class="table-active text-white">
+                          {{ turno.inicio }} - {{ turno.final }}
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / LUNES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / MARTES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / MIERCOLES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / JUEVES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value="turno / VIERNES"
+                              id="flexCheckDefault"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button
+                    class="col btn btn-primary me-2"
+                    (click)="availabilityProfesor()"
+                  >
+                    LISTO
+                  </button>
+                </ng-template>
               </div>
             </div>
           </td>
