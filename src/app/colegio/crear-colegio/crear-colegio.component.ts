@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { ApiService } from 'src/app/services/api.service';
 import {
   Aula,
   Colegio,
@@ -66,7 +67,8 @@ export class CrearColegioComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authSvc: AuthService,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private apiS:ApiService 
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
@@ -642,6 +644,6 @@ export class CrearColegioComponent implements OnInit {
   // _______________________________________FINALIZAR____________________________________________________________
 
   async finalizar() {
-    alert('GRACIAS👍 BROMITA🤙');
+    alert(this.apiS.idHorarioGenerado);
   }
 }
