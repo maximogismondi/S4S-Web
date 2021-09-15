@@ -7,12 +7,16 @@ import { AuthService } from '../auth/services/auth.service';
 })
 export class ApiService {
 
-  readonly url:string ="http://localhost:3300";
-  public idHorarioGenerado:string;
+  readonly url:string = "https://s4s-algoritmo.herokuapp.com/";
+  public idHorarioGenerado:string = "";
 
-  constructor(private http: HttpClient,private authS: AuthService) {
+  constructor(privatehttp: HttpClient ,private authS: AuthService) {
+  }
+
+  llamarAlgoritmo(http: HttpClient, authS: AuthService){
     let uid = authS.userData.uid;
-    http.get<string>(this.url + "/algoritmo/" + uid).subscribe((data) => {
-     this.idHorarioGenerado = data;
-    })
-  }}
+    http.post<string>(this.url + "/ayuda?id=" + uid, {}).subscribe((data) => {
+      this.idHorarioGenerado = data;
+     })
+  }
+}

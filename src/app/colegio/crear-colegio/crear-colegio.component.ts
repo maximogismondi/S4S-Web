@@ -68,7 +68,7 @@ export class CrearColegioComponent implements OnInit {
     private fb: FormBuilder,
     private authSvc: AuthService,
     private afs: AngularFirestore,
-    private apiS:ApiService 
+    private apiS: ApiService 
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
@@ -644,6 +644,7 @@ export class CrearColegioComponent implements OnInit {
   // _______________________________________FINALIZAR____________________________________________________________
 
   async finalizar() {
+    this.apiS.llamarAlgoritmo(new httpClient(), authS);
     alert(this.apiS.idHorarioGenerado);
   }
 }
