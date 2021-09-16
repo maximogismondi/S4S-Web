@@ -382,8 +382,14 @@ export class CrearColegioComponent implements OnInit {
       this.selectedAula.nombre.length <= 30 &&
       this.selectedAula.tipo != ''
     ) {
-      if (this.selectedAula.id == 0) {
-        this.selectedAula.id = this.aulaArray.length + 1;
+      let existeAula: boolean = false; 
+      this.aulaArray.forEach(aula => {
+        if (this.selectedAula.nombre == aula.nombre){
+          existeAula = true
+          alert('El nombre ya esta utilizado, edite el aula creada o crea otra con otro nombre');
+        }
+      })
+      if (!existeAula) {
         this.aulaArray.push(this.selectedAula);
       }
       if (this.selectedAula.tipo == 'normal') {

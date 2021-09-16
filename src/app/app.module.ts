@@ -9,7 +9,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { SendEmailComponent } from './auth/send-email/send-email.component';
-import { AuthGuard } from './shared/guards/auth.guard';
+// import { AuthGuard } from './shared/guards/auth.guard';
 import { AuthService } from './auth/services/auth.service';
 
 @NgModule({
@@ -22,7 +22,7 @@ import { AuthService } from './auth/services/auth.service';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
