@@ -861,8 +861,9 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                             <input
                               checked
                               class="form-check-input"
+
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['lunes']['manana'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['lunes']['manana'][modulo.inicio]"
                               >
                           </div>
                         </td>
@@ -872,7 +873,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['martes']['manana'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['martes']['manana'][modulo.inicio]"
                               >
                           </div>
                         </td>
@@ -882,7 +883,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['miercoles']['manana'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['miercoles']['manana'][modulo.inicio]"
                               >
                           </div>
                         </td>
@@ -892,7 +893,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['jueves']['manana'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['jueves']['manana'][modulo.inicio]"
                               >
                           </div>
                         </td>
@@ -902,7 +903,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['viernes']['manana'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['viernes']['manana'][modulo.inicio]"
                               >
                           </div>
                         </td>
@@ -921,7 +922,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['lunes']['tarde'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['lunes']['tarde'][modulo.inicio]"
                               >
                           </div>
                         </td>
@@ -931,7 +932,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['martes']['tarde'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['martes']['tarde'][modulo.inicio]"
                               >
                           </div>
                         </td>
@@ -941,7 +942,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['miercoles']['tarde'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['miercoles']['tarde'][modulo.inicio]"
                               >
                           </div>
                         </td>
@@ -951,7 +952,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['jueves']['tarde'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['jueves']['tarde'][modulo.inicio]"
                               >
                           </div>
                         </td>
@@ -961,7 +962,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['viernes']['tarde'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['viernes']['tarde'][modulo.inicio]"
                               >
                           </div>
                         </td>
@@ -980,7 +981,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['lunes']['noche'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['lunes']['noche'][modulo.inicio]"
                               >
                           </div>
                         </td>
@@ -990,7 +991,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['martes']['noche'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['martes']['noche'][modulo.inicio]"
                               >
                           </div>
                         </td>
@@ -1000,7 +1001,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['miercoles']['noche'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['miercoles']['noche'][modulo.inicio]"
                               >
                           </div>
                         </td>
@@ -1010,7 +1011,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['jueves']['noche'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['jueves']['noche'][modulo.inicio]"
                               >
                           </div>
                         </td>
@@ -1020,7 +1021,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value = "selectedProfesor.disponibilidad['viernes']['noche'][modulo.inicio]"
+                              [(ngModel)] = "selectedProfesor.disponibilidad['viernes']['noche'][modulo.inicio]"
                               >
                           </div>
                         </td>

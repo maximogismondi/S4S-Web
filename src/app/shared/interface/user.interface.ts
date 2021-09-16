@@ -100,7 +100,7 @@ export class Profesor {
       'martes',
       'miercoles',
       'jueves',
-      'viernes',
+      'viernes'
     ];
 
     dias.forEach((dia) => {
@@ -112,7 +112,7 @@ export class Profesor {
         });
       });
     });
-    this.disponibilidad = mapDisponibilidad
+    this.disponibilidad = mapDisponibilidad;
   }
 
   // materiasCapacitado: Array<string>;

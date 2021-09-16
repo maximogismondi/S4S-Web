@@ -133,7 +133,7 @@ export class CrearColegioComponent implements OnInit {
               school.profesores.forEach((profesor) => {
                 let profesorAux: ProfesorReducido = {
                   nombre: profesor.nombre,
-                  valor: false,
+                  valor: false
                 };
                 this.profesoresArrayMaterias.push(profesorAux);
               });
@@ -521,7 +521,11 @@ export class CrearColegioComponent implements OnInit {
       this.selectedProfesor.dni >= '1000000' &&
       this.selectedProfesor.nombre.length <= 30
     ) {
-      this.profesorArray.push(this.selectedProfesor);
+      if (this.selectedProfesor.id == 0) {
+        this.selectedProfesor.id = this.profesorArray.length + 1;
+        this.profesorArray.push(this.selectedProfesor);
+      }
+      
       this.updateDBProfesor();
     } else {
       if (this.selectedProfesor.dni < '1000000') {
@@ -549,6 +553,7 @@ export class CrearColegioComponent implements OnInit {
     if (!this.disponibilidadProfesor) {
       this.disponibilidadProfesor = true;
     } else {
+
       this.disponibilidadProfesor = false;
     }
   }
