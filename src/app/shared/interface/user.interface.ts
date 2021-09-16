@@ -92,7 +92,29 @@ export class Profesor {
   nombre: string = "";
   apellido: string = "";
   dni: string = "";
-  disponibilidad: any = [];
+  disponibilidad: any = {};
+  constructor(turnoArray:Array<Turno>){
+    let mapDisponibilidad: any = {};
+    const dias = [
+      'lunes',
+      'martes',
+      'miercoles',
+      'jueves',
+      'viernes',
+    ];
+
+    dias.forEach((dia) => {
+      mapDisponibilidad[dia] = {};
+      turnoArray.forEach((turno) => {
+        mapDisponibilidad[dia][turno.turno] = {};
+        turno.modulos.forEach((modulo) => {
+          mapDisponibilidad[dia][turno.turno][modulo.inicio] = true;
+        });
+      });
+    });
+    this.disponibilidad = mapDisponibilidad
+  }
+
   // materiasCapacitado: Array<string>;
   // turnoPreferido: number;
   // condiciones: Array<string>;

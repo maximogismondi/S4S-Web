@@ -857,48 +857,53 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                           {{ modulo.inicio }} - {{ modulo.final }}
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(0,0,turnoArray[0].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('lunes','manana',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[0][0][turnoArray[0].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['lunes']['manana'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(1,0,turnoArray[0].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('martes','manana',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[1][0][turnoArray[0].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['martes']['manana'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(2,0,turnoArray[0].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('miercoles','manana',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[2][0][turnoArray[0].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['miercoles']['manana'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(3,0,turnoArray[0].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('jueves','manana',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[3][0][turnoArray[0].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['jueves']['manana'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(4,0,turnoArray[0].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('viernes','manana',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[4][0][turnoArray[0].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['viernes']['manana'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                       </tr>
@@ -911,48 +916,53 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                           {{ modulo.inicio }} - {{ modulo.final }}
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(0,1,turnoArray[1].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('lunes','tarde',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[0][1][turnoArray[1].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['lunes']['tarde'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(1,1,turnoArray[1].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('martes','tarde',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[1][1][turnoArray[1].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['martes']['tarde'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(2,1,turnoArray[1].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('miercoles','tarde',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[2][1][turnoArray[1].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['miercoles']['tarde'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(3,1,turnoArray[1].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('jueves','tarde',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[3][1][turnoArray[1].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['jueves']['tarde'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(4,1,turnoArray[1].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('viernes','tarde',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[4][1][turnoArray[1].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['viernes']['tarde'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                       </tr>
@@ -965,48 +975,53 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                           {{ modulo.inicio }} - {{ modulo.final }}
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(0,2,turnoArray[2].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('lunes','noche',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[0][2][turnoArray[2].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['lunes']['noche'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(1,2,turnoArray[2].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('martes','noche',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[1][2][turnoArray[2].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['martes']['noche'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(2,2,turnoArray[2].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('miercoles','noche',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[2][2][turnoArray[2].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['miercoles']['noche'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(3,2,turnoArray[2].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('jueves','noche',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[3][2][turnoArray[2].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['jueves']['noche'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                         <td>
-                          <div class="form-check" (click)="clickFormCheck(4,2,turnoArray[2].modulos.indexOf(modulo))">
+                          <div class="form-check" (click)="clickFormCheck('viernes','noche',modulo.inicio)">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="{{ disponibilidadProfesorSemana[4][2][turnoArray[2].modulos.indexOf(modulo)] }}"                             />
+                              value = "selectedProfesor.disponibilidad['viernes']['noche'][modulo.inicio]"
+                              >
                           </div>
                         </td>
                       </tr>

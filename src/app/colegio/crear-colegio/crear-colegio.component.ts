@@ -100,6 +100,7 @@ export class CrearColegioComponent implements OnInit {
               this.horaInicial = Number(
                 String(this.inicioHorario).split(':')[0]
               );
+
               this.horaFinal = Number(
                 String(this.finalizacionHorario).split(':')[0]
               );
@@ -136,20 +137,6 @@ export class CrearColegioComponent implements OnInit {
                 };
                 this.profesoresArrayMaterias.push(profesorAux);
               });
-
-              if (this.turnos > 0) {
-                
-                this.disponibilidadProfesorSemana = [];
-                for (let i = 0; i < 5; i++) {
-                  this.disponibilidadProfesorSemana.push([]);
-                  this.turnoArray.forEach((turno) => {
-                    this.disponibilidadProfesorSemana[i].push([]);
-                    turno.modulos.forEach((modulo) => {
-                      this.disponibilidadProfesorSemana[i][this.disponibilidadProfesorSemana[i].length-1].push(true)
-                    });
-                  });
-                }
-              }
 
               this.totalCursosColegio = [];
               school.cursos.forEach((cursos) => {
@@ -500,10 +487,10 @@ export class CrearColegioComponent implements OnInit {
 
   profesorArray: Profesor[] = [];
 
-  selectedProfesor: Profesor = new Profesor();
+  selectedProfesor: Profesor = new Profesor(this.turnoArray);
 
   async updateDBProfesor() {
-    this.selectedProfesor = new Profesor();
+    this.selectedProfesor = new Profesor(this.turnoArray);
     let ProfesorArrayDiccionario: Array<any> = [];
     this.profesorArray.forEach((profesor) => {
       ProfesorArrayDiccionario.push({
@@ -511,7 +498,7 @@ export class CrearColegioComponent implements OnInit {
         nombre: profesor.nombre,
         apellido: profesor.apellido,
         dni: profesor.dni,
-        disponibilidad: profesor.disponibilidad
+        disponibilidad: profesor.disponibilidad,
         // 'materias capacitado': profesor.materiasCapacitado,
         //  turnoPreferido: profesor.turnoPreferido,
         // condiciones: profesor.condiciones,
@@ -559,32 +546,17 @@ export class CrearColegioComponent implements OnInit {
   }
 
   availabilityProfesor() {
-    if (this.disponibilidadProfesor == false) {
+    if (!this.disponibilidadProfesor) {
       this.disponibilidadProfesor = true;
     } else {
-      let mapDisponibilidad:any = {};
-      const dias = ["lunes","martes","miercoles","jueves","viernes"]
-
-      dias.forEach(dia => {
-        mapDisponibilidad[dia] = {}
-        this.turnoArray.forEach(turno => {
-          mapDisponibilidad[dia][turno.turno] = {}
-          turno.modulos.forEach(modulo => {
-            mapDisponibilidad[dia][turno.turno][modulo.inicio] = this.disponibilidadProfesorSemana[dias.indexOf(dia)][this.turnoArray.indexOf(turno)][turno.modulos.indexOf(modulo)]
-          });
-        })  
-      })
-      console.log(mapDisponibilidad)
-      console.log(this.disponibilidadProfesorSemana)
-      this.selectedProfesor.disponibilidad = mapDisponibilidad;
       this.disponibilidadProfesor = false;
     }
   }
 
-  clickFormCheck(dia:number, turno:number, modulo:number){
-    this.disponibilidadProfesorSemana[dia][turno][modulo] = !this.disponibilidadProfesorSemana[dia][turno][modulo]
+  clickFormCheck(dia: string, turno: string, modulo: string) {
+    this.selectedProfesor.disponibilidad[dia][turno][modulo] =
+      !this.selectedProfesor.disponibilidad[dia][turno][modulo];
   }
-
 
   async goFormMateria() {
     this.botonesCrearColegio = 5;
