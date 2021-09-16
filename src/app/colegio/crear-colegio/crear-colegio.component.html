@@ -850,193 +850,163 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                     <tbody>
 
                       <tr
-                        *ngFor="let turno of turnoArray[0].modulos"
+                        *ngFor="let modulo of turnoArray[0].modulos"
                         class="bg-secondary"
                       >
                         <td colspan="2" class="bg-light text-black">
-                          {{ turno.inicio }} - {{ turno.final }}
+                          {{ modulo.inicio }} - {{ modulo.final }}
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(0,0,turnoArray[0].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[0][0][turnoArray[0].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(1,0,turnoArray[0].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[1][0][turnoArray[0].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(2,0,turnoArray[0].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[2][0][turnoArray[0].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(3,0,turnoArray[0].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[3][0][turnoArray[0].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(4,0,turnoArray[0].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[4][0][turnoArray[0].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                       </tr>
 
                       <tr
-                        *ngFor="let turno of turnoArray[1].modulos"
+                        *ngFor="let modulo of turnoArray[1].modulos"
                         class="bg-secondary"
                       >
                         <td colspan="2" class="bg-light text-black">
-                          {{ turno.inicio }} - {{ turno.final }}
+                          {{ modulo.inicio }} - {{ modulo.final }}
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(0,1,turnoArray[1].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno / LUNES"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[0][1][turnoArray[1].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(1,1,turnoArray[1].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno / MARTES"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[1][1][turnoArray[1].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(2,1,turnoArray[1].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno / MIERCOLES"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[2][1][turnoArray[1].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(3,1,turnoArray[1].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno / JUEVES"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[3][1][turnoArray[1].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(4,1,turnoArray[1].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno / VIERNES"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[4][1][turnoArray[1].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                       </tr>
 
                       <tr
-                        *ngFor="let turno of turnoArray[2].modulos"
+                        *ngFor="let modulo of turnoArray[2].modulos"
                         class="bg-secondary"
                       >
                         <td colspan="2" class="bg-light text-black">
-                          {{ turno.inicio }} - {{ turno.final }}
+                          {{ modulo.inicio }} - {{ modulo.final }}
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(0,2,turnoArray[2].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno / LUNES"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[0][2][turnoArray[2].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(1,2,turnoArray[2].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno / MARTES"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[1][2][turnoArray[2].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(2,2,turnoArray[2].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno / MIERCOLES"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[2][2][turnoArray[2].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(3,2,turnoArray[2].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno / JUEVES"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[3][2][turnoArray[2].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                         <td>
-                          <div class="form-check">
+                          <div class="form-check" (click)="clickFormCheck(4,2,turnoArray[2].modulos.indexOf(modulo))">
                             <input
                               checked
                               class="form-check-input"
                               type="checkbox"
-                              value="turno / VIERNES"
-                              id="flexCheckDefault"
-                            />
+                              value="{{ disponibilidadProfesorSemana[4][2][turnoArray[2].modulos.indexOf(modulo)] }}"                             />
                           </div>
                         </td>
                       </tr>
