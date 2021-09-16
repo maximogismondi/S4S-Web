@@ -62,6 +62,7 @@ export class CrearColegioComponent implements OnInit {
   botonesCrearColegio: number = 1;
   botonesCrearColegioProgreso: number;
   disponibilidadProfesor: boolean = false;
+  disponibilidadProfesorSemana: Array<Array<Modulo>> = [];
 
   constructor(
     private router: Router,
@@ -132,6 +133,19 @@ export class CrearColegioComponent implements OnInit {
                 };
                 this.profesoresArrayMaterias.push(profesorAux);
               });
+
+            if (this.turnos > 0){
+              this.disponibilidadProfesorSemana = [];
+              for(let i = 0; i < 5; i++){
+                this.turnoArray.forEach((turno) => {
+                  turno.modulos.forEach((horario) => {
+                    this.disponibilidadProfesorSemana[i].push(horario);
+                  })
+                });
+              }
+            }
+              
+
               this.totalCursosColegio = [];
               school.cursos.forEach((cursos) => {
                 this.totalCursosColegio.push(cursos.nombre);
@@ -365,15 +379,13 @@ export class CrearColegioComponent implements OnInit {
 
   addOrEditAula() {
     if (
-      this.selectedAula.nombre != '' &&
-      this.selectedAula.tipo != '' &&
-      this.selectedAula.nombre.length <= 30
+      this.selectedAula.nombre != '' && this.selectedAula.nombre.length <= 30 && this.selectedAula.tipo != ''
     ) {
       if (this.selectedAula.id == 0) {
         this.selectedAula.id = this.aulaArray.length + 1;
         this.aulaArray.push(this.selectedAula);
       }
-      if (this.selectedAula.tipo == 'Normal') {
+      if (this.selectedAula.tipo == 'normal') {
         this.selectedAula.otro = 'normal';
       }
       this.updateDBAula();
@@ -535,6 +547,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   availabilityProfesor(){
+    console.log(this.disponibilidadProfesorSemana);
     if (this.disponibilidadProfesor == false) {
       this.disponibilidadProfesor = true;
     } else {

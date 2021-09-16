@@ -92,7 +92,7 @@ export class Profesor {
   nombre: string = "";
   apellido: string = "";
   dni: string = "";
-  disponibilidad: Array<string> = [];
+  disponibilidad: Array<Array<Modulo>> = [];
   // materiasCapacitado: Array<string>;
   // turnoPreferido: number;
   // condiciones: Array<string>;
