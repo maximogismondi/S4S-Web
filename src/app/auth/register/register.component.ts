@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import {
   FormBuilder,
@@ -7,6 +8,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/shared/interface/user.interface';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -23,14 +25,9 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authSvc: AuthService,
-    private afs: AngularFirestore
-  ) {
-    // authSvc.afAuth.authState.subscribe((user) => {
-    //   if (!user) {
-    //     this.noVerificado = false;
-    //   }
-    // });
-  }
+    private afs: AngularFirestore,
+    public afAuth: AngularFireAuth
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -59,7 +56,7 @@ export class RegisterComponent implements OnInit {
       }
       else{
         alert("El email debe ser mayor a los 5 digitos y la contraseña debe ser mayor a los 5 digitos");
-      }  
+      } 
     }
     
   }

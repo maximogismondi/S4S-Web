@@ -99,6 +99,7 @@
       <div class="card-body">
         <div class="row align-items-end">
           <button
+            *ngIf="botonesCrearColegioProgreso >= 1; else bloquearBoton"
             [ngClass]="{ 'btn-primary': botonesCrearColegio == 1 }"
             class="col btn mx-2"
             (click)="clickeoBotones('turnos')"
@@ -106,7 +107,10 @@
             Turnos
           </button>
           <button
-            *ngIf="botonesCrearColegioProgreso >= 2 && turnos != 0; else bloquearBoton"
+            *ngIf="
+              botonesCrearColegioProgreso >= 2 && turnos != 0;
+              else bloquearBoton0
+            "
             [ngClass]="{ 'btn-primary': botonesCrearColegio == 2 }"
             class="col btn me-2"
             (click)="clickeoBotones('aulas')"
@@ -114,7 +118,10 @@
             Aulas
           </button>
           <button
-            *ngIf="botonesCrearColegioProgreso >= 3 && turnos != 0 && aulas != 0; else bloquearBoton1"
+            *ngIf="
+              botonesCrearColegioProgreso >= 3 && turnos != 0 && aulas != 0;
+              else bloquearBoton1
+            "
             [ngClass]="{ 'btn-primary': botonesCrearColegio == 3 }"
             class="col btn me-2"
             (click)="clickeoBotones('cursos')"
@@ -122,7 +129,13 @@
             Cursos
           </button>
           <button
-            *ngIf="botonesCrearColegioProgreso >= 4 && turnos != 0 && aulas != 0 && cursos != 0; else bloquearBoton2"
+            *ngIf="
+              botonesCrearColegioProgreso >= 4 &&
+                turnos != 0 &&
+                aulas != 0 &&
+                cursos != 0;
+              else bloquearBoton2
+            "
             [ngClass]="{ 'btn-primary': botonesCrearColegio == 4 }"
             class="col btn me-2"
             (click)="clickeoBotones('profesores')"
@@ -130,7 +143,14 @@
             Profesores
           </button>
           <button
-            *ngIf="botonesCrearColegioProgreso >= 5 && turnos != 0 && aulas != 0 && cursos != 0 && profesores != 0; else bloquearBoton3"
+            *ngIf="
+              botonesCrearColegioProgreso >= 5 &&
+                turnos != 0 &&
+                aulas != 0 &&
+                cursos != 0 &&
+                profesores != 0;
+              else bloquearBoton3
+            "
             [ngClass]="{ 'btn-primary': botonesCrearColegio == 5 }"
             class="col btn me-2"
             (click)="clickeoBotones('materias')"
@@ -138,7 +158,15 @@
             Materias
           </button>
           <button
-            *ngIf="botonesCrearColegioProgreso >= 6 && turnos != 0 && aulas != 0 && cursos != 0 && profesores != 0 && materias != 0; else bloquearBoton4"
+            *ngIf="
+              botonesCrearColegioProgreso >= 6 &&
+                turnos != 0 &&
+                aulas != 0 &&
+                cursos != 0 &&
+                profesores != 0 &&
+                materias != 0;
+              else bloquearBoton4
+            "
             [ngClass]="{ 'btn-primary': botonesCrearColegio == 6 }"
             class="col btn me-2"
             (click)="clickeoBotones('finalizar')"
@@ -147,6 +175,9 @@
           </button>
         </div>
         <ng-template #bloquearBoton>
+          <button class="col btn btn-light me-2 disabled">Turnos</button>
+        </ng-template>
+        <ng-template #bloquearBoton0>
           <button class="col btn btn-light me-2 disabled">Aulas</button>
         </ng-template>
         <ng-template #bloquearBoton1>
@@ -181,7 +212,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
       </div>
       <table class="table text-center">
         <thead>
-          <tr class="table-dark">
+          <tr class="table-light">
             <th class="rounded-start" scope="col">Horarios</th>
             <th scope="col"></th>
             <th scope="col">Lunes</th>
@@ -195,34 +226,40 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <!-- MAÑANA -->
           <tr *ngIf="12 >= horaInicial && horaInicial >= 5">
             <td colspan="7" class="table-active">
-              TURNO MAÑANA ({{ inicioHorario }} am - 12:00 am)
+              TURNO MAÑANA ({{ inicioHorario }} am - 12:00 pm)
             </td>
           </tr>
-          <tr
-            *ngIf="12 >= horaInicial && horaInicial >= 5"
-            class="bg-dark rounded"
-          >
-            <ul class="list-group" *ngIf="turnoArray[0].modulos.length > 0">
-              <li
-                *ngFor="let turno of turnoArray[0].modulos"
-                class="list-group-item bg-dark text-white rounded"
+          <tr *ngFor="let turno of turnoArray[0].modulos" class="bg-white">
+            <td colspan="2" class="text-black">
+              {{ turno.inicio }} - {{ turno.final }}
+            </td>
+            <td colspan="4" class="text-black">CLASE</td>
+            <td class="bg-light">
+              <svg
+                (click)="deleteModulo('manana', turno)"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-trash-fill"
+                viewBox="0 0 16 16"
               >
-                <td colspan="7">
-                  <span>{{ turno.inicio }} - {{ turno.final }}</span>
-                </td>
-              </li>
-            </ul>
+                <path
+                  d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+                />
+              </svg>
+            </td>
           </tr>
-          <tr *ngIf="turnoSeleccionado == 'manana'">
+          <tr>
             <td colspan="3"></td>
             <td colspan="2">
               <div class="input-group">
                 <input
                   type="Time"
                   class="form-control"
-                  [(ngModel)]="inicioModuloSeleccionado"
+                  [(ngModel)]="inicioModuloSeleccionado[0]"
                 />
-                <button class="btn btn-primary" (click)="addModulo()">
+                <button class="btn btn-primary" (click)="addModulo('manana')">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -237,72 +274,63 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                   </svg>
                 </button>
               </div>
-            </td>
-            <td colspan="3"></td>
-          </tr>
-          <tr
-            *ngIf="
-              12 >= horaInicial &&
-              horaInicial >= 5 &&
-              turnoSeleccionado != 'manana'
-            "
-          >
-            <td colspan="7" class="table-light">
-              <button class="btn btn-primary" (click)="turnoActual('manana')">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  class="bi bi-plus-lg"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
-                  />
-                </svg>
-              </button>
             </td>
           </tr>
 
           <!-- TARDE -->
           <tr *ngIf="18 >= horaFinal && horaFinal > 12; else turnoNoche">
             <td colspan="7" class="table-active">
-              TURNO TARDE (12:00 am - {{ finalizacionHorario }} pm)
+              TURNO TARDE (12:00 pm - {{ finalizacionHorario }} pm)
             </td>
           </tr>
           <ng-template #turnoNoche>
-            <tr>
-              <td colspan="7" class="table-active">
-                TURNO TARDE (12:00 am - 18:00 pm)
-              </td>
-            </tr>
-          </ng-template>
-          <tr
-            *ngIf="(18 >= horaFinal && horaFinal > 12) || horaFinal > 18"
-            class="bg-dark"
-          >
-            <ul class="list-group" *ngIf="turnoArray[1].modulos.length > 0">
-              <li
-                *ngFor="let turno of turnoArray[1].modulos"
-                class="list-group-item bg-dark text-white"
-              >
-                <td colspan="7">
-                  <span>{{ turno.inicio }} - {{ turno.final }}</span>
+            <tr *ngIf="horaFinal == 12; else turnoNoche2"></tr>
+            <ng-template #turnoNoche2>
+              <tr>
+                <td colspan="7" class="table-active">
+                  TURNO TARDE (12:00 am - 18:00 pm)
                 </td>
-              </li>
-            </ul>
+              </tr>
+            </ng-template>
+          </ng-template>
+
+          <tr *ngFor="let turno of turnoArray[1].modulos" class="bg-white">
+            <td colspan="2" class="text-black">
+              {{ turno.inicio }} - {{ turno.final }}
+            </td>
+            <td colspan="4" class="text-black">CLASE</td>
+            <td class="bg-light">
+              <svg
+                (click)="deleteModulo('tarde', turno)"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-trash-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+                />
+              </svg>
+            </td>
           </tr>
-          <tr *ngIf="turnoSeleccionado == 'tarde'">
+
+          <tr
+            *ngIf="
+              (18 >= horaFinal && horaFinal > 12) || 18 <= horaFinal;
+              else turnoNoche3
+            "
+          >
             <td colspan="3"></td>
             <td colspan="2">
               <div class="input-group">
                 <input
                   type="Time"
                   class="form-control"
-                  [(ngModel)]="inicioModuloSeleccionado"
+                  [(ngModel)]="inicioModuloSeleccionado[1]"
                 />
-                <button class="btn btn-primary" (click)="addModulo()">
+                <button class="btn btn-primary" (click)="addModulo('tarde')">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -320,32 +348,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
             </td>
             <td colspan="3"></td>
           </tr>
-
-          <tr
-            *ngIf="
-              (18 >= horaFinal &&
-                horaFinal > 12 &&
-                turnoSeleccionado != 'tarde') ||
-              (horaFinal > 18 && turnoSeleccionado != 'tarde')
-            "
-          >
-            <td colspan="7" class="table-light">
-              <button class="btn btn-primary" (click)="turnoActual('tarde')">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  class="bi bi-plus-lg"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
-                  />
-                </svg>
-              </button>
-            </td>
-          </tr>
+          <ng-template #turnoNoche3></ng-template>
 
           <!-- NOCHE -->
           <tr *ngIf="horaFinal > 18">
@@ -354,28 +357,38 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
             </td>
           </tr>
 
-          <tr *ngIf="horaFinal > 18" class="bg-dark">
-            <ul class="list-group" *ngIf="turnoArray[2].modulos.length > 0">
-              <li
-                *ngFor="let turno of turnoArray[2].modulos"
-                class="list-group-item bg-dark text-white"
+          <tr *ngFor="let turno of turnoArray[2].modulos" class="bg-white">
+            <td colspan="2" class="text-black">
+              {{ turno.inicio }} - {{ turno.final }}
+            </td>
+            <td colspan="4" class="text-black">CLASE</td>
+            <td class="bg-light">
+              <svg
+                (click)="deleteModulo('noche', turno)"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-trash-fill"
+                viewBox="0 0 16 16"
               >
-                <td colspan="7">
-                  <span>{{ turno.inicio }} - {{ turno.final }}</span>
-                </td>
-              </li>
-            </ul>
+                <path
+                  d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+                />
+              </svg>
+            </td>
           </tr>
-          <tr *ngIf="turnoSeleccionado == 'noche'">
+
+          <tr *ngIf="horaFinal > 18">
             <td colspan="3"></td>
             <td colspan="2">
               <div class="input-group">
                 <input
                   type="Time"
                   class="form-control"
-                  [(ngModel)]="inicioModuloSeleccionado"
+                  [(ngModel)]="inicioModuloSeleccionado[2]"
                 />
-                <button class="btn btn-primary" (click)="addModulo()">
+                <button class="btn btn-primary" (click)="addModulo('noche')">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -393,31 +406,14 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
             </td>
             <td colspan="3"></td>
           </tr>
-
-          <tr *ngIf="horaFinal > 18 && turnoSeleccionado != 'noche'">
-            <td colspan="7" class="table-light">
-              <button class="btn btn-primary" (click)="turnoActual('noche')">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  class="bi bi-plus-lg"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
-                  />
-                </svg>
-              </button>
-            </td>
-          </tr>
         </tbody>
       </table>
     </ul>
     <div class="d-grid">
       <button
-        *ngIf="botonesCrearColegioProgreso <= 1 && turnoArray.length != 0"
+        *ngIf="
+          botonesCrearColegioProgreso <= 1 && turnoArray[0].modulos.length != 0
+        "
         (click)="goFormAula()"
         class="btn btn-primary btn-lg mt-4"
       >
@@ -448,9 +444,9 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
   <div class="col-md-8 mx-auto">
     <table class="table">
       <thead>
-        <tr class="table-dark">
+        <tr class="table-light">
           <th scope="col" class="rounded-start">Insertar Aulas</th>
-          <th scope="col" class="rounded-end"  >Aulas</th>
+          <th scope="col" class="rounded-end">Aulas</th>
         </tr>
       </thead>
       <tbody>
@@ -468,20 +464,20 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
 
                   <label class="mt-2">Tipo de aula</label>
                   <select class="form-select" [(ngModel)]="selectedAula.tipo">
-                    <option value="Normal">Normal</option>
-                    <option value="Otro">Otro</option>
+                    <option value="normal">Normal</option>
+                    <option value="otro">Otro</option>
                   </select>
 
-                  <div class="mt-3" *ngIf="selectedAula.tipo == 'Otro'">
+                  <div class="mt-3" *ngIf="selectedAula.tipo == 'otro'">
                     <div class="form-check">
                       <input
+                        checked
                         class="form-check-input"
                         type="radio"
                         [(ngModel)]="selectedAula.otro"
                         value="SUM"
                         name="flexRadioDefault"
                         id="flexRadioDefault1"
-                        checked
                       />
                       <label class="form-check-label" for="flexRadioDefault1">
                         SUM
@@ -505,11 +501,89 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                         class="form-check-input"
                         type="radio"
                         [(ngModel)]="selectedAula.otro"
-                        value="LABORATORIO"
+                        value="BIBLIOTECA"
                         name="flexRadioDefault"
                         id="flexRadioDefault3"
                       />
                       <label class="form-check-label" for="flexRadioDefault3">
+                        BIBLIOTECA
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="ESTUDIO MUSICAL"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault4"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault4">
+                        ESTUDIO MUSICAL
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="ESTUDIO ARTISTICO"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault5"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault5">
+                        ESTUDIO ARTISTICO
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="ESTUDIO DE RADIO"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault6"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault6">
+                        ESTUDIO DE RADIO
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="ESTUDIO DE VIDEO"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault7"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault7">
+                        ESTUDIO DE VIDEO
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="SALA DE COMPUTACION"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault8"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault8">
+                        SALA DE COMPUTACION
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="LABORATORIO"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault9"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault9">
                         LABORATORIO
                       </label>
                     </div>
@@ -589,9 +663,9 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
   <div class="col-md-8 mx-auto">
     <table class="table">
       <thead>
-        <tr class="table-dark">
+        <tr class="table-light">
           <th scope="col" class="rounded-start">Insertar Cursos</th>
-          <th scope="col" class="rounded-end"  >Cursos</th>
+          <th scope="col" class="rounded-end">Cursos</th>
         </tr>
       </thead>
       <tbody>
@@ -702,9 +776,9 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
   <div class="col-md-8 mx-auto">
     <table class="table">
       <thead>
-        <tr class="table-dark">
+        <tr class="table-light">
           <th scope="col" class="rounded-start">Insertar Profesores</th>
-          <th scope="col" class="rounded-end"  >Profesores</th>
+          <th scope="col" class="rounded-end">Profesores</th>
         </tr>
       </thead>
       <tbody>
@@ -712,7 +786,13 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <td>
             <div class="card">
               <div class="card-body">
-                <div class="form-group">
+                <div
+                  *ngIf="
+                    disponibilidadProfesor == false;
+                    else disponibilidadTabla
+                  "
+                  class="form-group"
+                >
                   <input
                     type="text"
                     placeholder="Nombre"
@@ -736,6 +816,15 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                   />
 
                   <button
+                    type="button"
+                    class="btn btn-light mt-4"
+                    style="width: 100%"
+                    (click)="availabilityProfesor()"
+                  >
+                    Disponibilidad
+                  </button>
+
+                  <button
                     (click)="addOrEditProfesor()"
                     class="btn btn-primary mt-4"
                   >
@@ -749,6 +838,355 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                     Eliminar
                   </button>
                 </div>
+                <ng-template #disponibilidadTabla>
+                  <div class="text-black text-center mb-2">
+                    <h4>Disponibilidad del profesor</h4>
+                  </div>
+                  <table class="table text-center">
+                    <thead>
+                      <tr class="table-light">
+                        <th class="rounded-start" scope="col">Horarios</th>
+                        <th scope="col"></th>
+                        <th scope="col">Lunes</th>
+                        <th scope="col">Martes</th>
+                        <th scope="col">Miercoles</th>
+                        <th scope="col">Jueves</th>
+                        <th class="rounded-end" scope="col">Viernes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let modulo of turnoArray[0].modulos"
+                        class="bg-secondary"
+                      >
+                        <td colspan="2" class="bg-light text-black">
+                          {{ modulo.inicio }} - {{ modulo.final }}
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck('lunes', 'manana', modulo.inicio)
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['lunes'][
+                                  'manana'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck('martes', 'manana', modulo.inicio)
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['martes'][
+                                  'manana'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck(
+                                'miercoles',
+                                'manana',
+                                modulo.inicio
+                              )
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['miercoles'][
+                                  'manana'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck('jueves', 'manana', modulo.inicio)
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['jueves'][
+                                  'manana'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck('viernes', 'manana', modulo.inicio)
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['viernes'][
+                                  'manana'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr
+                        *ngFor="let modulo of turnoArray[1].modulos"
+                        class="bg-secondary"
+                      >
+                        <td colspan="2" class="bg-light text-black">
+                          {{ modulo.inicio }} - {{ modulo.final }}
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck('lunes', 'tarde', modulo.inicio)
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['lunes'][
+                                  'tarde'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck('martes', 'tarde', modulo.inicio)
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['martes'][
+                                  'tarde'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck(
+                                'miercoles',
+                                'tarde',
+                                modulo.inicio
+                              )
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['miercoles'][
+                                  'tarde'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck('jueves', 'tarde', modulo.inicio)
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['jueves'][
+                                  'tarde'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck('viernes', 'tarde', modulo.inicio)
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['viernes'][
+                                  'tarde'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr
+                        *ngFor="let modulo of turnoArray[2].modulos"
+                        class="bg-secondary"
+                      >
+                        <td colspan="2" class="bg-light text-black">
+                          {{ modulo.inicio }} - {{ modulo.final }}
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck('lunes', 'noche', modulo.inicio)
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['lunes'][
+                                  'noche'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck('martes', 'noche', modulo.inicio)
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['martes'][
+                                  'noche'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck(
+                                'miercoles',
+                                'noche',
+                                modulo.inicio
+                              )
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['miercoles'][
+                                  'noche'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck('jueves', 'noche', modulo.inicio)
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['jueves'][
+                                  'noche'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="form-check"
+                            (click)="
+                              clickFormCheck('viernes', 'noche', modulo.inicio)
+                            "
+                          >
+                            <input
+                              checked
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedProfesor.disponibilidad['viernes'][
+                                  'noche'
+                                ][modulo.inicio]
+                              "
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button
+                    class="col btn btn-primary me-2"
+                    (click)="availabilityProfesor()"
+                  >
+                    LISTO
+                  </button>
+                </ng-template>
               </div>
             </div>
           </td>
@@ -802,16 +1240,22 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
 </div>
 
 <div
-  *ngIf="botonesCrearColegio == 5 && turnos != 0 && aulas != 0 && cursos != 0 && profesores != 0"
+  *ngIf="
+    botonesCrearColegio == 5 &&
+    turnos != 0 &&
+    aulas != 0 &&
+    cursos != 0 &&
+    profesores != 0
+  "
   class="container mx-auto my-4"
   id="divMateria"
 >
   <div class="col-md-8 mx-auto">
     <table class="table">
       <thead>
-        <tr class="table-dark">
+        <tr class="table-light">
           <th scope="col" class="rounded-start">Insertar Materias</th>
-          <th scope="col" class="rounded-end"  >Materias</th>
+          <th scope="col" class="rounded-end">Materias</th>
         </tr>
       </thead>
       <tbody>
@@ -847,103 +1291,55 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                     <label class="mt-2">Curso</label>
                     <select
                       class="form-select"
-                      [(ngModel)]="selectedMateria.cursoDado"
+                      [(ngModel)]="selectedMateria.curso"
                     >
                       <option
-                        value="{{ curso }}"
-                        *ngFor="let curso of totalCursosColegio"
+                        *ngFor="let curso of cursoArray"
+                        value="{{ curso.nombre }}"
                       >
-                        {{ curso }}
+                        {{ curso.nombre }}
                       </option>
                     </select>
                   </p>
 
-                  <label class="mt-2">Profesores:</label>
+                  <!-- <label class="mt-2">Profesores:</label> -->
                   <table>
-                    <tr *ngFor="let profesor of profesoresArrayMaterias">
-                      <td>
-                        <div class="form-check mt-2">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            (click)="clicked(profesor.nombre)"
-                            id="{{ profesor.nombre }}"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="{{ profesor.nombre }}"
+                    <thead>
+                      <tr class="table-light">
+                        <th class="rounded" scope="col">Profesores</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let profesor of profesorArray">
+                        <td>
+                          <div
+                            class="form-check mt-2"
+                            (click)="clickFormCheckMateria(profesor.nombre)"
                           >
-                            {{ profesor.nombre }}
-                          </label>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedMateria.profesoresCapacitados[
+                                  profesor.nombre
+                                ]
+                              "
+                              id="{{ profesor.nombre }}"
+                            />
+                            <!--profesoresArrayMaterias
+                               (click)="clicked(profesor.nombre)" -->
 
-                  <!-- <input
-                    type="number"
-                    min="1"
-                    [(ngModel)]="selectedMateria.cantProfesores"
-                    placeholder="Cantidad de profesores"
-                    class="form-control"
-                  />
-        
-                  <input
-                    type="number"
-                    min="0"
-                    [(ngModel)]="selectedMateria.espacioEntreDias"
-                    placeholder="Espacio entre cada dia"
-                    class="form-control"
-                  />
-        
-                  <label class="mt-2">Tipo de aula</label>
-                  <select class="form-select" [(ngModel)]="selectedMateria.tipo">
-                    <option value="Normal">Normal</option>
-                    <option value="Otro">Otro</option>
-                  </select>
-        
-                  <div class="mt-3" *ngIf="selectedMateria.tipo == 'Otro'">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        [(ngModel)]="selectedMateria.otro"
-                        value="SUM"
-                        name="flexRadioDefault"
-                        id="flexRadioDefault1"
-                        checked
-                      />
-                      <label class="form-check-label" for="flexRadioDefault1">
-                        SUM
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        [(ngModel)]="selectedMateria.otro"
-                        value="TALLER"
-                        name="flexRadioDefault"
-                        id="flexRadioDefault2"
-                      />
-                      <label class="form-check-label" for="flexRadioDefault2">
-                        TALLER
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        [(ngModel)]="selectedMateria.otro"
-                        value="LABORATORIO"
-                        name="flexRadioDefault"
-                        id="flexRadioDefault3"
-                      />
-                      <label class="form-check-label" for="flexRadioDefault3">
-                        LABORATORIO
-                      </label>
-                    </div>
-                  </div> -->
+                            <label
+                              class="form-check-label"
+                              for="{{ profesor.nombre }}"
+                            >
+                              {{ profesor.nombre }} {{ profesor.apellido }}
+                            </label>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
 
                   <button
                     (click)="addOrEditMateria()"
@@ -1012,7 +1408,14 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
 </div>
 
 <div
-  *ngIf="botonesCrearColegio == 6 && turnos != 0 && aulas != 0 && cursos != 0 && profesores != 0 && materias != 0"
+  *ngIf="
+    botonesCrearColegio == 6 &&
+    turnos != 0 &&
+    aulas != 0 &&
+    cursos != 0 &&
+    profesores != 0 &&
+    materias != 0
+  "
   class="container mx-auto my-4"
   id="divFinalizar"
 >
