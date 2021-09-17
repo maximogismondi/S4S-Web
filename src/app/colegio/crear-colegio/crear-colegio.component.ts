@@ -169,6 +169,20 @@ export class CrearColegioComponent implements OnInit {
     }
   }
 
+  chequearRepeticionEnSubidaDatos(selected: any, arreglo: Array<any>): boolean {
+    let existeDato: boolean = false;
+    arreglo.forEach((dato) => {
+      if (selected.nombre == dato.nombre) {
+        existeDato = true;
+        alert(
+          'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre'
+        );
+      }
+    });
+
+    return existeDato;
+  }
+
   // _______________________________________TURNOS______________________________________________________________
 
   updateDBTurnos() {
@@ -385,8 +399,15 @@ export class CrearColegioComponent implements OnInit {
       this.selectedAula.tipo != ''
     ) {
       if (this.selectedAula.id == 0) {
-        this.selectedAula.id = this.aulaArray.length + 1;
-        this.aulaArray.push(this.selectedAula);
+        if (
+          !this.chequearRepeticionEnSubidaDatos(
+            this.selectedAula,
+            this.aulaArray
+          )
+        ) {
+          this.selectedAula.id = this.aulaArray.length + 1;
+          this.aulaArray.push(this.selectedAula);
+        }
       }
       if (this.selectedAula.tipo == 'normal') {
         this.selectedAula.otro = 'normal';
@@ -454,8 +475,15 @@ export class CrearColegioComponent implements OnInit {
       this.selectedCurso.nombre.length <= 30
     ) {
       if (this.selectedCurso.id == 0) {
-        this.selectedCurso.id = this.cursoArray.length + 1;
-        this.cursoArray.push(this.selectedCurso);
+        if (
+          !this.chequearRepeticionEnSubidaDatos(
+            this.selectedCurso,
+            this.cursoArray
+          )
+        ) {
+          this.selectedCurso.id = this.cursoArray.length + 1;
+          this.cursoArray.push(this.selectedCurso);
+        }
       }
       this.updateDBCurso();
     } else {
@@ -523,7 +551,18 @@ export class CrearColegioComponent implements OnInit {
       this.selectedProfesor.dni >= '1000000' &&
       this.selectedProfesor.nombre.length <= 30
     ) {
-      this.profesorArray.push(this.selectedProfesor);
+      if (this.selectedProfesor.id == 0) {
+        if (
+          !this.chequearRepeticionEnSubidaDatos(
+            this.selectedProfesor,
+            this.profesorArray
+          )
+        ) {
+          this.selectedProfesor.id = this.profesorArray.length + 1;
+          this.profesorArray.push(this.selectedProfesor);
+        }
+      }
+
       this.updateDBProfesor();
     } else {
       if (this.selectedProfesor.dni < '1000000') {
@@ -612,14 +651,22 @@ export class CrearColegioComponent implements OnInit {
       this.selectedMateria.nombre.length <= 30
     ) {
       if (this.selectedMateria.id == 0) {
-        this.selectedMateria.id = this.materiaArray.length + 1;
-        this.profesoresArrayMaterias.forEach((profesor) => {
-          if (profesor.valor == true) {
-            this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
-          }
-        });
-        this.materiaArray.push(this.selectedMateria);
+        if (
+          !this.chequearRepeticionEnSubidaDatos(
+            this.selectedMateria,
+            this.materiaArray
+          )
+        ) {
+          this.selectedMateria.id = this.materiaArray.length + 1;
+          this.profesoresArrayMaterias.forEach((profesor) => {
+            if (profesor.valor == true) {
+              this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
+            }
+          });
+          this.materiaArray.push(this.selectedMateria);
+        }
       }
+
       this.updateDBMateria();
     } else {
       if (this.selectedMateria.nombre.length > 30) {
