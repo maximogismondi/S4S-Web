@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import {
@@ -42,10 +43,11 @@ export class CrearColegioComponent implements OnInit {
   cursos: number;
   profesores: number;
   // materiasArrayCursos: Array<MateriaReducido> = [];
-  profesoresArrayMaterias: Array<ProfesorReducido> = [];
+  // profesoresArrayMaterias: Array<ProfesorReducido> = [];
   cantidadTurnos: Array<Turno> = [];
-  totalCursosColegio: Array<string> = [];
-  inicioModuloSeleccionado: string;
+  // totalCursosColegio: Array<string> = [];
+  inicioModuloSeleccionado: Array<string> = [];
+  // inicioModuloSeleccionado: string;
   turnoSeleccionado: string;
   // horasFinalSeleccionada: string;
   // minutoFinalSeleccionado: string;
@@ -60,12 +62,15 @@ export class CrearColegioComponent implements OnInit {
   ];
   botonesCrearColegio: number = 1;
   botonesCrearColegioProgreso: number;
+  disponibilidadProfesor: boolean = false;
+  disponibilidadProfesorSemana: Array<Array<Array<boolean>>> = [];
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private authSvc: AuthService,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private http: HttpClient
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
@@ -82,17 +87,31 @@ export class CrearColegioComponent implements OnInit {
               this.duracionModulo = school.duracionModulo;
               this.inicioHorario = school.inicioHorario;
               this.finalizacionHorario = school.finalizacionHorario;
-              this.inicioModuloSeleccionado = school.inicioHorario;
+              if (this.inicioModuloSeleccionado.length == 0) {
+                this.inicioModuloSeleccionado.push('05:00', '12:00', '18:00');
+                if (school.inicioHorario < '12:00') {
+                  this.inicioModuloSeleccionado[0] = school.inicioHorario;
+                } else if (school.inicioHorario < '18:00') {
+                  this.inicioModuloSeleccionado[1] = school.inicioHorario;
+                } else {
+                  this.inicioModuloSeleccionado[2] = school.inicioHorario;
+                }
+              }
+
               // this.horarios.push(String(this.inicioHorario));
               this.horaInicial = Number(
                 String(this.inicioHorario).split(':')[0]
               );
+
               this.horaFinal = Number(
                 String(this.finalizacionHorario).split(':')[0]
               );
               // this.minutos = Number(String(this.inicioHorario).split(':')[1]);
               // this.modulos = school.modulos.length;
-              this.turnos = school.turnos.length;
+              this.turnos =
+                school.turnos[0].modulos.length +
+                school.turnos[1].modulos.length +
+                school.turnos[2].modulos.length;
               this.aulas = school.aulas.length;
               this.materias = school.materias.length;
               this.cursos = school.cursos.length;
@@ -112,18 +131,19 @@ export class CrearColegioComponent implements OnInit {
 
               this.materiaArray = school.materias;
 
-              this.profesoresArrayMaterias = [];
-              school.profesores.forEach((profesor) => {
-                let profesorAux: ProfesorReducido = {
-                  nombre: profesor.nombre,
-                  valor: false,
-                };
-                this.profesoresArrayMaterias.push(profesorAux);
-              });
-              this.totalCursosColegio = [];
-              school.cursos.forEach((cursos) => {
-                this.totalCursosColegio.push(cursos.nombre);
-              });
+              // this.profesoresArrayMaterias = [];
+              // school.profesores.forEach((profesor) => {
+              //   let profesorAux: ProfesorReducido = {
+              //     nombre: profesor.nombre,
+              //     valor: false,
+              //   };
+              //   this.profesoresArrayMaterias.push(profesorAux);
+              // });
+
+              // this.totalCursosColegio = [];
+              // school.cursos.forEach((cursos) => {
+              //   this.totalCursosColegio.push(cursos.nombre);
+              // });
             })
           )
           .subscribe();
@@ -149,7 +169,41 @@ export class CrearColegioComponent implements OnInit {
     }
   }
 
+  chequearRepeticionEnSubidaDatos(selected: any, arreglo: Array<any>): boolean {
+    let existeDato: boolean = false;
+    arreglo.forEach((dato) => {
+      if (selected.nombre == dato.nombre) {
+        existeDato = true;
+        alert(
+          'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre'
+        );
+      }
+    });
+
+    return existeDato;
+  }
+
   // _______________________________________TURNOS______________________________________________________________
+
+  updateDBTurnos() {
+    let turnoArrayDiccionario: Array<any> = [];
+    this.turnoArray.forEach((turno) => {
+      let modulosTurno: Array<any> = [];
+      turno.modulos.forEach((modulo) => {
+        modulosTurno.push({
+          inicio: modulo.inicio,
+          final: modulo.final,
+        });
+      });
+      turnoArrayDiccionario.push({
+        turno: turno.turno,
+        modulos: modulosTurno,
+      });
+    });
+    this.afs.collection('schools').doc(this.nombreDocumento).update({
+      turnos: turnoArrayDiccionario,
+    });
+  }
 
   moduloValido(horaInicial: string, horaFinal: string): string {
     //fuera de horario
@@ -211,13 +265,28 @@ export class CrearColegioComponent implements OnInit {
     return 'valido';
   }
 
-  addModulo() {
-    let horaInicial: string = String(this.inicioModuloSeleccionado).split(
-      ':'
-    )[0];
-    let minutosInicial: string = String(this.inicioModuloSeleccionado).split(
-      ':'
-    )[1];
+  addModulo(turnoSeleccionado: string) {
+    if (
+      this.turnoArray[0].modulos.length +
+        this.turnoArray[1].modulos.length +
+        this.turnoArray[2].modulos.length ==
+      0
+    ) {
+      alert(
+        'Los modulos creados son para las clases, de lo contrario se consideraran como recreos/horas de almuerzo'
+      );
+    }
+    this.turnoSeleccionado = turnoSeleccionado;
+    let horaInicial: string = String(
+      this.inicioModuloSeleccionado[
+        turnoSeleccionado == 'manana' ? 0 : turnoSeleccionado == 'tarde' ? 1 : 2
+      ]
+    ).split(':')[0];
+    let minutosInicial: string = String(
+      this.inicioModuloSeleccionado[
+        turnoSeleccionado == 'manana' ? 0 : turnoSeleccionado == 'tarde' ? 1 : 2
+      ]
+    ).split(':')[1];
 
     let horasAux: number = Number(horaInicial);
     let minutosAux: number = Number(minutosInicial) + this.duracionModulo;
@@ -241,50 +310,50 @@ export class CrearColegioComponent implements OnInit {
 
     if (this.moduloValido(inicio, fin) == 'valido') {
       this.turnoArray[
-        this.turnoSeleccionado == 'manana'
-          ? 0
-          : this.turnoSeleccionado == 'tarde'
-          ? 1
-          : 2
+        turnoSeleccionado == 'manana' ? 0 : turnoSeleccionado == 'tarde' ? 1 : 2
       ].modulos.push(new Modulo(inicio, fin));
-      this.inicioModuloSeleccionado = horaFinal + ':' + minutoFinal;
+      this.inicioModuloSeleccionado[
+        turnoSeleccionado == 'manana' ? 0 : turnoSeleccionado == 'tarde' ? 1 : 2
+      ] = horaFinal + ':' + minutoFinal;
       this.turnoArray[
-        this.turnoSeleccionado == 'manana'
-          ? 0
-          : this.turnoSeleccionado == 'tarde'
-          ? 1
-          : 2
+        turnoSeleccionado == 'manana' ? 0 : turnoSeleccionado == 'tarde' ? 1 : 2
       ].modulos.sort((a, b) =>
         Number(a.inicio.split(':')[0]) * 60 + Number(a.inicio.split(':')[1]) >
         Number(b.inicio.split(':')[0]) * 60 + Number(b.inicio.split(':')[1])
           ? 1
           : -1
       );
-      let turnoArrayDiccionario: Array<any> = [];
-      this.turnoArray.forEach((turno) => {
-        let modulosTurno: Array<any> = [];
-        turno.modulos.forEach((modulo) => {
-          modulosTurno.push({
-            inicio: modulo.inicio,
-            final: modulo.final,
-          });
-        });
-        turnoArrayDiccionario.push({
-          turno: turno.turno,
-          modulos: modulosTurno,
-        });
-      });
-      this.afs.collection('schools').doc(this.nombreDocumento).update({
-        turnos: turnoArrayDiccionario,
-      });
+      this.updateDBTurnos();
     } else {
       alert(this.moduloValido(inicio, fin));
     }
   }
 
-  turnoActual(turno: string) {
-    this.turnoSeleccionado = turno;
+  deleteModulo(turnoSeleccionado: string, turno: Modulo) {
+    console.log(turno);
+    if (turnoSeleccionado == 'manana') {
+      this.turnoArray[0].modulos.splice(
+        this.turnoArray[0].modulos.indexOf(turno),
+        1
+      );
+    } else if (turnoSeleccionado == 'tarde') {
+      this.turnoArray[1].modulos.splice(
+        this.turnoArray[1].modulos.indexOf(turno),
+        1
+      );
+    } else {
+      this.turnoArray[2].modulos.splice(
+        this.turnoArray[2].modulos.indexOf(turno),
+        1
+      );
+    }
+
+    this.updateDBTurnos();
   }
+
+  // turnoActual(turno: string) {
+  //   this.turnoSeleccionado = turno;
+  // }
 
   async goFormAula() {
     this.botonesCrearColegio = 2;
@@ -326,15 +395,22 @@ export class CrearColegioComponent implements OnInit {
   addOrEditAula() {
     if (
       this.selectedAula.nombre != '' &&
-      this.selectedAula.tipo != '' &&
-      this.selectedAula.nombre.length <= 30
+      this.selectedAula.nombre.length <= 30 &&
+      this.selectedAula.tipo != ''
     ) {
       if (this.selectedAula.id == 0) {
-        this.selectedAula.id = this.aulaArray.length + 1;
-        this.aulaArray.push(this.selectedAula);
+        if (
+          !this.chequearRepeticionEnSubidaDatos(
+            this.selectedAula,
+            this.aulaArray
+          )
+        ) {
+          this.selectedAula.id = this.aulaArray.length + 1;
+          this.aulaArray.push(this.selectedAula);
+        }
       }
-      if (this.selectedAula.tipo == 'Normal') {
-        this.selectedAula.otro = 'Se selecciono el tipo normal';
+      if (this.selectedAula.tipo == 'normal') {
+        this.selectedAula.otro = 'normal';
       }
       this.updateDBAula();
     } else {
@@ -399,8 +475,15 @@ export class CrearColegioComponent implements OnInit {
       this.selectedCurso.nombre.length <= 30
     ) {
       if (this.selectedCurso.id == 0) {
-        this.selectedCurso.id = this.cursoArray.length + 1;
-        this.cursoArray.push(this.selectedCurso);
+        if (
+          !this.chequearRepeticionEnSubidaDatos(
+            this.selectedCurso,
+            this.cursoArray
+          )
+        ) {
+          this.selectedCurso.id = this.cursoArray.length + 1;
+          this.cursoArray.push(this.selectedCurso);
+        }
       }
       this.updateDBCurso();
     } else {
@@ -434,10 +517,10 @@ export class CrearColegioComponent implements OnInit {
 
   profesorArray: Profesor[] = [];
 
-  selectedProfesor: Profesor = new Profesor();
+  selectedProfesor: Profesor = new Profesor(this.turnoArray);
 
   async updateDBProfesor() {
-    this.selectedProfesor = new Profesor();
+    this.selectedProfesor = new Profesor(this.turnoArray);
     let ProfesorArrayDiccionario: Array<any> = [];
     this.profesorArray.forEach((profesor) => {
       ProfesorArrayDiccionario.push({
@@ -445,6 +528,7 @@ export class CrearColegioComponent implements OnInit {
         nombre: profesor.nombre,
         apellido: profesor.apellido,
         dni: profesor.dni,
+        disponibilidad: profesor.disponibilidad,
         // 'materias capacitado': profesor.materiasCapacitado,
         //  turnoPreferido: profesor.turnoPreferido,
         // condiciones: profesor.condiciones,
@@ -468,9 +552,17 @@ export class CrearColegioComponent implements OnInit {
       this.selectedProfesor.nombre.length <= 30
     ) {
       if (this.selectedProfesor.id == 0) {
-        this.selectedProfesor.id = this.profesorArray.length + 1;
-        this.profesorArray.push(this.selectedProfesor);
+        if (
+          !this.chequearRepeticionEnSubidaDatos(
+            this.selectedProfesor,
+            this.profesorArray
+          )
+        ) {
+          this.selectedProfesor.id = this.profesorArray.length + 1;
+          this.profesorArray.push(this.selectedProfesor);
+        }
       }
+
       this.updateDBProfesor();
     } else {
       if (this.selectedProfesor.dni < '1000000') {
@@ -494,6 +586,19 @@ export class CrearColegioComponent implements OnInit {
     }
   }
 
+  availabilityProfesor() {
+    if (!this.disponibilidadProfesor) {
+      this.disponibilidadProfesor = true;
+    } else {
+      this.disponibilidadProfesor = false;
+    }
+  }
+
+  clickFormCheck(dia: string, turno: string, modulo: string) {
+    this.selectedProfesor.disponibilidad[dia][turno][modulo] =
+      !this.selectedProfesor.disponibilidad[dia][turno][modulo];
+  }
+
   async goFormMateria() {
     this.botonesCrearColegio = 5;
     if (this.botonesCrearColegioProgreso < 5) {
@@ -509,17 +614,17 @@ export class CrearColegioComponent implements OnInit {
 
   materiaArray: Materia[] = [];
 
-  selectedMateria: Materia = new Materia();
+  selectedMateria: Materia = new Materia(this.profesorArray);
 
   async updateDBMateria() {
-    this.selectedMateria = new Materia();
+    this.selectedMateria = new Materia(this.profesorArray);
     let materiaArrayDiccionario: Array<any> = [];
     this.materiaArray.forEach((materia) => {
       materiaArrayDiccionario.push({
-        id: materia.id,
+        // id: materia.id,
         nombre: materia.nombre,
         cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
-        curso: materia.cursoDado,
+        curso: materia.curso,
         // cantProfesores: materia.cantProfesores,
         // espacioEntreDias: materia.espacioEntreDias,
         // tipoAula: materia.tipo,
@@ -541,19 +646,27 @@ export class CrearColegioComponent implements OnInit {
     if (
       this.selectedMateria.nombre != '' &&
       this.selectedMateria.cantidadDeModulosTotal != '' &&
-      this.selectedMateria.cursoDado != '' &&
+      this.selectedMateria.curso != '' &&
       this.selectedMateria.cantidadMaximaDeModulosPorDia != '' &&
       this.selectedMateria.nombre.length <= 30
     ) {
       if (this.selectedMateria.id == 0) {
-        this.selectedMateria.id = this.materiaArray.length + 1;
-        this.profesoresArrayMaterias.forEach((profesor) => {
-          if (profesor.valor == true) {
-            this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
-          }
-        });
-        this.materiaArray.push(this.selectedMateria);
+        if (
+          !this.chequearRepeticionEnSubidaDatos(
+            this.selectedMateria,
+            this.materiaArray
+          )
+        ) {
+          this.selectedMateria.id = this.materiaArray.length + 1;
+          // this.profesoresArrayMaterias.forEach((profesor) => {
+          //   if (profesor.valor == true) {
+          //     this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
+          //   }
+          // });
+          this.materiaArray.push(this.selectedMateria);
+        }
       }
+
       this.updateDBMateria();
     } else {
       if (this.selectedMateria.nombre.length > 30) {
@@ -564,20 +677,25 @@ export class CrearColegioComponent implements OnInit {
     }
   }
 
-  clicked(nombreProfesor: string) {
-    for (let i = 0; i < this.profesoresArrayMaterias.length; i++) {
-      if (
-        this.profesoresArrayMaterias[i].nombre == nombreProfesor &&
-        this.profesoresArrayMaterias[i].valor == false
-      ) {
-        this.profesoresArrayMaterias[i].valor = true;
-      } else if (
-        this.profesoresArrayMaterias[i].nombre == nombreProfesor &&
-        this.profesoresArrayMaterias[i].valor == true
-      ) {
-        this.profesoresArrayMaterias[i].valor = false;
-      }
-    }
+  // clicked(nombreProfesor: string) {
+  //   for (let i = 0; i < this.profesoresArrayMaterias.length; i++) {
+  //     if (
+  //       this.profesoresArrayMaterias[i].nombre == nombreProfesor &&
+  //       this.profesoresArrayMaterias[i].valor == false
+  //     ) {
+  //       this.profesoresArrayMaterias[i].valor = true;
+  //     } else if (
+  //       this.profesoresArrayMaterias[i].nombre == nombreProfesor &&
+  //       this.profesoresArrayMaterias[i].valor == true
+  //     ) {
+  //       this.profesoresArrayMaterias[i].valor = false;
+  //     }
+  //   }
+  // }
+
+  clickFormCheckMateria(nombre: string) {
+    this.selectedMateria.profesoresCapacitados[nombre] =
+      !this.selectedMateria.profesoresCapacitados[nombre];
   }
 
   deleteMateria() {
@@ -603,6 +721,9 @@ export class CrearColegioComponent implements OnInit {
   // _______________________________________FINALIZAR____________________________________________________________
 
   async finalizar() {
-    alert('GRACIAS👍 BROMITA🤙');
+
+    this.http.get("https://s4s-algoritmo.herokuapp.com",{responseType: 'text'}).subscribe(data => {
+      console.log(data);
+    }) 
   }
 }

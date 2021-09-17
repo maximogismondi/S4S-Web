@@ -70,7 +70,12 @@ export class SendEmailComponent implements OnInit {
         });
       // .updateCurrentUser(this.userData.uid);
       // const userNuevoEmail = this.afAuth.currentUser;
-      (await this.afAuth.currentUser)?.updateEmail(this.usuarioEmail);
+      // if((await this.afAuth.currentUser)?.emailVerified){
+      //   alert('Ya existe una cuenta con ese email');
+      //   this.router.navigate(['/crear-colegio']);
+      // }
+      // else{}
+        (await this.afAuth.currentUser)?.updateEmail(this.usuarioEmail);
       this.cambiarEmail = 2;
       setTimeout(() => {this.onSendEmail()}, 1000);
       // await this.router.navigate(['/verificacion-email']);

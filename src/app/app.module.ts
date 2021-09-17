@@ -9,8 +9,9 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { SendEmailComponent } from './auth/send-email/send-email.component';
-import { AuthGuard } from './shared/guards/auth.guard';
+// import { AuthGuard } from './shared/guards/auth.guard';
 import { AuthService } from './auth/services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, SendEmailComponent],
@@ -20,9 +21,10 @@ import { AuthService } from './auth/services/auth.service';
     ReactiveFormsModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    HttpClientModule
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
