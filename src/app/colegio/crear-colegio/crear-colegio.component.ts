@@ -58,8 +58,9 @@ export class CrearColegioComponent implements OnInit {
     new Turno('tarde'),
     new Turno('noche'),
   ];
-  botonesCrearColegio: number = 1;
+  botonesCrearColegio: number = 6;
   botonesCrearColegioProgreso: number;
+  botonFinalizar = false;
 
   constructor(
     private router: Router,
@@ -604,5 +605,6 @@ export class CrearColegioComponent implements OnInit {
 
   async finalizar() {
     alert('GRACIAS👍 BROMITA🤙');
+    this.botonFinalizar = true;
   }
 }
