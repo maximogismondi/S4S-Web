@@ -42,9 +42,9 @@ export class CrearColegioComponent implements OnInit {
   cursos: number;
   profesores: number;
   // materiasArrayCursos: Array<MateriaReducido> = [];
-  profesoresArrayMaterias: Array<ProfesorReducido> = [];
+  // profesoresArrayMaterias: Array<ProfesorReducido> = [];
   cantidadTurnos: Array<Turno> = [];
-  totalCursosColegio: Array<string> = [];
+  // totalCursosColegio: Array<string> = [];
   inicioModuloSeleccionado: Array<string> = [];
   // inicioModuloSeleccionado: string;
   turnoSeleccionado: string;
@@ -129,19 +129,19 @@ export class CrearColegioComponent implements OnInit {
 
               this.materiaArray = school.materias;
 
-              this.profesoresArrayMaterias = [];
-              school.profesores.forEach((profesor) => {
-                let profesorAux: ProfesorReducido = {
-                  nombre: profesor.nombre,
-                  valor: false,
-                };
-                this.profesoresArrayMaterias.push(profesorAux);
-              });
+              // this.profesoresArrayMaterias = [];
+              // school.profesores.forEach((profesor) => {
+              //   let profesorAux: ProfesorReducido = {
+              //     nombre: profesor.nombre,
+              //     valor: false,
+              //   };
+              //   this.profesoresArrayMaterias.push(profesorAux);
+              // });
 
-              this.totalCursosColegio = [];
-              school.cursos.forEach((cursos) => {
-                this.totalCursosColegio.push(cursos.nombre);
-              });
+              // this.totalCursosColegio = [];
+              // school.cursos.forEach((cursos) => {
+              //   this.totalCursosColegio.push(cursos.nombre);
+              // });
             })
           )
           .subscribe();
@@ -612,17 +612,17 @@ export class CrearColegioComponent implements OnInit {
 
   materiaArray: Materia[] = [];
 
-  selectedMateria: Materia = new Materia();
+  selectedMateria: Materia = new Materia(this.profesorArray);
 
   async updateDBMateria() {
-    this.selectedMateria = new Materia();
+    this.selectedMateria = new Materia(this.profesorArray);
     let materiaArrayDiccionario: Array<any> = [];
     this.materiaArray.forEach((materia) => {
       materiaArrayDiccionario.push({
-        id: materia.id,
+        // id: materia.id,
         nombre: materia.nombre,
         cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
-        curso: materia.cursoDado,
+        curso: materia.curso,
         // cantProfesores: materia.cantProfesores,
         // espacioEntreDias: materia.espacioEntreDias,
         // tipoAula: materia.tipo,
@@ -644,7 +644,7 @@ export class CrearColegioComponent implements OnInit {
     if (
       this.selectedMateria.nombre != '' &&
       this.selectedMateria.cantidadDeModulosTotal != '' &&
-      this.selectedMateria.cursoDado != '' &&
+      this.selectedMateria.curso != '' &&
       this.selectedMateria.cantidadMaximaDeModulosPorDia != '' &&
       this.selectedMateria.nombre.length <= 30
     ) {
@@ -656,11 +656,11 @@ export class CrearColegioComponent implements OnInit {
           )
         ) {
           this.selectedMateria.id = this.materiaArray.length + 1;
-          this.profesoresArrayMaterias.forEach((profesor) => {
-            if (profesor.valor == true) {
-              this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
-            }
-          });
+          // this.profesoresArrayMaterias.forEach((profesor) => {
+          //   if (profesor.valor == true) {
+          //     this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
+          //   }
+          // });
           this.materiaArray.push(this.selectedMateria);
         }
       }
@@ -675,20 +675,25 @@ export class CrearColegioComponent implements OnInit {
     }
   }
 
-  clicked(nombreProfesor: string) {
-    for (let i = 0; i < this.profesoresArrayMaterias.length; i++) {
-      if (
-        this.profesoresArrayMaterias[i].nombre == nombreProfesor &&
-        this.profesoresArrayMaterias[i].valor == false
-      ) {
-        this.profesoresArrayMaterias[i].valor = true;
-      } else if (
-        this.profesoresArrayMaterias[i].nombre == nombreProfesor &&
-        this.profesoresArrayMaterias[i].valor == true
-      ) {
-        this.profesoresArrayMaterias[i].valor = false;
-      }
-    }
+  // clicked(nombreProfesor: string) {
+  //   for (let i = 0; i < this.profesoresArrayMaterias.length; i++) {
+  //     if (
+  //       this.profesoresArrayMaterias[i].nombre == nombreProfesor &&
+  //       this.profesoresArrayMaterias[i].valor == false
+  //     ) {
+  //       this.profesoresArrayMaterias[i].valor = true;
+  //     } else if (
+  //       this.profesoresArrayMaterias[i].nombre == nombreProfesor &&
+  //       this.profesoresArrayMaterias[i].valor == true
+  //     ) {
+  //       this.profesoresArrayMaterias[i].valor = false;
+  //     }
+  //   }
+  // }
+
+  clickFormCheckMateria(nombre: string) {
+    this.selectedMateria.profesoresCapacitados[nombre] =
+      !this.selectedMateria.profesoresCapacitados[nombre];
   }
 
   deleteMateria() {
