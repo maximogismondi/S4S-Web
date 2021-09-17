@@ -7,26 +7,19 @@ import {
   AngularFireAuthGuard,
   emailVerified,
   isNotAnonymous,
+  loggedIn,
   redirectLoggedInTo,
   redirectUnauthorizedTo,
 } from '@angular/fire/auth-guard';
 import { pipe } from 'rxjs';
-// import { AuthGuard } from './shared/guards/auth.guard';
-// export const emailVerified: AuthPipe = map(user => !!user && user.emailVerified);
-const redirectToLoginWhenUserNotVerified = (redirect: any[]) =>
-  pipe(
-    emailVerified,
-    map((loggedIn: any) => loggedIn || redirect)
-  );
-const redirectToLoginWhenUserNotLogin = (redirect: any[]) =>
-  pipe(
-    isNotAnonymous,
-    map((loggedIn: any) => loggedIn || redirect)
-  );
 
-const redirectToVerifiedEmail = () =>
-  redirectToLoginWhenUserNotVerified(['verificacion-email']);
-const redirectToLogin = () => redirectToLoginWhenUserNotLogin(['login']);
+const redirectToLoginWhenUserNotVerified = (redirect: any[]) => pipe(emailVerified, map((loggedIn:any) => loggedIn || redirect));
+const redirectToLoginWhenUserLogin = (redirect: any[]) => pipe(isNotAnonymous, map((loggedIn:any) => loggedIn || redirect));
+
+
+const redirectToVerifiedEmail = () => redirectToLoginWhenUserNotVerified(['verificacion-email']);
+const redirectToLogin = () => redirectToLoginWhenUserLogin(['login']);
+
 
 const routes: Routes = [
   {
@@ -37,15 +30,15 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () =>
       import('./auth/register/register.module').then((m) => m.RegisterModule),
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectToVerifiedEmail },
+      // canActivate: [AngularFireAuthGuard],
+      // data: { authGuardPipe: redirectToVerifiedEmail },
   },
   {
     path: 'login',
     loadChildren: () =>
       import('./auth/login/login.module').then((m) => m.LoginModule),
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectToVerifiedEmail },
+      // canActivate: [AngularFireAuthGuard],
+      // data: { authGuardPipe: redirectToVerifiedEmail },
   },
   {
     path: 'eleccion',

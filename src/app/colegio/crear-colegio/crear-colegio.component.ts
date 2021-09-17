@@ -148,7 +148,7 @@ export class CrearColegioComponent implements OnInit {
           )
           .subscribe();
 
-          
+
       }
     });
   }
@@ -724,7 +724,7 @@ export class CrearColegioComponent implements OnInit {
 
   async finalizar() {
 
-    this.http.get("https://s4s-algoritmo.herokuapp.com",{responseType: 'text'}).subscribe(data => {
+    this.http.get("https://s4s-algoritmo.herokuapp.com/algoritmo?uid="+ this.nombreDocumento,{responseType: 'text'}).subscribe(data => {
       console.log(data);
     }) 
   }
