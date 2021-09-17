@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import {
@@ -68,7 +69,8 @@ export class CrearColegioComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authSvc: AuthService,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private http: HttpClient
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
@@ -719,6 +721,9 @@ export class CrearColegioComponent implements OnInit {
   // _______________________________________FINALIZAR____________________________________________________________
 
   async finalizar() {
-    alert('GRACIAS👍 BROMITA🤙');
+
+    this.http.get("https://s4s-algoritmo.herokuapp.com",{responseType: 'text'}).subscribe(data => {
+      console.log(data);
+    }) 
   }
 }
