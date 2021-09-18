@@ -2,16 +2,24 @@ import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SendEmailComponent } from './auth/send-email/send-email.component';
 import { EleccionComponent } from './colegio/eleccion/eleccion.component'; //sirve para esto component: EleccionComponent
+import { map } from 'rxjs/operators';
 import {
   AngularFireAuthGuard,
   emailVerified,
+  isNotAnonymous,
+  loggedIn,
   redirectLoggedInTo,
   redirectUnauthorizedTo,
 } from '@angular/fire/auth-guard';
-// import { AuthGuard } from './shared/guards/auth.guard';
-// export const emailVerified: AuthPipe = map(user => !!user && user.emailVerified);
-  const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
-// const redirectUnauthorizedToLogin = () => emailVerified;
+import { pipe } from 'rxjs';
+
+const redirectToLoginWhenUserNotVerified = (redirect: any[]) => pipe(emailVerified, map((loggedIn:any) => loggedIn || redirect));
+const redirectToLoginWhenUserLogin = (redirect: any[]) => pipe(isNotAnonymous, map((loggedIn:any) => loggedIn || redirect));
+
+
+const redirectToVerifiedEmail = () => redirectToLoginWhenUserNotVerified(['verificacion-email']);
+const redirectToLogin = () => redirectToLoginWhenUserLogin(['login']);
+
 
 const routes: Routes = [
   {
@@ -22,11 +30,15 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () =>
       import('./auth/register/register.module').then((m) => m.RegisterModule),
+      // canActivate: [AngularFireAuthGuard],
+      // data: { authGuardPipe: redirectToVerifiedEmail },
   },
   {
     path: 'login',
     loadChildren: () =>
       import('./auth/login/login.module').then((m) => m.LoginModule),
+      // canActivate: [AngularFireAuthGuard],
+      // data: { authGuardPipe: redirectToVerifiedEmail },
   },
   {
     path: 'eleccion',
@@ -35,13 +47,13 @@ const routes: Routes = [
         (m) => m.EleccionModule
       ),
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    data: { authGuardPipe: redirectToVerifiedEmail },
   },
   {
     path: 'verificacion-email',
     component: SendEmailComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    data: { authGuardPipe: redirectToLogin },
   },
   {
     path: 'crear-colegio',
@@ -50,7 +62,7 @@ const routes: Routes = [
         (m) => m.CrearColegioModule
       ),
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    data: { authGuardPipe: redirectToVerifiedEmail },
   },
   {
     path: 'menu-principal',
@@ -59,7 +71,7 @@ const routes: Routes = [
         (m) => m.MenuPrincipalModule
       ),
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    data: { authGuardPipe: redirectToVerifiedEmail },
   },
   // {
   //   path: 'configuracion',
