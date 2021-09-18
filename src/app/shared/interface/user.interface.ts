@@ -132,7 +132,7 @@ export class Materia {
     this.aulasMateria = {};
 
     profesorArray.forEach((profesor) => {
-      this.profesoresCapacitados[profesor.nombre] = false;
+      this.profesoresCapacitados[profesor.nombre + ' ' + profesor.apellido] = false;
     });
 
     aulaArray.forEach((aula) => {

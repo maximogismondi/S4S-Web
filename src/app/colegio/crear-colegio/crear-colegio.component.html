@@ -1316,21 +1316,21 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                         <td>
                           <div
                             class="form-check mt-2"
-                            (click)="clickFormCheckMateriaProfesor(profesor.nombre)"
+                            (click)="clickFormCheckMateriaProfesor(profesor.nombre + ' ' + profesor.apellido)"
                             *ngFor="let profesor of profesorArray"
                           >
                             <input
                               class="form-check-input"
                               type="checkbox"
-                              [(ngModel)]="selectedMateria.profesoresCapacitados[profesor.nombre]"
-                              id="{{ profesor.nombre }}"
+                              [(ngModel)]="selectedMateria.profesoresCapacitados[profesor.nombre + ' ' + profesor.apellido]"
+                              id="{{ profesor.nombre }} {{ profesor.apellido }}"
                             />
                             <!--profesoresArrayMaterias
                                (click)="clicked(profesor.nombre)" -->
 
                             <label
                               class="form-check-label"
-                              for="{{ profesor.nombre }}"
+                              for="{{ profesor.nombre }} {{ profesor.apellido }}"
                             >
                               {{ profesor.nombre }} {{ profesor.apellido }}
                             </label>
