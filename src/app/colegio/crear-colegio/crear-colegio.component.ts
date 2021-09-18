@@ -565,12 +565,33 @@ export class CrearColegioComponent implements OnInit {
           this.profesorArray.forEach((dniProfe) => {
             if (this.selectedProfesor.dni == dniProfe.dni) {
               existeDni = true;
-              alert('El dni ya esta utilizado, edite el elemento creado o cree uno con distinto dni')
+              alert(
+                'El dni ya esta utilizado, edite el elemento creado o cree uno con distinto dni'
+              );
             }
           });
           if (!existeDni) {
-            this.selectedProfesor.id = this.profesorArray.length + 1;
-            this.profesorArray.push(this.selectedProfesor);
+            let existeProfesorDisponible: boolean = false;
+            const dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+            dias.forEach((dia) => {
+              this.turnoArray.forEach((turno) => {
+                turno.modulos.forEach((modulo) => {
+                  if(this.selectedProfesor.disponibilidad[dia][turno.turno][modulo.inicio]){
+                    existeProfesorDisponible = true;
+                  }
+                });
+              });
+            });
+            if(existeProfesorDisponible){
+              this.selectedProfesor.id = this.profesorArray.length + 1;
+              this.profesorArray.push(this.selectedProfesor);
+            }
+            else{
+              alert(
+                'Coloque por lo menos un horario para el profesor/a'
+              );
+            }
+            
           }
         }
       }
@@ -634,7 +655,7 @@ export class CrearColegioComponent implements OnInit {
         curso: materia.curso,
         profesoresCapacitados: materia.profesoresCapacitados,
         aulasMateria: materia.aulasMateria,
-        cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia
+        cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
         // id: materia.id,
         // cantProfesores: materia.cantProfesores,
         // espacioEntreDias: materia.espacioEntreDias,
