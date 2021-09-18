@@ -576,22 +576,22 @@ export class CrearColegioComponent implements OnInit {
             dias.forEach((dia) => {
               this.turnoArray.forEach((turno) => {
                 turno.modulos.forEach((modulo) => {
-                  if(this.selectedProfesor.disponibilidad[dia][turno.turno][modulo.inicio]){
+                  if (
+                    this.selectedProfesor.disponibilidad[dia][turno.turno][
+                      modulo.inicio
+                    ]
+                  ) {
                     existeProfesorDisponible = true;
                   }
                 });
               });
             });
-            if(existeProfesorDisponible){
+            if (existeProfesorDisponible) {
               this.selectedProfesor.id = this.profesorArray.length + 1;
               this.profesorArray.push(this.selectedProfesor);
+            } else {
+              alert('Coloque por lo menos un horario para el profesor/a');
             }
-            else{
-              alert(
-                'Coloque por lo menos un horario para el profesor/a'
-              );
-            }
-            
           }
         }
       }
@@ -687,8 +687,37 @@ export class CrearColegioComponent implements OnInit {
             this.materiaArray
           )
         ) {
-          this.selectedMateria.id = this.materiaArray.length + 1;
-          this.materiaArray.push(this.selectedMateria);
+          let existeProfesorCapacitado: boolean = false;
+
+          this.profesorArray.forEach((profesor) => {
+            if (
+              this.selectedMateria.profesoresCapacitados[
+                profesor.nombre + ' ' + profesor.apellido
+              ]
+            ) {
+              existeProfesorCapacitado = true;
+            }
+          });
+
+          if (existeProfesorCapacitado) {
+            let existeAula: boolean = false;
+
+            this.aulaArray.forEach((aula) => {
+              if (this.selectedMateria.aulasMateria[aula.nombre]) {
+                existeAula = true;
+              }
+            });
+
+            if (existeAula) {
+              this.selectedMateria.id = this.materiaArray.length + 1;
+              this.materiaArray.push(this.selectedMateria);
+            } else {
+              alert('Coloque por lo menos un aula para la materia creada');
+            }
+          } else {
+            alert('Coloque por lo menos un profesor para la materia creada');
+          }
+
           // this.profesoresArrayMaterias.forEach((profesor) => {
           //   if (profesor.valor == true) {
           //     this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
@@ -754,16 +783,17 @@ export class CrearColegioComponent implements OnInit {
   }
 
   // _______________________________________FINALIZAR____________________________________________________________
-
+  botonPresionado: boolean = false;
   async finalizar() {
     this.http
       .get(
-        'https://s4s-algoritmo.herokuapp.com/algoritmo?uid=' +
+        'https://s4s-algoritmo.herokuapp.com/algoritmo?idColegio=' +
           this.nombreDocumento,
         { responseType: 'text' }
       )
       .subscribe((data) => {
-        // console.log(data);
+        console.log(data);
       });
+    this.botonPresionado = true;
   }
 }
