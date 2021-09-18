@@ -1307,11 +1307,12 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                     <thead>
                       <tr class="table-light">
                         <th class="rounded-start" scope="col">Profesores</th>
+                        <th scope="col"></th>
                         <th class="rounded-end" scope="col">Aulas</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr >
+                      <tr>
                         <td>
                           <div
                             class="form-check mt-2"
@@ -1321,11 +1322,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                             <input
                               class="form-check-input"
                               type="checkbox"
-                              [(ngModel)]="
-                                selectedMateria.profesoresCapacitados[
-                                  profesor.nombre
-                                ]
-                              "
+                              [(ngModel)]="selectedMateria.profesoresCapacitados[profesor.nombre]"
                               id="{{ profesor.nombre }}"
                             />
                             <!--profesoresArrayMaterias
@@ -1339,6 +1336,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                             </label>
                           </div>
                         </td>
+                        <td></td>
                         <td>
                           <div
                             class="form-check mt-2"
@@ -1348,11 +1346,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                             <input
                               class="form-check-input"
                               type="checkbox"
-                              [(ngModel)]="
-                                selectedMateria.aulasMateria[
-                                  aula.nombre
-                                ]
-                              "
+                              [(ngModel)]="selectedMateria.aulasMateria[aula.nombre]"
                               id="{{ aula.nombre }}"
                             />
 

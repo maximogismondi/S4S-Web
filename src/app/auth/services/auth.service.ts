@@ -43,7 +43,7 @@ export class AuthService {
 
   async isLoggedIn(): Promise<boolean> {
     let user = await this.afAuth.authState.toPromise();
-    console.log(user);
+    // console.log(user);
     if (!user) {
       return false;
     }
@@ -52,7 +52,7 @@ export class AuthService {
       .doc<User>(`users/${user.uid}`)
       .get()
       .toPromise();
-    console.log(userData.data()?.emailVerified);
+    // console.log(userData.data()?.emailVerified);
     if (userData.data()?.emailVerified) {
       return true;
     }

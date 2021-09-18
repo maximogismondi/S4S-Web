@@ -9,14 +9,13 @@ import {
   Aula,
   Colegio,
   Curso,
-  // HorarioModulo,
   Materia,
-  // MateriaReducido,
-  // Modulo,
   Profesor,
-  // ProfesorReducido,
   Turno,
   Modulo,
+  // ProfesorReducido,
+  // HorarioModulo,
+  // MateriaReducido,
 } from 'src/app/shared/interface/user.interface';
 
 @Component({
@@ -29,7 +28,6 @@ export class CrearColegioComponent implements OnInit {
   nombreColegio: string;
   nombreDocumento: string;
   duracionModulo: number;
-  horarios: Array<string> = [];
   inicioHorario: string;
   finalizacionHorario: string;
   turnos: number;
@@ -58,6 +56,7 @@ export class CrearColegioComponent implements OnInit {
   selectedCurso: Curso = new Curso();
   materiaArray: Materia[] = [];
   selectedMateria: Materia;
+  // horarios: Array<string> = [];
   // minutos: number;
   // horas: number;
   // horarioFinalizacionModulo: string = '';
@@ -562,8 +561,17 @@ export class CrearColegioComponent implements OnInit {
             this.profesorArray
           )
         ) {
-          this.selectedProfesor.id = this.profesorArray.length + 1;
-          this.profesorArray.push(this.selectedProfesor);
+          let existeDni: boolean = false;
+          this.profesorArray.forEach((dniProfe) => {
+            if (this.selectedProfesor.dni == dniProfe.dni) {
+              existeDni = true;
+              alert('El dni ya esta utilizado, edite el elemento creado o cree uno con distinto dni')
+            }
+          });
+          if (!existeDni) {
+            this.selectedProfesor.id = this.profesorArray.length + 1;
+            this.profesorArray.push(this.selectedProfesor);
+          }
         }
       }
 
@@ -625,8 +633,8 @@ export class CrearColegioComponent implements OnInit {
         cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
         curso: materia.curso,
         profesoresCapacitados: materia.profesoresCapacitados,
-        aulas: materia.aulasMateria,
-        cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
+        aulasMateria: materia.aulasMateria,
+        cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia
         // id: materia.id,
         // cantProfesores: materia.cantProfesores,
         // espacioEntreDias: materia.espacioEntreDias,
@@ -659,12 +667,12 @@ export class CrearColegioComponent implements OnInit {
           )
         ) {
           this.selectedMateria.id = this.materiaArray.length + 1;
+          this.materiaArray.push(this.selectedMateria);
           // this.profesoresArrayMaterias.forEach((profesor) => {
           //   if (profesor.valor == true) {
           //     this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
           //   }
           // });
-          this.materiaArray.push(this.selectedMateria);
         }
       }
 
@@ -700,8 +708,8 @@ export class CrearColegioComponent implements OnInit {
   }
 
   clickFormCheckMateriaAula(nombre: string) {
-    this.selectedMateria.profesoresCapacitados[nombre] =
-      !this.selectedMateria.profesoresCapacitados[nombre];
+    this.selectedMateria.aulasMateria[nombre] =
+      !this.selectedMateria.aulasMateria[nombre];
   }
 
   deleteMateria() {

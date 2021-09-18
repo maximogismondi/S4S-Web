@@ -94,11 +94,11 @@ export class Profesor {
     const dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
     dias.forEach((dia) => {
       mapDisponibilidad[dia] = {};
-      console.log(turnoArray)
+      // console.log(turnoArray)
       turnoArray.forEach((turno) => {
         mapDisponibilidad[dia][turno.turno] = {};
         turno.modulos.forEach((modulo) => {
-          mapDisponibilidad[dia][turno.turno][modulo.inicio] = true;
+          mapDisponibilidad[dia][turno.turno][modulo.inicio] = false;
         });
       });
     });
@@ -124,31 +124,31 @@ export class Materia {
   curso: string = '';
   profesoresCapacitados: any = {};
   aulasMateria: any = {};
+
   constructor(profesorArray: Array<Profesor>, aulaArray: Array<Aula>) {
-    
-    let mapProfesoresCapacitados: any = {};
+    // let mapProfesoresCapacitados: any = {};
+    // let mapAulaMateria: any = {};
+    this.profesoresCapacitados = {};
+    this.aulasMateria = {};
+
     profesorArray.forEach((profesor) => {
-      mapProfesoresCapacitados[profesor.nombre] = false;
+      this.profesoresCapacitados[profesor.nombre] = false;
     });
-    
-    this.profesoresCapacitados = mapProfesoresCapacitados;
-    
-    let mapAulaMateria: any = {};
+
     aulaArray.forEach((aula) => {
-      mapAulaMateria[aula.nombre] = false;
+      this.aulasMateria[aula.nombre] = false;
     });
-    
-    this.aulasMateria = mapAulaMateria;
+
+    // this.profesoresCapacitados = mapProfesoresCapacitados;
+    // this.aulasMateria = mapAulaMateria;
     // cantProfesores: number;
     // espacioEntreDias: number;
     // tipo: string;
     // otro: string = "Se selecciono el tipo normal";
     // profesoresCapacitados: Array<string> = [];
   }
-
+  // export class MateriaReducido{
+  //   nombre: string;
+  //   valor: boolean;
+  // }
 }
-
-// export class MateriaReducido{
-//   nombre: string;
-//   valor: boolean;
-// }

@@ -51,7 +51,7 @@ export class SendEmailComponent implements OnInit {
             });
             this.router.navigate(['/eleccion']);
           } else {
-            console.log('B');
+            // console.log('B');
           }
         });
     }, 1000);
