@@ -719,7 +719,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <td>
             <ul
               class="list-group shadow scrollbar scrollbar-primary"
-              style="max-height: 250px; overflow-y: scroll"
+              style="max-height: 315px; overflow-y: scroll"
             >
               <li
                 *ngFor="let curso of cursoArray"
@@ -1193,7 +1193,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <td>
             <ul
               class="list-group shadow"
-              style="max-height: 250px; overflow-y: scroll"
+              style="max-height: 350px; overflow-y: scroll"
             >
               <li
                 *ngFor="let profesor of profesorArray"
@@ -1306,15 +1306,17 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                   <table>
                     <thead>
                       <tr class="table-light">
-                        <th class="rounded" scope="col">Profesores</th>
+                        <th class="rounded-start" scope="col">Profesores</th>
+                        <th class="rounded-end" scope="col">Aulas</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let profesor of profesorArray">
+                      <tr >
                         <td>
                           <div
                             class="form-check mt-2"
-                            (click)="clickFormCheckMateria(profesor.nombre)"
+                            (click)="clickFormCheckMateriaProfesor(profesor.nombre)"
+                            *ngFor="let profesor of profesorArray"
                           >
                             <input
                               class="form-check-input"
@@ -1334,6 +1336,31 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                               for="{{ profesor.nombre }}"
                             >
                               {{ profesor.nombre }} {{ profesor.apellido }}
+                            </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="form-check mt-2"
+                            (click)="clickFormCheckMateriaAula(aula.nombre)"
+                            *ngFor="let aula of aulaArray"
+                          >
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedMateria.aulasMateria[
+                                  aula.nombre
+                                ]
+                              "
+                              id="{{ aula.nombre }}"
+                            />
+
+                            <label
+                              class="form-check-label"
+                              for="{{ aula.nombre }}"
+                            >
+                              {{ aula.nombre }}
                             </label>
                           </div>
                         </td>
@@ -1361,7 +1388,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <td>
             <ul
               class="list-group shadow"
-              style="max-height: 250px; overflow-y: scroll"
+              style="max-height: 400px; overflow-y: scroll"
             >
               <li
                 *ngFor="let materia of materiaArray"

@@ -13,7 +13,6 @@ export interface Colegio {
   id: string;
   userAdmin: string;
   nombre: string;
-  // ejecutado: string;
   direccion: string;
   localidad: string;
   telefono: string;
@@ -21,14 +20,15 @@ export interface Colegio {
   inicioHorario: string;
   finalizacionHorario: string;
   botonesCrearColegioProgreso: number;
-  // botonesCrearColegio: number;
   usuariosExtensiones: Array<string>;
   aulas: Array<Aula>;
   turnos: Array<Turno>;
-  // modulos: Array<Modulo>;
   materias: Array<Materia>;
   cursos: Array<Curso>;
   profesores: Array<Profesor>;
+  // ejecutado: string;
+  // botonesCrearColegio: number;
+  // modulos: Array<Modulo>;
 }
 
 export class Turno {
@@ -111,31 +111,41 @@ export class Profesor {
   // condiciones: Map<string, any>;
 }
 
-export class ProfesorReducido {
-  nombre: string;
-  valor: boolean;
-}
+// export class ProfesorReducido {
+//   nombre: string;
+//   valor: boolean;
+// }
 
 export class Materia {
   id: number = 0;
   nombre: string = '';
   cantidadDeModulosTotal: string = '';
-  // cantProfesores: number;
-  // espacioEntreDias: number;
-  // tipo: string;
-  // otro: string = "Se selecciono el tipo normal";
   cantidadMaximaDeModulosPorDia: string = '';
   curso: string = '';
-  // profesoresCapacitados: Array<string> = [];
   profesoresCapacitados: any = {};
-  constructor(profesorArray: Array<Profesor>) {
+  aulasMateria: any = {};
+  constructor(profesorArray: Array<Profesor>, aulaArray: Array<Aula>) {
+    
     let mapProfesoresCapacitados: any = {};
     profesorArray.forEach((profesor) => {
       mapProfesoresCapacitados[profesor.nombre] = false;
     });
-
+    
     this.profesoresCapacitados = mapProfesoresCapacitados;
+    
+    let mapAulaMateria: any = {};
+    aulaArray.forEach((aula) => {
+      mapAulaMateria[aula.nombre] = false;
+    });
+    
+    this.aulasMateria = mapAulaMateria;
+    // cantProfesores: number;
+    // espacioEntreDias: number;
+    // tipo: string;
+    // otro: string = "Se selecciono el tipo normal";
+    // profesoresCapacitados: Array<string> = [];
   }
+
 }
 
 // export class MateriaReducido{
