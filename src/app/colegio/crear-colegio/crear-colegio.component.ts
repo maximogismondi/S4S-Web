@@ -13,6 +13,7 @@ import {
   Profesor,
   Turno,
   Modulo,
+  horariosHechos,
   // ProfesorReducido,
   // HorarioModulo,
   // MateriaReducido,
@@ -56,6 +57,7 @@ export class CrearColegioComponent implements OnInit {
   selectedCurso: Curso = new Curso();
   materiaArray: Materia[] = [];
   selectedMateria: Materia;
+  horariosFinal: Array<string> = [];
   // horarios: Array<string> = [];
   // minutos: number;
   // horas: number;
@@ -168,7 +170,10 @@ export class CrearColegioComponent implements OnInit {
           )
           .snapshotChanges()
           .pipe(
-            map((schools) => {})
+            map((horariosFinalizados) => {
+              const xd=horariosFinalizados[0].payload.doc.data() as horariosHechos;
+              this.horariosFinal=xd.horarios;
+            })
             )
             .subscribe();
       }
