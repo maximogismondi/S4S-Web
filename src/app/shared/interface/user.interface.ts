@@ -8,6 +8,9 @@ export class User {
 // export interface UserData extends User {
 //   colegios: Array<string>;
 // }
+export interface horariosHechos{
+  
+}
 
 export interface Colegio {
   id: string;
