@@ -1,7 +1,0 @@
-language: node_js
-script:
-  - echo "Deploying!"
-install:
-  - npm install i
-after_success:
-  - firebase deploy --token "$FIREBASE_TOKEN"
