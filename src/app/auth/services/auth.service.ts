@@ -232,7 +232,7 @@ export class AuthService {
   //joya
   private SchoolData(school: any) {
     const schoolRef: AngularFirestoreDocument<Colegio> = this.afs.doc(
-      `schools/${school.id}`
+      `schools/${school.nombre}`
     );
 
     let turnoArrayDiccionario: Array<any> = [];

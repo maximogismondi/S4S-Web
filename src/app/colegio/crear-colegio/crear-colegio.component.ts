@@ -13,7 +13,7 @@ import {
   Profesor,
   Turno,
   Modulo,
-  horariosHechos,
+  HorariosHechos,
   // ProfesorReducido,
   // HorarioModulo,
   // MateriaReducido,
@@ -58,6 +58,9 @@ export class CrearColegioComponent implements OnInit {
   materiaArray: Materia[] = [];
   selectedMateria: Materia;
   horariosFinal: Array<string> = [];
+  nombreMateria: string;
+  aulaMateria: string;
+  horariosHechos: Array<HorariosHechos> = [];
   // horarios: Array<string> = [];
   // minutos: number;
   // horas: number;
@@ -83,6 +86,20 @@ export class CrearColegioComponent implements OnInit {
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
+        this.afs
+          .collection('horariosHechos', (ref) =>
+            ref.where('userAdmin', '==', user.uid)
+          )
+          .snapshotChanges()
+          .pipe(
+            map((horariosHechos) => {
+            const schoolReady = horariosHechos[0].payload.doc.data() as HorariosHechos;
+             // this.horariosHechos.push(schoolReady.horarios);
+              for(let i=0;i<this.cursoArray.length;i++);
+
+            })
+            )
+            .subscribe();
         this.afs
           .collection('schools', (ref) =>
             ref.where('userAdmin', '==', user.uid)
@@ -171,8 +188,8 @@ export class CrearColegioComponent implements OnInit {
           .snapshotChanges()
           .pipe(
             map((horariosFinalizados) => {
-              const xd=horariosFinalizados[0].payload.doc.data() as horariosHechos;
-              this.horariosFinal=xd.horarios;
+              const xd=horariosFinalizados[0].payload.doc.data() as HorariosHechos;
+              //this.horariosFinal=xd.horarios;
             })
             )
             .subscribe();
