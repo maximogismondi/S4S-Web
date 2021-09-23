@@ -141,7 +141,7 @@ export class AuthService {
   async createSchool(
     nombre: string,
     direccion: string,
-    localidad: string,
+    provincia: string,
     telefono: string,
     duracionModulo: number,
     inicioHorario: string,
@@ -154,7 +154,7 @@ export class AuthService {
       nombre: nombre,
       // ejecutado: "no",
       direccion: direccion,
-      localidad: localidad,
+      provincia: provincia,
       telefono: telefono,
       duracionModulo: duracionModulo,
       inicioHorario: inicioHorario,
@@ -173,7 +173,7 @@ export class AuthService {
     if (
       String(school.nombre).length === 0 ||
       String(school.direccion).length === 0 ||
-      String(school.localidad).length === 0 ||
+      String(school.provincia).length === 0 ||
       String(school.telefono).length === 0 ||
       String(school.duracionModulo).length === 0 ||
       String(school.inicioHorario).length === 0 ||
@@ -258,7 +258,7 @@ export class AuthService {
       nombre: school.nombre,
       // ejecutado: school.ejecutado,
       direccion: school.direccion,
-      localidad: school.localidad,
+      provincia: school.provincia,
       telefono: '11' + school.telefono,
       duracionModulo: school.duracionModulo,
       inicioHorario: school.inicioHorario,

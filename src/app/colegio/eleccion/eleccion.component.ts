@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -14,12 +15,13 @@ export class EleccionComponent implements OnInit {
   nombreColegio: string;
   fueACrear:boolean = false;
   fueAUnirse:boolean = false;
-  
+  provinciasArgentina:any;
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private authSvc: AuthService,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private http: HttpClient
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
@@ -34,6 +36,14 @@ export class EleccionComponent implements OnInit {
             
           });
       }
+      this.http
+      .get(
+        'https://apis.datos.gob.ar/georef/api/provincias', {responseType: 'json'}
+      )
+      .subscribe((data) => {
+        this.provinciasArgentina = data;
+        this.provinciasArgentina = this.provinciasArgentina["provincias"];
+      });
     });
   }
 
@@ -44,13 +54,12 @@ export class EleccionComponent implements OnInit {
     this.crearColegioForm = this.fb.group({
       nombre: ['', Validators.required],
       direccion: ['', Validators.required],
-      localidad: ['', Validators.required],
+      provincia: ['', Validators.required],
       telefono: ['', Validators.required],
       duracionModulo: ['', Validators.required],
       inicioHorario: ['', Validators.required],
       finalizacionHorario: ['', Validators.required],
     });
-
   }
 
   async generaNss() {
@@ -72,7 +81,7 @@ export class EleccionComponent implements OnInit {
     const {
       nombre,
       direccion,
-      localidad,
+      provincia,
       telefono,
       duracionModulo,
       inicioHorario,
@@ -81,7 +90,7 @@ export class EleccionComponent implements OnInit {
     const school = await this.authSvc.createSchool(
       nombre,
       direccion,
-      localidad,
+      provincia,
       telefono,
       duracionModulo,
       inicioHorario,

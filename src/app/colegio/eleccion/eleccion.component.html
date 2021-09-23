@@ -4,7 +4,7 @@
       <!-- <h1 class="text-center mt-4">COLEGIO</h1> -->
       <h3 class="text-center mt-3">Scheduler For School</h3>
       <!-- id="botonesEleccionCrear" -->
-      <div  *ngIf="fueACrear == false" >
+      <div *ngIf="fueACrear == false">
         <div class="d-grid">
           <button
             *ngIf="nombreColegio == null; else bloquearBoton"
@@ -21,7 +21,7 @@
         </ng-template>
       </div>
       <!--id="crear" style="display: none"-->
-      <div *ngIf="fueACrear" >
+      <div *ngIf="fueACrear">
         <div class="mx-auto mt-5">
           <div class="card">
             <div class="card-body">
@@ -31,7 +31,10 @@
               </div>
               <form [formGroup]="crearColegioForm" (ngSubmit)="onCrear()">
                 <div class="form-group mt-3">
-                  <label>Nombre del Colegio<h6 class="text-danger d-inline-block">*</h6></label>
+                  <label
+                    >Nombre del Colegio
+                    <h6 class="text-danger d-inline-block">*</h6></label
+                  >
                   <input
                     type="text"
                     required
@@ -40,7 +43,10 @@
                   />
                 </div>
                 <div class="form-group mt-3">
-                  <label>Direccion del Colegio <h6 class="text-danger d-inline-block">*</h6></label>
+                  <label
+                    >Direccion del Colegio
+                    <h6 class="text-danger d-inline-block">*</h6></label
+                  >
                   <input
                     type="text"
                     required
@@ -49,74 +55,32 @@
                   />
                 </div>
                 <div class="form-group mt-3">
-                  <label>Localidad <h6 class="text-danger d-inline-block">*</h6></label>
+                  <label
+                    >Provincia
+                    <h6 class="text-danger d-inline-block">*</h6></label
+                  >
                   <select
                     class="form-select"
                     aria-label="Default select example"
-                    formControlName="localidad"
+                    formControlName="provincia"
                     required
                   >
-                    <option value="Abasto">Abasto</option>
-                    <option value="Agronomía">Agronomía</option>
-                    <option value="Almagro">Almagro</option>
-                    <option value="Balvanera">Balvanera</option>
-                    <option value="Barracas">Barracas</option>
-                    <option value="Barrio Norte">Barrio Norte</option>
-                    <option value="Belgrano">Belgrano</option>
-                    <option value="Boedo">Boedo</option>
-                    <option value="Buenos Aires">Buenos Aires</option>
-                    <option value="Caba">Caba</option>
-                    <option value="Caballito">Caballito</option>
-                    <option value="Capital Federal">Capital Federal</option>
-                    <option value="Chacarita">Chacarita</option>
-                    <option value="Ciudad Autónoma De Buenos Aires">Ciudad Autónoma De Buenos Aires</option>
-                    <option value="Coghlan">Coghlan</option>
-                    <option value="Colegiales">Colegiales</option>
-                    <option value="Constitución">Constitución</option>
-                    <option value="Flores">Flores</option>
-                    <option value="Floresta">Floresta</option>
-                    <option value="La Boca">La Boca</option>
-                    <option value="Liniers">Liniers</option>
-                    <option value="Mataderos">Mataderos</option>
-                    <option value="Microcentro">Microcentro</option>
-                    <option value="Monte Castro">Monte Castro</option>
-                    <option value="Montserrat">Montserrat</option>
-                    <option value="Nueva Pompeya">Nueva Pompeya</option>
-                    <option value="Núñez">Núñez</option>
-                    <option value="Palermo">Palermo</option>
-                    <option value="Palermo Viejo">Palermo Viejo</option>
-                    <option value="Parque Avellaneda">Parque Avellaneda</option>
-                    <option value="Parque Chacabuco">Parque Chacabuco</option>
-                    <option value="Parque Patricios">Parque Patricios</option>
-                    <option value="Paternal">Paternal</option>
-                    <option value="Puerto Madero">Puerto Madero</option>
-                    <option value="Recoleta">Recoleta</option>
-                    <option value="Retiro">Retiro</option>
-                    <option value="Saavedra">Saavedra</option>
-                    <option value="San Cristobal">San Cristobal</option>
-                    <option value="San Nicolás">San Nicolás</option>
-                    <option value="San Telmo">San Telmo</option>
-                    <option value="Velez Sarsfield">Velez Sarsfield</option>
-                    <option value="Versalles">Versalles</option>
-                    <option value="Villa Crespo">Villa Crespo</option>
-                    <option value="Villa del Parque">Villa del Parque</option>
-                    <option value="Villa Devoto">Villa Devoto</option>
-                    <option value="Villa General Mitre">Villa General Mitre</option>
-                    <option value="Villa Lugano">Villa Lugano</option>
-                    <option value="Villa Luro">Villa Luro</option>
-                    <option value="Villa Ortúzar">Villa Ortúzar</option>
-                    <option value="Villa Pueyrredón">Villa Pueyrredón</option>
-                    <option value="Villa Real">Villa Real</option>
-                    <option value="Villa Riachuelo">Villa Riachuelo</option>
-                    <option value="Villa Santa Rita">Villa Santa Rita</option>
-                    <option value="Villa Soldati">Villa Soldati</option>
-                    <option value="Villa Urquiza">Villa Urquiza</option>
+                    <option
+                      value="{{ provincia['nombre'] }}"
+                      *ngFor="let provincia of provinciasArgentina"
+                      class="bg-white"
+                    >{{ provincia['nombre'] }}</option>
                   </select>
                 </div>
                 <div class="form-group mt-3">
-                  <label>Telefono del Colegio (sin espacion ni signos, solo numeros)<h6 class="text-danger d-inline-block">*</h6></label>
+                  <label
+                    >Telefono del Colegio (sin espacion ni signos, solo numeros)
+                    <h6 class="text-danger d-inline-block">*</h6></label
+                  >
                   <div class="input-group mb-3">
-                    <span class="input-group-text rounded bg-light me-2">011-</span>
+                    <span class="input-group-text rounded bg-light me-2"
+                      >011-</span
+                    >
                     <input
                       type="number"
                       placeholder="Ej: 12345678"
@@ -129,7 +93,10 @@
                   </div>
                 </div>
                 <div class="form-group mt-3">
-                  <label>Duracion de cada modulo (en minutos)<h6 class="text-danger d-inline-block">*</h6></label>
+                  <label
+                    >Duracion de cada modulo (en minutos)
+                    <h6 class="text-danger d-inline-block">*</h6></label
+                  >
                   <input
                     type="number"
                     placeholder="Ej: 40"
@@ -141,7 +108,10 @@
                   />
                 </div>
                 <div class="form-group mt-3">
-                  <label>Hora inicio del primer Modulo del dia <h6 class="text-danger d-inline-block">*</h6></label>
+                  <label
+                    >Hora inicio del primer Modulo del dia
+                    <h6 class="text-danger d-inline-block">*</h6></label
+                  >
                   <input
                     type="Time"
                     required
@@ -150,7 +120,10 @@
                   />
                 </div>
                 <div class="form-group mt-3">
-                  <label>Hora final del ultimo modulo del dia <h6 class="text-danger d-inline-block">*</h6></label>
+                  <label
+                    >Hora final del ultimo modulo del dia
+                    <h6 class="text-danger d-inline-block">*</h6></label
+                  >
                   <input
                     type="Time"
                     required
@@ -175,7 +148,11 @@
       <!-- id="botonesEleccionUnirse" -->
       <div *ngIf="fueAUnirse == false">
         <div class="d-grid">
-          <button (click)="irUnirse()" disabled class="btn btn-primary btn-lg mt-4">
+          <button
+            (click)="irUnirse()"
+            disabled
+            class="btn btn-primary btn-lg mt-4"
+          >
             UNIRSE
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +171,7 @@
         </div>
       </div>
       <!--id="unirse" style="display: none"-->
-      <div *ngIf="fueAUnirse" >
+      <div *ngIf="fueAUnirse">
         <div class="mx-auto mt-5">
           <div class="card">
             <div class="card-body">

@@ -803,6 +803,13 @@ export class CrearColegioComponent implements OnInit {
       .subscribe((data) => {
         console.log(data);
       });
+      this.http
+      .get(
+        'https://apis.datos.gob.ar/georef/api/provincias', {responseType: 'json'}
+      )
+      .subscribe((data) => {
+        console.log(data);
+      });
     this.botonPresionado = true;
   }
 }

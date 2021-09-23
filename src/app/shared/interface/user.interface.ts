@@ -14,7 +14,7 @@ export interface Colegio {
   userAdmin: string;
   nombre: string;
   direccion: string;
-  localidad: string;
+  provincia: string;
   telefono: string;
   duracionModulo: number;
   inicioHorario: string;
