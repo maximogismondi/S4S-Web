@@ -55,13 +55,13 @@ export class HomeComponent implements OnInit {
   //   return user.emailVerified;
   // }
 
-  functionScrollToDownMoreInfo() {
-    window.scrollTo({
-      top: 1215,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }
+  // functionScrollToDownMoreInfo() {
+  //   window.scrollTo({
+  //     top: 1215,
+  //     left: 0,
+  //     behavior: 'smooth',
+  //   });
+  // }
 
   // functionScrollToDown() {
   //   //window.scrollTo(0,0);
