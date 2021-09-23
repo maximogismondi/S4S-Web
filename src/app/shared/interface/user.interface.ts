@@ -1,3 +1,5 @@
+import { EAFNOSUPPORT } from "constants";
+
 export class User {
   uid: string;
   email: string;
@@ -80,6 +82,7 @@ export class Curso {
   nombre: string = '';
   turnoPreferido: string = '';
   cantAlumnos: string = '';
+  diasHechos: Array<DiasHechos>;
   // materiasCurso: Array<string> = [];
 }
 
@@ -151,4 +154,26 @@ export class Materia {
   //   nombre: string;
   //   valor: boolean;
   // }
+}
+export class MananaHecha{
+  nombreMateria: string;
+  aulaMateria: string;
+}
+export class TardeHecha{
+  nombreMateria: string;
+  aulaMateria: string;
+}
+export class NocheHecha{
+  nombreMateria: string;
+  aulaMateria: string;
+}
+export class DiasHechos{
+  nombre: string;
+  turnoManana: Array<MananaHecha>;
+  turnoTarde: Array<TardeHecha>;
+  turnoNoche: Array<NocheHecha>;
+
+}
+export interface HorariosHechos{
+  horarios: Array<Curso>;
 }
