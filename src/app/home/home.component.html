@@ -1,6 +1,6 @@
 
 <!--!INICIO-->
-<div class="container col-xxl-8 px-4 py-5">
+<div class="container col-xxl-8 px-4 py-3">
   <div class="row flex-lg-row-reverse align-items-center g-5 py-5 bg-light">
     <div class="col-10 col-sm-8 col-lg-6">
       <div
@@ -11,31 +11,35 @@
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img
-              src="https://previews.123rf.com/images/stockbroker/stockbroker1709/stockbroker170901081/85458093-ni%C3%B1os-de-la-escuela-corriendo-en-el-pasillo-de-la-escuela-primaria-vista-frontal.jpg"
+              style="max-width: 626px; max-height: 417px"
+              src="https://imgur.com/09B9frX.jpg"
               class="d-block w-100"
             />
           </div>
           <div class="carousel-item">
             <img
-              src="https://www.caracteristicas.co/wp-content/uploads/2017/03/buena-escuela-e1564423937636.jpg"
+            style="max-width: 626px; max-height: 417px"
+              src="https://imgur.com/VxEXJtK.jpg"
               class="d-block w-100"
             />
           </div>
           <div class="carousel-item">
             <img
-              src="https://www.ceupe.com/images/easyblog_articles/1533/b2ap3_thumbnail_clase-escuela-negocios.jpg"
+              src="https://imgur.com/IK4DSIQ.jpg"
               class="d-block w-100"
             />
           </div>
           <div class="carousel-item">
             <img
-              src="https://sintesis.com.mx/puebla/wp-content/uploads/2020/05/escuela-activa.jpg"
+            style="max-width: 626px; max-height: 417px"
+              src="https://imgur.com/xpDFdpA.jpg"
               class="d-block w-100"
             />
           </div>
           <div class="carousel-item">
             <img
-              src="https://www.sanisidro.gob.ar/sites/default/files/img/67e93d9d00c72c3bfac2f7dc2a096396.jpg"
+            style="max-width: 626px; max-height: 417px"
+              src="https://imgur.com/TVKAiJG.jpg"
               class="d-block w-100"
             />
           </div>
@@ -61,14 +65,13 @@
         >
           Empezar
         </button>
-        <button
+        <a
           type="button"
-          (click)="functionScrollToDownMoreInfo()"
-          id="buttonScrollToDownMoreInfo"
           class="btn btn-light btn-lg px-4 mx-3"
+          href="#moreInfo"
         >
           Más info
-        </button>
+      </a>
       </div>
     </div>
   </div>
@@ -113,7 +116,7 @@
     </div>
 -->
 
-<!--!FLECHA-->
+<!--!FLECHA
 <div style="display: flex; justify-content: center; align-items: center">
   <a
     (click)="functionScrollToDown()"
@@ -138,11 +141,11 @@
       />
     </svg>
   </a>
-</div>
+</div>-->
 
 <!--!SEPARADOR-->
 <div class="container-fuid">
-  <div class="col-md-max mx-auto mt-4">
+  <div class="col-md-max mx-auto">
     <div class="bg-dark" style="opacity: 90%">
       <div class="card-body"></div>
     </div>
@@ -155,7 +158,7 @@
     <div class="col-lg-8 mx-auto p-3 py-md-5">
       <h2 class="pb-2 border-bottom">Descarga horario de ejemplo</h2>
       <img
-        src="https://i.pinimg.com/originals/9b/94/11/9b94113dd02c92fd142bbc755afd6947.jpg"
+        src="https://imgur.com/N6It093.jpg"
         class="d-block mx-lg-auto img-fluid py-4"
         alt="Bootstrap Themes"
         width="500"
@@ -169,7 +172,7 @@
         horario precione el boton "EMPEZAR"
       </p>
       <div class="mb-5 py-3">
-        <a type="button" href="https://drive.google.com/uc?id=1vxDfFF5A-W9FFnE7I3DxO_1LmjNgnbwl&export=download" class="btn btn-primary btn-lg px-4">
+        <a type="button" href="https://imgur.com/N6It093.jpg" download class="btn btn-primary btn-lg px-4">
           Descargar ejemplo
         </a>
         <button
@@ -185,8 +188,8 @@
 </div>
 
 <!--!SEPARADOR-->
-<div class="container-fuid">
-  <div class="col-md-max mx-auto mt-5">
+<div class="container-fuid" id="moreInfo">
+  <div class="col-md-max mx-auto">
     <div class="bg-dark" style="opacity: 90%">
       <div class="card-body"></div>
     </div>
@@ -230,7 +233,7 @@
 
 <!--!SEPARADOR-->
 <div class="container-fuid">
-  <div class="col-md-max mx-auto mt-5">
+  <div class="col-md-max mx-auto">
     <div class="bg-dark" style="opacity: 90%">
       <div class="card-body"></div>
     </div>
@@ -337,7 +340,7 @@
 
 <!--!SEPARADOR-->
 <div class="container-fuid">
-  <div class="col-md-max mx-auto mt-5">
+  <div class="col-md-max mx-auto">
     <div class="bg-dark" style="opacity: 90%">
       <div class="card-body"></div>
     </div>
@@ -477,8 +480,8 @@
 </div>
 
 <!--!FLECHA-->
-<div style="display: flex; justify-content: center; align-items: center">
-  <a
+<div style="display:inline-block; position: fixed; bottom: 50px; right: 20px; z-index: 100;">
+  <button
     (click)="functionScrollToUp()"
     id="buttonScrollToUp"
     style="
@@ -487,25 +490,17 @@
       -o-animation: nod2 3s ease infinite;
       animation: nod2 3s ease infinite;
     "
+    class="btn btn-primary rounded-circle"
   >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="50"
-      height="50"
-      fill="currentColor"
-      class="bi bi-caret-up"
-      viewBox="0 0 16 16"
-    >
-      <path
-        d="M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"
-      />
-    </svg>
-  </a>
+  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="30" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+    <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+  </svg>
+  </button>
 </div>
 
 <!--!FOOTER-->
 <div class="container-fuid">
-  <div class="col-md-max mx-auto mt-5">
+  <div class="col-md-max mx-auto">
     <div class="bg-dark" style="text-align: center; opacity: 90%">
       <div class="card-body">
         <span class="text-muted"> Copyright © 2021 The S4S Company </span>
@@ -514,26 +509,3 @@
   </div>
 </div>
 
-<!--FOOTER 2
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    
-  
-    <div class="collapse navbar-collapse" id="navbarColor02">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link">Scheduler</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" >For</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link">School</a>
-        </li>
-      </ul>
-    </div>
-    <i class="bi bi-arrow-up-square-fill"></i>
-    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
-      <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z"/>
-    </svg>
-  </nav>
--->
