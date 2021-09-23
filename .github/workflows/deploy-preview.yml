@@ -3,7 +3,9 @@ name: Deploy to preview channel
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the main branch
 on:
-  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
   build_and_preview:
