@@ -32,7 +32,10 @@ export class HomeComponent implements OnInit {
     // } else
     if (this.authSvc.userData && this.authSvc.userData.emailVerified) {
       this.router.navigate(['/menu-principal']);
-    } else if (this.authSvc.userData && this.authSvc.userData.emailVerified == false) {
+    } else if (
+      this.authSvc.userData &&
+      this.authSvc.userData.emailVerified == false
+    ) {
       this.router.navigate(['/verificacion-email']);
     } else {
       this.router.navigate(['/login']);
@@ -55,13 +58,13 @@ export class HomeComponent implements OnInit {
   //   return user.emailVerified;
   // }
 
-  // functionScrollToDownMoreInfo() {
-  //   window.scrollTo({
-  //     top: 1215,
-  //     left: 0,
-  //     behavior: 'smooth',
-  //   });
-  // }
+  functionScrollToDownMoreInfo() {
+    window.scrollTo({
+      top: 1215,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
 
   // functionScrollToDown() {
   //   //window.scrollTo(0,0);
