@@ -57,23 +57,23 @@ export class HomeComponent implements OnInit {
 
   functionScrollToDownMoreInfo() {
     window.scrollTo({
-      top: 1400,
+      top: 1215,
       left: 0,
       behavior: 'smooth',
     });
   }
 
-  functionScrollToDown() {
-    //window.scrollTo(0,0);
+  // functionScrollToDown() {
+  //   //window.scrollTo(0,0);
 
-    window.scrollTo({
-      top: 623,
-      left: 0,
-      behavior: 'smooth',
-    });
+  //   window.scrollTo({
+  //     top: 623,
+  //     left: 0,
+  //     behavior: 'smooth',
+  //   });
 
-    //$("button","#buttonScrollToDown").animate({scrollTop: 50},"slow");
-  }
+  //   //$("button","#buttonScrollToDown").animate({scrollTop: 50},"slow");
+  // }
 
   functionScrollToUp() {
     window.scrollTo({
