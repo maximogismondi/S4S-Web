@@ -12,7 +12,7 @@ import { Colegio } from 'src/app/shared/interface/user.interface';
   providers: [AuthService],
 })
 export class MenuPrincipalComponent implements OnInit {
-  nombreColegio: string;
+  // nombreColegio: string;
   nombreDocumento: string;
   borroColegio: boolean = true;
   // duracionModulo: number;
@@ -44,8 +44,8 @@ export class MenuPrincipalComponent implements OnInit {
             map((schools) => {
               if (schools[0] != null) {
                 const school = schools[0].payload.doc.data() as Colegio;
-                this.nombreColegio = school.nombre;
-                this.nombreDocumento = school.id;
+                // this.nombreColegio = school.nombre;
+                this.nombreDocumento = school.nombre;
                 // this.duracionModulo = school.duracionModulo;
               }
               else{

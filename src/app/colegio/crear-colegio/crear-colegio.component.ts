@@ -81,15 +81,15 @@ export class CrearColegioComponent implements OnInit {
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.afs
-          .collection('horariosHechos', (ref) =>
-            ref.where('userAdmin', '==', user.uid)
-          )
-          .snapshotChanges()
-          .pipe(
-            map((schools) => {})
-            )
-            .subscribe();
+        // this.afs
+        //   .collection('horariosHechos', (ref) =>
+        //     ref.where('userAdmin', '==', user.uid)
+        //   )
+        //   .snapshotChanges()
+        //   .pipe(
+        //     map((schools) => {})
+        //     )
+        //     .subscribe();
         this.afs
           .collection('schools', (ref) =>
             ref.where('userAdmin', '==', user.uid)
@@ -403,6 +403,7 @@ export class CrearColegioComponent implements OnInit {
         otro: aula.otro,
       });
     });
+
     this.afs.collection('schools').doc(this.nombreDocumento).update({
       aulas: aulaArrayDiccionario,
     });

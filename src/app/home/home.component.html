@@ -68,7 +68,8 @@
         <a
           type="button"
           class="btn btn-light btn-lg px-4 mx-3"
-          href="#moreInfo"
+          (click)="functionScrollToDownMoreInfo()"
+          id="buttonScrollToDownMoreInfo"
         >
           Más info
       </a>
@@ -114,9 +115,8 @@
             </div>
         </div>
     </div>
--->
 
-<!--!FLECHA
+FLECHA
 <div style="display: flex; justify-content: center; align-items: center">
   <a
     (click)="functionScrollToDown()"
