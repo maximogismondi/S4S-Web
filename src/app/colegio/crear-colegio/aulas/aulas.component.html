@@ -1,0 +1,207 @@
+<div class="col-md-8 mx-auto">
+  <table class="table">
+    <thead>
+      <tr class="table-light">
+        <th scope="col" class="rounded-start">Insertar Aulas</th>
+        <th scope="col" class="rounded-end">Aulas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="card">
+            <div class="card-body">
+              <div class="form-group">
+                <input
+                  type="text"
+                  [(ngModel)]="selectedAula.nombre"
+                  placeholder="Nombre"
+                  class="form-control"
+                />
+
+                <label class="mt-2">Tipo de aula</label>
+                <select class="form-select" [(ngModel)]="selectedAula.tipo">
+                  <option value="normal">Normal</option>
+                  <option value="otro">Otro</option>
+                </select>
+
+                <div class="mt-3" *ngIf="selectedAula.tipo == 'otro'">
+                  <div class="form-check">
+                    <input
+                      checked
+                      class="form-check-input"
+                      type="radio"
+                      [(ngModel)]="selectedAula.otro"
+                      value="SUM"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault1">
+                      SUM
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [(ngModel)]="selectedAula.otro"
+                      value="TALLER"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault2"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      TALLER
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [(ngModel)]="selectedAula.otro"
+                      value="BIBLIOTECA"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault3"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault3">
+                      BIBLIOTECA
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [(ngModel)]="selectedAula.otro"
+                      value="ESTUDIO MUSICAL"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault4"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault4">
+                      ESTUDIO MUSICAL
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [(ngModel)]="selectedAula.otro"
+                      value="ESTUDIO ARTISTICO"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault5"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault5">
+                      ESTUDIO ARTISTICO
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [(ngModel)]="selectedAula.otro"
+                      value="ESTUDIO DE RADIO"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault6"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault6">
+                      ESTUDIO DE RADIO
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [(ngModel)]="selectedAula.otro"
+                      value="ESTUDIO DE VIDEO"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault7"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault7">
+                      ESTUDIO DE VIDEO
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [(ngModel)]="selectedAula.otro"
+                      value="SALA DE COMPUTACION"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault8"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault8">
+                      SALA DE COMPUTACION
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [(ngModel)]="selectedAula.otro"
+                      value="LABORATORIO"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault9"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault9">
+                      LABORATORIO
+                    </label>
+                  </div>
+                </div>
+
+                <button (click)="addOrEditAula()" class="btn btn-primary mt-4">
+                  Añadir / Editar
+                </button>
+                <button
+                  *ngIf="selectedAula.id != 0"
+                  class="btn btn-danger mt-4 ms-4"
+                  (click)="deleteAula()"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <ul
+            class="list-group shadow"
+            style="max-height: 250px; overflow-y: scroll"
+          >
+            <li
+              *ngFor="let aula of aulaArray"
+              class="list-group-item list-group-item-action"
+              (click)="openForEditAula(aula)"
+              [class.active]="aula == selectedAula"
+            >
+              <span>{{ aula.nombre }}</span>
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div class="d-grid">
+            <button
+              *ngIf="botonesCrearColegioProgreso <= 2 && aulaArray.length != 0"
+              (click)="goFormCurso()"
+              class="btn btn-primary btn-lg mt-4"
+            >
+              SIGUIENTE
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1.10em"
+                height="1.10em"
+                fill="currentColor"
+                class="bi bi-arrow-right"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                />
+              </svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
