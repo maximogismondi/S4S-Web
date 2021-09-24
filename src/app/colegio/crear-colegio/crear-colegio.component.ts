@@ -38,7 +38,7 @@ export class CrearColegioComponent implements OnInit {
   turnoSeleccionado: string;
   horaInicial: number;
   horaFinal: number;
-  botonesCrearColegio: number = 1;
+  botonesCrearColegio: number = 6;
   botonesCrearColegioProgreso: number;
   disponibilidadProfesor: boolean = false;
   disponibilidadProfesorSemana: Array<Array<Array<boolean>>> = [];
@@ -56,6 +56,14 @@ export class CrearColegioComponent implements OnInit {
   selectedCurso: Curso = new Curso();
   materiaArray: Materia[] = [];
   selectedMateria: Materia;
+  horariosFinal: Array<string> = [];
+  nombreMateria: string;
+  aulaMateria: string;
+  horariosHechos: any = {};
+  horariosAulasHechos: any = {};
+  materiasProfesoresHechos: any = {};
+  cursoActual: string;
+  dias = ["lunes","martes","miercoles","jueves","viernes"];
   // horarios: Array<string> = [];
   // minutos: number;
   // horas: number;
@@ -81,15 +89,6 @@ export class CrearColegioComponent implements OnInit {
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
-        // this.afs
-        //   .collection('horariosHechos', (ref) =>
-        //     ref.where('userAdmin', '==', user.uid)
-        //   )
-        //   .snapshotChanges()
-        //   .pipe(
-        //     map((schools) => {})
-        //     )
-        //     .subscribe();
         this.afs
           .collection('schools', (ref) =>
             ref.where('userAdmin', '==', user.uid)
@@ -142,6 +141,7 @@ export class CrearColegioComponent implements OnInit {
               this.profesorArray = school.profesores;
 
               this.materiaArray = school.materias;
+
               if (!this.selectedProfesor) {
                 this.selectedProfesor = new Profesor(this.turnoArray);
               }
@@ -150,6 +150,9 @@ export class CrearColegioComponent implements OnInit {
                   this.profesorArray,
                   this.aulaArray
                 );
+              }
+              if (this.cursoArray.length > 0) {
+                this.cursoActual = this.cursoArray[0].nombre;
               }
 
               /* this.profesoresArrayMaterias = [];
@@ -794,15 +797,43 @@ export class CrearColegioComponent implements OnInit {
 
   // _______________________________________FINALIZAR____________________________________________________________
   botonPresionado: boolean = false;
+  horarioGenerado: boolean = false;
   async finalizar() {
     this.http
       .get(
         'https://s4s-algoritmo.herokuapp.com/algoritmo?idColegio=' +
-          this.nombreDocumento,
+          this.nombreColegio,
         { responseType: 'text' }
       )
-      .subscribe((data) => {
-        console.log(data);
+      .subscribe((fecha) => {
+        this.afs
+          .doc('horariosHechos/' + this.nombreColegio + '/horarios/' + fecha)
+          .snapshotChanges()
+          .pipe(
+            map((horariosReady) => {
+              if (horariosReady.payload.exists) {
+                this.horarioGenerado = true;
+                this.horariosHechos = horariosReady.payload.get("horarios")
+                this.horariosAulasHechos = horariosReady.payload.get("horariosAulas")
+                this.materiasProfesoresHechos = horariosReady.payload.get("materiasProfesores")
+
+                this.cursoArray.forEach(curso => {
+                  this.dias.forEach(dia => {
+                    this.turnoArray.forEach(turno=>{
+                      turno.modulos.forEach((modulo) => {
+                        this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] = this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1].split('-')[0]
+                        if (this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] == "Hueco"){
+                          this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] = ""
+                        }
+                      })
+                    });
+                  });
+                });
+              }
+              // console.log(this.horariosHechos["4CSTC"]["lunes"]["manana"][3])
+            })
+          )
+          .subscribe();
       });
       this.http
       .get(
