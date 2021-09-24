@@ -13,7 +13,7 @@ import {
   Profesor,
   Turno,
   Modulo,
-  HorariosHechos,
+  HorarioHecho,
   // ProfesorReducido,
   // HorarioModulo,
   // MateriaReducido,
@@ -60,7 +60,7 @@ export class CrearColegioComponent implements OnInit {
   horariosFinal: Array<string> = [];
   nombreMateria: string;
   aulaMateria: string;
-  horariosHechos: Array<HorariosHechos> = [];
+  horariosHechos: HorarioHecho;
   // horarios: Array<string> = [];
   // minutos: number;
   // horas: number;
@@ -86,20 +86,6 @@ export class CrearColegioComponent implements OnInit {
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.afs
-          .collection('horariosHechos', (ref) =>
-            ref.where('userAdmin', '==', user.uid)
-          )
-          .snapshotChanges()
-          .pipe(
-            map((horariosHechos) => {
-            const schoolReady = horariosHechos[0].payload.doc.data() as HorariosHechos;
-             // this.horariosHechos.push(schoolReady.horarios);
-              for(let i=0;i<this.cursoArray.length;i++);
-
-            })
-            )
-            .subscribe();
         this.afs
           .collection('schools', (ref) =>
             ref.where('userAdmin', '==', user.uid)
@@ -181,18 +167,19 @@ export class CrearColegioComponent implements OnInit {
             })
           )
           .subscribe();
-          this.afs
-          .collection('horariosHechos', (ref) =>
-            ref.where('id', '==', this.nombreDocumento)
-          )
-          .snapshotChanges()
-          .pipe(
-            map((horariosFinalizados) => {
-              const xd=horariosFinalizados[0].payload.doc.data() as HorariosHechos;
-              //this.horariosFinal=xd.horarios;
-            })
-            )
-            .subscribe();
+
+        // this.afs
+        // .collection('horariosHechos', (ref) =>
+        //   ref.where('id', '==', this.nombreDocumento)
+        // )
+        // .snapshotChanges()
+        // .pipe(
+        //   map((horariosFinalizados) => {
+        //     const xd=horariosFinalizados[0].payload.doc.data() as HorariosHechos;
+        //     //this.horariosFinal=xd.horarios;
+        //   })
+        //   )
+        //   .subscribe();
       }
     });
   }
@@ -824,6 +811,15 @@ export class CrearColegioComponent implements OnInit {
       )
       .subscribe((data) => {
         console.log(data);
+        this.afs
+          .doc('horariosHechos/1ej5mYm1XSUC5F6WKjwW3QioCRS4PEW6sD3iCUu4Zs9R6mIecY6cwQVjmOjvjq/horarios/2021-09-23 15:48:00')
+          .get().toPromise().then(horariosHechos =>{
+            const schoolReady  = horariosHechos.data() as any;
+            console.log(schoolReady)
+            // this.horariosHechos = schoolReady.get('2021-09-18 06:29:32.153828')
+            // console.log(schoolReady.forEach(()))
+          })
+          
       });
     this.botonPresionado = true;
   }

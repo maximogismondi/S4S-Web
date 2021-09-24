@@ -1,5 +1,3 @@
-import { EAFNOSUPPORT } from "constants";
-
 export class User {
   uid: string;
   email: string;
@@ -85,7 +83,6 @@ export class Curso {
   nombre: string = '';
   turnoPreferido: string = '';
   cantAlumnos: string = '';
-  diasHechos: Array<DiasHechos>;
   // materiasCurso: Array<string> = [];
 }
 
@@ -158,25 +155,21 @@ export class Materia {
   //   valor: boolean;
   // }
 }
-export class MananaHecha{
-  nombreMateria: string;
-  aulaMateria: string;
-}
-export class TardeHecha{
-  nombreMateria: string;
-  aulaMateria: string;
-}
-export class NocheHecha{
-  nombreMateria: string;
-  aulaMateria: string;
-}
-export class DiasHechos{
-  nombre: string;
-  turnoManana: Array<MananaHecha>;
-  turnoTarde: Array<TardeHecha>;
-  turnoNoche: Array<NocheHecha>;
 
+export class TurnoHecho{
+  turnos:  Map<Number, String>;
 }
-export interface HorariosHechos{
-  horarios: Array<Curso>;
+
+export class DiaHecho{
+  turnos: Map<String, TurnoHecho>;
+}
+
+export class CursoHecho{
+  horarios: Map<String ,DiaHecho>;
+}
+
+export interface HorarioHecho{
+  horarios: Map<String, CursoHecho>;
+  horariosAulas: Map<String, CursoHecho>;
+  materiasProfesores: Map<String, String> 
 }
