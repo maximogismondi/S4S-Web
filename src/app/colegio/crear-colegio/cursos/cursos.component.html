@@ -1,0 +1,101 @@
+<div class="col-md-8 mx-auto">
+  <table class="table">
+    <thead>
+      <tr class="table-light">
+        <th scope="col" class="rounded-start">Insertar Cursos</th>
+        <th scope="col" class="rounded-end">Cursos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="card">
+            <div class="card-body">
+              <div class="form-group">
+                <input
+                  type="text"
+                  placeholder="Nombre"
+                  [(ngModel)]="selectedCurso.nombre"
+                  class="form-control"
+                />
+
+                <label class="mt-2">Turno preferido</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="selectedCurso.turnoPreferido"
+                >
+                  <option value="manana">Mañana</option>
+                  <option value="tarde">Tarde</option>
+                  <option value="noche">Noche</option>
+                </select>
+
+                <input
+                  type="number"
+                  min="1"
+                  placeholder="Cantidad de alumnos"
+                  [(ngModel)]="selectedCurso.cantAlumnos"
+                  class="form-control mt-2"
+                />
+
+                <button (click)="addOrEditCurso()" class="btn btn-primary mt-4">
+                  Añadir / Editar
+                </button>
+                <button
+                  *ngIf="selectedCurso.id != 0"
+                  class="btn btn-danger mt-4 ms-4"
+                  (click)="deleteCurso()"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <ul
+            class="list-group shadow scrollbar scrollbar-primary"
+            style="max-height: 315px; overflow-y: scroll"
+          >
+            <li
+              *ngFor="let curso of cursoArray"
+              class="list-group-item list-group-item-action"
+              (click)="openForEditCurso(curso)"
+              [class.active]="curso == selectedCurso"
+            >
+              <span>{{ curso.nombre }}</span>
+
+              <!--  / Materias en el curso:
+              <p *ngFor="let materia of curso.materiasCurso">- {{ materia }}</p>  -->
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div class="d-grid">
+            <button
+              *ngIf="botonesCrearColegioProgreso <= 3 && cursoArray.length != 0"
+              (click)="goFormProfesor()"
+              class="btn btn-primary btn-lg mt-4"
+            >
+              SIGUIENTE
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1.10em"
+                height="1.10em"
+                fill="currentColor"
+                class="bi bi-arrow-right"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                />
+              </svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

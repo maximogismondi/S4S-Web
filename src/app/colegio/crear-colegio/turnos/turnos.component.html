@@ -1,0 +1,229 @@
+<div class="col-md-8 mx-auto">
+  <ul class="list-group">
+    <div class="text-secondary">
+      <h6>Duracion de cada modulo: {{ duracionModulo }} min</h6>
+    </div>
+    <table class="table text-center">
+      <thead>
+        <tr class="table-light">
+          <th class="rounded-start" scope="col">Horarios</th>
+          <th scope="col"></th>
+          <th scope="col">Lunes</th>
+          <th scope="col">Martes</th>
+          <th scope="col">Miercoles</th>
+          <th scope="col">Jueves</th>
+          <th class="rounded-end" scope="col">Viernes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- MAÑANA -->
+        <tr *ngIf="12 >= horaInicial && horaInicial >= 5">
+          <td colspan="7" class="table-active">
+            TURNO MAÑANA ({{ inicioHorario }} am - 12:00 pm)
+          </td>
+        </tr>
+        <tr *ngFor="let turno of turnoArray[0].modulos" class="bg-white">
+          <td colspan="2" class="text-black">
+            {{ turno.inicio }} - {{ turno.final }}
+          </td>
+          <td colspan="4" class="text-black">CLASE</td>
+          <td class="bg-light">
+            <svg
+              (click)="deleteModulo('manana', turno)"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-trash-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+              />
+            </svg>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3"></td>
+          <td colspan="2">
+            <div class="input-group">
+              <input
+                type="Time"
+                class="form-control"
+                [(ngModel)]="inicioModuloSeleccionado[0]"
+              />
+              <button class="btn btn-primary" (click)="addModulo('manana')">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-plus-lg"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        <!-- TARDE -->
+        <tr *ngIf="18 >= horaFinal && horaFinal > 12; else turnoNoche">
+          <td colspan="7" class="table-active">
+            TURNO TARDE (12:00 pm - {{ finalizacionHorario }} pm)
+          </td>
+        </tr>
+        <ng-template #turnoNoche>
+          <tr *ngIf="horaFinal == 12; else turnoNoche2"></tr>
+          <ng-template #turnoNoche2>
+            <tr>
+              <td colspan="7" class="table-active">
+                TURNO TARDE (12:00 am - 18:00 pm)
+              </td>
+            </tr>
+          </ng-template>
+        </ng-template>
+
+        <tr *ngFor="let turno of turnoArray[1].modulos" class="bg-white">
+          <td colspan="2" class="text-black">
+            {{ turno.inicio }} - {{ turno.final }}
+          </td>
+          <td colspan="4" class="text-black">CLASE</td>
+          <td class="bg-light">
+            <svg
+              (click)="deleteModulo('tarde', turno)"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-trash-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+              />
+            </svg>
+          </td>
+        </tr>
+
+        <tr
+          *ngIf="
+            (18 >= horaFinal && horaFinal > 12) || 18 <= horaFinal;
+            else turnoNoche3
+          "
+        >
+          <td colspan="3"></td>
+          <td colspan="2">
+            <div class="input-group">
+              <input
+                type="Time"
+                class="form-control"
+                [(ngModel)]="inicioModuloSeleccionado[1]"
+              />
+              <button class="btn btn-primary" (click)="addModulo('tarde')">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-plus-lg"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </td>
+          <td colspan="3"></td>
+        </tr>
+        <ng-template #turnoNoche3></ng-template>
+
+        <!-- NOCHE -->
+        <tr *ngIf="horaFinal > 18">
+          <td colspan="7" class="table-active">
+            TURNO NOCHE (18:00 pm - {{ finalizacionHorario }} pm)
+          </td>
+        </tr>
+
+        <tr *ngFor="let turno of turnoArray[2].modulos" class="bg-white">
+          <td colspan="2" class="text-black">
+            {{ turno.inicio }} - {{ turno.final }}
+          </td>
+          <td colspan="4" class="text-black">CLASE</td>
+          <td class="bg-light">
+            <svg
+              (click)="deleteModulo('noche', turno)"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-trash-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+              />
+            </svg>
+          </td>
+        </tr>
+
+        <tr *ngIf="horaFinal > 18">
+          <td colspan="3"></td>
+          <td colspan="2">
+            <div class="input-group">
+              <input
+                type="Time"
+                class="form-control"
+                [(ngModel)]="inicioModuloSeleccionado[2]"
+              />
+              <button class="btn btn-primary" (click)="addModulo('noche')">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-plus-lg"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </td>
+          <td colspan="3"></td>
+        </tr>
+      </tbody>
+    </table>
+  </ul>
+  <div class="d-grid">
+    <button
+      *ngIf="
+        botonesCrearColegioProgreso <= 1 && turnoArray[0].modulos.length != 0
+      "
+      (click)="goFormAula()"
+      class="btn btn-primary btn-lg mt-4"
+    >
+      SIGUIENTE
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="1.10em"
+        height="1.10em"
+        fill="currentColor"
+        class="bi bi-arrow-right"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+        />
+      </svg>
+    </button>
+  </div>
+</div>

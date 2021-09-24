@@ -1,4 +1,3 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -15,16 +14,11 @@ import {
   Profesor,
   Turno,
 } from 'src/app/shared/interface/user.interface';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { ColegioService } from '../services/colegio.service';
 
-@Component({
-  selector: 'app-crear-colegio',
-  templateUrl: './crear-colegio.component.html',
-  styleUrls: ['./crear-colegio.component.scss'],
-  providers: [AuthService],
+@Injectable({
+  providedIn: 'root',
 })
-export class CrearColegioComponent implements OnInit {
+export class ColegioService {
   nombreColegio: string;
   nombreDocumento: string;
   duracionModulo: number;
@@ -58,8 +52,6 @@ export class CrearColegioComponent implements OnInit {
   selectedMateria: Materia;
 
   constructor(
-    public afAuth: AngularFireAuth,
-    private colegioSvc: ColegioService,
     private router: Router,
     private fb: FormBuilder,
     private authSvc: AuthService,
@@ -162,21 +154,17 @@ export class CrearColegioComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  chequearRepeticionEnSubidaDatos(selected: any, arreglo: Array<any>): boolean {
+    let existeDato: boolean = false;
+    arreglo.forEach((dato) => {
+      if (selected.nombre == dato.nombre) {
+        existeDato = true;
+        alert(
+          'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre'
+        );
+      }
+    });
 
-  async clickeoBotones(boton: string) {
-    if (boton == 'turnos' && this.turnos != 0) {
-      this.botonesCrearColegio = 1;
-    } else if (boton == 'aulas') {
-      this.botonesCrearColegio = 2;
-    } else if (boton == 'cursos') {
-      this.botonesCrearColegio = 3;
-    } else if (boton == 'profesores') {
-      this.botonesCrearColegio = 4;
-    } else if (boton == 'materias') {
-      this.botonesCrearColegio = 5;
-    } else if (boton == 'finalizar') {
-      this.botonesCrearColegio = 6;
-    }
+    return existeDato;
   }
 }

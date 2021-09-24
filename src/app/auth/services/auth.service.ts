@@ -16,7 +16,7 @@ import firebase from 'firebase/app';
 import { Router } from '@angular/router';
 // import { Time } from '@angular/common';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthService {
   public userData: any;
   ingresoEmailCompleto: boolean = false;

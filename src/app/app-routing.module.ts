@@ -13,13 +13,20 @@ import {
 } from '@angular/fire/auth-guard';
 import { pipe } from 'rxjs';
 
-const redirectToLoginWhenUserNotVerified = (redirect: any[]) => pipe(emailVerified, map((loggedIn:any) => loggedIn || redirect));
-const redirectToLoginWhenUserLogin = (redirect: any[]) => pipe(isNotAnonymous, map((loggedIn:any) => loggedIn || redirect));
+const redirectToLoginWhenUserNotVerified = (redirect: any[]) =>
+  pipe(
+    emailVerified,
+    map((loggedIn: any) => loggedIn || redirect)
+  );
+const redirectToLoginWhenUserLogin = (redirect: any[]) =>
+  pipe(
+    isNotAnonymous,
+    map((loggedIn: any) => loggedIn || redirect)
+  );
 
-
-const redirectToVerifiedEmail = () => redirectToLoginWhenUserNotVerified(['verificacion-email']);
+const redirectToVerifiedEmail = () =>
+  redirectToLoginWhenUserNotVerified(['verificacion-email']);
 const redirectToLogin = () => redirectToLoginWhenUserLogin(['login']);
-
 
 const routes: Routes = [
   {
@@ -30,15 +37,15 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () =>
       import('./auth/register/register.module').then((m) => m.RegisterModule),
-      // canActivate: [AngularFireAuthGuard],
-      // data: { authGuardPipe: redirectToVerifiedEmail },
+    // canActivate: [AngularFireAuthGuard],
+    // data: { authGuardPipe: redirectToVerifiedEmail },
   },
   {
     path: 'login',
     loadChildren: () =>
       import('./auth/login/login.module').then((m) => m.LoginModule),
-      // canActivate: [AngularFireAuthGuard],
-      // data: { authGuardPipe: redirectToVerifiedEmail },
+    // canActivate: [AngularFireAuthGuard],
+    // data: { authGuardPipe: redirectToVerifiedEmail },
   },
   {
     path: 'eleccion',
@@ -69,6 +76,60 @@ const routes: Routes = [
     loadChildren: () =>
       import('./colegio/menu-principal/menu-principal.module').then(
         (m) => m.MenuPrincipalModule
+      ),
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectToVerifiedEmail },
+  },
+  {
+    path: 'crear-colegio/turnos',
+    loadChildren: () =>
+      import('./colegio/crear-colegio/turnos/turnos.module').then(
+        (m) => m.TurnosModule
+      ),
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectToVerifiedEmail },
+  },
+  {
+    path: 'crear-colegio/aulas',
+    loadChildren: () =>
+      import('./colegio/crear-colegio/aulas/aulas.module').then(
+        (m) => m.AulasModule
+      ),
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectToVerifiedEmail },
+  },
+  {
+    path: 'crear-colegio/cursos',
+    loadChildren: () =>
+      import('./colegio/crear-colegio/cursos/cursos.module').then(
+        (m) => m.CursosModule
+      ),
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectToVerifiedEmail },
+  },
+  {
+    path: 'crear-colegio/profesores',
+    loadChildren: () =>
+      import('./colegio/crear-colegio/profesores/profesores.module').then(
+        (m) => m.ProfesoresModule
+      ),
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectToVerifiedEmail },
+  },
+  {
+    path: 'crear-colegio/materias',
+    loadChildren: () =>
+      import('./colegio/crear-colegio/materias/materias.module').then(
+        (m) => m.MateriasModule
+      ),
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectToVerifiedEmail },
+  },
+  {
+    path: 'crear-colegio/finalizar',
+    loadChildren: () =>
+      import('./colegio/crear-colegio/finalizar/finalizar.module').then(
+        (m) => m.FinalizarModule
       ),
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectToVerifiedEmail },
