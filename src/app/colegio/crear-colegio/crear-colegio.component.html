@@ -587,6 +587,19 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                         LABORATORIO
                       </label>
                     </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        [(ngModel)]="selectedAula.otro"
+                        value="CAMPO"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault10"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault10">
+                        CAMPO
+                      </label>
+                    </div>
                   </div>
 
                   <button

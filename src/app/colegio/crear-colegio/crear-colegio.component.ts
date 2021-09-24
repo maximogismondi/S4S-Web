@@ -26,7 +26,7 @@ import {
 })
 export class CrearColegioComponent implements OnInit {
   nombreColegio: string;
-  nombreDocumento: string;
+  // nombreDocumento: string;
   duracionModulo: number;
   inicioHorario: string;
   finalizacionHorario: string;
@@ -38,7 +38,7 @@ export class CrearColegioComponent implements OnInit {
   turnoSeleccionado: string;
   horaInicial: number;
   horaFinal: number;
-  botonesCrearColegio: number = 6;
+  botonesCrearColegio: number = 1;
   botonesCrearColegioProgreso: number;
   disponibilidadProfesor: boolean = false;
   disponibilidadProfesorSemana: Array<Array<Array<boolean>>> = [];
@@ -64,6 +64,8 @@ export class CrearColegioComponent implements OnInit {
   materiasProfesoresHechos: any = {};
   cursoActual: string;
   dias = ["lunes","martes","miercoles","jueves","viernes"];
+  botonPresionado: boolean = false;
+  horarioGenerado: boolean = false;
   // horarios: Array<string> = [];
   // minutos: number;
   // horas: number;
@@ -98,7 +100,7 @@ export class CrearColegioComponent implements OnInit {
             map((schools) => {
               const school = schools[0].payload.doc.data() as Colegio;
               this.nombreColegio = school.nombre;
-              this.nombreDocumento = school.id;
+              // this.nombreDocumento = school.id;
               this.duracionModulo = school.duracionModulo;
               this.inicioHorario = school.inicioHorario;
               this.finalizacionHorario = school.finalizacionHorario;
@@ -151,9 +153,12 @@ export class CrearColegioComponent implements OnInit {
                   this.aulaArray
                 );
               }
-              if (this.cursoArray.length > 0) {
+              if (!this.cursoActual) {
                 this.cursoActual = this.cursoArray[0].nombre;
               }
+
+              this.botonPresionado = false;
+              this.horarioGenerado = false;
 
               /* this.profesoresArrayMaterias = [];
                this.horarios.push(String(this.inicioHorario));
@@ -227,7 +232,7 @@ export class CrearColegioComponent implements OnInit {
         modulos: modulosTurno,
       });
     });
-    this.afs.collection('schools').doc(this.nombreDocumento).update({
+    this.afs.collection('schools').doc(this.nombreColegio).update({
       turnos: turnoArrayDiccionario,
     });
   }
@@ -386,7 +391,7 @@ export class CrearColegioComponent implements OnInit {
     this.botonesCrearColegio = 2;
     if (this.botonesCrearColegioProgreso < 2) {
       this.botonesCrearColegioProgreso = 2;
-      this.afs.collection('schools').doc(this.nombreDocumento).update({
+      this.afs.collection('schools').doc(this.nombreColegio).update({
         botonesCrearColegioProgreso: 2,
         botonesCrearColegio: 2,
       });
@@ -407,7 +412,7 @@ export class CrearColegioComponent implements OnInit {
       });
     });
 
-    this.afs.collection('schools').doc(this.nombreDocumento).update({
+    this.afs.collection('schools').doc(this.nombreColegio).update({
       aulas: aulaArrayDiccionario,
     });
   }
@@ -457,7 +462,7 @@ export class CrearColegioComponent implements OnInit {
     this.botonesCrearColegio = 3;
     if (this.botonesCrearColegioProgreso < 3) {
       this.botonesCrearColegioProgreso = 3;
-      this.afs.collection('schools').doc(this.nombreDocumento).update({
+      this.afs.collection('schools').doc(this.nombreColegio).update({
         botonesCrearColegioProgreso: 3,
         botonesCrearColegio: 3,
       });
@@ -478,7 +483,7 @@ export class CrearColegioComponent implements OnInit {
         // materiasCurso: curso.materiasCurso,
       });
     });
-    this.afs.collection('schools').doc(this.nombreDocumento).update({
+    this.afs.collection('schools').doc(this.nombreColegio).update({
       cursos: CursoArrayDiccionario,
     });
   }
@@ -526,7 +531,7 @@ export class CrearColegioComponent implements OnInit {
     this.botonesCrearColegio = 4;
     if (this.botonesCrearColegioProgreso < 4) {
       this.botonesCrearColegioProgreso = 4;
-      this.afs.collection('schools').doc(this.nombreDocumento).update({
+      this.afs.collection('schools').doc(this.nombreColegio).update({
         botonesCrearColegioProgreso: 4,
         botonesCrearColegio: 4,
       });
@@ -550,7 +555,7 @@ export class CrearColegioComponent implements OnInit {
         // condiciones: profesor.condiciones,
       });
     });
-    this.afs.collection('schools').doc(this.nombreDocumento).update({
+    this.afs.collection('schools').doc(this.nombreColegio).update({
       profesores: ProfesorArrayDiccionario,
     });
   }
@@ -649,7 +654,7 @@ export class CrearColegioComponent implements OnInit {
     this.botonesCrearColegio = 5;
     if (this.botonesCrearColegioProgreso < 5) {
       this.botonesCrearColegioProgreso = 5;
-      this.afs.collection('schools').doc(this.nombreDocumento).update({
+      this.afs.collection('schools').doc(this.nombreColegio).update({
         botonesCrearColegioProgreso: 5,
         botonesCrearColegio: 5,
       });
@@ -676,7 +681,7 @@ export class CrearColegioComponent implements OnInit {
         // otro: materia.otro,
       });
     });
-    this.afs.collection('schools').doc(this.nombreDocumento).update({
+    this.afs.collection('schools').doc(this.nombreColegio).update({
       materias: materiaArrayDiccionario,
     });
   }
@@ -788,7 +793,7 @@ export class CrearColegioComponent implements OnInit {
     this.botonesCrearColegio = 6;
     if (this.botonesCrearColegioProgreso < 6) {
       this.botonesCrearColegioProgreso = 6;
-      this.afs.collection('schools').doc(this.nombreDocumento).update({
+      this.afs.collection('schools').doc(this.nombreColegio).update({
         botonesCrearColegioProgreso: 6,
         botonesCrearColegio: 6,
       });
@@ -796,8 +801,6 @@ export class CrearColegioComponent implements OnInit {
   }
 
   // _______________________________________FINALIZAR____________________________________________________________
-  botonPresionado: boolean = false;
-  horarioGenerado: boolean = false;
   async finalizar() {
     this.http
       .get(
@@ -834,13 +837,6 @@ export class CrearColegioComponent implements OnInit {
             })
           )
           .subscribe();
-      });
-      this.http
-      .get(
-        'https://apis.datos.gob.ar/georef/api/provincias', {responseType: 'json'}
-      )
-      .subscribe((data) => {
-        console.log(data);
       });
     this.botonPresionado = true;
   }

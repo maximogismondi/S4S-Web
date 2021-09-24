@@ -12,8 +12,8 @@ import { Colegio } from 'src/app/shared/interface/user.interface';
   providers: [AuthService],
 })
 export class MenuPrincipalComponent implements OnInit {
-  // nombreColegio: string;
-  nombreDocumento: string;
+  nombreColegio: string;
+  // nombreDocumento: string;
   borroColegio: boolean = true;
   // duracionModulo: number;
 
@@ -45,7 +45,7 @@ export class MenuPrincipalComponent implements OnInit {
               if (schools[0] != null) {
                 const school = schools[0].payload.doc.data() as Colegio;
                 // this.nombreColegio = school.nombre;
-                this.nombreDocumento = school.nombre;
+                this.nombreColegio = school.nombre;
                 // this.duracionModulo = school.duracionModulo;
               }
               else{
@@ -70,7 +70,7 @@ export class MenuPrincipalComponent implements OnInit {
 
   async deleteSchool() {
     if (confirm('¿Estas seguro/a que quieres eliminar este colegio?')) {
-      this.afs.collection('schools').doc(this.nombreDocumento).delete();
+      this.afs.collection('schools').doc(this.nombreColegio).delete();
     }
   }
 }
