@@ -9,14 +9,14 @@ import {
   Aula,
   Colegio,
   Curso,
-  // HorarioModulo,
   Materia,
-  // MateriaReducido,
-  // Modulo,
   Profesor,
-  ProfesorReducido,
   Turno,
   Modulo,
+  HorarioHecho,
+  // ProfesorReducido,
+  // HorarioModulo,
+  // MateriaReducido,
 } from 'src/app/shared/interface/user.interface';
 
 @Component({
@@ -29,12 +29,6 @@ export class CrearColegioComponent implements OnInit {
   nombreColegio: string;
   nombreDocumento: string;
   duracionModulo: number;
-  // minutos: number;
-  // horas: number;
-  // horarioFinalizacionModulo: string = '';
-  // conjuntoDeTurnos : Array<HorarioModulo> = [];
-  // modulos: number;
-  horarios: Array<string> = [];
   inicioHorario: string;
   finalizacionHorario: string;
   turnos: number;
@@ -42,28 +36,47 @@ export class CrearColegioComponent implements OnInit {
   materias: number;
   cursos: number;
   profesores: number;
-  // materiasArrayCursos: Array<MateriaReducido> = [];
-  // profesoresArrayMaterias: Array<ProfesorReducido> = [];
-  cantidadTurnos: Array<Turno> = [];
-  // totalCursosColegio: Array<string> = [];
-  inicioModuloSeleccionado: Array<string> = [];
-  // inicioModuloSeleccionado: string;
   turnoSeleccionado: string;
-  // horasFinalSeleccionada: string;
-  // minutoFinalSeleccionado: string;
-  // horaInicialSeleccionada: string;
-  // minutosInicialSeleccionado: string;
   horaInicial: number;
   horaFinal: number;
+  botonesCrearColegio: number = 1;
+  botonesCrearColegioProgreso: number;
+  disponibilidadProfesor: boolean = false;
+  disponibilidadProfesorSemana: Array<Array<Array<boolean>>> = [];
   turnoArray: Array<Turno> = [
     new Turno('manana'),
     new Turno('tarde'),
     new Turno('noche'),
   ];
-  botonesCrearColegio: number = 1;
-  botonesCrearColegioProgreso: number;
-  disponibilidadProfesor: boolean = false;
-  disponibilidadProfesorSemana: Array<Array<Array<boolean>>> = [];
+  inicioModuloSeleccionado: Array<string> = [];
+  profesorArray: Profesor[] = [];
+  selectedProfesor: Profesor;
+  aulaArray: Aula[] = [];
+  selectedAula: Aula = new Aula();
+  cursoArray: Curso[] = [];
+  selectedCurso: Curso = new Curso();
+  materiaArray: Materia[] = [];
+  selectedMateria: Materia;
+  horariosFinal: Array<string> = [];
+  nombreMateria: string;
+  aulaMateria: string;
+  horariosHechos: HorarioHecho;
+  cursoActual: string;
+  // horarios: Array<string> = [];
+  // minutos: number;
+  // horas: number;
+  // horarioFinalizacionModulo: string = '';
+  // conjuntoDeTurnos : Array<HorarioModulo> = [];
+  // modulos: number;
+  // materiasArrayCursos: Array<MateriaReducido> = [];
+  // profesoresArrayMaterias: Array<ProfesorReducido> = [];
+  // totalCursosColegio: Array<string> = [];
+  // inicioModuloSeleccionado: string;
+  // horasFinalSeleccionada: string;
+  // minutoFinalSeleccionado: string;
+  // horaInicialSeleccionada: string;
+  // minutosInicialSeleccionado: string;
+  // cantidadTurnos: Array<Turno> = [];
 
   constructor(
     private router: Router,
@@ -98,7 +111,6 @@ export class CrearColegioComponent implements OnInit {
                 }
               }
 
-              // this.horarios.push(String(this.inicioHorario));
               this.horaInicial = Number(
                 String(this.inicioHorario).split(':')[0]
               );
@@ -106,8 +118,6 @@ export class CrearColegioComponent implements OnInit {
               this.horaFinal = Number(
                 String(this.finalizacionHorario).split(':')[0]
               );
-              // this.minutos = Number(String(this.inicioHorario).split(':')[1]);
-              // this.modulos = school.modulos.length;
               this.turnos =
                 school.turnos[0].modulos.length +
                 school.turnos[1].modulos.length +
@@ -119,7 +129,6 @@ export class CrearColegioComponent implements OnInit {
 
               this.botonesCrearColegioProgreso =
                 school.botonesCrearColegioProgreso;
-              // this.botonesCrearColegio = school.botonesCrearColegio;
 
               this.turnoArray = school.turnos;
 
@@ -130,23 +139,48 @@ export class CrearColegioComponent implements OnInit {
               this.profesorArray = school.profesores;
 
               this.materiaArray = school.materias;
+              if (!this.selectedProfesor) {
+                this.selectedProfesor = new Profesor(this.turnoArray);
+              }
+              if (!this.selectedMateria) {
+                this.selectedMateria = new Materia(
+                  this.profesorArray,
+                  this.aulaArray
+                );
+              }
 
-              // this.profesoresArrayMaterias = [];
-              // school.profesores.forEach((profesor) => {
-              //   let profesorAux: ProfesorReducido = {
-              //     nombre: profesor.nombre,
-              //     valor: false,
-              //   };
-              //   this.profesoresArrayMaterias.push(profesorAux);
-              // });
-
-              // this.totalCursosColegio = [];
-              // school.cursos.forEach((cursos) => {
-              //   this.totalCursosColegio.push(cursos.nombre);
-              // });
+              /* this.profesoresArrayMaterias = [];
+               this.horarios.push(String(this.inicioHorario));
+               this.minutos = Number(String(this.inicioHorario).split(':')[1]);
+               this.modulos = school.modulos.length;
+               this.botonesCrearColegio = school.botonesCrearColegio;
+               school.profesores.forEach((profesor) => {
+                 let profesorAux: ProfesorReducido = {
+                   nombre: profesor.nombre,
+                   valor: false,
+                 };
+                 this.profesoresArrayMaterias.push(profesorAux);
+               });
+               this.totalCursosColegio = [];
+               school.cursos.forEach((cursos) => {
+                 this.totalCursosColegio.push(cursos.nombre);
+               });*/
             })
           )
           .subscribe();
+
+        // this.afs
+        // .collection('horariosHechos', (ref) =>
+        //   ref.where('id', '==', this.nombreDocumento)
+        // )
+        // .snapshotChanges()
+        // .pipe(
+        //   map((horariosFinalizados) => {
+        //     const xd=horariosFinalizados[0].payload.doc.data() as HorariosHechos;
+        //     //this.horariosFinal=xd.horarios;
+        //   })
+        //   )
+        //   .subscribe();
       }
     });
   }
@@ -330,7 +364,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteModulo(turnoSeleccionado: string, turno: Modulo) {
-    console.log(turno);
+    // console.log(turno);
     if (turnoSeleccionado == 'manana') {
       this.turnoArray[0].modulos.splice(
         this.turnoArray[0].modulos.indexOf(turno),
@@ -367,10 +401,6 @@ export class CrearColegioComponent implements OnInit {
   }
 
   // _________________________________________AULAS____________________________________________________________
-
-  aulaArray: Aula[] = [];
-
-  selectedAula: Aula = new Aula();
 
   async updateDBAula() {
     this.selectedAula = new Aula();
@@ -442,19 +472,15 @@ export class CrearColegioComponent implements OnInit {
 
   // _______________________________________CURSOS______________________________________________________________
 
-  cursoArray: Curso[] = [];
-
-  selectedCurso: Curso = new Curso();
-
   async updateDBCurso() {
     this.selectedCurso = new Curso();
     let CursoArrayDiccionario: Array<any> = [];
     this.cursoArray.forEach((curso) => {
       CursoArrayDiccionario.push({
-        // id: curso.id,
         nombre: curso.nombre,
         turnoPreferido: curso.turnoPreferido,
         cantAlumnos: curso.cantAlumnos,
+        // id: curso.id,
         // materiasCurso: curso.materiasCurso,
       });
     });
@@ -515,20 +541,16 @@ export class CrearColegioComponent implements OnInit {
 
   // _______________________________________PROFESORES__________________________________________________________
 
-  profesorArray: Profesor[] = [];
-
-  selectedProfesor: Profesor = new Profesor(this.turnoArray);
-
   async updateDBProfesor() {
     this.selectedProfesor = new Profesor(this.turnoArray);
     let ProfesorArrayDiccionario: Array<any> = [];
     this.profesorArray.forEach((profesor) => {
       ProfesorArrayDiccionario.push({
-        // id: profesor.id,
         nombre: profesor.nombre,
         apellido: profesor.apellido,
         dni: profesor.dni,
         disponibilidad: profesor.disponibilidad,
+        // id: profesor.id,
         // 'materias capacitado': profesor.materiasCapacitado,
         //  turnoPreferido: profesor.turnoPreferido,
         // condiciones: profesor.condiciones,
@@ -558,8 +580,38 @@ export class CrearColegioComponent implements OnInit {
             this.profesorArray
           )
         ) {
-          this.selectedProfesor.id = this.profesorArray.length + 1;
-          this.profesorArray.push(this.selectedProfesor);
+          let existeDni: boolean = false;
+          this.profesorArray.forEach((dniProfe) => {
+            if (this.selectedProfesor.dni == dniProfe.dni) {
+              existeDni = true;
+              alert(
+                'El dni ya esta utilizado, edite el elemento creado o cree uno con distinto dni'
+              );
+            }
+          });
+          if (!existeDni) {
+            let existeProfesorDisponible: boolean = false;
+            const dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+            dias.forEach((dia) => {
+              this.turnoArray.forEach((turno) => {
+                turno.modulos.forEach((modulo) => {
+                  if (
+                    this.selectedProfesor.disponibilidad[dia][turno.turno][
+                      modulo.inicio
+                    ]
+                  ) {
+                    existeProfesorDisponible = true;
+                  }
+                });
+              });
+            });
+            if (existeProfesorDisponible) {
+              this.selectedProfesor.id = this.profesorArray.length + 1;
+              this.profesorArray.push(this.selectedProfesor);
+            } else {
+              alert('Coloque por lo menos un horario para el profesor/a');
+            }
+          }
         }
       }
 
@@ -612,25 +664,22 @@ export class CrearColegioComponent implements OnInit {
 
   // _______________________________________MATERIAS____________________________________________________________
 
-  materiaArray: Materia[] = [];
-
-  selectedMateria: Materia = new Materia(this.profesorArray);
-
   async updateDBMateria() {
-    this.selectedMateria = new Materia(this.profesorArray);
+    this.selectedMateria = new Materia(this.profesorArray, this.aulaArray);
     let materiaArrayDiccionario: Array<any> = [];
     this.materiaArray.forEach((materia) => {
       materiaArrayDiccionario.push({
-        // id: materia.id,
         nombre: materia.nombre,
         cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
         curso: materia.curso,
+        profesoresCapacitados: materia.profesoresCapacitados,
+        aulasMateria: materia.aulasMateria,
+        cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
+        // id: materia.id,
         // cantProfesores: materia.cantProfesores,
         // espacioEntreDias: materia.espacioEntreDias,
         // tipoAula: materia.tipo,
         // otro: materia.otro,
-        profesoresCapacitados: materia.profesoresCapacitados,
-        cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
       });
     });
     this.afs.collection('schools').doc(this.nombreDocumento).update({
@@ -657,13 +706,42 @@ export class CrearColegioComponent implements OnInit {
             this.materiaArray
           )
         ) {
-          this.selectedMateria.id = this.materiaArray.length + 1;
+          let existeProfesorCapacitado: boolean = false;
+
+          this.profesorArray.forEach((profesor) => {
+            if (
+              this.selectedMateria.profesoresCapacitados[
+                profesor.nombre + ' ' + profesor.apellido
+              ]
+            ) {
+              existeProfesorCapacitado = true;
+            }
+          });
+
+          if (existeProfesorCapacitado) {
+            let existeAula: boolean = false;
+
+            this.aulaArray.forEach((aula) => {
+              if (this.selectedMateria.aulasMateria[aula.nombre]) {
+                existeAula = true;
+              }
+            });
+
+            if (existeAula) {
+              this.selectedMateria.id = this.materiaArray.length + 1;
+              this.materiaArray.push(this.selectedMateria);
+            } else {
+              alert('Coloque por lo menos un aula para la materia creada');
+            }
+          } else {
+            alert('Coloque por lo menos un profesor para la materia creada');
+          }
+
           // this.profesoresArrayMaterias.forEach((profesor) => {
           //   if (profesor.valor == true) {
           //     this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
           //   }
           // });
-          this.materiaArray.push(this.selectedMateria);
         }
       }
 
@@ -693,9 +771,14 @@ export class CrearColegioComponent implements OnInit {
   //   }
   // }
 
-  clickFormCheckMateria(nombre: string) {
+  clickFormCheckMateriaProfesor(nombre: string) {
     this.selectedMateria.profesoresCapacitados[nombre] =
       !this.selectedMateria.profesoresCapacitados[nombre];
+  }
+
+  clickFormCheckMateriaAula(nombre: string) {
+    this.selectedMateria.aulasMateria[nombre] =
+      !this.selectedMateria.aulasMateria[nombre];
   }
 
   deleteMateria() {
@@ -719,11 +802,26 @@ export class CrearColegioComponent implements OnInit {
   }
 
   // _______________________________________FINALIZAR____________________________________________________________
-
+  botonPresionado: boolean = false;
   async finalizar() {
-
-    this.http.get("https://s4s-algoritmo.herokuapp.com",{responseType: 'text'}).subscribe(data => {
-      console.log(data);
-    }) 
+    this.http
+      .get(
+        'https://s4s-algoritmo.herokuapp.com/algoritmo?idColegio=' +
+          this.nombreDocumento,
+        { responseType: 'text' }
+      )
+      .subscribe((data) => {
+        console.log(data);
+        this.afs
+          .doc('horariosHechos/1ej5mYm1XSUC5F6WKjwW3QioCRS4PEW6sD3iCUu4Zs9R6mIecY6cwQVjmOjvjq/horarios/2021-09-23 15:48:00')
+          .get().toPromise().then(horariosHechos =>{
+            const schoolReady  = horariosHechos.data() as any;
+            console.log(schoolReady)
+            // this.horariosHechos = schoolReady.get('2021-09-18 06:29:32.153828')
+            // console.log(schoolReady.forEach(()))
+          })
+          
+      });
+    this.botonPresionado = true;
   }
 }

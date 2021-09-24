@@ -65,13 +65,14 @@
         </button>
       </div>
       <!-- *ngIf="!verificado" -->
-      <div class="mt-2" *ngIf="!olvidoConrtrasena">
+      <div class="mt-4" *ngIf="!olvidoConrtrasena">
         <a type="button" class="btn btn-link" style="margin-left: -15px;" (click)="forgotPassword()">
           ¿Olvidaste tu contraseña?
         </a>
         <p>
-          ¿No tienes cuenta?
-          <a href="/register"> Registrate</a>
+          <a type="button"  href="/register" class="btn btn-link" style="margin-left: -15px;" >
+            ¿No tienes cuenta? Registrate
+          </a>
         </p>
       </div>
       <div class="col-md-6 mx-auto">

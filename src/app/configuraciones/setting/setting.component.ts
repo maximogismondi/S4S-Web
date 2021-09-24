@@ -44,7 +44,7 @@ export class SettingComponent implements OnInit {
   nuevoNombre: User = new User();
 
   async cambiarNombre() {
-    console.log(this.nuevoNombre.displayName);
+    // console.log(this.nuevoNombre.displayName);
     this.afs.collection('users').doc(this.userData.uid).update({
       displayName: this.nuevoNombre.displayName,
     });

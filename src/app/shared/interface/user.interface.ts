@@ -8,12 +8,14 @@ export class User {
 // export interface UserData extends User {
 //   colegios: Array<string>;
 // }
+export interface horariosHechos{
+  
+}
 
 export interface Colegio {
   id: string;
   userAdmin: string;
   nombre: string;
-  // ejecutado: string;
   direccion: string;
   localidad: string;
   telefono: string;
@@ -21,14 +23,15 @@ export interface Colegio {
   inicioHorario: string;
   finalizacionHorario: string;
   botonesCrearColegioProgreso: number;
-  // botonesCrearColegio: number;
   usuariosExtensiones: Array<string>;
   aulas: Array<Aula>;
   turnos: Array<Turno>;
-  // modulos: Array<Modulo>;
   materias: Array<Materia>;
   cursos: Array<Curso>;
   profesores: Array<Profesor>;
+  // ejecutado: string;
+  // botonesCrearColegio: number;
+  // modulos: Array<Modulo>;
 }
 
 export class Turno {
@@ -94,11 +97,11 @@ export class Profesor {
     const dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
     dias.forEach((dia) => {
       mapDisponibilidad[dia] = {};
-      console.log(turnoArray)
+      // console.log(turnoArray)
       turnoArray.forEach((turno) => {
         mapDisponibilidad[dia][turno.turno] = {};
         turno.modulos.forEach((modulo) => {
-          mapDisponibilidad[dia][turno.turno][modulo.inicio] = true;
+          mapDisponibilidad[dia][turno.turno][modulo.inicio] = false;
         });
       });
     });
@@ -111,34 +114,62 @@ export class Profesor {
   // condiciones: Map<string, any>;
 }
 
-export class ProfesorReducido {
-  nombre: string;
-  valor: boolean;
-}
+// export class ProfesorReducido {
+//   nombre: string;
+//   valor: boolean;
+// }
 
 export class Materia {
   id: number = 0;
   nombre: string = '';
   cantidadDeModulosTotal: string = '';
-  // cantProfesores: number;
-  // espacioEntreDias: number;
-  // tipo: string;
-  // otro: string = "Se selecciono el tipo normal";
   cantidadMaximaDeModulosPorDia: string = '';
   curso: string = '';
-  // profesoresCapacitados: Array<string> = [];
   profesoresCapacitados: any = {};
-  constructor(profesorArray: Array<Profesor>) {
-    let mapProfesoresCapacitados: any = {};
+  aulasMateria: any = {};
+
+  constructor(profesorArray: Array<Profesor>, aulaArray: Array<Aula>) {
+    // let mapProfesoresCapacitados: any = {};
+    // let mapAulaMateria: any = {};
+    this.profesoresCapacitados = {};
+    this.aulasMateria = {};
+
     profesorArray.forEach((profesor) => {
-      mapProfesoresCapacitados[profesor.nombre] = false;
+      this.profesoresCapacitados[profesor.nombre + ' ' + profesor.apellido] = false;
     });
 
-    this.profesoresCapacitados = mapProfesoresCapacitados;
+    aulaArray.forEach((aula) => {
+      this.aulasMateria[aula.nombre] = false;
+    });
+
+    // this.profesoresCapacitados = mapProfesoresCapacitados;
+    // this.aulasMateria = mapAulaMateria;
+    // cantProfesores: number;
+    // espacioEntreDias: number;
+    // tipo: string;
+    // otro: string = "Se selecciono el tipo normal";
+    // profesoresCapacitados: Array<string> = [];
   }
+  // export class MateriaReducido{
+  //   nombre: string;
+  //   valor: boolean;
+  // }
 }
 
-// export class MateriaReducido{
-//   nombre: string;
-//   valor: boolean;
-// }
+export class TurnoHecho{
+  turnos:  Map<Number, String>;
+}
+
+export class DiaHecho{
+  turnos: Map<String, TurnoHecho>;
+}
+
+export class CursoHecho{
+  horarios: Map<String ,DiaHecho>;
+}
+
+export interface HorarioHecho{
+  horarios: Map<String, CursoHecho>;
+  horariosAulas: Map<String, CursoHecho>;
+  materiasProfesores: Map<String, String> 
+}

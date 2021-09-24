@@ -719,7 +719,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <td>
             <ul
               class="list-group shadow scrollbar scrollbar-primary"
-              style="max-height: 250px; overflow-y: scroll"
+              style="max-height: 315px; overflow-y: scroll"
             >
               <li
                 *ngFor="let curso of cursoArray"
@@ -1193,7 +1193,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <td>
             <ul
               class="list-group shadow"
-              style="max-height: 250px; overflow-y: scroll"
+              style="max-height: 350px; overflow-y: scroll"
             >
               <li
                 *ngFor="let profesor of profesorArray"
@@ -1306,34 +1306,67 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                   <table>
                     <thead>
                       <tr class="table-light">
-                        <th class="rounded" scope="col">Profesores</th>
+                        <th class="rounded-start" scope="col">Profesores</th>
+                        <th scope="col"></th>
+                        <th class="rounded-end" scope="col">Aulas</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let profesor of profesorArray">
+                      <tr>
                         <td>
                           <div
                             class="form-check mt-2"
-                            (click)="clickFormCheckMateria(profesor.nombre)"
+                            (click)="
+                              clickFormCheckMateriaProfesor(
+                                profesor.nombre + ' ' + profesor.apellido
+                              )
+                            "
+                            *ngFor="let profesor of profesorArray"
                           >
                             <input
                               class="form-check-input"
                               type="checkbox"
                               [(ngModel)]="
                                 selectedMateria.profesoresCapacitados[
-                                  profesor.nombre
+                                  profesor.nombre + ' ' + profesor.apellido
                                 ]
                               "
-                              id="{{ profesor.nombre }}"
+                              id="{{ profesor.nombre }} {{ profesor.apellido }}"
                             />
                             <!--profesoresArrayMaterias
                                (click)="clicked(profesor.nombre)" -->
 
                             <label
                               class="form-check-label"
-                              for="{{ profesor.nombre }}"
+                              for="{{ profesor.nombre }} {{
+                                profesor.apellido
+                              }}"
                             >
                               {{ profesor.nombre }} {{ profesor.apellido }}
+                            </label>
+                          </div>
+                        </td>
+                        <td></td>
+                        <td>
+                          <div
+                            class="form-check mt-2"
+                            (click)="clickFormCheckMateriaAula(aula.nombre)"
+                            *ngFor="let aula of aulaArray"
+                          >
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              [(ngModel)]="
+                                selectedMateria.aulasMateria[aula.nombre]
+                              "
+                              id="{{ aula.nombre }}"
+                            />
+
+                            <label
+                              class="form-check-label"
+                              for="{{ aula.nombre }}"
+                            >
+                              {{ aula.nombre }}
                             </label>
                           </div>
                         </td>
@@ -1361,7 +1394,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <td>
             <ul
               class="list-group shadow"
-              style="max-height: 250px; overflow-y: scroll"
+              style="max-height: 400px; overflow-y: scroll"
             >
               <li
                 *ngFor="let materia of materiaArray"
@@ -1419,23 +1452,107 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
   class="container mx-auto my-4"
   id="divFinalizar"
 >
-  <div class="col-md-6 mx-auto">
+  <div class="col-md-8 mx-auto">
     <div class="card mt-6">
       <div class="card-body">
+        <select
+              class="form-select"
+              aria-label="Default select example"
+              formControlName="Curso"
+              required
+              [(ngModel)] = 'cursoActual'
+
+            >
+              <option
+                value="{{ curso.nombre }}"
+                *ngFor="let curso of cursoArray"
+                class="bg-white"
+              >
+                {{ curso.nombre }}
+              </option>
+            </select>
+        <table class="table text-center">
+          <thead>
+            <tr class="table-light">
+              <th class="rounded-start" scope="col">Horarios</th>
+              <th scope="col"></th>
+              <th scope="col">Lunes</th>
+              <th scope="col">Martes</th>
+              <th scope="col">Miercoles</th>
+              <th scope="col">Jueves</th>
+              <th class="rounded-end" scope="col">Viernes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- MAÑANA -->
+            <tr *ngIf="12 >= horaInicial && horaInicial >= 5">
+              <td colspan="7" class="table-active">INICIO ACTIVIDADES</td>
+            </tr>
+            <tr *ngFor="let turno of turnoArray[0].modulos" class="bg-white">
+              <td colspan="2" class="text-black">
+                {{ turno.inicio }} - {{ turno.final }}
+              </td>
+              <td colspan="1" class="text-black">
+                <!--{{ this.horariosHechos[1].horarios['4CSTC']['lunes']['manana']['1'] }}-->
+              </td>
+            </tr>
+
+            <!-- TARDE -->
+            <tr *ngIf="18 >= horaFinal && horaFinal > 12">
+              <td colspan="7" class="table-active"></td>
+            </tr>
+
+            <tr *ngFor="let turno of turnoArray[1].modulos" class="bg-white">
+              <td colspan="2" class="text-black">
+                {{ turno.inicio }} - {{ turno.final }}
+              </td>
+            </tr>
+
+            <!-- NOCHE -->
+            <tr *ngIf="horaFinal > 18">
+              <td colspan="7" class="table-active"></td>
+            </tr>
+
+            <tr *ngFor="let turno of turnoArray[2].modulos" class="bg-white">
+              <td colspan="2" class="text-black">
+                {{ turno.inicio }} - {{ turno.final }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <div class="card-title">
-          <h5>
+          <h5 class="my-3">
             <p>
-              GRACIAS POR OPTIMIZAR TU TIEMPO CON S4S. <br />
-              A CONTINUACION FINALIZAREMOS CON EL PROCESO.
+              Gracias por utilizar S4S. <br />
+              A continuacion veras los horarios generados.
             </p>
           </h5>
+
+          <button class="btn btn-primary" type="button" disabled>
+            <span
+              class="spinner-grow spinner-grow-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            Generando Horarios (Esto podria demorar)...
+          </button>
         </div>
+
+        <ng-template #bloquearBoton5>
+          <span>Genera tus horarios presionando el boton</span>
+        </ng-template>
+
         <div class="d-grid">
           <button (click)="finalizar()" class="btn btn-primary btn-lg mt-2">
-            FINALIZAR
+            Generar mis horarios ya!
           </button>
         </div>
       </div>
+      <ng-template #presionadoFinalizar>
+        <div class="d-flex justify-content-center my-5">
+          <div class="spinner-border" role="status"></div>
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>
