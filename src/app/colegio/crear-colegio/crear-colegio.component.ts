@@ -61,6 +61,7 @@ export class CrearColegioComponent implements OnInit {
   nombreMateria: string;
   aulaMateria: string;
   horariosHechos: HorarioHecho;
+  cursoActual: string;
   // horarios: Array<string> = [];
   // minutos: number;
   // horas: number;
