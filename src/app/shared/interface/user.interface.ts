@@ -8,9 +8,6 @@ export class User {
 // export interface UserData extends User {
 //   colegios: Array<string>;
 // }
-export interface horariosHechos{
-  
-}
 
 export interface Colegio {
   id: string;
@@ -154,22 +151,4 @@ export class Materia {
   //   nombre: string;
   //   valor: boolean;
   // }
-}
-
-export class TurnoHecho{
-  turnos:  Map<Number, String>;
-}
-
-export class DiaHecho{
-  turnos: Map<String, TurnoHecho>;
-}
-
-export class CursoHecho{
-  horarios: Map<String ,DiaHecho>;
-}
-
-export interface HorarioHecho{
-  horarios: Map<String, CursoHecho>;
-  horariosAulas: Map<String, CursoHecho>;
-  materiasProfesores: Map<String, String> 
 }

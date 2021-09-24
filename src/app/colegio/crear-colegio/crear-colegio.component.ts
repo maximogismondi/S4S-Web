@@ -13,7 +13,6 @@ import {
   Profesor,
   Turno,
   Modulo,
-  HorarioHecho,
   // ProfesorReducido,
   // HorarioModulo,
   // MateriaReducido,
@@ -39,7 +38,7 @@ export class CrearColegioComponent implements OnInit {
   turnoSeleccionado: string;
   horaInicial: number;
   horaFinal: number;
-  botonesCrearColegio: number = 1;
+  botonesCrearColegio: number = 6;
   botonesCrearColegioProgreso: number;
   disponibilidadProfesor: boolean = false;
   disponibilidadProfesorSemana: Array<Array<Array<boolean>>> = [];
@@ -60,8 +59,11 @@ export class CrearColegioComponent implements OnInit {
   horariosFinal: Array<string> = [];
   nombreMateria: string;
   aulaMateria: string;
-  horariosHechos: HorarioHecho;
+  horariosHechos: any = {};
+  horariosAulasHechos: any = {};
+  materiasProfesoresHechos: any = {};
   cursoActual: string;
+  dias = ["lunes","martes","miercoles","jueves","viernes"];
   // horarios: Array<string> = [];
   // minutos: number;
   // horas: number;
@@ -139,6 +141,7 @@ export class CrearColegioComponent implements OnInit {
               this.profesorArray = school.profesores;
 
               this.materiaArray = school.materias;
+
               if (!this.selectedProfesor) {
                 this.selectedProfesor = new Profesor(this.turnoArray);
               }
@@ -147,6 +150,9 @@ export class CrearColegioComponent implements OnInit {
                   this.profesorArray,
                   this.aulaArray
                 );
+              }
+              if (this.cursoArray.length > 0) {
+                this.cursoActual = this.cursoArray[0].nombre;
               }
 
               /* this.profesoresArrayMaterias = [];
@@ -168,19 +174,6 @@ export class CrearColegioComponent implements OnInit {
             })
           )
           .subscribe();
-
-        // this.afs
-        // .collection('horariosHechos', (ref) =>
-        //   ref.where('id', '==', this.nombreDocumento)
-        // )
-        // .snapshotChanges()
-        // .pipe(
-        //   map((horariosFinalizados) => {
-        //     const xd=horariosFinalizados[0].payload.doc.data() as HorariosHechos;
-        //     //this.horariosFinal=xd.horarios;
-        //   })
-        //   )
-        //   .subscribe();
       }
     });
   }
@@ -803,24 +796,43 @@ export class CrearColegioComponent implements OnInit {
 
   // _______________________________________FINALIZAR____________________________________________________________
   botonPresionado: boolean = false;
+  horarioGenerado: boolean = false;
   async finalizar() {
     this.http
       .get(
         'https://s4s-algoritmo.herokuapp.com/algoritmo?idColegio=' +
-          this.nombreDocumento,
+          this.nombreColegio,
         { responseType: 'text' }
       )
-      .subscribe((data) => {
-        console.log(data);
+      .subscribe((fecha) => {
         this.afs
-          .doc('horariosHechos/1ej5mYm1XSUC5F6WKjwW3QioCRS4PEW6sD3iCUu4Zs9R6mIecY6cwQVjmOjvjq/horarios/2021-09-23 15:48:00')
-          .get().toPromise().then(horariosHechos =>{
-            const schoolReady  = horariosHechos.data() as any;
-            console.log(schoolReady)
-            // this.horariosHechos = schoolReady.get('2021-09-18 06:29:32.153828')
-            // console.log(schoolReady.forEach(()))
-          })
-          
+          .doc('horariosHechos/' + this.nombreColegio + '/horarios/' + fecha)
+          .snapshotChanges()
+          .pipe(
+            map((horariosReady) => {
+              if (horariosReady.payload.exists) {
+                this.horarioGenerado = true;
+                this.horariosHechos = horariosReady.payload.get("horarios")
+                this.horariosAulasHechos = horariosReady.payload.get("horariosAulas")
+                this.materiasProfesoresHechos = horariosReady.payload.get("materiasProfesores")
+
+                this.cursoArray.forEach(curso => {
+                  this.dias.forEach(dia => {
+                    this.turnoArray.forEach(turno=>{
+                      turno.modulos.forEach((modulo) => {
+                        this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] = this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1].split('-')[0]
+                        if (this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] == "Hueco"){
+                          this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] = ""
+                        }
+                      })
+                    });
+                  });
+                });
+              }
+              // console.log(this.horariosHechos["4CSTC"]["lunes"]["manana"][3])
+            })
+          )
+          .subscribe();
       });
     this.botonPresionado = true;
   }
