@@ -153,7 +153,7 @@ export class CrearColegioComponent implements OnInit {
                   this.aulaArray
                 );
               }
-              if (!this.cursoActual) {
+              if (this.cursoArray.length > 0) {
                 this.cursoActual = this.cursoArray[0].nombre;
               }
 
