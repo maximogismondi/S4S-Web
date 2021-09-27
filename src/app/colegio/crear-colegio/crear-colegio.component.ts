@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -26,7 +26,7 @@ import {
   providers: [AuthService],
 })
 export class CrearColegioComponent implements OnInit {
-  nombreColegio: string;
+  nombreColegio: any;
   // nombreDocumento: string;
   duracionModulo: number;
   inicioHorario: string;
@@ -88,10 +88,13 @@ export class CrearColegioComponent implements OnInit {
     private fb: FormBuilder,
     private authSvc: AuthService,
     private afs: AngularFirestore,
-    private http: HttpClient
+    private http: HttpClient,
+    private activatedRoute: ActivatedRoute
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
+      
       if (user) {
+        this.nombreColegio = this.activatedRoute.snapshot.paramMap.get("nombreColegio")
         // this.afs
         //   .collection('schools')
         //   .get()
@@ -103,13 +106,12 @@ export class CrearColegioComponent implements OnInit {
 
         this.afs
           .collection('schools', (ref) =>
-            ref.where('userAdmin', '==', user.uid ).where('nombre', '==' , escuela)
+            ref.where('nombre', '==' , this.nombreColegio)
           )
           .snapshotChanges()
           .pipe(
             map((schools) => {
               const school = schools[0].payload.doc.data() as Colegio;
-              this.nombreColegio = school.nombre;
               // this.nombreDocumento = school.id;
               this.duracionModulo = school.duracionModulo;
               this.inicioHorario = school.inicioHorario;
@@ -814,7 +816,7 @@ export class CrearColegioComponent implements OnInit {
   async finalizar() {
     this.http
       .get(
-        'https://s4s-algoritmo.herokuapp.com/algoritmo?idColegio=' +
+        'http://127.0.0.1:5000/algoritmo?idColegio=' +
           this.nombreColegio,
         { responseType: 'text' }
       )

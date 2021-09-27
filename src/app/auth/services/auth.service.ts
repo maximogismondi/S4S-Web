@@ -229,7 +229,7 @@ export class AuthService {
       }
       else{
         this.SchoolData(school);
-        this.router.navigate(['/crear-colegio']);
+        this.router.navigate(["/"+school.nombre+'/crear-colegio']);
       }
 
       // confirm("Poner los valores que se piden");

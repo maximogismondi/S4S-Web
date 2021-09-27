@@ -75,7 +75,7 @@ export class MenuPrincipalComponent implements OnInit {
   }
 
   irCrearColegio(escuela: string) {
-    this.router.navigate(['/crear-colegio']);
+    this.router.navigate(["/"+escuela+'/crear-colegio']);
   }
 
   async deleteSchool() {
