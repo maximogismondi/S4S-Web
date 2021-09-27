@@ -18,19 +18,27 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarColor02">
-      <ul class="navbar-nav me-auto">
+      <!-- <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link">Scheduler For School</a>
+          <a class="nav-link">Schedulers For Schools</a>
         </li>
-      </ul>
+      </ul> -->
       <ul class="navbar-nav mx-auto"></ul>
-      <ul class="navbar-nav" *ngIf="userData && userData.emailVerified">
-        <li class="nav-item me-3">
-          <a class="nav-link" href="/menu-principal">{{userData.displayName}}
+      <ul class="navbar-nav mx-3" *ngIf="userData && userData.emailVerified">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{userData.displayName}}
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="" (click)="onLogout()">Cerrar Sesion</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/menu-principal">Mis Colegios</a></li>
+            <li>
+              <div class="form-check form-switch ms-2">
+                <input class="form-check-input mt-1" (click)="changeTheme()" type="checkbox" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Cambiar Tema</label>
+              </div></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="" (click)="onLogout()">Cerrar Sesion</a></li>
+          </ul>
         </li>
       </ul>
 

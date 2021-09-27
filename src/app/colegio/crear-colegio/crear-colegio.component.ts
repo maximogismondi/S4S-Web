@@ -17,6 +17,7 @@ import {
   // HorarioModulo,
   // MateriaReducido,
 } from 'src/app/shared/interface/user.interface';
+// import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'app-crear-colegio',
@@ -63,7 +64,7 @@ export class CrearColegioComponent implements OnInit {
   horariosAulasHechos: any = {};
   materiasProfesoresHechos: any = {};
   cursoActual: string;
-  dias = ["lunes","martes","miercoles","jueves","viernes"];
+  dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
   botonPresionado: boolean = false;
   horarioGenerado: boolean = false;
   // horarios: Array<string> = [];
@@ -91,6 +92,15 @@ export class CrearColegioComponent implements OnInit {
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
+        // this.afs
+        //   .collection('schools')
+        //   .get()
+        //   .then((escuelas: { docs: { values: string } }[]) => {
+        //     escuelas.forEach((escuela: { docs: { values: string } }) => {
+        //       this.nombresDeEscuelas.push(escuela.docs.values);
+        //     });
+        //   });
+
         this.afs
           .collection('schools', (ref) =>
             ref.where('userAdmin', '==', user.uid)
@@ -816,19 +826,32 @@ export class CrearColegioComponent implements OnInit {
             map((horariosReady) => {
               if (horariosReady.payload.exists) {
                 this.horarioGenerado = true;
-                this.horariosHechos = horariosReady.payload.get("horarios")
-                this.horariosAulasHechos = horariosReady.payload.get("horariosAulas")
-                this.materiasProfesoresHechos = horariosReady.payload.get("materiasProfesores")
+                this.horariosHechos = horariosReady.payload.get('horarios');
+                this.horariosAulasHechos =
+                  horariosReady.payload.get('horariosAulas');
+                this.materiasProfesoresHechos =
+                  horariosReady.payload.get('materiasProfesores');
 
-                this.cursoArray.forEach(curso => {
-                  this.dias.forEach(dia => {
-                    this.turnoArray.forEach(turno=>{
+                this.cursoArray.forEach((curso) => {
+                  this.dias.forEach((dia) => {
+                    this.turnoArray.forEach((turno) => {
                       turno.modulos.forEach((modulo) => {
-                        this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] = this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1].split('-')[0]
-                        if (this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] == "Hueco"){
-                          this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] = ""
+                        this.horariosHechos[curso.nombre][dia][turno.turno][
+                          turno.modulos.indexOf(modulo) + 1
+                        ] =
+                          this.horariosHechos[curso.nombre][dia][turno.turno][
+                            turno.modulos.indexOf(modulo) + 1
+                          ].split('-')[0];
+                        if (
+                          this.horariosHechos[curso.nombre][dia][turno.turno][
+                            turno.modulos.indexOf(modulo) + 1
+                          ] == 'Hueco'
+                        ) {
+                          this.horariosHechos[curso.nombre][dia][turno.turno][
+                            turno.modulos.indexOf(modulo) + 1
+                          ] = '';
                         }
-                      })
+                      });
                     });
                   });
                 });
