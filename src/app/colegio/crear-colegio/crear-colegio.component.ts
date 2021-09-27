@@ -103,7 +103,7 @@ export class CrearColegioComponent implements OnInit {
 
         this.afs
           .collection('schools', (ref) =>
-            ref.where('userAdmin', '==', user.uid)
+            ref.where('userAdmin', '==', user.uid ).where('nombre', '==' , escuela)
           )
           .snapshotChanges()
           .pipe(

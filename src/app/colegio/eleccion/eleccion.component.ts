@@ -16,6 +16,7 @@ export class EleccionComponent implements OnInit {
   fueACrear:boolean = false;
   fueAUnirse:boolean = false;
   provinciasArgentina:any;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,

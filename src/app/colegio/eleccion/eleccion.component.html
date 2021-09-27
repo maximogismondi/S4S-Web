@@ -2,23 +2,24 @@
   <div class="card">
     <div class="card-body">
       <!-- <h1 class="text-center mt-4">COLEGIO</h1> -->
-      <h3 class="text-center mt-3">Scheduler For School</h3>
+      <h3 class="text-center mt-3">Schedulers For Schools</h3>
       <!-- id="botonesEleccionCrear" -->
       <div *ngIf="fueACrear == false">
         <div class="d-grid">
           <button
-            *ngIf="nombreColegio == null; else bloquearBoton"
+            
             (click)="irCrear()"
             class="btn btn-primary btn-lg mt-4 py-4"
           >
             CREAR
           </button>
         </div>
+        <!-- *ngIf="nombreColegio == null; else bloquearBoton"
         <ng-template #bloquearBoton>
           <button class="btn btn-primary disabled btn-lg mt-4 py-4">
             CREAR
           </button>
-        </ng-template>
+        </ng-template> -->
       </div>
       <!--id="crear" style="display: none"-->
       <div *ngIf="fueACrear">
