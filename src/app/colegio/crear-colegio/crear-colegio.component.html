@@ -1501,7 +1501,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                 {{ turno.inicio }} - {{ turno.final }}
               </td>
               <td *ngFor="let dia of dias" colspan="1" class="text-black">
-                {{ horariosHechos[cursoActual][dia]['manana'][turnoArray[0].modulos.indexOf(turno) + 1]}}
+                {{ horariosHechos[cursoActual][dia]['manana'][turnoArray[0].modulos.indexOf(turno)]}}
               </td>
 
             </tr>
@@ -1516,7 +1516,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                 {{ turno.inicio }} - {{ turno.final }}
               </td>
               <td *ngFor="let dia of dias" colspan="1" class="text-black">
-                {{ horariosHechos[cursoActual][dia]['tarde'][turnoArray[1].modulos.indexOf(turno) + 1]}}
+                {{ horariosHechos[cursoActual][dia]['tarde'][turnoArray[1].modulos.indexOf(turno)]}}
               </td>
             </tr>
 
@@ -1530,7 +1530,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                 {{ turno.inicio }} - {{ turno.final }}
               </td>
               <td *ngFor="let dia of dias" colspan="1" class="text-black">
-                {{ horariosHechos[cursoActual][dia]['noche'][turnoArray[2].modulos.indexOf(turno) + 1]}}
+                {{ horariosHechos[cursoActual][dia]['noche'][turnoArray[2].modulos.indexOf(turno)]}}
               </td>
             </tr>
           </tbody>

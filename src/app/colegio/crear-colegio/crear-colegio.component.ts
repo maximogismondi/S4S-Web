@@ -63,7 +63,7 @@ export class CrearColegioComponent implements OnInit {
   horariosAulasHechos: any = {};
   materiasProfesoresHechos: any = {};
   cursoActual: string;
-  dias = ["lunes","martes","miercoles","jueves","viernes"];
+  dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
   botonPresionado: boolean = false;
   horarioGenerado: boolean = false;
   // horarios: Array<string> = [];
@@ -815,28 +815,81 @@ export class CrearColegioComponent implements OnInit {
           .pipe(
             map((horariosReady) => {
               if (horariosReady.payload.exists) {
+                console.log('ejecuta el obvserver');
                 this.horarioGenerado = true;
-                this.horariosHechos = horariosReady.payload.get("horarios")
-                this.horariosAulasHechos = horariosReady.payload.get("horariosAulas")
-                this.materiasProfesoresHechos = horariosReady.payload.get("materiasProfesores")
+                let horariosHechos = horariosReady.payload.get('horarios');
+                let horariosAulasHechos =
+                  horariosReady.payload.get('horariosAulas');
+                let materiasProfesoresHechos =
+                  horariosReady.payload.get('materiasProfesores');
 
-                this.cursoArray.forEach(curso => {
-                  this.dias.forEach(dia => {
-                    this.turnoArray.forEach(turno=>{
+                this.cursoArray.forEach((curso) => {
+                  this.horariosHechos[curso.nombre] = {};
+                  this.dias.forEach((dia) => {
+                    this.horariosHechos[curso.nombre][dia] = {};
+                    this.turnoArray.forEach((turno) => {
+                      this.horariosHechos[curso.nombre][dia][turno.turno] = [];
                       turno.modulos.forEach((modulo) => {
-                        this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] = this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1].split('-')[0]
-                        if (this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] == "Hueco"){
-                          this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] = ""
+                        if (
+                          horariosHechos[curso.nombre][dia][turno.turno][
+                            turno.modulos.indexOf(modulo) + 1
+                          ].split('-')[0] == 'Hueco'
+                        ) {
+                          this.horariosHechos[curso.nombre][dia][
+                            turno.turno
+                          ].push('');
+                        } else {
+                          this.horariosHechos[curso.nombre][dia][
+                            turno.turno
+                          ].push(
+                            horariosHechos[curso.nombre][dia][turno.turno][
+                              turno.modulos.indexOf(modulo) + 1
+                            ].split('-')[0]
+                          );
                         }
-                      })
+                      });
                     });
                   });
                 });
+
+                this.cursoArray.forEach((curso) => {
+                  this.horariosAulasHechos[curso.nombre] = {};
+                  this.dias.forEach((dia) => {
+                    this.horariosAulasHechos[curso.nombre][dia] = {};
+                    this.turnoArray.forEach((turno) => {
+                      this.horariosAulasHechos[curso.nombre][dia][turno.turno] =
+                        [];
+                      turno.modulos.forEach((modulo) => {
+                        if (
+                          horariosAulasHechos[curso.nombre][dia][turno.turno][
+                            turno.modulos.indexOf(modulo) + 1
+                          ] == 'Hueco'
+                        ) {
+                          this.horariosAulasHechos[curso.nombre][dia][
+                            turno.turno
+                          ].push('');
+                        } else {
+                          this.horariosAulasHechos[curso.nombre][dia][
+                            turno.turno
+                          ].push(
+                            horariosAulasHechos[curso.nombre][dia][turno.turno][
+                              turno.modulos.indexOf(modulo) + 1
+                            ]
+                          );
+                        }
+                      });
+                    });
+                  });
+                });
+
+                this.materiaArray.forEach((materia) => {
+                  this.materiasProfesoresHechos[materia.nombre] =
+                    materiasProfesoresHechos[materia.nombre];
+                });
+                this.horarioGenerado = true;
               }
-              // console.log(this.horariosHechos["4CSTC"]["lunes"]["manana"][3])
             })
-          )
-          .subscribe();
+          ).subscribe();
       });
     this.botonPresionado = true;
   }
