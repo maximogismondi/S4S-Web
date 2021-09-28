@@ -15,32 +15,32 @@
         </thead>
         <tbody>
           <!-- MAÑANA -->
-          <tr *ngIf="12 >= horaInicial && horaInicial >= 5">
+          <tr *ngIf="12 >= colegioSvc.horaInicial && colegioSvc.horaInicial >= 5">
             <td colspan="7" class="table-active">INICIO ACTIVIDADES</td>
           </tr>
-          <tr *ngFor="let turno of turnoArray[0].modulos" class="bg-white">
+          <tr *ngFor="let turno of colegioSvc.turnoArray[0].modulos" class="bg-white">
             <td colspan="2" class="text-black">
               {{ turno.inicio }} - {{ turno.final }}
             </td>
           </tr>
 
           <!-- TARDE -->
-          <tr *ngIf="18 >= horaFinal && horaFinal > 12">
+          <tr *ngIf="18 >= colegioSvc.horaFinal && colegioSvc.horaFinal > 12">
             <td colspan="7" class="table-active"></td>
           </tr>
 
-          <tr *ngFor="let turno of turnoArray[1].modulos" class="bg-white">
+          <tr *ngFor="let turno of colegioSvc.turnoArray[1].modulos" class="bg-white">
             <td colspan="2" class="text-black">
               {{ turno.inicio }} - {{ turno.final }}
             </td>
           </tr>
 
           <!-- NOCHE -->
-          <tr *ngIf="horaFinal > 18">
+          <tr *ngIf="colegioSvc.horaFinal > 18">
             <td colspan="7" class="table-active"></td>
           </tr>
 
-          <tr *ngFor="let turno of turnoArray[2].modulos" class="bg-white">
+          <tr *ngFor="let turno of colegioSvc.turnoArray[2].modulos" class="bg-white">
             <td colspan="2" class="text-black">
               {{ turno.inicio }} - {{ turno.final }}
             </td>

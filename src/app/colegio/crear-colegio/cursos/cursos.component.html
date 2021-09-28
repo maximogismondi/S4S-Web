@@ -15,14 +15,14 @@
                 <input
                   type="text"
                   placeholder="Nombre"
-                  [(ngModel)]="selectedCurso.nombre"
+                  [(ngModel)]="colegioSvc.selectedCurso.nombre"
                   class="form-control"
                 />
 
                 <label class="mt-2">Turno preferido</label>
                 <select
                   class="form-select"
-                  [(ngModel)]="selectedCurso.turnoPreferido"
+                  [(ngModel)]="colegioSvc.selectedCurso.turnoPreferido"
                 >
                   <option value="manana">Mañana</option>
                   <option value="tarde">Tarde</option>
@@ -33,7 +33,7 @@
                   type="number"
                   min="1"
                   placeholder="Cantidad de alumnos"
-                  [(ngModel)]="selectedCurso.cantAlumnos"
+                  [(ngModel)]="colegioSvc.selectedCurso.cantAlumnos"
                   class="form-control mt-2"
                 />
 
@@ -41,7 +41,7 @@
                   Añadir / Editar
                 </button>
                 <button
-                  *ngIf="selectedCurso.id != 0"
+                  *ngIf="colegioSvc.selectedCurso.id != 0"
                   class="btn btn-danger mt-4 ms-4"
                   (click)="deleteCurso()"
                 >
@@ -57,10 +57,10 @@
             style="max-height: 315px; overflow-y: scroll"
           >
             <li
-              *ngFor="let curso of cursoArray"
+              *ngFor="let curso of colegioSvc.cursoArray"
               class="list-group-item list-group-item-action"
               (click)="openForEditCurso(curso)"
-              [class.active]="curso == selectedCurso"
+              [class.active]="curso == colegioSvc.selectedCurso"
             >
               <span>{{ curso.nombre }}</span>
 
@@ -74,7 +74,7 @@
         <td colspan="2">
           <div class="d-grid">
             <button
-              *ngIf="botonesCrearColegioProgreso <= 3 && cursoArray.length != 0"
+              *ngIf="colegioSvc.botonesCrearColegioProgreso <= 3 && colegioSvc.cursoArray.length != 0"
               (click)="goFormProfesor()"
               class="btn btn-primary btn-lg mt-4"
             >

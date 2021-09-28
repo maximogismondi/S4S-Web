@@ -2,8 +2,8 @@
   <table class="table">
     <thead>
       <tr class="table-light">
-        <th scope="col" class="rounded-start">Insertar Profesores</th>
-        <th scope="col" class="rounded-end">Profesores</th>
+        <th scope="col" class="rounded-start">Insertar colegioSvc.profesores</th>
+        <th scope="col" class="rounded-end">colegioSvc.profesores</th>
       </tr>
     </thead>
     <tbody>
@@ -13,7 +13,7 @@
             <div class="card-body">
               <div
                 *ngIf="
-                  disponibilidadProfesor == false;
+                colegioSvc.disponibilidadProfesor == false;
                   else disponibilidadTabla
                 "
                 class="form-group"
@@ -21,14 +21,14 @@
                 <input
                   type="text"
                   placeholder="Nombre"
-                  [(ngModel)]="selectedProfesor.nombre"
+                  [(ngModel)]="colegioSvc.selectedProfesor.nombre"
                   class="form-control"
                 />
 
                 <input
                   type="text"
                   placeholder="Apellido"
-                  [(ngModel)]="selectedProfesor.apellido"
+                  [(ngModel)]="colegioSvc.selectedProfesor.apellido"
                   class="form-control"
                 />
 
@@ -36,7 +36,7 @@
                   type="number"
                   placeholder="Dni"
                   min="1000000"
-                  [(ngModel)]="selectedProfesor.dni"
+                  [(ngModel)]="colegioSvc.selectedProfesor.dni"
                   class="form-control"
                 />
 
@@ -56,7 +56,7 @@
                   Añadir / Editar
                 </button>
                 <button
-                  *ngIf="selectedProfesor.id != 0"
+                  *ngIf="colegioSvc.selectedProfesor.id != 0"
                   class="btn btn-danger mt-4 ms-4"
                   (click)="deleteProfesor()"
                 >
@@ -81,7 +81,7 @@
                   </thead>
                   <tbody>
                     <tr
-                      *ngFor="let modulo of turnoArray[0].modulos"
+                      *ngFor="let modulo of colegioSvc.turnoArray[0].modulos"
                       class="bg-secondary"
                     >
                       <td colspan="2" class="bg-light text-black">
@@ -99,7 +99,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['lunes'][
+                            colegioSvc.selectedProfesor.disponibilidad['lunes'][
                                 'manana'
                               ][modulo.inicio]
                             "
@@ -118,7 +118,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['martes'][
+                            colegioSvc.selectedProfesor.disponibilidad['martes'][
                                 'manana'
                               ][modulo.inicio]
                             "
@@ -137,7 +137,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['miercoles'][
+                            colegioSvc.selectedProfesor.disponibilidad['miercoles'][
                                 'manana'
                               ][modulo.inicio]
                             "
@@ -156,7 +156,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['jueves'][
+                            colegioSvc.selectedProfesor.disponibilidad['jueves'][
                                 'manana'
                               ][modulo.inicio]
                             "
@@ -175,7 +175,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['viernes'][
+                            colegioSvc.selectedProfesor.disponibilidad['viernes'][
                                 'manana'
                               ][modulo.inicio]
                             "
@@ -185,7 +185,7 @@
                     </tr>
 
                     <tr
-                      *ngFor="let modulo of turnoArray[1].modulos"
+                      *ngFor="let modulo of colegioSvc.turnoArray[1].modulos"
                       class="bg-secondary"
                     >
                       <td colspan="2" class="bg-light text-black">
@@ -203,7 +203,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['lunes']['tarde'][
+                            colegioSvc.selectedProfesor.disponibilidad['lunes']['tarde'][
                                 modulo.inicio
                               ]
                             "
@@ -222,7 +222,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['martes'][
+                            colegioSvc.selectedProfesor.disponibilidad['martes'][
                                 'tarde'
                               ][modulo.inicio]
                             "
@@ -241,7 +241,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['miercoles'][
+                            colegioSvc.selectedProfesor.disponibilidad['miercoles'][
                                 'tarde'
                               ][modulo.inicio]
                             "
@@ -260,7 +260,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['jueves'][
+                            colegioSvc.selectedProfesor.disponibilidad['jueves'][
                                 'tarde'
                               ][modulo.inicio]
                             "
@@ -279,7 +279,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['viernes'][
+                            colegioSvc.selectedProfesor.disponibilidad['viernes'][
                                 'tarde'
                               ][modulo.inicio]
                             "
@@ -289,7 +289,7 @@
                     </tr>
 
                     <tr
-                      *ngFor="let modulo of turnoArray[2].modulos"
+                      *ngFor="let modulo of colegioSvc.turnoArray[2].modulos"
                       class="bg-secondary"
                     >
                       <td colspan="2" class="bg-light text-black">
@@ -307,7 +307,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['lunes']['noche'][
+                            colegioSvc.selectedProfesor.disponibilidad['lunes']['noche'][
                                 modulo.inicio
                               ]
                             "
@@ -326,7 +326,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['martes'][
+                            colegioSvc.selectedProfesor.disponibilidad['martes'][
                                 'noche'
                               ][modulo.inicio]
                             "
@@ -345,7 +345,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['miercoles'][
+                            colegioSvc.selectedProfesor.disponibilidad['miercoles'][
                                 'noche'
                               ][modulo.inicio]
                             "
@@ -364,7 +364,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['jueves'][
+                            colegioSvc.selectedProfesor.disponibilidad['jueves'][
                                 'noche'
                               ][modulo.inicio]
                             "
@@ -383,7 +383,7 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedProfesor.disponibilidad['viernes'][
+                            colegioSvc.selectedProfesor.disponibilidad['viernes'][
                                 'noche'
                               ][modulo.inicio]
                             "
@@ -409,10 +409,10 @@
             style="max-height: 350px; overflow-y: scroll"
           >
             <li
-              *ngFor="let profesor of profesorArray"
+              *ngFor="let profesor of colegioSvc.profesorArray"
               class="list-group-item list-group-item-action"
               (click)="openForEditProfesor(profesor)"
-              [class.active]="profesor == selectedProfesor"
+              [class.active]="profesor == colegioSvc.selectedProfesor"
             >
               <span>{{ profesor.nombre }} {{ profesor.apellido }}</span>
             </li>
@@ -424,7 +424,7 @@
           <div class="d-grid">
             <button
               *ngIf="
-                botonesCrearColegioProgreso <= 4 && profesorArray.length != 0
+                colegioSvc.botonesCrearColegioProgreso <= 4 && colegioSvc.profesorArray.length != 0
               "
               (click)="goFormMateria()"
               class="btn btn-primary btn-lg mt-4"

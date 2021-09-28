@@ -14,7 +14,7 @@
               <div class="form-group">
                 <input
                   type="text"
-                  [(ngModel)]="selectedMateria.nombre"
+                  [(ngModel)]="colegioSvc.selectedMateria.nombre"
                   placeholder="Nombre"
                   class="form-control"
                 />
@@ -22,7 +22,7 @@
                 <input
                   type="number"
                   min="1"
-                  [(ngModel)]="selectedMateria.cantidadDeModulosTotal"
+                  [(ngModel)]="colegioSvc.selectedMateria.cantidadDeModulosTotal"
                   placeholder="Cantidad de modulos total"
                   class="form-control"
                 />
@@ -30,7 +30,7 @@
                 <input
                   type="number"
                   min="1"
-                  [(ngModel)]="selectedMateria.cantidadMaximaDeModulosPorDia"
+                  [(ngModel)]="colegioSvc.selectedMateria.cantidadMaximaDeModulosPorDia"
                   placeholder="Cantidad maxima de modulos por dia"
                   class="form-control"
                 />
@@ -39,10 +39,10 @@
                   <label class="mt-2">Curso</label>
                   <select
                     class="form-select"
-                    [(ngModel)]="selectedMateria.curso"
+                    [(ngModel)]="colegioSvc.selectedMateria.curso"
                   >
                     <option
-                      *ngFor="let curso of cursoArray"
+                      *ngFor="let curso of colegioSvc.cursoArray"
                       value="{{ curso.nombre }}"
                     >
                       {{ curso.nombre }}
@@ -50,11 +50,11 @@
                   </select>
                 </p>
 
-                <!-- <label class="mt-2">Profesores:</label> -->
+                <!-- <label class="mt-2">colegioSvc.profesores:</label> -->
                 <table>
                   <thead>
                     <tr class="table-light">
-                      <th class="rounded-start" scope="col">Profesores</th>
+                      <th class="rounded-start" scope="col">colegioSvc.profesores</th>
                       <th scope="col"></th>
                       <th class="rounded-end" scope="col">Aulas</th>
                     </tr>
@@ -69,19 +69,19 @@
                               profesor.nombre + ' ' + profesor.apellido
                             )
                           "
-                          *ngFor="let profesor of profesorArray"
+                          *ngFor="let profesor of colegioSvc.profesorArray"
                         >
                           <input
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedMateria.profesoresCapacitados[
+                              colegioSvc.selectedMateria.profesoresCapacitados[
                                 profesor.nombre + ' ' + profesor.apellido
                               ]
                             "
                             id="{{ profesor.nombre }} {{ profesor.apellido }}"
                           />
-                          <!--profesoresArrayMaterias
+                          <!--colegioSvc.profesoresArrayMaterias
                                (click)="clicked(profesor.nombre)" -->
 
                           <label
@@ -97,13 +97,13 @@
                         <div
                           class="form-check mt-2"
                           (click)="clickFormCheckMateriaAula(aula.nombre)"
-                          *ngFor="let aula of aulaArray"
+                          *ngFor="let aula of colegioSvc.aulaArray"
                         >
                           <input
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                              selectedMateria.aulasMateria[aula.nombre]
+                            colegioSvc.selectedMateria.aulasMateria[aula.nombre]
                             "
                             id="{{ aula.nombre }}"
                           />
@@ -127,7 +127,7 @@
                   Añadir / Editar
                 </button>
                 <button
-                  *ngIf="selectedMateria.id != 0"
+                  *ngIf="colegioSvc.selectedMateria.id != 0"
                   class="btn btn-danger mt-4 ms-4"
                   (click)="deleteMateria()"
                 >
@@ -143,10 +143,10 @@
             style="max-height: 400px; overflow-y: scroll"
           >
             <li
-              *ngFor="let materia of materiaArray"
+              *ngFor="let materia of colegioSvc.materiaArray"
               class="list-group-item list-group-item-action"
               (click)="openForEditMateria(materia)"
-              [class.active]="materia == selectedMateria"
+              [class.active]="materia == colegioSvc.selectedMateria"
             >
               <span>{{ materia.nombre }}</span>
             </li>
@@ -158,7 +158,7 @@
           <div class="d-grid">
             <button
               *ngIf="
-                botonesCrearColegioProgreso <= 5 && materiaArray.length != 0
+                colegioSvc.botonesCrearColegioProgreso <= 5 && colegioSvc.materiaArray.length != 0
               "
               (click)="goFormFinalizar()"
               class="btn btn-primary btn-lg mt-4"

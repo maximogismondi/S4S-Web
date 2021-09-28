@@ -1,7 +1,7 @@
 <div class="col-md-8 mx-auto">
   <ul class="list-group">
     <div class="text-secondary">
-      <h6>Duracion de cada modulo: {{ duracionModulo }} min</h6>
+      <h6>Duracion de cada modulo: {{ colegioSvc.duracionModulo }} min</h6>
     </div>
     <table class="table text-center">
       <thead>
@@ -17,12 +17,12 @@
       </thead>
       <tbody>
         <!-- MAÑANA -->
-        <tr *ngIf="12 >= horaInicial && horaInicial >= 5">
+        <tr *ngIf="12 >= colegioSvc.horaInicial && colegioSvc.horaInicial >= 5">
           <td colspan="7" class="table-active">
-            TURNO MAÑANA ({{ inicioHorario }} am - 12:00 pm)
+            TURNO MAÑANA ({{ colegioSvc.inicioHorario }} am - 12:00 pm)
           </td>
         </tr>
-        <tr *ngFor="let turno of turnoArray[0].modulos" class="bg-white">
+        <tr *ngFor="let turno of colegioSvc.turnoArray[0].modulos" class="bg-white">
           <td colspan="2" class="text-black">
             {{ turno.inicio }} - {{ turno.final }}
           </td>
@@ -50,7 +50,7 @@
               <input
                 type="Time"
                 class="form-control"
-                [(ngModel)]="inicioModuloSeleccionado[0]"
+                [(ngModel)]="colegioSvc.inicioModuloSeleccionado[0]"
               />
               <button class="btn btn-primary" (click)="addModulo('manana')">
                 <svg
@@ -71,13 +71,13 @@
         </tr>
 
         <!-- TARDE -->
-        <tr *ngIf="18 >= horaFinal && horaFinal > 12; else turnoNoche">
+        <tr *ngIf="18 >= colegioSvc.horaFinal && colegioSvc.horaFinal > 12; else turnoNoche">
           <td colspan="7" class="table-active">
-            TURNO TARDE (12:00 pm - {{ finalizacionHorario }} pm)
+            TURNO TARDE (12:00 pm - {{ colegioSvc.finalizacionHorario }} pm)
           </td>
         </tr>
         <ng-template #turnoNoche>
-          <tr *ngIf="horaFinal == 12; else turnoNoche2"></tr>
+          <tr *ngIf="colegioSvc.horaFinal == 12; else turnoNoche2"></tr>
           <ng-template #turnoNoche2>
             <tr>
               <td colspan="7" class="table-active">
@@ -87,7 +87,7 @@
           </ng-template>
         </ng-template>
 
-        <tr *ngFor="let turno of turnoArray[1].modulos" class="bg-white">
+        <tr *ngFor="let turno of colegioSvc.turnoArray[1].modulos" class="bg-white">
           <td colspan="2" class="text-black">
             {{ turno.inicio }} - {{ turno.final }}
           </td>
@@ -111,7 +111,7 @@
 
         <tr
           *ngIf="
-            (18 >= horaFinal && horaFinal > 12) || 18 <= horaFinal;
+            (18 >= colegioSvc.horaFinal && colegioSvc.horaFinal > 12) || 18 <= colegioSvc.horaFinal;
             else turnoNoche3
           "
         >
@@ -121,7 +121,7 @@
               <input
                 type="Time"
                 class="form-control"
-                [(ngModel)]="inicioModuloSeleccionado[1]"
+                [(ngModel)]="colegioSvc.inicioModuloSeleccionado[1]"
               />
               <button class="btn btn-primary" (click)="addModulo('tarde')">
                 <svg
@@ -144,13 +144,13 @@
         <ng-template #turnoNoche3></ng-template>
 
         <!-- NOCHE -->
-        <tr *ngIf="horaFinal > 18">
+        <tr *ngIf="colegioSvc.horaFinal > 18">
           <td colspan="7" class="table-active">
-            TURNO NOCHE (18:00 pm - {{ finalizacionHorario }} pm)
+            TURNO NOCHE (18:00 pm - {{ colegioSvc.finalizacionHorario }} pm)
           </td>
         </tr>
 
-        <tr *ngFor="let turno of turnoArray[2].modulos" class="bg-white">
+        <tr *ngFor="let turno of colegioSvc.turnoArray[2].modulos" class="bg-white">
           <td colspan="2" class="text-black">
             {{ turno.inicio }} - {{ turno.final }}
           </td>
@@ -172,14 +172,14 @@
           </td>
         </tr>
 
-        <tr *ngIf="horaFinal > 18">
+        <tr *ngIf="colegioSvc.horaFinal > 18">
           <td colspan="3"></td>
           <td colspan="2">
             <div class="input-group">
               <input
                 type="Time"
                 class="form-control"
-                [(ngModel)]="inicioModuloSeleccionado[2]"
+                [(ngModel)]="colegioSvc.inicioModuloSeleccionado[2]"
               />
               <button class="btn btn-primary" (click)="addModulo('noche')">
                 <svg
@@ -205,7 +205,7 @@
   <div class="d-grid">
     <button
       *ngIf="
-        botonesCrearColegioProgreso <= 1 && turnoArray[0].modulos.length != 0
+      colegioSvc.botonesCrearColegioProgreso <= 1 && colegioSvc.turnoArray[0].modulos.length != 0
       "
       (click)="goFormAula()"
       class="btn btn-primary btn-lg mt-4"
