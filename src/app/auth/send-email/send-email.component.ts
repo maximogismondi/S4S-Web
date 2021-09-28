@@ -75,9 +75,11 @@ export class SendEmailComponent implements OnInit {
       //   this.router.navigate(['/crear-colegio']);
       // }
       // else{}
-        (await this.afAuth.currentUser)?.updateEmail(this.usuarioEmail);
+      (await this.afAuth.currentUser)?.updateEmail(this.usuarioEmail);
       this.cambiarEmail = 2;
-      setTimeout(() => {this.onSendEmail()}, 1000);
+      setTimeout(() => {
+        this.onSendEmail();
+      }, 1000);
       // await this.router.navigate(['/verificacion-email']);
     }
   }

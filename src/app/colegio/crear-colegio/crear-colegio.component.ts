@@ -464,7 +464,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteAula() {
-    if (confirm('¿Estas seguro/a que quieres eliminar este aula?')) {
+    if (confirm('¿Estas seguro/a que quiere eliminar el aula, ' + this.selectedAula.nombre + '?')) {
       this.aulaArray = this.aulaArray.filter((x) => x != this.selectedAula);
       this.updateDBAula();
     }
@@ -533,7 +533,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteCurso() {
-    if (confirm('¿Estas seguro/a que quieres eliminar este curso?')) {
+    if (confirm('¿Estas seguro/a que quiere eliminar el curso, ' + this.selectedCurso.nombre + '?')) {
       this.cursoArray = this.cursoArray.filter((x) => x != this.selectedCurso);
       this.updateDBCurso();
     }
@@ -641,7 +641,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteProfesor() {
-    if (confirm('¿Estas seguro/a que quieres eliminar este profesor/a?')) {
+    if (confirm('¿Estas seguro/a que quiere eliminar a el profesor/a, ' + this.selectedProfesor.nombre + ' ' + this.selectedProfesor.apellido + '?')) {
       this.profesorArray = this.profesorArray.filter(
         (x) => x != this.selectedProfesor
       );
@@ -793,7 +793,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteMateria() {
-    if (confirm('¿Estas seguro/a que quieres eliminar esta materia?')) {
+    if (confirm('¿Estas seguro/a que quiere eliminar la materia ' + this.selectedMateria.nombre + '?')) {
       this.materiaArray = this.materiaArray.filter(
         (x) => x != this.selectedMateria
       );
