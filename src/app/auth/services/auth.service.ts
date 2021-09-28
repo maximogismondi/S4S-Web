@@ -85,10 +85,9 @@ export class AuthService {
       })
       .catch((error) => {
         alert('No existe una cuenta con ese email, por favor registrese');
-        // console.log(error)
-
         this.router.navigate(['/register']);
         return null;
+
         // console.log(error.code);
         // console.log(error.message);
       });
@@ -130,7 +129,9 @@ export class AuthService {
         return user;
       })
       .catch((error) => {
-        alert('El email que esta ingresando ya esta siendo utilizado, por favor pruebe otro');
+        alert(
+          'El email que esta ingresando ya esta siendo utilizado, por favor pruebe otro'
+        );
         // console.log(error)
         return null;
         // console.log(error.code);
