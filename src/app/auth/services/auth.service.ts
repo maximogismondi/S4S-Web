@@ -76,26 +76,26 @@ export class AuthService {
     //   alert("No existe una cuenta con ese email, por favor registrese");
     //   this.router.navigate(['/register']);
     // }
-    firebase
+    return firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
+      .then(async (querySnapshot) => {
+        const { user } = querySnapshot;
+        return user;
+      })
       .catch((error) => {
         alert('No existe una cuenta con ese email, por favor registrese');
-        this.router.navigate(['/register']);
+        // console.log(error)
 
+        this.router.navigate(['/register']);
+        return null;
         // console.log(error.code);
         // console.log(error.message);
       });
 
-    const { user } = await this.afAuth.signInWithEmailAndPassword(
-      email,
-      password
-    );
-
     // if (user?.emailVerified) {
     //   this.updateUserData(user);
     // }
-    return user;
   }
 
   //joya
@@ -120,14 +120,29 @@ export class AuthService {
     //     );
     //   });
 
-    const { user } = await this.afAuth.createUserWithEmailAndPassword(
-      email,
-      password
-    );
+    return firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(async (querySnapshot) => {
+        const { user } = querySnapshot;
+        this.updateUserData(user);
+        this.sendVerificationEmail();
+        return user;
+      })
+      .catch((error) => {
+        alert('El email que esta ingresando ya esta siendo utilizado, por favor pruebe otro');
+        // console.log(error)
+        return null;
+        // console.log(error.code);
+        // console.log(error.message);
+      });
 
-    this.updateUserData(user);
-    this.sendVerificationEmail();
-    return user;
+    // const { user } = await this.afAuth.createUserWithEmailAndPassword(
+    //   email,
+    //   password
+    // );
+
+    // return user;
   }
 
   resetPassword(email: string) {
@@ -226,10 +241,9 @@ export class AuthService {
 
       if (this.existeEscuela) {
         alert('El nombre ya esta utilizado, por favor ingrese otro');
-      }
-      else{
+      } else {
         this.SchoolData(school);
-        this.router.navigate(["/"+school.nombre+'/crear-colegio']);
+        this.router.navigate(['/' + school.nombre + '/crear-colegio']);
       }
 
       // confirm("Poner los valores que se piden");

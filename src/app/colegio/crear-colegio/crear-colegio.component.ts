@@ -816,7 +816,7 @@ export class CrearColegioComponent implements OnInit {
   async finalizar() {
     this.http
       .get(
-        'http://127.0.0.1:5000/algoritmo?idColegio=' +
+        'http://s4s-algoritmo.herokuapp.com/algoritmo?idColegio=' +
           this.nombreColegio,
         { responseType: 'text' }
       )

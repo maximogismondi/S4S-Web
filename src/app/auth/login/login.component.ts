@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
     const { email, password } = this.loginForm.value;
     if (email.length > 10 && password.length > 5) {
       const user = await this.authSvc.login(email, password);
+      
       if (user && user.emailVerified) {
         this.router.navigate(['/menu-principal']);
       } else if (user && !user.emailVerified) {

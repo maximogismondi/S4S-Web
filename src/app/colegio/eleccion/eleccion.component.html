@@ -6,20 +6,16 @@
       <!-- id="botonesEleccionCrear" -->
       <div *ngIf="fueACrear == false">
         <div class="d-grid">
-          <button
-            *ngIf="nombresDeEscuelasUsuario.length < 3; else bloquearBoton"
-            (click)="irCrear()"
-            class="btn btn-primary btn-lg mt-4 py-4"
-          >
+          <button (click)="irCrear()" class="btn btn-primary btn-lg mt-4 py-4">
             CREAR
           </button>
         </div>
-
+        <!-- *ngIf="nombresDeEscuelasUsuario.length < 3; else bloquearBoton"
         <ng-template #bloquearBoton>
           <button class="btn btn-primary disabled btn-lg mt-4 py-4">
             CREAR
           </button>
-        </ng-template>
+        </ng-template> -->
       </div>
       <!--id="crear" style="display: none"-->
       <div *ngIf="fueACrear">
@@ -70,7 +66,9 @@
                       value="{{ provincia['nombre'] }}"
                       *ngFor="let provincia of provinciasArgentina"
                       class="bg-white"
-                    >{{ provincia['nombre'] }}</option>
+                    >
+                      {{ provincia["nombre"] }}
+                    </option>
                   </select>
                 </div>
                 <div class="form-group mt-3">
