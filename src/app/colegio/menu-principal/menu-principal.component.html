@@ -1,46 +1,63 @@
 <div class="container">
-  <div class="card mt-5 mx-5">
-    <div class="card-body">
-      <div class="form-group">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Mis Colegios</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>Crear o Unirse a Colegios</th>
-              <td scope="row">
-                <div class="card" style="width: 200px;">
-                  <div class="card-body">
-                    <div class="d-grid">
-                      <button
-                        (click)="irEleccion()"
-                        class="btn btn-primary"
-                      >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                      </svg>
-                      </button>
-                      <!-- <div class="alert alert-light mt-4 text-center" role="alert">
-                          AGREGAR COLEGIO
-                        </div> -->
-                    </div>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th>Colegios Creados</th>
-              <!-- *ngIf="borroColegio" -->
-              <div>
-                <td
+  <div class="col-md-3 mx-auto my-5">
+    <div class="card text-center">
+      <div class="card-body mx-auto">
+        <div class="form-group">
+          <label>Crear o Unirse a Colegios</label>
+          <div class="card">
+            <div class="card-body">
+              <div class="d-grid">
+                <button (click)="irEleccion()" class="btn btn-primary">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    class="bi bi-plus-circle"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                    />
+                    <path
+                      d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="nombresDeEscuelasUsuario.length > 0" class="col-md-6 mx-auto mt-5">
+    <div class="card text-center">
+      <div class="card-body">
+        <div class="form-group">
+          <label><h2>Mis Colegios</h2></label>
+          <table class="table">
+            <thead>
+              <tr>
+                <th
                   *ngFor="let escuela of nombresDeEscuelasUsuario"
+                  scope="col"
                 >
-                  <div class="card me-2">
+                  {{ escuela }}
+                </th>
+                <!-- <th scope="col">Mis Colegios</th> -->
+                <!-- <th scope="col">Mis Colegios Creados</th>
+                <th scope="col">Colegios Creados</th> -->
+                <!-- <th scope="col">Colegios Unidos</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <!-- <th>Colegios Creados</th> -->
+                <!-- *ngIf="borroColegio" -->
+                <td *ngFor="let escuela of nombresDeEscuelasUsuario">
+                  <div class="card">
                     <div class="card-body">
                       <button
                         (click)="deleteSchool(escuela)"
@@ -52,42 +69,53 @@
                           end-0
                         "
                         aria-label="Close"
-                        style="z-index: 1;"
+                        style="z-index: 1"
                       ></button>
+
                       <div class="d-grid">
-                        <div class="alert alert-light">
-                          {{ escuela }}
-                        </div>
+                        <!-- {{ escuela }} -->
                         <button
                           (click)="irCrearColegio(escuela)"
-                          class="btn btn-primary"
+                          class="btn btn-primary mx-auto"
+                          style="width: 90%;"
                         >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
-                          <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-                        </svg>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="30"
+                            height="30"
+                            fill="currentColor"
+                            class="bi bi-arrow-right-circle"
+                            viewBox="0 0 16 16"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"
+                            />
+                          </svg>
                         </button>
                       </div>
-                      <!-- <div class="alert alert-light mt-4 text-center" role="alert">
-                             {{ escuela }}
-                           </div>  
-                           <button class="alert btn btn-danger mt-4 text-center" style="width: 100%" (click)="deleteSchool()">
-                             ELIMINAR COLEGIO 
-                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                               <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                             </svg>
-                           </button>
-                       -->
                     </div>
                   </div>
                 </td>
-              </div>
-            </tr>
-            <tr>
-              <th>Colegios Unidos</th>
-            </tr>
-          </tbody>
-        </table>
+              </tr>
+              <!-- <tr>
+                <th>Colegios Unidos</th> 
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- <div class="alert alert-light mt-4 text-center" role="alert">
+     {{ escuela }}
+   </div>  
+   <button class="alert btn btn-danger mt-4 text-center" style="width: 100%" (click)="deleteSchool()">
+     ELIMINAR COLEGIO 
+     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+       <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+     </svg>
+   </button>
+-->

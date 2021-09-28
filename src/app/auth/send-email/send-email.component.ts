@@ -20,6 +20,8 @@ export class SendEmailComponent implements OnInit {
   mandarAEleccion: boolean = true;
   cambiarEmail: number = 0;
   usuarioEmail: string = ' ';
+  emailsDeUsuarios: Array<any> = [];
+  emailExistente: boolean = false;
   constructor(
     private authSvc: AuthService,
     private router: Router,
@@ -28,6 +30,15 @@ export class SendEmailComponent implements OnInit {
   ) {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
+        this.afs.firestore
+          .collection('users')
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              this.emailsDeUsuarios.push(doc.data().email);
+            });
+          });
+
         this.afs
           .doc<User>(`users/${user.uid}`)
           .snapshotChanges()
@@ -50,9 +61,10 @@ export class SendEmailComponent implements OnInit {
               emailVerified: true,
             });
             this.router.navigate(['/eleccion']);
-          } else {
-            // console.log('B');
-          }
+          } 
+          // else {
+          //   // console.log('B');
+          // }
         });
     }, 1000);
   }
@@ -61,26 +73,41 @@ export class SendEmailComponent implements OnInit {
     if (this.cambiarEmail == 0) {
       this.cambiarEmail = 1;
     } else {
-      this.afs
+      this.emailsDeUsuarios.forEach((email) =>{
+        if( this.usuarioEmail == email){
+          this.emailExistente = true;
+        }
+      });
+      if(this.emailExistente){
+        alert('El email ya esta utilizado');
+        this.emailExistente = false;
+      }
+      else{
+        this.afs
         .collection('users')
         .doc(this.userData.uid)
         .update({
           email: this.usuarioEmail,
           displayName: this.usuarioEmail.split('@')[0],
         });
-      // .updateCurrentUser(this.userData.uid);
-      // const userNuevoEmail = this.afAuth.currentUser;
-      // if((await this.afAuth.currentUser)?.emailVerified){
-      //   alert('Ya existe una cuenta con ese email');
-      //   this.router.navigate(['/crear-colegio']);
-      // }
-      // else{}
-      (await this.afAuth.currentUser)?.updateEmail(this.usuarioEmail);
-      this.cambiarEmail = 2;
-      setTimeout(() => {
-        this.onSendEmail();
-      }, 1000);
-      // await this.router.navigate(['/verificacion-email']);
+
+        (await this.afAuth.currentUser)?.updateEmail(this.usuarioEmail);
+        this.cambiarEmail = 2;
+
+        setTimeout(() => {
+          this.onSendEmail();
+        }, 1000);
+      }
+      
+
+        // .updateCurrentUser(this.userData.uid);
+        // const userNuevoEmail = this.afAuth.currentUser;
+        // if((await this.afAuth.currentUser)?.emailVerified){
+        //   alert('Ya existe una cuenta con ese email');
+        //   this.router.navigate(['/crear-colegio']);
+        // }
+        // else{}
+        // await this.router.navigate(['/verificacion-email']);
     }
   }
 
