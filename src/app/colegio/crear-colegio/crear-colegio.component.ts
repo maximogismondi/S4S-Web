@@ -165,18 +165,18 @@ export class CrearColegioComponent implements OnInit {
   ngOnInit(): void {}
 
   async clickeoBotones(boton: string) {
-    if (boton == 'turnos' && this.turnos != 0) {
-      this.botonesCrearColegio = 1;
+    if (boton == 'turnos' && this.colegioSvc.turnos != 0) {
+      this.colegioSvc.botonesCrearColegio = 1;
     } else if (boton == 'aulas') {
-      this.botonesCrearColegio = 2;
+      this.colegioSvc.botonesCrearColegio = 2;
     } else if (boton == 'cursos') {
-      this.botonesCrearColegio = 3;
+      this.colegioSvc.botonesCrearColegio = 3;
     } else if (boton == 'profesores') {
-      this.botonesCrearColegio = 4;
+      this.colegioSvc.botonesCrearColegio = 4;
     } else if (boton == 'materias') {
-      this.botonesCrearColegio = 5;
+      this.colegioSvc.botonesCrearColegio = 5;
     } else if (boton == 'finalizar') {
-      this.botonesCrearColegio = 6;
+      this.colegioSvc.botonesCrearColegio = 6;
     }
   }
 }

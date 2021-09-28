@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import {
@@ -10,9 +11,10 @@ import {
   Colegio,
   Curso,
   Materia,
-  Modulo,
   Profesor,
   Turno,
+  Modulo,
+
 } from 'src/app/shared/interface/user.interface';
 
 @Injectable({
@@ -60,15 +62,6 @@ export class ColegioService {
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
-        // this.afs
-        //   .collection('horariosHechos', (ref) =>
-        //     ref.where('userAdmin', '==', user.uid)
-        //   )
-        //   .snapshotChanges()
-        //   .pipe(
-        //     map((schools) => {})
-        //     )
-        //     .subscribe();
         this.afs
           .collection('schools', (ref) =>
             ref.where('userAdmin', '==', user.uid)
@@ -131,22 +124,6 @@ export class ColegioService {
                 );
               }
 
-              /* this.profesoresArrayMaterias = [];
-               this.horarios.push(String(this.inicioHorario));
-               this.minutos = Number(String(this.inicioHorario).split(':')[1]);
-               this.modulos = school.modulos.length;
-               this.botonesCrearColegio = school.botonesCrearColegio;
-               school.profesores.forEach((profesor) => {
-                 let profesorAux: ProfesorReducido = {
-                   nombre: profesor.nombre,
-                   valor: false,
-                 };
-                 this.profesoresArrayMaterias.push(profesorAux);
-               });
-               this.totalCursosColegio = [];
-               school.cursos.forEach((cursos) => {
-                 this.totalCursosColegio.push(cursos.nombre);
-               });*/
             })
           )
           .subscribe();

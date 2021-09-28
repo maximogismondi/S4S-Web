@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { ColegioService } from '../../services/colegio.service';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import {
@@ -13,10 +10,11 @@ import {
   Colegio,
   Curso,
   Materia,
-  Modulo,
   Profesor,
   Turno,
+  Modulo,
 } from 'src/app/shared/interface/user.interface';
+import { ColegioService } from '../../services/colegio.service';
 
 @Component({
   selector: 'app-turnos',
@@ -24,44 +22,11 @@ import {
   styleUrls: ['./turnos.component.scss'],
 })
 export class TurnosComponent implements OnInit {
-  nombreColegio: string;
-  nombreDocumento: string;
-  duracionModulo: number;
-  inicioHorario: string;
-  finalizacionHorario: string;
-  turnos: number;
-  aulas: number;
-  materias: number;
-  cursos: number;
-  profesores: number;
-  turnoSeleccionado: string;
-  horaInicial: number;
-  horaFinal: number;
-  botonesCrearColegio: number = 1;
-  botonesCrearColegioProgreso: number;
-  disponibilidadProfesor: boolean = false;
-  disponibilidadProfesorSemana: Array<Array<Array<boolean>>> = [];
-  turnoArray: Array<Turno> = [
-    new Turno('manana'),
-    new Turno('tarde'),
-    new Turno('noche'),
-  ];
-  inicioModuloSeleccionado: Array<string> = [];
-  profesorArray: Profesor[] = [];
-  selectedProfesor: Profesor;
-  aulaArray: Aula[] = [];
-  selectedAula: Aula = new Aula();
-  cursoArray: Curso[] = [];
-  selectedCurso: Curso = new Curso();
-  materiaArray: Materia[] = [];
-  selectedMateria: Materia;
 
   constructor(
-    public afAuth: AngularFireAuth,
-    private colegioSvc: ColegioService,
     private router: Router,
     private fb: FormBuilder,
-    private authSvc: AuthService,
+    private colegioSvc: ColegioService,
     private afs: AngularFirestore,
     private http: HttpClient
   ) {}
@@ -72,7 +37,7 @@ export class TurnosComponent implements OnInit {
 
   updateDBTurnos() {
     let turnoArrayDiccionario: Array<any> = [];
-    this.turnoArray.forEach((turno) => {
+    this.colegioSvc.turnoArray.forEach((turno) => {
       let modulosTurno: Array<any> = [];
       turno.modulos.forEach((modulo) => {
         modulosTurno.push({
@@ -85,26 +50,26 @@ export class TurnosComponent implements OnInit {
         modulos: modulosTurno,
       });
     });
-    this.afs.collection('schools').doc(this.nombreDocumento).update({
+    this.afs.collection('schools').doc(this.colegioSvc.nombreDocumento).update({
       turnos: turnoArrayDiccionario,
     });
   }
 
   moduloValido(horaInicial: string, horaFinal: string): string {
     //fuera de horario
-    if (horaInicial < this.inicioHorario) {
+    if (horaInicial < this.colegioSvc.inicioHorario) {
       return 'Fuera de Horario';
     }
-    if (horaFinal > this.finalizacionHorario) {
+    if (horaFinal > this.colegioSvc.finalizacionHorario) {
       return 'Fuera de Horario';
     }
 
     //fuera de turno
-    if (this.turnoSeleccionado == 'manana') {
+    if (this.colegioSvc.turnoSeleccionado == 'manana') {
       if (horaFinal > '12:00') {
         return 'Fuera de Turno';
       }
-    } else if (this.turnoSeleccionado == 'tarde') {
+    } else if (this.colegioSvc.turnoSeleccionado == 'tarde') {
       if (horaInicial < '12:00') {
         return 'Fuera de Turno';
       }
@@ -121,20 +86,20 @@ export class TurnosComponent implements OnInit {
     for (
       let iModulos = 0;
       iModulos <
-      this.turnoArray[
-        this.turnoSeleccionado == 'manana'
+      this.colegioSvc.turnoArray[
+        this.colegioSvc.turnoSeleccionado == 'manana'
           ? 0
-          : this.turnoSeleccionado == 'tarde'
+          : this.colegioSvc.turnoSeleccionado == 'tarde'
           ? 1
           : 2
       ].modulos.length;
       iModulos++
     ) {
       let modulo: Modulo =
-        this.turnoArray[
-          this.turnoSeleccionado == 'manana'
+        this.colegioSvc.turnoArray[
+          this.colegioSvc.turnoSeleccionado == 'manana'
             ? 0
-            : this.turnoSeleccionado == 'tarde'
+            : this.colegioSvc.turnoSeleccionado == 'tarde'
             ? 1
             : 2
         ].modulos[iModulos];
@@ -152,29 +117,29 @@ export class TurnosComponent implements OnInit {
 
   addModulo(turnoSeleccionado: string) {
     if (
-      this.turnoArray[0].modulos.length +
-        this.turnoArray[1].modulos.length +
-        this.turnoArray[2].modulos.length ==
+      this.colegioSvc.turnoArray[0].modulos.length +
+        this.colegioSvc.turnoArray[1].modulos.length +
+        this.colegioSvc.turnoArray[2].modulos.length ==
       0
     ) {
       alert(
         'Los modulos creados son para las clases, de lo contrario se consideraran como recreos/horas de almuerzo'
       );
     }
-    this.turnoSeleccionado = turnoSeleccionado;
+    this.colegioSvc.turnoSeleccionado = turnoSeleccionado;
     let horaInicial: string = String(
-      this.inicioModuloSeleccionado[
+      this.colegioSvc.inicioModuloSeleccionado[
         turnoSeleccionado == 'manana' ? 0 : turnoSeleccionado == 'tarde' ? 1 : 2
       ]
     ).split(':')[0];
     let minutosInicial: string = String(
-      this.inicioModuloSeleccionado[
+      this.colegioSvc.inicioModuloSeleccionado[
         turnoSeleccionado == 'manana' ? 0 : turnoSeleccionado == 'tarde' ? 1 : 2
       ]
     ).split(':')[1];
 
     let horasAux: number = Number(horaInicial);
-    let minutosAux: number = Number(minutosInicial) + this.duracionModulo;
+    let minutosAux: number = Number(minutosInicial) + this.colegioSvc.duracionModulo;
 
     while (minutosAux >= 60) {
       minutosAux = minutosAux - 60;
@@ -194,13 +159,13 @@ export class TurnosComponent implements OnInit {
     let fin = horaFinal + ':' + minutoFinal;
 
     if (this.moduloValido(inicio, fin) == 'valido') {
-      this.turnoArray[
+      this.colegioSvc.turnoArray[
         turnoSeleccionado == 'manana' ? 0 : turnoSeleccionado == 'tarde' ? 1 : 2
       ].modulos.push(new Modulo(inicio, fin));
-      this.inicioModuloSeleccionado[
+      this.colegioSvc.inicioModuloSeleccionado[
         turnoSeleccionado == 'manana' ? 0 : turnoSeleccionado == 'tarde' ? 1 : 2
       ] = horaFinal + ':' + minutoFinal;
-      this.turnoArray[
+      this.colegioSvc.turnoArray[
         turnoSeleccionado == 'manana' ? 0 : turnoSeleccionado == 'tarde' ? 1 : 2
       ].modulos.sort((a, b) =>
         Number(a.inicio.split(':')[0]) * 60 + Number(a.inicio.split(':')[1]) >
@@ -217,18 +182,18 @@ export class TurnosComponent implements OnInit {
   deleteModulo(turnoSeleccionado: string, turno: Modulo) {
     // console.log(turno);
     if (turnoSeleccionado == 'manana') {
-      this.turnoArray[0].modulos.splice(
-        this.turnoArray[0].modulos.indexOf(turno),
+      this.colegioSvc.turnoArray[0].modulos.splice(
+        this.colegioSvc.turnoArray[0].modulos.indexOf(turno),
         1
       );
     } else if (turnoSeleccionado == 'tarde') {
-      this.turnoArray[1].modulos.splice(
-        this.turnoArray[1].modulos.indexOf(turno),
+      this.colegioSvc.turnoArray[1].modulos.splice(
+        this.colegioSvc.turnoArray[1].modulos.indexOf(turno),
         1
       );
     } else {
-      this.turnoArray[2].modulos.splice(
-        this.turnoArray[2].modulos.indexOf(turno),
+      this.colegioSvc.turnoArray[2].modulos.splice(
+        this.colegioSvc.turnoArray[2].modulos.indexOf(turno),
         1
       );
     }
@@ -241,10 +206,10 @@ export class TurnosComponent implements OnInit {
   // }
 
   async goFormAula() {
-    this.botonesCrearColegio = 2;
-    if (this.botonesCrearColegioProgreso < 2) {
-      this.botonesCrearColegioProgreso = 2;
-      this.afs.collection('schools').doc(this.nombreDocumento).update({
+    this.colegioSvc.botonesCrearColegio = 2;
+    if (this.colegioSvc.botonesCrearColegioProgreso < 2) {
+      this.colegioSvc.botonesCrearColegioProgreso = 2;
+      this.afs.collection('schools').doc(this.colegioSvc.nombreDocumento).update({
         botonesCrearColegioProgreso: 2,
         botonesCrearColegio: 2,
       });

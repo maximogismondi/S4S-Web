@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import {
@@ -11,11 +10,13 @@ import {
   Colegio,
   Curso,
   Materia,
-  Modulo,
   Profesor,
   Turno,
+  Modulo,
+  // ProfesorReducido,
+  // HorarioModulo,
+  // MateriaReducido,
 } from 'src/app/shared/interface/user.interface';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { ColegioService } from '../../services/colegio.service';
 
 @Component({
@@ -24,55 +25,23 @@ import { ColegioService } from '../../services/colegio.service';
   styleUrls: ['./materias.component.scss'],
 })
 export class MateriasComponent implements OnInit {
-  nombreColegio: string;
-  nombreDocumento: string;
-  duracionModulo: number;
-  inicioHorario: string;
-  finalizacionHorario: string;
-  turnos: number;
-  aulas: number;
-  materias: number;
-  cursos: number;
-  profesores: number;
-  turnoSeleccionado: string;
-  horaInicial: number;
-  horaFinal: number;
-  botonesCrearColegio: number = 1;
-  botonesCrearColegioProgreso: number;
-  disponibilidadProfesor: boolean = false;
-  disponibilidadProfesorSemana: Array<Array<Array<boolean>>> = [];
-  turnoArray: Array<Turno> = [
-    new Turno('manana'),
-    new Turno('tarde'),
-    new Turno('noche'),
-  ];
-  inicioModuloSeleccionado: Array<string> = [];
-  profesorArray: Profesor[] = [];
-  selectedProfesor: Profesor;
-  aulaArray: Aula[] = [];
-  selectedAula: Aula = new Aula();
-  cursoArray: Curso[] = [];
-  selectedCurso: Curso = new Curso();
-  materiaArray: Materia[] = [];
-  selectedMateria: Materia;
 
   constructor(
-    public afAuth: AngularFireAuth,
-    private colegioSvc: ColegioService,
     private router: Router,
     private fb: FormBuilder,
-    private authSvc: AuthService,
+    private colegioSvc: ColegioService,
     private afs: AngularFirestore,
     private http: HttpClient
   ) {}
 
   ngOnInit(): void {}
+
   // _______________________________________MATERIAS____________________________________________________________
 
   async updateDBMateria() {
-    this.selectedMateria = new Materia(this.profesorArray, this.aulaArray);
+    this.colegioSvc.selectedMateria = new Materia(this.colegioSvc.profesorArray, this.colegioSvc.aulaArray);
     let materiaArrayDiccionario: Array<any> = [];
-    this.materiaArray.forEach((materia) => {
+    this.colegioSvc.materiaArray.forEach((materia) => {
       materiaArrayDiccionario.push({
         nombre: materia.nombre,
         cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
@@ -87,35 +56,35 @@ export class MateriasComponent implements OnInit {
         // otro: materia.otro,
       });
     });
-    this.afs.collection('schools').doc(this.nombreDocumento).update({
+    this.afs.collection('schools').doc(this.colegioSvc.nombreDocumento).update({
       materias: materiaArrayDiccionario,
     });
   }
 
   openForEditMateria(materia: Materia) {
-    this.selectedMateria = materia;
+    this.colegioSvc.selectedMateria = materia;
   }
 
   addOrEditMateria() {
     if (
-      this.selectedMateria.nombre != '' &&
-      this.selectedMateria.cantidadDeModulosTotal != '' &&
-      this.selectedMateria.curso != '' &&
-      this.selectedMateria.cantidadMaximaDeModulosPorDia != '' &&
-      this.selectedMateria.nombre.length <= 30
+      this.colegioSvc.selectedMateria.nombre != '' &&
+      this.colegioSvc.selectedMateria.cantidadDeModulosTotal != '' &&
+      this.colegioSvc.selectedMateria.curso != '' &&
+      this.colegioSvc.selectedMateria.cantidadMaximaDeModulosPorDia != '' &&
+      this.colegioSvc.selectedMateria.nombre.length <= 30
     ) {
-      if (this.selectedMateria.id == 0) {
+      if (this.colegioSvc.selectedMateria.id == 0) {
         if (
           !this.colegioSvc.chequearRepeticionEnSubidaDatos(
-            this.selectedMateria,
-            this.materiaArray
+            this.colegioSvc.selectedMateria,
+            this.colegioSvc.materiaArray
           )
         ) {
           let existeProfesorCapacitado: boolean = false;
 
-          this.profesorArray.forEach((profesor) => {
+          this.colegioSvc.profesorArray.forEach((profesor) => {
             if (
-              this.selectedMateria.profesoresCapacitados[
+              this.colegioSvc.selectedMateria.profesoresCapacitados[
                 profesor.nombre + ' ' + profesor.apellido
               ]
             ) {
@@ -126,15 +95,15 @@ export class MateriasComponent implements OnInit {
           if (existeProfesorCapacitado) {
             let existeAula: boolean = false;
 
-            this.aulaArray.forEach((aula) => {
-              if (this.selectedMateria.aulasMateria[aula.nombre]) {
+            this.colegioSvc.aulaArray.forEach((aula) => {
+              if (this.colegioSvc.selectedMateria.aulasMateria[aula.nombre]) {
                 existeAula = true;
               }
             });
 
             if (existeAula) {
-              this.selectedMateria.id = this.materiaArray.length + 1;
-              this.materiaArray.push(this.selectedMateria);
+              this.colegioSvc.selectedMateria.id = this.colegioSvc.materiaArray.length + 1;
+              this.colegioSvc.materiaArray.push(this.colegioSvc.selectedMateria);
             } else {
               alert('Coloque por lo menos un aula para la materia creada');
             }
@@ -142,17 +111,12 @@ export class MateriasComponent implements OnInit {
             alert('Coloque por lo menos un profesor para la materia creada');
           }
 
-          // this.profesoresArrayMaterias.forEach((profesor) => {
-          //   if (profesor.valor == true) {
-          //     this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
-          //   }
-          // });
         }
       }
 
       this.updateDBMateria();
     } else {
-      if (this.selectedMateria.nombre.length > 30) {
+      if (this.colegioSvc.selectedMateria.nombre.length > 30) {
         alert('Pone un nombre menor a los 30 caracteres');
       } else {
         alert('Complete los campos vacios');
@@ -160,46 +124,30 @@ export class MateriasComponent implements OnInit {
     }
   }
 
-  // clicked(nombreProfesor: string) {
-  //   for (let i = 0; i < this.profesoresArrayMaterias.length; i++) {
-  //     if (
-  //       this.profesoresArrayMaterias[i].nombre == nombreProfesor &&
-  //       this.profesoresArrayMaterias[i].valor == false
-  //     ) {
-  //       this.profesoresArrayMaterias[i].valor = true;
-  //     } else if (
-  //       this.profesoresArrayMaterias[i].nombre == nombreProfesor &&
-  //       this.profesoresArrayMaterias[i].valor == true
-  //     ) {
-  //       this.profesoresArrayMaterias[i].valor = false;
-  //     }
-  //   }
-  // }
-
   clickFormCheckMateriaProfesor(nombre: string) {
-    this.selectedMateria.profesoresCapacitados[nombre] =
-      !this.selectedMateria.profesoresCapacitados[nombre];
+    this.colegioSvc.selectedMateria.profesoresCapacitados[nombre] =
+      !this.colegioSvc.selectedMateria.profesoresCapacitados[nombre];
   }
 
   clickFormCheckMateriaAula(nombre: string) {
-    this.selectedMateria.aulasMateria[nombre] =
-      !this.selectedMateria.aulasMateria[nombre];
+    this.colegioSvc.selectedMateria.aulasMateria[nombre] =
+      !this.colegioSvc.selectedMateria.aulasMateria[nombre];
   }
 
   deleteMateria() {
     if (confirm('¿Estas seguro/a que quieres eliminar esta materia?')) {
-      this.materiaArray = this.materiaArray.filter(
-        (x) => x != this.selectedMateria
+      this.colegioSvc.materiaArray = this.colegioSvc.materiaArray.filter(
+        (x) => x != this.colegioSvc.selectedMateria
       );
       this.updateDBMateria();
     }
   }
 
   async goFormFinalizar() {
-    this.botonesCrearColegio = 6;
-    if (this.botonesCrearColegioProgreso < 6) {
-      this.botonesCrearColegioProgreso = 6;
-      this.afs.collection('schools').doc(this.nombreDocumento).update({
+    this.colegioSvc.botonesCrearColegio = 6;
+    if (this.colegioSvc.botonesCrearColegioProgreso < 6) {
+      this.colegioSvc.botonesCrearColegioProgreso = 6;
+      this.afs.collection('schools').doc(this.colegioSvc.nombreDocumento).update({
         botonesCrearColegioProgreso: 6,
         botonesCrearColegio: 6,
       });
