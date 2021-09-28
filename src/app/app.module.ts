@@ -18,10 +18,13 @@ import { CursosComponent } from './colegio/crear-colegio/cursos/cursos.component
 import { ProfesoresComponent } from './colegio/crear-colegio/profesores/profesores.component';
 import { MateriasComponent } from './colegio/crear-colegio/materias/materias.component';
 import { FinalizarComponent } from './colegio/crear-colegio/finalizar/finalizar.component';
+import { CrearColegioComponent } from './colegio/crear-colegio/crear-colegio.component';
+import { CrearColegioModule } from './colegio/crear-colegio/crear-colegio.module';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, SendEmailComponent, TurnosComponent, AulasComponent, CursosComponent, ProfesoresComponent, MateriasComponent, FinalizarComponent],
+  declarations: [AppComponent, NavbarComponent, SendEmailComponent, ],
   imports: [
+    CrearColegioModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,

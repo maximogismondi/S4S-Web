@@ -29,7 +29,7 @@ export class AulasComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private colegioSvc: ColegioService,
+    public colegioSvc: ColegioService,
     private afs: AngularFirestore,
     private http: HttpClient
   ){}

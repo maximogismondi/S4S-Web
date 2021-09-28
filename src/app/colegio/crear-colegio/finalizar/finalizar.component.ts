@@ -26,7 +26,7 @@ import { ColegioService } from '../../services/colegio.service';
 })
 export class FinalizarComponent implements OnInit {
   constructor(
-    private colegioSvc: ColegioService,
+    public colegioSvc: ColegioService,
     private http: HttpClient
   ) { }
 
