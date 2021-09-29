@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -17,6 +17,7 @@ import {
   // HorarioModulo,
   // MateriaReducido,
 } from 'src/app/shared/interface/user.interface';
+// import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'app-crear-colegio',
@@ -25,7 +26,7 @@ import {
   providers: [AuthService],
 })
 export class CrearColegioComponent implements OnInit {
-  nombreColegio: string;
+  nombreColegio: any;
   // nombreDocumento: string;
   duracionModulo: number;
   inicioHorario: string;
@@ -63,7 +64,7 @@ export class CrearColegioComponent implements OnInit {
   horariosAulasHechos: any = {};
   materiasProfesoresHechos: any = {};
   cursoActual: string;
-  dias = ["lunes","martes","miercoles","jueves","viernes"];
+  dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
   botonPresionado: boolean = false;
   horarioGenerado: boolean = false;
   // horarios: Array<string> = [];
@@ -87,19 +88,30 @@ export class CrearColegioComponent implements OnInit {
     private fb: FormBuilder,
     private authSvc: AuthService,
     private afs: AngularFirestore,
-    private http: HttpClient
+    private http: HttpClient,
+    private activatedRoute: ActivatedRoute
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
+      
       if (user) {
+        this.nombreColegio = this.activatedRoute.snapshot.paramMap.get("nombreColegio")
+        // this.afs
+        //   .collection('schools')
+        //   .get()
+        //   .then((escuelas: { docs: { values: string } }[]) => {
+        //     escuelas.forEach((escuela: { docs: { values: string } }) => {
+        //       this.nombresDeEscuelas.push(escuela.docs.values);
+        //     });
+        //   });
+
         this.afs
           .collection('schools', (ref) =>
-            ref.where('userAdmin', '==', user.uid)
+            ref.where('nombre', '==' , this.nombreColegio)
           )
           .snapshotChanges()
           .pipe(
             map((schools) => {
               const school = schools[0].payload.doc.data() as Colegio;
-              this.nombreColegio = school.nombre;
               // this.nombreDocumento = school.id;
               this.duracionModulo = school.duracionModulo;
               this.inicioHorario = school.inicioHorario;
@@ -452,7 +464,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteAula() {
-    if (confirm('¿Estas seguro/a que quieres eliminar este aula?')) {
+    if (confirm('¿Estas seguro/a que quiere eliminar el aula, ' + this.selectedAula.nombre + '?')) {
       this.aulaArray = this.aulaArray.filter((x) => x != this.selectedAula);
       this.updateDBAula();
     }
@@ -521,7 +533,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteCurso() {
-    if (confirm('¿Estas seguro/a que quieres eliminar este curso?')) {
+    if (confirm('¿Estas seguro/a que quiere eliminar el curso, ' + this.selectedCurso.nombre + '?')) {
       this.cursoArray = this.cursoArray.filter((x) => x != this.selectedCurso);
       this.updateDBCurso();
     }
@@ -629,7 +641,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteProfesor() {
-    if (confirm('¿Estas seguro/a que quieres eliminar este profesor/a?')) {
+    if (confirm('¿Estas seguro/a que quiere eliminar a el profesor/a, ' + this.selectedProfesor.nombre + ' ' + this.selectedProfesor.apellido + '?')) {
       this.profesorArray = this.profesorArray.filter(
         (x) => x != this.selectedProfesor
       );
@@ -781,7 +793,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteMateria() {
-    if (confirm('¿Estas seguro/a que quieres eliminar esta materia?')) {
+    if (confirm('¿Estas seguro/a que quiere eliminar la materia ' + this.selectedMateria.nombre + '?')) {
       this.materiaArray = this.materiaArray.filter(
         (x) => x != this.selectedMateria
       );
@@ -804,7 +816,7 @@ export class CrearColegioComponent implements OnInit {
   async finalizar() {
     this.http
       .get(
-        'https://s4s-algoritmo.herokuapp.com/algoritmo?idColegio=' +
+        'http://s4s-algoritmo.herokuapp.com/algoritmo?idColegio=' +
           this.nombreColegio,
         { responseType: 'text' }
       )
@@ -816,19 +828,32 @@ export class CrearColegioComponent implements OnInit {
             map((horariosReady) => {
               if (horariosReady.payload.exists) {
                 this.horarioGenerado = true;
-                this.horariosHechos = horariosReady.payload.get("horarios")
-                this.horariosAulasHechos = horariosReady.payload.get("horariosAulas")
-                this.materiasProfesoresHechos = horariosReady.payload.get("materiasProfesores")
+                this.horariosHechos = horariosReady.payload.get('horarios');
+                this.horariosAulasHechos =
+                  horariosReady.payload.get('horariosAulas');
+                this.materiasProfesoresHechos =
+                  horariosReady.payload.get('materiasProfesores');
 
-                this.cursoArray.forEach(curso => {
-                  this.dias.forEach(dia => {
-                    this.turnoArray.forEach(turno=>{
+                this.cursoArray.forEach((curso) => {
+                  this.dias.forEach((dia) => {
+                    this.turnoArray.forEach((turno) => {
                       turno.modulos.forEach((modulo) => {
-                        this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] = this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1].split('-')[0]
-                        if (this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] == "Hueco"){
-                          this.horariosHechos[curso.nombre][dia][turno.turno][turno.modulos.indexOf(modulo)+1] = ""
+                        this.horariosHechos[curso.nombre][dia][turno.turno][
+                          turno.modulos.indexOf(modulo) + 1
+                        ] =
+                          this.horariosHechos[curso.nombre][dia][turno.turno][
+                            turno.modulos.indexOf(modulo) + 1
+                          ].split('-')[0];
+                        if (
+                          this.horariosHechos[curso.nombre][dia][turno.turno][
+                            turno.modulos.indexOf(modulo) + 1
+                          ] == 'Hueco'
+                        ) {
+                          this.horariosHechos[curso.nombre][dia][turno.turno][
+                            turno.modulos.indexOf(modulo) + 1
+                          ] = '';
                         }
-                      })
+                      });
                     });
                   });
                 });

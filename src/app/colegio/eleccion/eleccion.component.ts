@@ -16,6 +16,8 @@ export class EleccionComponent implements OnInit {
   fueACrear:boolean = false;
   fueAUnirse:boolean = false;
   provinciasArgentina:any;
+  nombresDeEscuelasUsuario: Array<string> = [];
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -25,6 +27,16 @@ export class EleccionComponent implements OnInit {
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
+        this.afs.firestore
+          .collection('schools')
+          .where('userAdmin', '==', user.uid)
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              this.nombresDeEscuelasUsuario.push(doc.data().nombre);
+            });
+          });
+
         this.afs.firestore
           .collection('schools')
           .where('userAdmin', '==', user.uid)

@@ -61,6 +61,10 @@ export class NavbarComponent {
     await this.authSvc.logout();
   }
 
+  async changeTheme(){
+    alert('Bromita 🤙🤙🤙');
+  }
+
   // navbarCollapse(){
   //   document.getElementById('buttonNavbarColor02')?.getAttribute('aria-expanded');
 

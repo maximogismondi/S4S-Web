@@ -10,91 +10,6 @@
   </div>
   <div class="col-md-8 mt-4 mx-auto">
     <div class="card">
-      <!-- <div class="progress" style="height: 20px">
-        <div
-          *ngIf="turnos == 0"
-          id="barraDeProgreso"
-          class="progress-bar"
-          role="progressbar"
-          style="width: 10%"
-          aria-valuenow="25"
-          aria-valuemin="0"
-          aria-valuemax="100"
-        >
-          Turnos
-        </div>
-
-        <div
-          *ngIf="aulas == 0 && turnos != 0"
-          id="barraDeProgreso"
-          class="progress-bar"
-          role="progressbar"
-          style="width: 25%"
-          aria-valuenow="25"
-          aria-valuemin="0"
-          aria-valuemax="100"
-        >
-          Aulas
-        </div>
-
-        <div
-          *ngIf="cursos == 0 && aulas != 0"
-          id="barraDeProgreso"
-          class="progress-bar"
-          role="progressbar"
-          style="width: 43%"
-          aria-valuenow="25"
-          aria-valuemin="0"
-          aria-valuemax="100"
-        >
-          Cursos
-        </div>
-
-        <div
-          *ngIf="profesores == 0 && cursos != 0"
-          id="barraDeProgreso"
-          class="progress-bar"
-          role="progressbar"
-          style="width: 63%"
-          aria-valuenow="25"
-          aria-valuemin="0"
-          aria-valuemax="100"
-        >
-          Profesores
-        </div>
-
-        <div
-          *ngIf="materias == 0 && profesores != 0"
-          id="barraDeProgreso"
-          class="progress-bar"
-          role="progressbar"
-          style="width: 77%"
-          aria-valuenow="25"
-          aria-valuemin="0"
-          aria-valuemax="100"
-        >
-          Materias
-        </div>
-
-        <div
-          *ngIf="
-            turnos != 0 &&
-            aulas != 0 &&
-            materias != 0 &&
-            cursos != 0 &&
-            profesores != 0
-          "
-          id="barraDeProgreso"
-          class="progress-bar"
-          role="progressbar"
-          style="width: 100%"
-          aria-valuenow="25"
-          aria-valuemin="0"
-          aria-valuemax="100"
-        >
-          Finalizar
-        </div>
-      </div> -->
 
       <div class="card-body">
         <div class="row align-items-end">
@@ -412,7 +327,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
     <div class="d-grid">
       <button
         *ngIf="
-          botonesCrearColegioProgreso <= 1 && turnoArray[0].modulos.length != 0
+          botonesCrearColegioProgreso <= 1 && turnoArray[0].modulos.length > 3
         "
         (click)="goFormAula()"
         class="btn btn-primary btn-lg mt-4"
@@ -1319,9 +1234,12 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                   <table>
                     <thead>
                       <tr class="table-light">
-                        <th class="rounded-start" scope="col">Profesores</th>
-                        <th scope="col"></th>
-                        <th class="rounded-end" scope="col">Aulas</th>
+                        <th scope="col">Profesores</th>
+                        <th scope="col">ㅤ</th>
+                        <th scope="col">ㅤ</th>
+                        <th scope="col">ㅤ</th>
+                        <th scope="col">ㅤ</th>
+                        <th scope="col">Aulas</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1359,6 +1277,9 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
                             </label>
                           </div>
                         </td>
+                        <td></td>
+                        <td></td>
+                        <td>|</td>
                         <td></td>
                         <td>
                           <div
@@ -1559,7 +1480,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
         </div>
 
         <div *ngIf="!botonPresionado" class="d-grid">
-          <button (click)="finalizar()" class="btn btn-primary btn-lg mt-2">
+          <button (click)="finalizar()" class="btn btn-primary btn-lg">
             Generar mis horarios ya!
           </button>
         </div>
