@@ -228,11 +228,11 @@ export class AuthService {
       alert('El horario de finalizacion es mas chico que el de inicio');
     } else if (
       (school.inicioHorario < '05:00' && school.inicioHorario >= '00:00') ||
-      school.inicioHorario > '12:00'
+      school.inicioHorario > '12:05'
     ) {
-      alert('El horario de inicio debe ser entre 05:00 - 12:00 pm');
-    } else if (school.finalizacionHorario < '12:00') {
-      alert('El horario de finalizacion debe ser mayor que las 12:00 pm');
+      alert('El horario de inicio debe ser entre 05:00 - 12:05 pm');
+    } else if (school.finalizacionHorario < '12:05') {
+      alert('El horario de finalizacion debe ser mayor que las 12:05 pm');
     } else {
       this.nombresDeEscuelas.forEach((nombreEscuela) => {
         if (school.nombre == nombreEscuela) {

@@ -141,7 +141,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <!-- MAÑANA -->
           <tr *ngIf="12 >= horaInicial && horaInicial >= 5">
             <td colspan="7" class="table-active">
-              TURNO MAÑANA ({{ inicioHorario }} am - 12:00 pm)
+              TURNO MAÑANA ({{ inicioHorario }} am - 12:05 pm)
             </td>
           </tr>
           <tr *ngFor="let turno of turnoArray[0].modulos" class="bg-white">
@@ -195,7 +195,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
           <!-- TARDE -->
           <tr *ngIf="18 >= horaFinal && horaFinal > 12; else turnoNoche">
             <td colspan="7" class="table-active">
-              TURNO TARDE (12:00 pm - {{ finalizacionHorario }} pm)
+              TURNO TARDE (12:05 pm - {{ finalizacionHorario }} pm)
             </td>
           </tr>
           <ng-template #turnoNoche>
@@ -203,7 +203,7 @@ turnos != 0 && aulas != 0 && materias != 0 && cursos != 0 && profesores != 0 || 
             <ng-template #turnoNoche2>
               <tr>
                 <td colspan="7" class="table-active">
-                  TURNO TARDE (12:00 am - 18:00 pm)
+                  TURNO TARDE (12:05 am - 18:00 pm)
                 </td>
               </tr>
             </ng-template>

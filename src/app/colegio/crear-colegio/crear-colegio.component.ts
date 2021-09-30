@@ -117,8 +117,8 @@ export class CrearColegioComponent implements OnInit {
               this.inicioHorario = school.inicioHorario;
               this.finalizacionHorario = school.finalizacionHorario;
               if (this.inicioModuloSeleccionado.length == 0) {
-                this.inicioModuloSeleccionado.push('05:00', '12:00', '18:00');
-                if (school.inicioHorario < '12:00') {
+                this.inicioModuloSeleccionado.push('05:00', '12:05', '18:00');
+                if (school.inicioHorario < '12:05') {
                   this.inicioModuloSeleccionado[0] = school.inicioHorario;
                 } else if (school.inicioHorario < '18:00') {
                   this.inicioModuloSeleccionado[1] = school.inicioHorario;
@@ -260,11 +260,11 @@ export class CrearColegioComponent implements OnInit {
 
     //fuera de turno
     if (this.turnoSeleccionado == 'manana') {
-      if (horaFinal > '12:00') {
+      if (horaFinal > '12:05') {
         return 'Fuera de Turno';
       }
     } else if (this.turnoSeleccionado == 'tarde') {
-      if (horaInicial < '12:00') {
+      if (horaInicial < '12:05') {
         return 'Fuera de Turno';
       }
       if (horaFinal > '18:00') {
