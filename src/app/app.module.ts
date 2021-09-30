@@ -23,7 +23,6 @@ import { CrearColegioModule } from './colegio/crear-colegio/crear-colegio.module
 @NgModule({
   declarations: [AppComponent, NavbarComponent, SendEmailComponent, ],
   imports: [
-    CrearColegioModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,

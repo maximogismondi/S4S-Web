@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ColegioService } from '../services/colegio.service';
 
@@ -10,7 +11,9 @@ import { ColegioService } from '../services/colegio.service';
 })
 export class CrearColegioComponent implements OnInit {
   
-  constructor(public colegioSvc: ColegioService,) {}
+  constructor(public colegioSvc: ColegioService,private activatedRoute: ActivatedRoute) {
+    this.colegioSvc.nombreColegio = this.activatedRoute.snapshot.paramMap.get("nombreColegio");
+  }
 
   ngOnInit(): void {}
 

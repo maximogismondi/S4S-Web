@@ -73,9 +73,9 @@ export class ColegioService {
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.nombreColegio = "hola";
+        // this.nombreColegio = ;
         // this.activatedRoute.snapshot.paramMap.get("nombreColegio");
-        console.log(this.nombreColegio)
+        // console.log(this.nombreColegio)
         this.afs
           .collection('schools', (ref) =>
           ref.where('nombre', '==' , this.nombreColegio)
