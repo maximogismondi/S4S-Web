@@ -15,12 +15,24 @@
         </thead>
         <tbody>
           <!-- MAÑANA -->
-          <tr *ngIf="12 >= colegioSvc.horaInicial && colegioSvc.horaInicial >= 5">
+          <tr
+            *ngIf="12 >= colegioSvc.horaInicial && colegioSvc.horaInicial >= 5"
+          >
             <td colspan="7" class="table-active">INICIO ACTIVIDADES</td>
           </tr>
-          <tr *ngFor="let turno of colegioSvc.turnoArray[0].modulos" class="bg-white">
+          <tr
+            *ngFor="let turno of colegioSvc.turnoArray[0].modulos"
+            class="bg-white"
+          >
             <td colspan="2" class="text-black">
               {{ turno.inicio }} - {{ turno.final }}
+            </td>
+            <td *ngFor="let dia of colegioSvc.dias" colspan="1" class="text-black">
+              {{
+                colegioSvc.horariosHechos[colegioSvc.cursoActual][dia]["manana"][
+                colegioSvc.turnoArray[0].modulos.indexOf(turno) + 1
+                ]
+              }}
             </td>
           </tr>
 
@@ -29,9 +41,19 @@
             <td colspan="7" class="table-active"></td>
           </tr>
 
-          <tr *ngFor="let turno of colegioSvc.turnoArray[1].modulos" class="bg-white">
+          <tr
+            *ngFor="let turno of colegioSvc.turnoArray[1].modulos"
+            class="bg-white"
+          >
             <td colspan="2" class="text-black">
               {{ turno.inicio }} - {{ turno.final }}
+            </td>
+            <td *ngFor="let dia of colegioSvc.dias" colspan="1" class="text-black">
+              {{
+                colegioSvc.horariosHechos[colegioSvc.cursoActual][dia]["tarde"][
+                colegioSvc.turnoArray[1].modulos.indexOf(turno) + 1
+                ]
+              }}
             </td>
           </tr>
 
@@ -40,14 +62,24 @@
             <td colspan="7" class="table-active"></td>
           </tr>
 
-          <tr *ngFor="let turno of colegioSvc.turnoArray[2].modulos" class="bg-white">
+          <tr
+            *ngFor="let turno of colegioSvc.turnoArray[2].modulos"
+            class="bg-white"
+          >
             <td colspan="2" class="text-black">
               {{ turno.inicio }} - {{ turno.final }}
+            </td>
+            <td *ngFor="let dia of colegioSvc.dias" colspan="1" class="text-black">
+              {{
+                colegioSvc.horariosHechos[colegioSvc.cursoActual][dia]["noche"][
+                colegioSvc.turnoArray[2].modulos.indexOf(turno) + 1
+                ]
+              }}
             </td>
           </tr>
         </tbody>
       </table>
-      <div class="card-title">
+      <div *ngIf="botonPresionado && !colegioSvc.horarioGenerado" class="card-title">
         <h5 class="my-3">
           <p>
             Gracias por utilizar S4S. <br />
@@ -55,7 +87,12 @@
           </p>
         </h5>
 
-        <button class="btn btn-primary" type="button" disabled>
+        <button
+          *ngIf="botonPresionado && !colegioSvc.horarioGenerado"
+          class="btn btn-primary"
+          type="button"
+          disabled
+        >
           <span
             class="spinner-grow spinner-grow-sm"
             role="status"
@@ -65,12 +102,8 @@
         </button>
       </div>
 
-      <ng-template #bloquearBoton5>
-        <span>Genera tus horarios presionando el boton</span>
-      </ng-template>
-
-      <div class="d-grid">
-        <button (click)="finalizar()" class="btn btn-primary btn-lg mt-2">
+      <div *ngIf="!botonPresionado" class="d-grid">
+        <button (click)="finalizar()" class="btn btn-primary btn-lg">
           Generar mis horarios ya!
         </button>
       </div>

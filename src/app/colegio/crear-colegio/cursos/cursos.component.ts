@@ -51,7 +51,7 @@ export class CursosComponent implements OnInit {
         // materiasCurso: curso.materiasCurso,
       });
     });
-    this.afs.collection('schools').doc(this.colegioSvc.nombreDocumento).update({
+    this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
       cursos: CursoArrayDiccionario,
     });
   }
@@ -99,7 +99,7 @@ export class CursosComponent implements OnInit {
     this.colegioSvc.botonesCrearColegio = 4;
     if (this.colegioSvc.botonesCrearColegioProgreso < 4) {
       this.colegioSvc.botonesCrearColegioProgreso = 4;
-      this.afs.collection('schools').doc(this.colegioSvc.nombreDocumento).update({
+      this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
         botonesCrearColegioProgreso: 4,
         botonesCrearColegio: 4,
       });

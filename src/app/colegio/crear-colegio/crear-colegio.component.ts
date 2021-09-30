@@ -9,6 +9,7 @@ import { ColegioService } from '../services/colegio.service';
   providers: [AuthService],
 })
 export class CrearColegioComponent implements OnInit {
+  
   constructor(public colegioSvc: ColegioService,) {}
 
   ngOnInit(): void {}

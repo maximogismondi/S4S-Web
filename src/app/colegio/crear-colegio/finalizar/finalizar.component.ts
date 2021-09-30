@@ -39,7 +39,7 @@ export class FinalizarComponent implements OnInit {
       this.http
         .get(
           'https://s4s-algoritmo.herokuapp.com/algoritmo?idColegio=' +
-            this.colegioSvc.nombreDocumento,
+            this.colegioSvc.nombreColegio,
           { responseType: 'text' }
         )
         .subscribe((data) => {

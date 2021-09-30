@@ -54,7 +54,7 @@ export class ProfesoresComponent implements OnInit {
         // condiciones: profesor.condiciones,
       });
     });
-    this.afs.collection('schools').doc(this.colegioSvc.nombreDocumento).update({
+    this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
       profesores: ProfesorArrayDiccionario,
     });
   }
@@ -153,7 +153,7 @@ export class ProfesoresComponent implements OnInit {
     this.colegioSvc.botonesCrearColegio = 5;
     if (this.colegioSvc.botonesCrearColegioProgreso < 5) {
       this.colegioSvc.botonesCrearColegioProgreso = 5;
-      this.afs.collection('schools').doc(this.colegioSvc.nombreDocumento).update({
+      this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
         botonesCrearColegioProgreso: 5,
         botonesCrearColegio: 5,
       });

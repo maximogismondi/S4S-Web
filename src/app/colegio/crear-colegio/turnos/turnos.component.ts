@@ -50,7 +50,7 @@ export class TurnosComponent implements OnInit {
         modulos: modulosTurno,
       });
     });
-    this.afs.collection('schools').doc(this.colegioSvc.nombreDocumento).update({
+    this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
       turnos: turnoArrayDiccionario,
     });
   }
@@ -209,7 +209,7 @@ export class TurnosComponent implements OnInit {
     this.colegioSvc.botonesCrearColegio = 2;
     if (this.colegioSvc.botonesCrearColegioProgreso < 2) {
       this.colegioSvc.botonesCrearColegioProgreso = 2;
-      this.afs.collection('schools').doc(this.colegioSvc.nombreDocumento).update({
+      this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
         botonesCrearColegioProgreso: 2,
         botonesCrearColegio: 2,
       });

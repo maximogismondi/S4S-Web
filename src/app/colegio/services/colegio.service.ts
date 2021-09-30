@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -21,8 +21,8 @@ import {
   providedIn: 'root',
 })
 export class ColegioService {
-  nombreColegio: string;
-  nombreDocumento: string;
+  nombreColegio: any;
+  // nombreColegio: string;
   duracionModulo: number;
   inicioHorario: string;
   finalizacionHorario: string;
@@ -52,26 +52,40 @@ export class ColegioService {
   selectedCurso: Curso = new Curso();
   materiaArray: Materia[] = [];
   selectedMateria: Materia;
+  horariosFinal: Array<string> = [];
+  nombreMateria: string;
+  aulaMateria: string;
+  horariosHechos: any = {};
+  horariosAulasHechos: any = {};
+  materiasProfesoresHechos: any = {};
+  cursoActual: string;
+  dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+  botonPresionado: boolean = false;
+  horarioGenerado: boolean = false;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private authSvc: AuthService,
     private afs: AngularFirestore,
-    private http: HttpClient
+    private http: HttpClient,
+    private activatedRoute: ActivatedRoute
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
+        this.nombreColegio = "hola";
+        // this.activatedRoute.snapshot.paramMap.get("nombreColegio");
+        console.log(this.nombreColegio)
         this.afs
           .collection('schools', (ref) =>
-            ref.where('userAdmin', '==', user.uid)
+          ref.where('nombre', '==' , this.nombreColegio)
           )
           .snapshotChanges()
           .pipe(
             map((schools) => {
               const school = schools[0].payload.doc.data() as Colegio;
-              this.nombreColegio = school.nombre;
-              this.nombreDocumento = school.id;
+              // this.nombreColegio = school.nombre;
+              // this.nombreColegio = school.id;
               this.duracionModulo = school.duracionModulo;
               this.inicioHorario = school.inicioHorario;
               this.finalizacionHorario = school.finalizacionHorario;
@@ -123,6 +137,12 @@ export class ColegioService {
                   this.aulaArray
                 );
               }
+              if (this.cursoArray.length > 0) {
+                this.cursoActual = this.cursoArray[0].nombre;
+              }
+
+              this.botonPresionado = false;
+              this.horarioGenerado = false;
 
             })
           )

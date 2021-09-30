@@ -73,15 +73,7 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectToVerifiedEmail },
   },
-  // {
-  //   path: 'configuracion',
-  //   loadChildren: () =>
-  //     import('./configuraciones/setting/setting.module').then(
-  //       (m) => m.SettingModule
-  //     ),
-  //   canActivate: [AngularFireAuthGuard],
-  //   data: { authGuardPipe: redirectUnauthorizedToLogin },
-  // },
+
 ];
 
 @NgModule({
