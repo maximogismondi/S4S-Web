@@ -2,23 +2,20 @@
   <div class="card">
     <div class="card-body">
       <!-- <h1 class="text-center mt-4">COLEGIO</h1> -->
-      <h3 class="text-center mt-3">Scheduler For School</h3>
+      <h3 class="text-center mt-3">Schedulers For Schools</h3>
       <!-- id="botonesEleccionCrear" -->
       <div *ngIf="fueACrear == false">
         <div class="d-grid">
-          <button
-            *ngIf="nombreColegio == null; else bloquearBoton"
-            (click)="irCrear()"
-            class="btn btn-primary btn-lg mt-4 py-4"
-          >
+          <button (click)="irCrear()" class="btn btn-primary btn-lg mt-4 py-4">
             CREAR
           </button>
         </div>
+        <!-- *ngIf="nombresDeEscuelasUsuario.length < 3; else bloquearBoton"
         <ng-template #bloquearBoton>
           <button class="btn btn-primary disabled btn-lg mt-4 py-4">
             CREAR
           </button>
-        </ng-template>
+        </ng-template> -->
       </div>
       <!--id="crear" style="display: none"-->
       <div *ngIf="fueACrear">
@@ -69,7 +66,9 @@
                       value="{{ provincia['nombre'] }}"
                       *ngFor="let provincia of provinciasArgentina"
                       class="bg-white"
-                    >{{ provincia['nombre'] }}</option>
+                    >
+                      {{ provincia["nombre"] }}
+                    </option>
                   </select>
                 </div>
                 <div class="form-group mt-3">
@@ -154,19 +153,6 @@
             class="btn btn-primary btn-lg mt-4"
           >
             UNIRSE
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1.10em"
-              height="1.10em"
-              fill="currentColor"
-              class="bi bi-arrow-right"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-              />
-            </svg>
           </button>
         </div>
       </div>
