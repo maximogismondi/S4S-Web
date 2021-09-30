@@ -14,7 +14,6 @@ import {
   Profesor,
   Turno,
   Modulo,
-
 } from 'src/app/shared/interface/user.interface';
 
 @Injectable({
@@ -78,7 +77,7 @@ export class ColegioService {
         // console.log(this.nombreColegio)
         this.afs
           .collection('schools', (ref) =>
-          ref.where('nombre', '==' , this.nombreColegio)
+            ref.where('nombre', '==', this.nombreColegio)
           )
           .snapshotChanges()
           .pipe(
@@ -128,6 +127,16 @@ export class ColegioService {
               this.profesorArray = school.profesores;
 
               this.materiaArray = school.materias;
+
+              this.cursoArray.forEach((curso) => {
+                curso.materias = [];
+                this.materiaArray.forEach((materia) => {
+                  if (materia.curso == curso.nombre) {
+                    curso.materias.push(materia.nombre);
+                  }
+                });
+              });
+
               if (!this.selectedProfesor) {
                 this.selectedProfesor = new Profesor(this.turnoArray);
               }
@@ -144,6 +153,7 @@ export class ColegioService {
               this.botonPresionado = false;
               this.horarioGenerado = false;
 
+              console.log(this.cursoArray);
             })
           )
           .subscribe();

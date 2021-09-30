@@ -22,7 +22,9 @@
                 <input
                   type="number"
                   min="1"
-                  [(ngModel)]="colegioSvc.selectedMateria.cantidadDeModulosTotal"
+                  [(ngModel)]="
+                    colegioSvc.selectedMateria.cantidadDeModulosTotal
+                  "
                   placeholder="Cantidad de modulos total"
                   class="form-control"
                 />
@@ -30,7 +32,9 @@
                 <input
                   type="number"
                   min="1"
-                  [(ngModel)]="colegioSvc.selectedMateria.cantidadMaximaDeModulosPorDia"
+                  [(ngModel)]="
+                    colegioSvc.selectedMateria.cantidadMaximaDeModulosPorDia
+                  "
                   placeholder="Cantidad maxima de modulos por dia"
                   class="form-control"
                 />
@@ -55,11 +59,11 @@
                   <thead>
                     <tr class="table-light">
                       <th scope="col">Profesores</th>
-                        <th scope="col">ㅤ</th>
-                        <th scope="col">ㅤ</th>
-                        <th scope="col">ㅤ</th>
-                        <th scope="col">ㅤ</th>
-                        <th scope="col">Aulas</th>
+                      <th scope="col">ㅤ</th>
+                      <th scope="col">ㅤ</th>
+                      <th scope="col">ㅤ</th>
+                      <th scope="col">ㅤ</th>
+                      <th scope="col">Aulas</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -97,8 +101,8 @@
                       </td>
                       <td></td>
                       <td></td>
-                        <td>|</td>
-                        <td></td>
+                      <td>|</td>
+                      <td></td>
                       <td>
                         <div
                           class="form-check mt-2"
@@ -109,7 +113,9 @@
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                            colegioSvc.selectedMateria.aulasMateria[aula.nombre]
+                              colegioSvc.selectedMateria.aulasMateria[
+                                aula.nombre
+                              ]
                             "
                             id="{{ aula.nombre }}"
                           />
@@ -149,12 +155,26 @@
             style="max-height: 400px; overflow-y: scroll"
           >
             <li
-              *ngFor="let materia of colegioSvc.materiaArray"
+              *ngFor="let curso of colegioSvc.cursoArray"
               class="list-group-item list-group-item-action"
-              (click)="openForEditMateria(materia)"
-              [class.active]="materia == colegioSvc.selectedMateria"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExample"
+              aria-expanded="false"
+              aria-controls="collapseExample"
             >
-              <span>{{ materia.nombre }}</span>
+              {{ curso.nombre }}
+              <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                  <li
+                    *ngFor="let materia of colegioSvc.materiaArray"
+                    class="list-group-item list-group-item-action"
+                    (click)="openForEditMateria(materia)"
+                    [class.active]="materia == colegioSvc.selectedMateria"
+                  >
+                    <span>{{ materia.nombre }}</span>
+                  </li>
+                </div>
+              </div>
             </li>
           </ul>
         </td>
@@ -164,7 +184,8 @@
           <div class="d-grid">
             <button
               *ngIf="
-                colegioSvc.botonesCrearColegioProgreso <= 5 && colegioSvc.materiaArray.length != 0
+                colegioSvc.botonesCrearColegioProgreso <= 5 &&
+                colegioSvc.materiaArray.length != 0
               "
               (click)="goFormFinalizar()"
               class="btn btn-primary btn-lg mt-4"
