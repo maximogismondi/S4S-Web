@@ -92,9 +92,9 @@ export class CrearColegioComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
-      
       if (user) {
-        this.nombreColegio = this.activatedRoute.snapshot.paramMap.get("nombreColegio")
+        this.nombreColegio =
+          this.activatedRoute.snapshot.paramMap.get('nombreColegio');
         // this.afs
         //   .collection('schools')
         //   .get()
@@ -106,7 +106,7 @@ export class CrearColegioComponent implements OnInit {
 
         this.afs
           .collection('schools', (ref) =>
-            ref.where('nombre', '==' , this.nombreColegio)
+            ref.where('nombre', '==', this.nombreColegio)
           )
           .snapshotChanges()
           .pipe(
@@ -214,15 +214,31 @@ export class CrearColegioComponent implements OnInit {
   }
 
   chequearRepeticionEnSubidaDatos(selected: any, arreglo: Array<any>): boolean {
+    console.log('123');
     let existeDato: boolean = false;
-    arreglo.forEach((dato) => {
-      if (selected.nombre == dato.nombre) {
-        existeDato = true;
-        alert(
-          'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre'
-        );
-      }
-    });
+    if ('apellido' in selected) {
+      arreglo.forEach((dato) => {
+        if (
+          selected.nombre + selected.apellido ==
+          dato.nombre + dato.apellido
+        ) {
+          existeDato = true;
+          alert(
+            'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre y/o apellido'
+          );
+        }
+      });
+    } else {
+      if (typeof selected)
+        arreglo.forEach((dato) => {
+          if (selected.nombre == dato.nombre) {
+            existeDato = true;
+            alert(
+              'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre'
+            );
+          }
+        });
+    }
 
     return existeDato;
   }
@@ -464,7 +480,13 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteAula() {
-    if (confirm('¿Estas seguro/a que quiere eliminar el aula, ' + this.selectedAula.nombre + '?')) {
+    if (
+      confirm(
+        '¿Estas seguro/a que quiere eliminar el aula, ' +
+          this.selectedAula.nombre +
+          '?'
+      )
+    ) {
       this.aulaArray = this.aulaArray.filter((x) => x != this.selectedAula);
       this.updateDBAula();
     }
@@ -533,7 +555,13 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteCurso() {
-    if (confirm('¿Estas seguro/a que quiere eliminar el curso, ' + this.selectedCurso.nombre + '?')) {
+    if (
+      confirm(
+        '¿Estas seguro/a que quiere eliminar el curso, ' +
+          this.selectedCurso.nombre +
+          '?'
+      )
+    ) {
       this.cursoArray = this.cursoArray.filter((x) => x != this.selectedCurso);
       this.updateDBCurso();
     }
@@ -641,7 +669,15 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteProfesor() {
-    if (confirm('¿Estas seguro/a que quiere eliminar a el profesor/a, ' + this.selectedProfesor.nombre + ' ' + this.selectedProfesor.apellido + '?')) {
+    if (
+      confirm(
+        '¿Estas seguro/a que quiere eliminar a el profesor/a, ' +
+          this.selectedProfesor.nombre +
+          ' ' +
+          this.selectedProfesor.apellido +
+          '?'
+      )
+    ) {
       this.profesorArray = this.profesorArray.filter(
         (x) => x != this.selectedProfesor
       );
@@ -710,53 +746,56 @@ export class CrearColegioComponent implements OnInit {
       this.selectedMateria.cantidadMaximaDeModulosPorDia != '' &&
       this.selectedMateria.nombre.length <= 30
     ) {
-      if (this.selectedMateria.id == 0) {
-        if (
-          !this.chequearRepeticionEnSubidaDatos(
-            this.selectedMateria,
-            this.materiaArray
-          )
-        ) {
-          let existeProfesorCapacitado: boolean = false;
+      if (
+        !this.chequearRepeticionEnSubidaDatos(
+          this.selectedMateria,
+          this.materiaArray
+        )
+      ) {
+        if (this.selectedMateria.id == 0) {
+          {
+            let existeProfesorCapacitado: boolean = false;
 
-          this.profesorArray.forEach((profesor) => {
-            if (
-              this.selectedMateria.profesoresCapacitados[
-                profesor.nombre + ' ' + profesor.apellido
-              ]
-            ) {
-              existeProfesorCapacitado = true;
-            }
-          });
-
-          if (existeProfesorCapacitado) {
-            let existeAula: boolean = false;
-
-            this.aulaArray.forEach((aula) => {
-              if (this.selectedMateria.aulasMateria[aula.nombre]) {
-                existeAula = true;
+            this.profesorArray.forEach((profesor) => {
+              if (
+                this.selectedMateria.profesoresCapacitados[
+                  profesor.nombre + ' ' + profesor.apellido
+                ]
+              ) {
+                existeProfesorCapacitado = true;
               }
             });
 
-            if (existeAula) {
-              this.selectedMateria.id = this.materiaArray.length + 1;
-              this.materiaArray.push(this.selectedMateria);
-            } else {
-              alert('Coloque por lo menos un aula para la materia creada');
-            }
-          } else {
-            alert('Coloque por lo menos un profesor para la materia creada');
-          }
+            if (existeProfesorCapacitado) {
+              let existeAula: boolean = false;
 
-          // this.profesoresArrayMaterias.forEach((profesor) => {
-          //   if (profesor.valor == true) {
-          //     this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
-          //   }
-          // });
+              this.aulaArray.forEach((aula) => {
+                if (this.selectedMateria.aulasMateria[aula.nombre]) {
+                  existeAula = true;
+                }
+              });
+
+              if (existeAula) {
+                this.selectedMateria.id = this.materiaArray.length + 1;
+                this.materiaArray.push(this.selectedMateria);
+                this.updateDBMateria();
+              } else {
+                alert('Coloque por lo menos un aula para la materia creada');
+              }
+            } else {
+              alert('Coloque por lo menos un profesor para la materia creada');
+            }
+
+            // this.profesoresArrayMaterias.forEach((profesor) => {
+            //   if (profesor.valor == true) {
+            //     this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
+            //   }
+            // });
+          }
+        } else {
+          this.updateDBMateria();
         }
       }
-
-      this.updateDBMateria();
     } else {
       if (this.selectedMateria.nombre.length > 30) {
         alert('Pone un nombre menor a los 30 caracteres');
@@ -793,7 +832,13 @@ export class CrearColegioComponent implements OnInit {
   }
 
   deleteMateria() {
-    if (confirm('¿Estas seguro/a que quiere eliminar la materia ' + this.selectedMateria.nombre + '?')) {
+    if (
+      confirm(
+        '¿Estas seguro/a que quiere eliminar la materia ' +
+          this.selectedMateria.nombre +
+          '?'
+      )
+    ) {
       this.materiaArray = this.materiaArray.filter(
         (x) => x != this.selectedMateria
       );
