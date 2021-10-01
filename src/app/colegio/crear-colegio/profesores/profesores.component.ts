@@ -22,20 +22,18 @@ import { ColegioService } from '../../services/colegio.service';
 @Component({
   selector: 'app-profesores',
   templateUrl: './profesores.component.html',
-  styleUrls: ['./profesores.component.scss']
+  styleUrls: ['./profesores.component.scss'],
 })
 export class ProfesoresComponent implements OnInit {
-
   constructor(
     private router: Router,
     private fb: FormBuilder,
     public colegioSvc: ColegioService,
     private afs: AngularFirestore,
     private http: HttpClient
-  ) { }
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   // _______________________________________PROFESORES__________________________________________________________
 
@@ -71,13 +69,13 @@ export class ProfesoresComponent implements OnInit {
       this.colegioSvc.selectedProfesor.dni >= '1000000' &&
       this.colegioSvc.selectedProfesor.nombre.length <= 30
     ) {
-      if (this.colegioSvc.selectedProfesor.id == 0) {
-        if (
-          !this.colegioSvc.chequearRepeticionEnSubidaDatos(
-            this.colegioSvc.selectedProfesor,
-            this.colegioSvc.profesorArray
-          )
-        ) {
+      if (
+        !this.colegioSvc.chequearRepeticionEnSubidaDatos(
+          this.colegioSvc.selectedProfesor,
+          this.colegioSvc.profesorArray
+        )
+      ) {
+        if (this.colegioSvc.selectedProfesor.id == 0) {
           let existeDni: boolean = false;
           this.colegioSvc.profesorArray.forEach((dniProfe) => {
             if (this.colegioSvc.selectedProfesor.dni == dniProfe.dni) {
@@ -94,9 +92,9 @@ export class ProfesoresComponent implements OnInit {
               this.colegioSvc.turnoArray.forEach((turno) => {
                 turno.modulos.forEach((modulo) => {
                   if (
-                    this.colegioSvc.selectedProfesor.disponibilidad[dia][turno.turno][
-                      modulo.inicio
-                    ]
+                    this.colegioSvc.selectedProfesor.disponibilidad[dia][
+                      turno.turno
+                    ][modulo.inicio]
                   ) {
                     existeProfesorDisponible = true;
                   }
@@ -104,16 +102,20 @@ export class ProfesoresComponent implements OnInit {
               });
             });
             if (existeProfesorDisponible) {
-              this.colegioSvc.selectedProfesor.id = this.colegioSvc.profesorArray.length + 1;
-              this.colegioSvc.profesorArray.push(this.colegioSvc.selectedProfesor);
+              this.colegioSvc.selectedProfesor.id =
+                this.colegioSvc.profesorArray.length + 1;
+              this.colegioSvc.profesorArray.push(
+                this.colegioSvc.selectedProfesor
+              );
             } else {
               alert('Coloque por lo menos un horario para el profesor/a');
             }
           }
-        }
+        } 
+        this.updateDBProfesor();
+
       }
 
-      this.updateDBProfesor();
     } else {
       if (this.colegioSvc.selectedProfesor.dni < '1000000') {
         alert('Ingrese un dni valido');
@@ -159,6 +161,4 @@ export class ProfesoresComponent implements OnInit {
       });
     }
   }
-
-
 }

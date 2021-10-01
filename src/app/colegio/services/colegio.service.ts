@@ -163,14 +163,29 @@ export class ColegioService {
 
   chequearRepeticionEnSubidaDatos(selected: any, arreglo: Array<any>): boolean {
     let existeDato: boolean = false;
-    arreglo.forEach((dato) => {
-      if (selected.nombre == dato.nombre) {
-        existeDato = true;
-        alert(
-          'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre'
-        );
-      }
-    });
+    if ('apellido' in selected) {
+      arreglo.forEach((dato) => {
+        if (
+          selected.nombre + selected.apellido ==
+          dato.nombre + dato.apellido
+        ) {
+          existeDato = true;
+          alert(
+            'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre y/o apellido'
+          );
+        }
+      });
+    } else {
+      if (typeof selected)
+        arreglo.forEach((dato) => {
+          if (selected.nombre == dato.nombre) {
+            existeDato = true;
+            alert(
+              'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre'
+            );
+          }
+        });
+    }
 
     return existeDato;
   }

@@ -66,21 +66,18 @@ export class AulasComponent implements OnInit {
       this.colegioSvc.selectedAula.nombre.length <= 30 &&
       this.colegioSvc.selectedAula.tipo != ''
     ) {
-      if (this.colegioSvc.selectedAula.id == 0) {
-        if (
-          !this.colegioSvc.chequearRepeticionEnSubidaDatos(
-            this.colegioSvc.selectedAula,
-            this.colegioSvc.aulaArray
-          )
-        ) {
+      if (
+        !this.colegioSvc.chequearRepeticionEnSubidaDatos(this.colegioSvc.selectedAula, this.colegioSvc.aulaArray)
+      ) {
+        if (this.colegioSvc.selectedAula.id == 0) {
           this.colegioSvc.selectedAula.id = this.colegioSvc.aulaArray.length + 1;
           this.colegioSvc.aulaArray.push(this.colegioSvc.selectedAula);
         }
+        if (this.colegioSvc.selectedAula.tipo == 'normal') {
+          this.colegioSvc.selectedAula.otro = 'normal';
+        }
+        this.updateDBAula();
       }
-      if (this.colegioSvc.selectedAula.tipo == 'normal') {
-        this.colegioSvc.selectedAula.otro = 'normal';
-      }
-      this.updateDBAula();
     } else {
       if (this.colegioSvc.selectedAula.nombre.length > 30) {
         alert('Pone un nombre menor a los 30 caracteres');

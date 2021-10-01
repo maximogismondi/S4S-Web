@@ -25,7 +25,6 @@ import { ColegioService } from '../../services/colegio.service';
   styleUrls: ['./materias.component.scss'],
 })
 export class MateriasComponent implements OnInit {
-
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -39,7 +38,10 @@ export class MateriasComponent implements OnInit {
   // _______________________________________MATERIAS____________________________________________________________
 
   async updateDBMateria() {
-    this.colegioSvc.selectedMateria = new Materia(this.colegioSvc.profesorArray, this.colegioSvc.aulaArray);
+    this.colegioSvc.selectedMateria = new Materia(
+      this.colegioSvc.profesorArray,
+      this.colegioSvc.aulaArray
+    );
     let materiaArrayDiccionario: Array<any> = [];
     this.colegioSvc.materiaArray.forEach((materia) => {
       materiaArrayDiccionario.push({
@@ -73,13 +75,13 @@ export class MateriasComponent implements OnInit {
       this.colegioSvc.selectedMateria.cantidadMaximaDeModulosPorDia != '' &&
       this.colegioSvc.selectedMateria.nombre.length <= 30
     ) {
-      if (this.colegioSvc.selectedMateria.id == 0) {
-        if (
-          !this.colegioSvc.chequearRepeticionEnSubidaDatos(
-            this.colegioSvc.selectedMateria,
-            this.colegioSvc.materiaArray
-          )
-        ) {
+      if (
+        !this.colegioSvc.chequearRepeticionEnSubidaDatos(
+          this.colegioSvc.selectedMateria,
+          this.colegioSvc.materiaArray
+        )
+      ) {
+        if (this.colegioSvc.selectedMateria.id == 0) {
           let existeProfesorCapacitado: boolean = false;
 
           this.colegioSvc.profesorArray.forEach((profesor) => {
@@ -102,19 +104,20 @@ export class MateriasComponent implements OnInit {
             });
 
             if (existeAula) {
-              this.colegioSvc.selectedMateria.id = this.colegioSvc.materiaArray.length + 1;
-              this.colegioSvc.materiaArray.push(this.colegioSvc.selectedMateria);
+              this.colegioSvc.selectedMateria.id =
+                this.colegioSvc.materiaArray.length + 1;
+              this.colegioSvc.materiaArray.push(
+                this.colegioSvc.selectedMateria
+              );
             } else {
               alert('Coloque por lo menos un aula para la materia creada');
             }
           } else {
             alert('Coloque por lo menos un profesor para la materia creada');
           }
-
         }
+        this.updateDBMateria();
       }
-
-      this.updateDBMateria();
     } else {
       if (this.colegioSvc.selectedMateria.nombre.length > 30) {
         alert('Pone un nombre menor a los 30 caracteres');

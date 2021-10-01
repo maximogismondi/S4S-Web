@@ -67,18 +67,18 @@ export class CursosComponent implements OnInit {
       this.colegioSvc.selectedCurso.cantAlumnos != '' &&
       this.colegioSvc.selectedCurso.nombre.length <= 30
     ) {
-      if (this.colegioSvc.selectedCurso.id == 0) {
-        if (
-          !this.colegioSvc.chequearRepeticionEnSubidaDatos(
-            this.colegioSvc.selectedCurso,
-            this.colegioSvc.cursoArray
-          )
-        ) {
+      if (
+        !this.colegioSvc.chequearRepeticionEnSubidaDatos(
+          this.colegioSvc.selectedCurso,
+          this.colegioSvc.cursoArray
+        )
+      ) {
+        if (this.colegioSvc.selectedCurso.id == 0) {
           this.colegioSvc.selectedCurso.id = this.colegioSvc.cursoArray.length + 1;
           this.colegioSvc.cursoArray.push(this.colegioSvc.selectedCurso);
         }
+        this.updateDBCurso();
       }
-      this.updateDBCurso();
     } else {
       if (this.colegioSvc.selectedCurso.nombre.length > 30) {
         alert('Pone un nombre menor a los 30 caracteres');
