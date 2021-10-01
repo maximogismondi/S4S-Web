@@ -214,7 +214,6 @@ export class CrearColegioComponent implements OnInit {
   }
 
   chequearRepeticionEnSubidaDatos(selected: any, arreglo: Array<any>): boolean {
-    console.log('123');
     let existeDato: boolean = false;
     if ('apellido' in selected) {
       arreglo.forEach((dato) => {
@@ -455,21 +454,18 @@ export class CrearColegioComponent implements OnInit {
       this.selectedAula.nombre.length <= 30 &&
       this.selectedAula.tipo != ''
     ) {
-      if (this.selectedAula.id == 0) {
-        if (
-          !this.chequearRepeticionEnSubidaDatos(
-            this.selectedAula,
-            this.aulaArray
-          )
-        ) {
+      if (
+        !this.chequearRepeticionEnSubidaDatos(this.selectedAula, this.aulaArray)
+      ) {
+        if (this.selectedAula.id == 0) {
           this.selectedAula.id = this.aulaArray.length + 1;
           this.aulaArray.push(this.selectedAula);
         }
+        if (this.selectedAula.tipo == 'normal') {
+          this.selectedAula.otro = 'normal';
+        }
+        this.updateDBAula();
       }
-      if (this.selectedAula.tipo == 'normal') {
-        this.selectedAula.otro = 'normal';
-      }
-      this.updateDBAula();
     } else {
       if (this.selectedAula.nombre.length > 30) {
         alert('Pone un nombre menor a los 30 caracteres');
@@ -533,18 +529,18 @@ export class CrearColegioComponent implements OnInit {
       this.selectedCurso.cantAlumnos != '' &&
       this.selectedCurso.nombre.length <= 30
     ) {
-      if (this.selectedCurso.id == 0) {
-        if (
-          !this.chequearRepeticionEnSubidaDatos(
-            this.selectedCurso,
-            this.cursoArray
-          )
-        ) {
+      if (
+        !this.chequearRepeticionEnSubidaDatos(
+          this.selectedCurso,
+          this.cursoArray
+        )
+      ) {
+        if (this.selectedCurso.id == 0) {
           this.selectedCurso.id = this.cursoArray.length + 1;
           this.cursoArray.push(this.selectedCurso);
         }
+        this.updateDBCurso();
       }
-      this.updateDBCurso();
     } else {
       if (this.selectedCurso.nombre.length > 30) {
         alert('Pone un nombre menor a los 30 caracteres');
@@ -612,58 +608,59 @@ export class CrearColegioComponent implements OnInit {
       this.selectedProfesor.dni >= '1000000' &&
       this.selectedProfesor.nombre.length <= 30
     ) {
-      if (this.selectedProfesor.id == 0) {
-        if (
-          !this.chequearRepeticionEnSubidaDatos(
-            this.selectedProfesor,
-            this.profesorArray
-          )
-        ) {
-          let existeDni: boolean = false;
-          this.profesorArray.forEach((dniProfe) => {
-            if (this.selectedProfesor.dni == dniProfe.dni) {
-              existeDni = true;
-              alert(
-                'El dni ya esta utilizado, edite el elemento creado o cree uno con distinto dni'
-              );
-            }
-          });
-          if (!existeDni) {
-            let existeProfesorDisponible: boolean = false;
-            const dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
-            dias.forEach((dia) => {
-              this.turnoArray.forEach((turno) => {
-                turno.modulos.forEach((modulo) => {
-                  if (
-                    this.selectedProfesor.disponibilidad[dia][turno.turno][
-                      modulo.inicio
-                    ]
-                  ) {
-                    existeProfesorDisponible = true;
-                  }
-                });
-              });
+      if (
+        !this.chequearRepeticionEnSubidaDatos(
+          this.selectedMateria,
+          this.materiaArray
+        )
+      ) {
+        if (this.selectedMateria.id == 0) {
+          {
+            let existeProfesorCapacitado: boolean = false;
+
+            this.profesorArray.forEach((profesor) => {
+              if (
+                this.selectedMateria.profesoresCapacitados[
+                  profesor.nombre + ' ' + profesor.apellido
+                ]
+              ) {
+                existeProfesorCapacitado = true;
+              }
             });
-            if (existeProfesorDisponible) {
-              this.selectedProfesor.id = this.profesorArray.length + 1;
-              this.profesorArray.push(this.selectedProfesor);
+            if (existeProfesorCapacitado) {
+              let existeAula: boolean = false;
+
+              this.aulaArray.forEach((aula) => {
+                if (this.selectedMateria.aulasMateria[aula.nombre]) {
+                  existeAula = true;
+                }
+              });
+
+              if (existeAula) {
+                this.selectedMateria.id = this.materiaArray.length + 1;
+                this.materiaArray.push(this.selectedMateria);
+                this.updateDBMateria();
+              } else {
+                alert('Coloque por lo menos un aula para la materia creada');
+              }
             } else {
-              alert('Coloque por lo menos un horario para el profesor/a');
+              alert('Coloque por lo menos un profesor para la materia creada');
             }
+            // this.profesoresArrayMaterias.forEach((profesor) => {
+            //   if (profesor.valor == true) {
+            //     this.selectedMateria.profesoresCapacitados.push(profesor.nombre);
+            //   }
+            // });
           }
+        } else {
+          this.updateDBMateria();
         }
       }
-
-      this.updateDBProfesor();
     } else {
-      if (this.selectedProfesor.dni < '1000000') {
-        alert('Ingrese un dni valido');
+      if (this.selectedMateria.nombre.length > 30) {
+        alert('Pone un nombre menor a los 30 caracteres');
       } else {
-        if (this.selectedProfesor.nombre.length > 30) {
-          alert('Pone un nombre menor a los 30 caracteres');
-        } else {
-          alert('Complete los campos vacios');
-        }
+        alert('Complete los campos vacios');
       }
     }
   }
