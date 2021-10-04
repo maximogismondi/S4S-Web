@@ -25,6 +25,8 @@ import { ColegioService } from '../../services/colegio.service';
   styleUrls: ['./cursos.component.scss']
 })
 export class CursosComponent implements OnInit {
+  selectedCurso = new Curso();
+  temporalCurso = new Curso();
 
   constructor(
     private router: Router,
@@ -40,7 +42,7 @@ export class CursosComponent implements OnInit {
   // _______________________________________CURSOS______________________________________________________________
 
   async updateDBCurso() {
-    this.colegioSvc.selectedCurso = new Curso();
+    this.selectedCurso = new Curso();
     let CursoArrayDiccionario: Array<any> = [];
     this.colegioSvc.cursoArray.forEach((curso) => {
       CursoArrayDiccionario.push({
@@ -57,30 +59,39 @@ export class CursosComponent implements OnInit {
   }
 
   openForEditCurso(curso: Curso) {
-    this.colegioSvc.selectedCurso = curso;
+    this.selectedCurso = curso;
+    Object.assign(this.temporalCurso, curso)
   }
 
   addOrEditCurso() {
     if (
-      this.colegioSvc.selectedCurso.nombre != '' &&
-      this.colegioSvc.selectedCurso.turnoPreferido != '' &&
-      this.colegioSvc.selectedCurso.cantAlumnos != '' &&
-      this.colegioSvc.selectedCurso.nombre.length <= 30
+      this.selectedCurso.nombre != '' &&
+      this.selectedCurso.turnoPreferido != '' &&
+      this.selectedCurso.cantAlumnos != '' &&
+      this.selectedCurso.nombre.length <= 30
     ) {
       if (
         !this.colegioSvc.chequearRepeticionEnSubidaDatos(
-          this.colegioSvc.selectedCurso,
+          this.selectedCurso,
           this.colegioSvc.cursoArray
         )
       ) {
-        if (this.colegioSvc.selectedCurso.id == 0) {
-          this.colegioSvc.selectedCurso.id = this.colegioSvc.cursoArray.length + 1;
-          this.colegioSvc.cursoArray.push(this.colegioSvc.selectedCurso);
+        if (this.selectedCurso.id == 0) {
+          this.selectedCurso.id = this.colegioSvc.cursoArray.length + 1;
+          this.colegioSvc.cursoArray.push(this.selectedCurso);
+        }
+        else {
+          this.colegioSvc.materiaArray.forEach(materia => {
+            if(materia.curso == this.temporalCurso.nombre){
+              materia.curso = this.selectedCurso.nombre;
+            }
+          });
+          this.colegioSvc.updateDBMateria();
         }
         this.updateDBCurso();
       }
     } else {
-      if (this.colegioSvc.selectedCurso.nombre.length > 30) {
+      if (this.selectedCurso.nombre.length > 30) {
         alert('Pone un nombre menor a los 30 caracteres');
       } else {
         alert('Complete los campos vacios');
@@ -90,7 +101,7 @@ export class CursosComponent implements OnInit {
 
   deleteCurso() {
     if (confirm('¿Estas seguro/a que quieres eliminar este curso?')) {
-      this.colegioSvc.cursoArray = this.colegioSvc.cursoArray.filter((x) => x != this.colegioSvc.selectedCurso);
+      this.colegioSvc.cursoArray = this.colegioSvc.cursoArray.filter((x) => x != this.selectedCurso);
       this.updateDBCurso();
     }
   }

@@ -173,27 +173,40 @@ export class TurnosComponent implements OnInit {
           ? 1
           : -1
       );
+      this.colegioSvc.profesorArray.forEach(profesor => {
+        this.colegioSvc.dias.forEach(dia => {
+          profesor.disponibilidad[dia][turnoSeleccionado][inicio] = false;
+        });
+      });
+      this.colegioSvc.updateDBProfesor();
       this.updateDBTurnos();
     } else {
       alert(this.moduloValido(inicio, fin));
     }
   }
 
-  deleteModulo(turnoSeleccionado: string, turno: Modulo) {
+  deleteModulo(turnoSeleccionado: string, modulo: Modulo) {
     // console.log(turno);
+    this.colegioSvc.profesorArray.forEach(profesor => {
+      this.colegioSvc.dias.forEach(dia => {
+        delete profesor.disponibilidad[dia][turnoSeleccionado][modulo.inicio];
+      });
+    });
+    this.colegioSvc.updateDBProfesor();
+
     if (turnoSeleccionado == 'manana') {
       this.colegioSvc.turnoArray[0].modulos.splice(
-        this.colegioSvc.turnoArray[0].modulos.indexOf(turno),
+        this.colegioSvc.turnoArray[0].modulos.indexOf(modulo),
         1
       );
     } else if (turnoSeleccionado == 'tarde') {
       this.colegioSvc.turnoArray[1].modulos.splice(
-        this.colegioSvc.turnoArray[1].modulos.indexOf(turno),
+        this.colegioSvc.turnoArray[1].modulos.indexOf(modulo),
         1
       );
     } else {
       this.colegioSvc.turnoArray[2].modulos.splice(
-        this.colegioSvc.turnoArray[2].modulos.indexOf(turno),
+        this.colegioSvc.turnoArray[2].modulos.indexOf(modulo),
         1
       );
     }

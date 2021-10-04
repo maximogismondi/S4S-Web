@@ -14,24 +14,24 @@
               <div class="form-group">
                 <input
                   type="text"
-                  [(ngModel)]="colegioSvc.selectedAula.nombre"
+                  [(ngModel)]="selectedAula.nombre"
                   placeholder="Nombre"
                   class="form-control"
                 />
 
                 <label class="mt-2">Tipo de aula</label>
-                <select class="form-select" [(ngModel)]="colegioSvc.selectedAula.tipo">
+                <select class="form-select" [(ngModel)]="selectedAula.tipo">
                   <option value="normal">Normal</option>
                   <option value="otro">Otro</option>
                 </select>
 
-                <div class="mt-3" *ngIf="colegioSvc.selectedAula.tipo == 'otro'">
+                <div class="mt-3" *ngIf="selectedAula.tipo == 'otro'">
                   <div class="form-check">
                     <input
                       checked
                       class="form-check-input"
                       type="radio"
-                      [(ngModel)]="colegioSvc.selectedAula.otro"
+                      [(ngModel)]="selectedAula.otro"
                       value="SUM"
                       name="flexRadioDefault"
                       id="flexRadioDefault1"
@@ -44,7 +44,7 @@
                     <input
                       class="form-check-input"
                       type="radio"
-                      [(ngModel)]="colegioSvc.selectedAula.otro"
+                      [(ngModel)]="selectedAula.otro"
                       value="TALLER"
                       name="flexRadioDefault"
                       id="flexRadioDefault2"
@@ -57,7 +57,7 @@
                     <input
                       class="form-check-input"
                       type="radio"
-                      [(ngModel)]="colegioSvc.selectedAula.otro"
+                      [(ngModel)]="selectedAula.otro"
                       value="BIBLIOTECA"
                       name="flexRadioDefault"
                       id="flexRadioDefault3"
@@ -70,7 +70,7 @@
                     <input
                       class="form-check-input"
                       type="radio"
-                      [(ngModel)]="colegioSvc.selectedAula.otro"
+                      [(ngModel)]="selectedAula.otro"
                       value="ESTUDIO MUSICAL"
                       name="flexRadioDefault"
                       id="flexRadioDefault4"
@@ -83,7 +83,7 @@
                     <input
                       class="form-check-input"
                       type="radio"
-                      [(ngModel)]="colegioSvc.selectedAula.otro"
+                      [(ngModel)]="selectedAula.otro"
                       value="ESTUDIO ARTISTICO"
                       name="flexRadioDefault"
                       id="flexRadioDefault5"
@@ -96,7 +96,7 @@
                     <input
                       class="form-check-input"
                       type="radio"
-                      [(ngModel)]="colegioSvc.selectedAula.otro"
+                      [(ngModel)]="selectedAula.otro"
                       value="ESTUDIO DE RADIO"
                       name="flexRadioDefault"
                       id="flexRadioDefault6"
@@ -109,7 +109,7 @@
                     <input
                       class="form-check-input"
                       type="radio"
-                      [(ngModel)]="colegioSvc.selectedAula.otro"
+                      [(ngModel)]="selectedAula.otro"
                       value="ESTUDIO DE VIDEO"
                       name="flexRadioDefault"
                       id="flexRadioDefault7"
@@ -122,7 +122,7 @@
                     <input
                       class="form-check-input"
                       type="radio"
-                      [(ngModel)]="colegioSvc.selectedAula.otro"
+                      [(ngModel)]="selectedAula.otro"
                       value="SALA DE COMPUTACION"
                       name="flexRadioDefault"
                       id="flexRadioDefault8"
@@ -135,7 +135,7 @@
                     <input
                       class="form-check-input"
                       type="radio"
-                      [(ngModel)]="colegioSvc.selectedAula.otro"
+                      [(ngModel)]="selectedAula.otro"
                       value="LABORATORIO"
                       name="flexRadioDefault"
                       id="flexRadioDefault9"
@@ -150,7 +150,7 @@
                   Añadir / Editar
                 </button>
                 <button
-                  *ngIf="colegioSvc.selectedAula.id != 0"
+                  *ngIf="selectedAula.id != 0"
                   class="btn btn-danger mt-4 ms-4"
                   (click)="deleteAula()"
                 >
@@ -169,7 +169,7 @@
               *ngFor="let aula of colegioSvc.aulaArray"
               class="list-group-item list-group-item-action"
               (click)="openForEditAula(aula)"
-              [class.active]="aula == colegioSvc.selectedAula"
+              [class.active]="aula == selectedAula"
             >
               <span>{{ aula.nombre }}</span>
             </li>
