@@ -167,7 +167,7 @@ export class ColegioService {
       arreglo.forEach((dato) => {
         if (
           selected.nombre + selected.apellido ==
-          dato.nombre + dato.apellido
+          dato.nombre + dato.apellido && selected != dato 
         ) {
           existeDato = true;
           alert(
@@ -176,17 +176,15 @@ export class ColegioService {
         }
       });
     } else {
-      if (typeof selected)
         arreglo.forEach((dato) => {
-          if (selected.nombre == dato.nombre) {
+          if (selected.nombre == dato.nombre && selected != dato) {
             existeDato = true;
             alert(
               'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre'
             );
           }
         });
-    }
-
-    return existeDato;
+      }
+      return existeDato;
   }
 }
