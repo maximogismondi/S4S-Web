@@ -27,6 +27,7 @@ import { ColegioService } from '../../services/colegio.service';
 export class AulasComponent implements OnInit {
   selectedAula = new Aula();
   temporalAula = new Aula();
+  
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -74,16 +75,19 @@ export class AulasComponent implements OnInit {
         if (this.selectedAula.id == 0) {
           this.selectedAula.id = this.colegioSvc.aulaArray.length + 1;
           this.colegioSvc.aulaArray.push(this.selectedAula);
+          this.colegioSvc.materiaArray.forEach(materia => {
+            materia.aulasMateria[this.selectedAula.nombre] = false;
+          });
         } else {
           this.colegioSvc.materiaArray.forEach(materia => {
             materia.aulasMateria[this.selectedAula.nombre] = materia.aulasMateria[this.temporalAula.nombre];
             delete materia.aulasMateria[this.temporalAula.nombre];
           });
-          this.colegioSvc.updateDBMateria();
         }
         if (this.selectedAula.tipo == 'normal') {
           this.selectedAula.otro = 'normal';
         }
+        this.colegioSvc.updateDBMateria();
         this.updateDBAula();
       }
     } else {
@@ -98,6 +102,10 @@ export class AulasComponent implements OnInit {
   deleteAula() {
     if (confirm('¿Estas seguro/a que quieres eliminar este aula?')) {
       this.colegioSvc.aulaArray = this.colegioSvc.aulaArray.filter((x) => x != this.selectedAula);
+      this.colegioSvc.materiaArray.forEach(materia => {
+        delete materia.aulasMateria[this.selectedAula.nombre]
+      });
+      this.colegioSvc.updateDBMateria();
       this.updateDBAula();
     }
   }

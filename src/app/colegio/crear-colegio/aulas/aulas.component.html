@@ -165,14 +165,52 @@
             class="list-group shadow"
             style="max-height: 250px; overflow-y: scroll"
           >
+          <div *ngIf="colegioSvc.materiaArray.length > 0">
             <li
-              *ngFor="let aula of colegioSvc.aulaArray"
+              *ngFor="let tipoAulas of colegioSvc.tiposAulas; let i = index;"
               class="list-group-item list-group-item-action"
-              (click)="openForEditAula(aula)"
-              [class.active]="aula == selectedAula"
+              data-bs-toggle="collapse"
+              [attr.data-bs-target]="'#collapseExample' + i"
+              aria-expanded="false"
             >
-              <span>{{ aula.nombre }}</span>
+            
+              <div>
+                <!-- aria-controls="'collapseExample' + i" -->
+                {{ tipoAulas[0].otro }}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="
+                    bi bi-caret-down
+                    position-absolute
+                    top-50
+                    start-50
+                    translate-middle
+                  "
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"
+                  />
+                </svg>
+                <div
+                  *ngFor="let aula of tipoAulas"
+                  class="collapse"
+                  [attr.id]="'collapseExample' + i"
+                >
+                  <li
+                    class="list-group-item list-group-item-action"
+                    (click)="openForEditAula(aula)"
+                    [class.active]="aula == selectedAula"
+                  >
+                    <span>{{ aula.nombre }}</span>
+                  </li>
+                </div>
+              </div>
             </li>
+          </div>
           </ul>
         </td>
       </tr>

@@ -55,14 +55,10 @@
                 </p>
 
                 <!-- <label class="mt-2">colegioSvc.profesores:</label> -->
-                <table>
+                <table class="table">
                   <thead>
                     <tr class="table-light">
                       <th scope="col">Profesores</th>
-                      <th scope="col">ㅤ</th>
-                      <th scope="col">ㅤ</th>
-                      <th scope="col">ㅤ</th>
-                      <th scope="col">ㅤ</th>
                       <th scope="col">Aulas</th>
                     </tr>
                   </thead>
@@ -99,10 +95,7 @@
                           </label>
                         </div>
                       </td>
-                      <td></td>
-                      <td></td>
-                      <td>|</td>
-                      <td></td>
+
                       <td>
                         <div
                           class="form-check mt-2"
@@ -154,33 +147,17 @@
             class="list-group shadow"
             style="max-height: 400px; overflow-y: scroll"
           >
-            <!-- <li
-              *ngFor="let curso of colegioSvc.cursoArray"
-              class="list-group-item list-group-item-action"
-            >
-              <label>{{ curso.nombre }}</label>
-              <select
-                class="form-select"
-                [(ngModel)]="colegioSvc.selectedMateria.curso"
-              >
-                <option
-                  *ngFor="let materia of colegioSvc.materiaArray"
-                  value="{{ materia.nombre }}"
-                  (click)="openForEditMateria(materia)"
-                  [class.active]="materia == colegioSvc.selectedMateria"
-                >
-                  {{ materia.nombre }}
-                </option>
-              </select> -->
             <div *ngIf="colegioSvc.materiaArray.length > 0">
               <li
-                *ngFor="let curso of colegioSvc.cursoMateriaArray; let i = index;"
+                *ngFor="
+                  let curso of colegioSvc.cursoMateriaArray;
+                  let i = index
+                "
                 class="list-group-item list-group-item-action"
                 data-bs-toggle="collapse"
                 [attr.data-bs-target]="'#collapseExample' + i"
                 aria-expanded="false"
               >
-              
                 <div>
                   <!-- aria-controls="'collapseExample' + i" -->
                   {{ curso.nombre }}

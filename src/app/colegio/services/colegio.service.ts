@@ -60,6 +60,7 @@ export class ColegioService {
   botonPresionado: boolean = false;
   horarioGenerado: boolean = false;
   cursoMateriaArray: Curso[];
+  tiposAulas: Array<Aula []> = new Array();
 
   constructor(
     private router: Router,
@@ -153,7 +154,21 @@ export class ColegioService {
               this.botonPresionado = false;
               this.horarioGenerado = false;
 
-              // console.log(this.cursoArray);
+              this.tiposAulas = []
+
+              this.aulaArray.forEach(aula =>{
+                let agregado: boolean = false;
+                this.tiposAulas.forEach(tipoAulas => {
+                  if (tipoAulas.length > 0 && aula.otro == tipoAulas[0].otro){
+                    agregado = true;
+                    tipoAulas.push(aula);
+                  }
+                });  
+                if (!agregado){
+                  this.tiposAulas.push([aula])
+                }
+              });
+              // console.table(this.tiposAulas)
             })
           )
           .subscribe();
