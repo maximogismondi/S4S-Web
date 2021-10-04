@@ -37,32 +37,6 @@ export class MateriasComponent implements OnInit {
 
   // _______________________________________MATERIAS____________________________________________________________
 
-  async updateDBMateria() {
-    this.colegioSvc.selectedMateria = new Materia(
-      this.colegioSvc.profesorArray,
-      this.colegioSvc.aulaArray
-    );
-    let materiaArrayDiccionario: Array<any> = [];
-    this.colegioSvc.materiaArray.forEach((materia) => {
-      materiaArrayDiccionario.push({
-        nombre: materia.nombre,
-        cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
-        curso: materia.curso,
-        profesoresCapacitados: materia.profesoresCapacitados,
-        aulasMateria: materia.aulasMateria,
-        cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
-        // id: materia.id,
-        // cantProfesores: materia.cantProfesores,
-        // espacioEntreDias: materia.espacioEntreDias,
-        // tipoAula: materia.tipo,
-        // otro: materia.otro,
-      });
-    });
-    this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-      materias: materiaArrayDiccionario,
-    });
-  }
-
   openForEditMateria(materia: Materia) {
     this.colegioSvc.selectedMateria = materia;
   }
@@ -116,7 +90,7 @@ export class MateriasComponent implements OnInit {
             alert('Coloque por lo menos un profesor para la materia creada');
           }
         }
-        this.updateDBMateria();
+        this.colegioSvc.updateDBMateria();
       }
     } else {
       if (this.colegioSvc.selectedMateria.nombre.length > 30) {
@@ -142,7 +116,7 @@ export class MateriasComponent implements OnInit {
       this.colegioSvc.materiaArray = this.colegioSvc.materiaArray.filter(
         (x) => x != this.colegioSvc.selectedMateria
       );
-      this.updateDBMateria();
+      this.colegioSvc.updateDBMateria();
     }
   }
 

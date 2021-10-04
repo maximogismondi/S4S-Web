@@ -172,49 +172,53 @@
                   {{ materia.nombre }}
                 </option>
               </select> -->
-
-            <li
-              *ngFor="let curso of colegioSvc.cursoArray; let i = index"
-              class="list-group-item list-group-item-action"
-              data-bs-toggle="collapse"
-              [attr.data-bs-target]="'#collapseExample' + i"
-              aria-expanded="false"
-            >
-              <!-- aria-controls="'collapseExample' + i" -->
-              {{ curso.nombre }}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="
-                  bi bi-caret-down
-                  position-absolute
-                  top-50
-                  start-50
-                  translate-middle
-                "
-                viewBox="0 0 16 16"
+            <div *ngIf="colegioSvc.materiaArray.length > 0">
+              <li
+                *ngFor="let curso of colegioSvc.cursoMateriaArray; let i = index;"
+                class="list-group-item list-group-item-action"
+                data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapseExample' + i"
+                aria-expanded="false"
               >
-                <path
-                  d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"
-                />
-              </svg>
-              <div
-                *ngFor="let materia of colegioSvc.materiaArray"
-                class="collapse"
-                [attr.id]="'collapseExample' + i"
-              >
-                <li
-                  *ngIf="curso.nombre == materia.curso"
-                  class="list-group-item list-group-item-action"
-                  (click)="openForEditMateria(materia)"
-                  [class.active]="materia == colegioSvc.selectedMateria"
-                >
-                  <span>{{ materia.nombre }}</span>
-                </li>
-              </div>
-            </li>
+              
+                <div>
+                  <!-- aria-controls="'collapseExample' + i" -->
+                  {{ curso.nombre }}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="
+                      bi bi-caret-down
+                      position-absolute
+                      top-50
+                      start-50
+                      translate-middle
+                    "
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"
+                    />
+                  </svg>
+                  <div
+                    *ngFor="let materia of colegioSvc.materiaArray"
+                    class="collapse"
+                    [attr.id]="'collapseExample' + i"
+                  >
+                    <li
+                      *ngIf="curso.nombre == materia.curso"
+                      class="list-group-item list-group-item-action"
+                      (click)="openForEditMateria(materia)"
+                      [class.active]="materia == colegioSvc.selectedMateria"
+                    >
+                      <span>{{ materia.nombre }}</span>
+                    </li>
+                  </div>
+                </div>
+              </li>
+            </div>
           </ul>
         </td>
       </tr>

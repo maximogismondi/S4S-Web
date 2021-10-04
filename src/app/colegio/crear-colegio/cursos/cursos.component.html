@@ -15,14 +15,14 @@
                 <input
                   type="text"
                   placeholder="Nombre"
-                  [(ngModel)]="colegioSvc.selectedCurso.nombre"
+                  [(ngModel)]="selectedCurso.nombre"
                   class="form-control"
                 />
 
                 <label class="mt-2">Turno preferido</label>
                 <select
                   class="form-select"
-                  [(ngModel)]="colegioSvc.selectedCurso.turnoPreferido"
+                  [(ngModel)]="selectedCurso.turnoPreferido"
                 >
                   <option value="manana">Mañana</option>
                   <option value="tarde">Tarde</option>
@@ -33,7 +33,7 @@
                   type="number"
                   min="1"
                   placeholder="Cantidad de alumnos"
-                  [(ngModel)]="colegioSvc.selectedCurso.cantAlumnos"
+                  [(ngModel)]="selectedCurso.cantAlumnos"
                   class="form-control mt-2"
                 />
 
@@ -41,7 +41,7 @@
                   Añadir / Editar
                 </button>
                 <button
-                  *ngIf="colegioSvc.selectedCurso.id != 0"
+                  *ngIf="selectedCurso.id != 0"
                   class="btn btn-danger mt-4 ms-4"
                   (click)="deleteCurso()"
                 >
@@ -60,7 +60,7 @@
               *ngFor="let curso of colegioSvc.cursoArray"
               class="list-group-item list-group-item-action"
               (click)="openForEditCurso(curso)"
-              [class.active]="curso == colegioSvc.selectedCurso"
+              [class.active]="curso == selectedCurso"
             >
               <span>{{ curso.nombre }}</span>
 

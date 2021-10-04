@@ -25,6 +25,8 @@ import { ColegioService } from '../../services/colegio.service';
   styleUrls: ['./profesores.component.scss'],
 })
 export class ProfesoresComponent implements OnInit {
+  temporalProfesor = new Profesor(this.colegioSvc.turnoArray);
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -37,28 +39,9 @@ export class ProfesoresComponent implements OnInit {
 
   // _______________________________________PROFESORES__________________________________________________________
 
-  async updateDBProfesor() {
-    this.colegioSvc.selectedProfesor = new Profesor(this.colegioSvc.turnoArray);
-    let ProfesorArrayDiccionario: Array<any> = [];
-    this.colegioSvc.profesorArray.forEach((profesor) => {
-      ProfesorArrayDiccionario.push({
-        nombre: profesor.nombre,
-        apellido: profesor.apellido,
-        dni: profesor.dni,
-        disponibilidad: profesor.disponibilidad,
-        // id: profesor.id,
-        // 'materias capacitado': profesor.materiasCapacitado,
-        //  turnoPreferido: profesor.turnoPreferido,
-        // condiciones: profesor.condiciones,
-      });
-    });
-    this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-      profesores: ProfesorArrayDiccionario,
-    });
-  }
-
   openForEditProfesor(profesor: Profesor) {
     this.colegioSvc.selectedProfesor = profesor;
+    Object.assign(this.temporalProfesor, profesor)
   }
 
   addOrEditProfesor() {
@@ -111,8 +94,15 @@ export class ProfesoresComponent implements OnInit {
               alert('Coloque por lo menos un horario para el profesor/a');
             }
           }
-        } 
-        this.updateDBProfesor();
+        }
+        else {
+          this.colegioSvc.materiaArray.forEach(materia => {
+            materia.profesoresCapacitados[this.temporalProfesor.nombre] = materia.profesoresCapacitados[this.temporalProfesor.nombre];
+            delete materia.profesoresCapacitados[this.temporalProfesor.nombre];
+          });
+          this.colegioSvc.updateDBMateria();
+        }
+        this.colegioSvc.updateDBProfesor();
 
       }
 
@@ -134,7 +124,7 @@ export class ProfesoresComponent implements OnInit {
       this.colegioSvc.profesorArray = this.colegioSvc.profesorArray.filter(
         (x) => x != this.colegioSvc.selectedProfesor
       );
-      this.updateDBProfesor();
+      this.colegioSvc.updateDBProfesor();
     }
   }
 

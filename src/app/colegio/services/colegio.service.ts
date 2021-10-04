@@ -46,9 +46,7 @@ export class ColegioService {
   profesorArray: Profesor[] = [];
   selectedProfesor: Profesor;
   aulaArray: Aula[] = [];
-  selectedAula: Aula = new Aula();
   cursoArray: Curso[] = [];
-  selectedCurso: Curso = new Curso();
   materiaArray: Materia[] = [];
   selectedMateria: Materia;
   horariosFinal: Array<string> = [];
@@ -61,6 +59,7 @@ export class ColegioService {
   dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
   botonPresionado: boolean = false;
   horarioGenerado: boolean = false;
+  cursoMateriaArray: Curso[];
 
   constructor(
     private router: Router,
@@ -136,6 +135,7 @@ export class ColegioService {
                   }
                 });
               });
+              this.cursoMateriaArray = this.cursoArray.filter(curso => curso.materias.length > 0);
 
               if (!this.selectedProfesor) {
                 this.selectedProfesor = new Profesor(this.turnoArray);
@@ -153,11 +153,57 @@ export class ColegioService {
               this.botonPresionado = false;
               this.horarioGenerado = false;
 
-              console.log(this.cursoArray);
+              // console.log(this.cursoArray);
             })
           )
           .subscribe();
       }
+    });
+  }
+
+  async updateDBMateria() {
+    this.selectedMateria = new Materia(
+      this.profesorArray,
+      this.aulaArray
+    );
+    let materiaArrayDiccionario: Array<any> = [];
+    this.materiaArray.forEach((materia) => {
+      materiaArrayDiccionario.push({
+        nombre: materia.nombre,
+        cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
+        curso: materia.curso,
+        profesoresCapacitados: materia.profesoresCapacitados,
+        aulasMateria: materia.aulasMateria,
+        cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
+        // id: materia.id,
+        // cantProfesores: materia.cantProfesores,
+        // espacioEntreDias: materia.espacioEntreDias,
+        // tipoAula: materia.tipo,
+        // otro: materia.otro,
+      });
+    });
+    this.afs.collection('schools').doc(this.nombreColegio).update({
+      materias: materiaArrayDiccionario,
+    });
+  }
+
+  async updateDBProfesor() {
+    this.selectedProfesor = new Profesor(this.turnoArray);
+    let ProfesorArrayDiccionario: Array<any> = [];
+    this.profesorArray.forEach((profesor) => {
+      ProfesorArrayDiccionario.push({
+        nombre: profesor.nombre,
+        apellido: profesor.apellido,
+        dni: profesor.dni,
+        disponibilidad: profesor.disponibilidad,
+        // id: profesor.id,
+        // 'materias capacitado': profesor.materiasCapacitado,
+        //  turnoPreferido: profesor.turnoPreferido,
+        // condiciones: profesor.condiciones,
+      });
+    });
+    this.afs.collection('schools').doc(this.nombreColegio).update({
+      profesores: ProfesorArrayDiccionario,
     });
   }
 
@@ -171,16 +217,29 @@ export class ColegioService {
         ) {
           existeDato = true;
           alert(
-            'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre y/o apellido'
+            'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre y/o apellido.'
           );
         }
       });
-    } else {
+    } else if('curso' in selected){
+      arreglo.forEach((dato) => {
+        if (
+          selected.nombre + selected.curso ==
+          dato.nombre + dato.curso && selected != dato 
+        ) {
+          existeDato = true;
+          alert(
+            'El nombre ya esta utilizado en este curso, edite el elemento creado o cree uno con distinto nombre.'
+          );
+        }
+      });
+    } 
+    else {
         arreglo.forEach((dato) => {
           if (selected.nombre == dato.nombre && selected != dato) {
             existeDato = true;
             alert(
-              'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre'
+              'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre.'
             );
           }
         });

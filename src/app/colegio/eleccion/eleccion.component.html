@@ -2,11 +2,14 @@
   <div class="card">
     <div class="card-body">
       <!-- <h1 class="text-center mt-4">COLEGIO</h1> -->
-      <h3 class="text-center mt-3">Schedulers For Schools</h3>
+      <h3 class="text-center mt-3">Scheduler For Schools</h3>
+      <div class="alert alert-light mt-2 text-danger" role="alert">
+        *Obligatorio
+      </div>
       <!-- id="botonesEleccionCrear" -->
       <div *ngIf="fueACrear == false">
         <div class="d-grid">
-          <button (click)="irCrear()" class="btn btn-primary btn-lg mt-4 py-4">
+          <button (click)="irCrear()" class="btn btn-primary btn-lg mt-2 py-4">
             CREAR
           </button>
         </div>
@@ -19,13 +22,10 @@
       </div>
       <!--id="crear" style="display: none"-->
       <div *ngIf="fueACrear">
-        <div class="mx-auto mt-5">
+        <div class="mx-auto mt-2">
           <div class="card">
             <div class="card-body">
-              <h1 class="text-center">CREAR COLEGIO</h1>
-              <div class="alert alert-light mt-2 text-danger" role="alert">
-                *Obligatorio
-              </div>
+              <!-- <h1 class="text-center">CREAR COLEGIO</h1> -->
               <form [formGroup]="crearColegioForm" (ngSubmit)="onCrear()">
                 <div class="form-group mt-3">
                   <label
@@ -147,28 +147,26 @@
       <!-- id="botonesEleccionUnirse" -->
       <div *ngIf="fueAUnirse == false">
         <div class="d-grid">
-          <button
-            (click)="irUnirse()"
-            disabled
-            class="btn btn-primary btn-lg mt-4"
-          >
+          <button (click)="irUnirse()" disabled class="btn btn-primary btn-lg mt-4">
             UNIRSE
           </button>
         </div>
       </div>
       <!--id="unirse" style="display: none"-->
       <div *ngIf="fueAUnirse">
-        <div class="mx-auto mt-5">
+        <div class="mx-auto mt-2">
           <div class="card">
             <div class="card-body">
-              <h1 class="text-center">UNIRSE A COLEGIO</h1>
+              <!-- <h1 class="text-center">UNIRSE A COLEGIO</h1> -->
               <!-- [formGroup]="unirseColegioForm" (ngSubmit)="onUnirse()" -->
               <form>
                 <div class="form-group mt-4">
-                  <h6 class="text-danger d-inline-block">*</h6>
+                  <label
+                    >Codigo del Colegio
+                    <h6 class="text-danger d-inline-block">*</h6></label
+                  >
                   <input
                     type="text"
-                    placeholder="Ingresar Codigo del Colegio"
                     required
                     class="form-control"
                     formControlName="codigoColegio"
@@ -181,19 +179,6 @@
                     class="btn btn-primary btn-lg mt-4"
                   >
                     UNIRSE
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1.10em"
-                      height="1.10em"
-                      fill="currentColor"
-                      class="bi bi-arrow-right"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                      />
-                    </svg>
                   </button>
                 </div>
               </form>

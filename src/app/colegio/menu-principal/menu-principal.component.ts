@@ -16,8 +16,9 @@ export class MenuPrincipalComponent implements OnInit {
   // nombreColegio: string;
   // nombreColegio: string;
   // borroColegio: boolean = true;
-  nombresDeEscuelasUsuario: Array<string> = [];
   // duracionModulo: number;
+  nombresDeEscuelasUsuario: Array<string> = [];
+  
 
   constructor(
     private router: Router,
@@ -25,17 +26,7 @@ export class MenuPrincipalComponent implements OnInit {
     private afs: AngularFirestore
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
-      //   if (user) {
-      //     this.afs.firestore
-      //       .collection('schools')
-      //       .where('userAdmin', '==', user.uid)
-      //       .get()
-      //       .then((data) => {
-      //         this.nombreColegio = data.docs[0].data().nombre;
-      //         this.nombreColegio = data.docs[0].data().id;
-      //       });
-      //   }
-      // });
+
       if (user) {
         this.afs.firestore
           .collection('schools')
@@ -47,26 +38,6 @@ export class MenuPrincipalComponent implements OnInit {
             });
           });
           
-
-        // this.afs
-        //   .collection('schools', (ref) =>
-        //     ref.where('userAdmin', '==', user.uid)
-        //   )
-        //   .snapshotChanges()
-        //   .pipe(
-        //     map((schools) => {
-        //       if (schools[0] != null) {
-        //         const school = schools[0].payload.doc.data() as Colegio;
-        //         // this.nombreColegio = school.nombre;
-        //         this.nombreColegio = school.nombre;
-        //         // this.duracionModulo = school.duracionModulo;
-        //       }
-        //       else{
-        //         this.borroColegio = false;
-        //       }
-        //     })
-        //   )
-        //   .subscribe();
       }
     });
   }
@@ -88,4 +59,16 @@ export class MenuPrincipalComponent implements OnInit {
       this.nombresDeEscuelasUsuario.splice(i, 1);
     }
   }
+  
+  // copyToClipboard(): void {
+  //   // Se copia el texto del input al portapapeles
+  //   this.clipboard.copy(this.textControl.value);
+
+  //   // Se muestra un snackbar durante 2 segundos en la parte inferior
+  //   this.snackBar.open('¡Texto copiado al portapapeles!', null, {
+  //     duration: 2000,
+  //     panelClass: 'snackbar'
+  //   });
+  // }
+
 }
