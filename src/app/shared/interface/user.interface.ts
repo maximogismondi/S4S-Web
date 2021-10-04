@@ -80,7 +80,7 @@ export class Curso {
   nombre: string = '';
   turnoPreferido: string = '';
   cantAlumnos: string = '';
-  // materiasCurso: Array<string> = [];
+  materias: Array<string> = [];
 }
 
 export class Profesor {

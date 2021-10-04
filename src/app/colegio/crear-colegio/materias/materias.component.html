@@ -1,0 +1,252 @@
+<div class="col-md-8 mx-auto">
+  <table class="table">
+    <thead>
+      <tr class="table-light">
+        <th scope="col" class="rounded-start">Insertar Materias</th>
+        <th scope="col" class="rounded-end">Materias</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="card">
+            <div class="card-body">
+              <div class="form-group">
+                <input
+                  type="text"
+                  [(ngModel)]="colegioSvc.selectedMateria.nombre"
+                  placeholder="Nombre"
+                  class="form-control"
+                />
+
+                <input
+                  type="number"
+                  min="1"
+                  [(ngModel)]="
+                    colegioSvc.selectedMateria.cantidadDeModulosTotal
+                  "
+                  placeholder="Cantidad de modulos total"
+                  class="form-control"
+                />
+
+                <input
+                  type="number"
+                  min="1"
+                  [(ngModel)]="
+                    colegioSvc.selectedMateria.cantidadMaximaDeModulosPorDia
+                  "
+                  placeholder="Cantidad maxima de modulos por dia"
+                  class="form-control"
+                />
+
+                <p>
+                  <label class="mt-2">Curso</label>
+                  <select
+                    class="form-select"
+                    [(ngModel)]="colegioSvc.selectedMateria.curso"
+                  >
+                    <option
+                      *ngFor="let curso of colegioSvc.cursoArray"
+                      value="{{ curso.nombre }}"
+                    >
+                      {{ curso.nombre }}
+                    </option>
+                  </select>
+                </p>
+
+                <!-- <label class="mt-2">colegioSvc.profesores:</label> -->
+                <table>
+                  <thead>
+                    <tr class="table-light">
+                      <th scope="col">Profesores</th>
+                      <th scope="col">ㅤ</th>
+                      <th scope="col">ㅤ</th>
+                      <th scope="col">ㅤ</th>
+                      <th scope="col">ㅤ</th>
+                      <th scope="col">Aulas</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div
+                          class="form-check mt-2"
+                          (click)="
+                            clickFormCheckMateriaProfesor(
+                              profesor.nombre + ' ' + profesor.apellido
+                            )
+                          "
+                          *ngFor="let profesor of colegioSvc.profesorArray"
+                        >
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            [(ngModel)]="
+                              colegioSvc.selectedMateria.profesoresCapacitados[
+                                profesor.nombre + ' ' + profesor.apellido
+                              ]
+                            "
+                            id="{{ profesor.nombre }} {{ profesor.apellido }}"
+                          />
+                          <!--colegioSvc.profesoresArrayMaterias
+                               (click)="clicked(profesor.nombre)" -->
+
+                          <label
+                            class="form-check-label"
+                            for="{{ profesor.nombre }} {{ profesor.apellido }}"
+                          >
+                            {{ profesor.nombre }} {{ profesor.apellido }}
+                          </label>
+                        </div>
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td>|</td>
+                      <td></td>
+                      <td>
+                        <div
+                          class="form-check mt-2"
+                          (click)="clickFormCheckMateriaAula(aula.nombre)"
+                          *ngFor="let aula of colegioSvc.aulaArray"
+                        >
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            [(ngModel)]="
+                              colegioSvc.selectedMateria.aulasMateria[
+                                aula.nombre
+                              ]
+                            "
+                            id="{{ aula.nombre }}"
+                          />
+
+                          <label
+                            class="form-check-label"
+                            for="{{ aula.nombre }}"
+                          >
+                            {{ aula.nombre }}
+                          </label>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <button
+                  (click)="addOrEditMateria()"
+                  class="btn btn-primary mt-4"
+                >
+                  Añadir / Editar
+                </button>
+                <button
+                  *ngIf="colegioSvc.selectedMateria.id != 0"
+                  class="btn btn-danger mt-4 ms-4"
+                  (click)="deleteMateria()"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <ul
+            class="list-group shadow"
+            style="max-height: 400px; overflow-y: scroll"
+          >
+            <!-- <li
+              *ngFor="let curso of colegioSvc.cursoArray"
+              class="list-group-item list-group-item-action"
+            >
+              <label>{{ curso.nombre }}</label>
+              <select
+                class="form-select"
+                [(ngModel)]="colegioSvc.selectedMateria.curso"
+              >
+                <option
+                  *ngFor="let materia of colegioSvc.materiaArray"
+                  value="{{ materia.nombre }}"
+                  (click)="openForEditMateria(materia)"
+                  [class.active]="materia == colegioSvc.selectedMateria"
+                >
+                  {{ materia.nombre }}
+                </option>
+              </select> -->
+
+            <li
+              *ngFor="let curso of colegioSvc.cursoArray; let i = index"
+              class="list-group-item list-group-item-action"
+              data-bs-toggle="collapse"
+              [attr.data-bs-target]="'#collapseExample' + i"
+              aria-expanded="false"
+            >
+              <!-- aria-controls="'collapseExample' + i" -->
+              {{ curso.nombre }}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="
+                  bi bi-caret-down
+                  position-absolute
+                  top-50
+                  start-50
+                  translate-middle
+                "
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"
+                />
+              </svg>
+              <div
+                *ngFor="let materia of colegioSvc.materiaArray"
+                class="collapse"
+                [attr.id]="'collapseExample' + i"
+              >
+                <li
+                  *ngIf="curso.nombre == materia.curso"
+                  class="list-group-item list-group-item-action"
+                  (click)="openForEditMateria(materia)"
+                  [class.active]="materia == colegioSvc.selectedMateria"
+                >
+                  <span>{{ materia.nombre }}</span>
+                </li>
+              </div>
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div class="d-grid">
+            <button
+              *ngIf="
+                colegioSvc.botonesCrearColegioProgreso <= 5 &&
+                colegioSvc.materiaArray.length != 0
+              "
+              (click)="goFormFinalizar()"
+              class="btn btn-primary btn-lg mt-4"
+            >
+              SIGUIENTE
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1.10em"
+                height="1.10em"
+                fill="currentColor"
+                class="bi bi-arrow-right"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                />
+              </svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

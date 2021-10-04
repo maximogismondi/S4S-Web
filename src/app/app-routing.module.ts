@@ -24,6 +24,11 @@ const redirectToLogin = () => redirectToLoginWhenUserLogin(['login']);
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'home',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
   {
@@ -73,15 +78,7 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectToVerifiedEmail },
   },
-  // {
-  //   path: 'configuracion',
-  //   loadChildren: () =>
-  //     import('./configuraciones/setting/setting.module').then(
-  //       (m) => m.SettingModule
-  //     ),
-  //   canActivate: [AngularFireAuthGuard],
-  //   data: { authGuardPipe: redirectUnauthorizedToLogin },
-  // },
+
 ];
 
 @NgModule({

@@ -14,7 +14,7 @@ import { Colegio } from 'src/app/shared/interface/user.interface';
 })
 export class MenuPrincipalComponent implements OnInit {
   // nombreColegio: string;
-  // nombreDocumento: string;
+  // nombreColegio: string;
   // borroColegio: boolean = true;
   nombresDeEscuelasUsuario: Array<string> = [];
   // duracionModulo: number;
@@ -32,7 +32,7 @@ export class MenuPrincipalComponent implements OnInit {
       //       .get()
       //       .then((data) => {
       //         this.nombreColegio = data.docs[0].data().nombre;
-      //         this.nombreDocumento = data.docs[0].data().id;
+      //         this.nombreColegio = data.docs[0].data().id;
       //       });
       //   }
       // });

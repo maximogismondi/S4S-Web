@@ -12,9 +12,16 @@ import { SendEmailComponent } from './auth/send-email/send-email.component';
 // import { AuthGuard } from './shared/guards/auth.guard';
 import { AuthService } from './auth/services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { TurnosComponent } from './colegio/crear-colegio/turnos/turnos.component';
+import { AulasComponent } from './colegio/crear-colegio/aulas/aulas.component';
+import { CursosComponent } from './colegio/crear-colegio/cursos/cursos.component';
+import { ProfesoresComponent } from './colegio/crear-colegio/profesores/profesores.component';
+import { MateriasComponent } from './colegio/crear-colegio/materias/materias.component';
+import { FinalizarComponent } from './colegio/crear-colegio/finalizar/finalizar.component';
+import { CrearColegioModule } from './colegio/crear-colegio/crear-colegio.module';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, SendEmailComponent],
+  declarations: [AppComponent, NavbarComponent, SendEmailComponent, ],
   imports: [
     BrowserModule,
     AppRoutingModule,
