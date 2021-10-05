@@ -165,40 +165,9 @@ export class AuthService {
   }
 
   joinSchool(idColegio: string){
-    const schoolJoined: Colegio = {
-      id: idColegio,
-      userAdmin: this.userData.uid,
-      nombre: ,
-      direccion: ,
-      provincia: ,
-      telefono: ,
-      duracionModulo: ,
-      inicioHorario: ,
-      finalizacionHorario: ,
-      botonesCrearColegioProgreso: 1,
-      usuariosExtensiones: [],
-      aulas: [],
-      turnos: [],
-      materias: [],
-      cursos: [],
-      profesores: [],
-    }
-    if() {
-      this.nombresDeEscuelas.forEach((nombreEscuela) => {
-        if (school.nombre == nombreEscuela) {
-          this.existeEscuela = true;
-        }
-      });
-
-      if (this.existeEscuela) {
-        alert('El nombre ya esta utilizado, por favor ingrese otro');
-      } else {
-        this.SchoolData(school);
-        this.router.navigate(['/' + school.nombre + '/crear-colegio']);
-      }
-
-      // confirm("Poner los valores que se piden");
-    }
+    // const schoolJoined: Colegio = {
+    //   id: idColegio
+    // }
   }
 
   //joya

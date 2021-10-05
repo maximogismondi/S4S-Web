@@ -60,7 +60,7 @@ export class ProfesoresComponent implements OnInit {
       ) {
         let existeDni: boolean = false;
         this.colegioSvc.profesorArray.forEach((dniProfe) => {
-          if (this.colegioSvc.selectedProfesor.dni == dniProfe.dni) {
+          if (this.colegioSvc.selectedProfesor.dni == dniProfe.dni && this.colegioSvc.selectedProfesor != dniProfe) {
             existeDni = true;
             alert(
               'El dni ya esta utilizado, edite el elemento creado o cree uno con distinto dni'

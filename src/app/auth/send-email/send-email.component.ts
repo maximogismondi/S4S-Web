@@ -60,7 +60,7 @@ export class SendEmailComponent implements OnInit {
             this.afs.collection('users').doc(this.userData.uid).update({
               emailVerified: true,
             });
-            this.router.navigate(['/eleccion']);
+            this.router.navigate(['/menu-principal']);
           } 
           // else {
           //   // console.log('B');
