@@ -39,7 +39,7 @@ export class FinalizarComponent implements OnInit {
     async finalizar() {
       this.http
       .get(
-        'https://s4s-algoritmo.herokuapp.com/algoritmo?idColegio=' +
+        'https://127.0.0.1:5000/algoritmo?idColegio=' +
           this.colegioSvc.nombreColegio,
         { responseType: 'text' }
       )
