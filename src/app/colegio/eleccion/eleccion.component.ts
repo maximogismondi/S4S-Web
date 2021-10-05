@@ -72,6 +72,10 @@ export class EleccionComponent implements OnInit {
       inicioHorario: ['', Validators.required],
       finalizacionHorario: ['', Validators.required],
     });
+
+    this.unirseColegioForm = this.fb.group({
+      idColegio: ['', Validators.required],
+    });
   }
 
   async generaNss() {
@@ -108,6 +112,15 @@ export class EleccionComponent implements OnInit {
       inicioHorario,
       finalizacionHorario,
       await this.id
+    );
+  }
+
+  async onUnirse() {
+    const {
+      idColegio
+    } = this.unirseColegioForm.value;
+    const school = await this.authSvc.joinSchool(
+      idColegio
     );
   }
 
