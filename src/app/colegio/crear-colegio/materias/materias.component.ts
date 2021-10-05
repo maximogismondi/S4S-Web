@@ -107,6 +107,7 @@ export class MateriasComponent implements OnInit {
   }
 
   clickFormCheckMateriaAula(nombre: string) {
+    console.log(this.colegioSvc.selectedMateria.aulasMateria[nombre])
     this.colegioSvc.selectedMateria.aulasMateria[nombre] =
       !this.colegioSvc.selectedMateria.aulasMateria[nombre];
   }
