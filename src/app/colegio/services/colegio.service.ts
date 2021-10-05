@@ -52,9 +52,6 @@ export class ColegioService {
   horariosFinal: Array<string> = [];
   nombreMateria: string;
   aulaMateria: string;
-  horariosHechos: any = {};
-  horariosAulasHechos: any = {};
-  materiasProfesoresHechos: any = {};
   cursoActual: string;
   dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
   botonPresionado: boolean = false;

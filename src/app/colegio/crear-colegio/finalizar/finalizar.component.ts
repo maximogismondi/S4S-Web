@@ -22,22 +22,26 @@ import { ColegioService } from '../../services/colegio.service';
 @Component({
   selector: 'app-finalizar',
   templateUrl: './finalizar.component.html',
-  styleUrls: ['./finalizar.component.scss']
+  styleUrls: ['./finalizar.component.scss'],
 })
 export class FinalizarComponent implements OnInit {
+  clickMoreInfoSchool: boolean = false;
+  horariosHechos: any = {};
+  horariosAulasHechos: any = {};
+  materiasProfesoresHechos: any = {};
+
   constructor(
     public colegioSvc: ColegioService,
     private http: HttpClient,
     private afs: AngularFirestore
-  ) { }
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-    // _______________________________________FINALIZAR____________________________________________________________
-    botonPresionado: boolean = false;
-    async finalizar() {
-      this.http
+  // _______________________________________FINALIZAR____________________________________________________________
+  botonPresionado: boolean = false;
+  async finalizar() {
+    this.http
       .get(
         'https://s4s-algoritmo.herokuapp.com/algoritmo?idColegio=' +
           this.colegioSvc.nombreColegio,
@@ -45,12 +49,17 @@ export class FinalizarComponent implements OnInit {
       )
       .subscribe((fecha) => {
         this.afs
-          .doc('horariosHechos/' + this.colegioSvc.nombreColegio + '/horarios/' + fecha)
+          .doc(
+            'horariosHechos/' +
+              this.colegioSvc.nombreColegio +
+              '/horarios/' +
+              fecha
+          )
           .snapshotChanges()
           .pipe(
             map((horariosReady) => {
               if (horariosReady.payload.exists) {
-                console.log('ejecuta el obvserver');
+                // console.log('ejecuta el obvserver');
                 this.colegioSvc.horarioGenerado = true;
                 let horariosHechos = horariosReady.payload.get('horarios');
                 let horariosAulasHechos =
@@ -59,22 +68,24 @@ export class FinalizarComponent implements OnInit {
                   horariosReady.payload.get('materiasProfesores');
 
                 this.colegioSvc.cursoArray.forEach((curso) => {
-                  this.colegioSvc.horariosHechos[curso.nombre] = {};
+                  this.horariosHechos[curso.nombre] = {};
                   this.colegioSvc.dias.forEach((dia) => {
-                    this.colegioSvc.horariosHechos[curso.nombre][dia] = {};
+                    this.horariosHechos[curso.nombre][dia] = {};
                     this.colegioSvc.turnoArray.forEach((turno) => {
-                      this.colegioSvc.horariosHechos[curso.nombre][dia][turno.turno] = [];
+                      this.horariosHechos[curso.nombre][dia][
+                        turno.turno
+                      ] = [];
                       turno.modulos.forEach((modulo) => {
                         if (
                           horariosHechos[curso.nombre][dia][turno.turno][
                             turno.modulos.indexOf(modulo) + 1
                           ].split('-')[0] == 'Hueco'
                         ) {
-                          this.colegioSvc.horariosHechos[curso.nombre][dia][
+                          this.horariosHechos[curso.nombre][dia][
                             turno.turno
                           ].push('');
                         } else {
-                          this.colegioSvc.horariosHechos[curso.nombre][dia][
+                          this.horariosHechos[curso.nombre][dia][
                             turno.turno
                           ].push(
                             horariosHechos[curso.nombre][dia][turno.turno][
@@ -88,25 +99,26 @@ export class FinalizarComponent implements OnInit {
                 });
 
                 this.colegioSvc.cursoArray.forEach((curso) => {
-                  this.colegioSvc.horariosAulasHechos[curso.nombre] = {};
+                  this.horariosAulasHechos[curso.nombre] = {};
                   this.colegioSvc.dias.forEach((dia) => {
-                    this.colegioSvc.horariosAulasHechos[curso.nombre][dia] = {};
+                    this.horariosAulasHechos[curso.nombre][dia] = {};
                     this.colegioSvc.turnoArray.forEach((turno) => {
-                      this.colegioSvc.horariosAulasHechos[curso.nombre][dia][turno.turno] =
-                        [];
+                      this.horariosAulasHechos[curso.nombre][dia][
+                        turno.turno
+                      ] = [];
                       turno.modulos.forEach((modulo) => {
                         if (
                           horariosAulasHechos[curso.nombre][dia][turno.turno][
                             turno.modulos.indexOf(modulo) + 1
                           ] == 'Hueco'
                         ) {
-                          this.colegioSvc.horariosAulasHechos[curso.nombre][dia][
-                            turno.turno
-                          ].push('');
+                          this.horariosAulasHechos[curso.nombre][
+                            dia
+                          ][turno.turno].push('');
                         } else {
-                          this.colegioSvc.horariosAulasHechos[curso.nombre][dia][
-                            turno.turno
-                          ].push(
+                          this.horariosAulasHechos[curso.nombre][
+                            dia
+                          ][turno.turno].push(
                             horariosAulasHechos[curso.nombre][dia][turno.turno][
                               turno.modulos.indexOf(modulo) + 1
                             ]
@@ -118,14 +130,17 @@ export class FinalizarComponent implements OnInit {
                 });
 
                 this.colegioSvc.materiaArray.forEach((materia) => {
-                  this.colegioSvc.materiasProfesoresHechos[materia.nombre] =
-                    materiasProfesoresHechos[materia.nombre];
+                  this.materiasProfesoresHechos[materia.nombre+"-"+materia.curso] =
+                    materiasProfesoresHechos[materia.nombre+"-"+materia.curso];
                 });
+                // console.table(materiasProfesoresHechos)
                 this.colegioSvc.horarioGenerado = true;
               }
             })
-          ).subscribe();
+          )
+          .subscribe();
       });
     this.colegioSvc.botonPresionado = true;
-    }
+  }
+
 }
