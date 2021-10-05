@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { Colegio } from 'src/app/shared/interface/user.interface';
 
 @Component({
   selector: 'app-eleccion',
@@ -16,8 +17,8 @@ export class EleccionComponent implements OnInit {
   fueACrear:boolean = false;
   fueAUnirse:boolean = false;
   provinciasArgentina:any;
-  nombresDeEscuelasUsuario: Array<string> = [];
-
+  // nombresDeEscuelasUsuario: Array<string> = [];
+  escuelasUsuario: Array<Colegio>=[];
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -33,7 +34,8 @@ export class EleccionComponent implements OnInit {
           .get()
           .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-              this.nombresDeEscuelasUsuario.push(doc.data().nombre);
+              // this.nombresDeEscuelasUsuario.push(doc.data().nombre);
+              this.escuelasUsuario.push(doc.data().nombre);
             });
           });
 
@@ -120,7 +122,7 @@ export class EleccionComponent implements OnInit {
       idColegio
     } = this.unirseColegioForm.value;
     const school = await this.authSvc.joinSchool(
-      idColegio
+      idColegio,
     );
   }
 
