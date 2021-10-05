@@ -14,7 +14,6 @@ import { Colegio } from 'src/app/shared/interface/user.interface';
 })
 export class MenuPrincipalComponent implements OnInit {
   nombresDeEscuelasUsuario: Array<string> = [];
-  
 
   constructor(
     private router: Router,
@@ -22,7 +21,6 @@ export class MenuPrincipalComponent implements OnInit {
     private afs: AngularFirestore
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
-
       if (user) {
         this.afs.firestore
           .collection('schools')
@@ -33,7 +31,6 @@ export class MenuPrincipalComponent implements OnInit {
               this.nombresDeEscuelasUsuario.push(doc.data().nombre);
             });
           });
-          
       }
     });
   }
@@ -55,6 +52,8 @@ export class MenuPrincipalComponent implements OnInit {
       this.nombresDeEscuelasUsuario.splice(i, 1);
     }
   }
-  
 
+  copyLink(){
+    
+  }
 }

@@ -161,10 +161,15 @@
       <div class="card" style="height: 100%">
         <div class="card-body">
           <button
+            (click)="copyLink()"
             type="button"
-            class="position-absolute top-0 start-0"
-            aria-label="Close"
-            style="z-index: 1"
+            class="btn btn-light btn-sm position-absolute top-0 start-0"
+            style="
+              z-index: 1;
+              box-shadow: none;
+              border: none;
+              background-image: none;
+            "
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +194,7 @@
           <div class="d-grid">
             <button
               (click)="irCrearColegio(escuela)"
-              class="btn btn-primary py-5 mx-auto"
+              class="btn btn-primary py-5 mx-auto ms-4"
               style="width: 90%"
             >
               <svg
