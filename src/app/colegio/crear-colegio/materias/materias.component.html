@@ -54,12 +54,10 @@
                   </select>
                 </p>
 
-                <!-- <label class="mt-2">colegioSvc.profesores:</label> -->
                 <table class="table">
                   <thead>
                     <tr class="table-light">
                       <th scope="col">Profesores</th>
-                      <th scope="col">Aulas</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -95,12 +93,26 @@
                           </label>
                         </div>
                       </td>
+                    </tr>
+                  </tbody>
+                </table>
 
+                <!-- <label class="mt-2">colegioSvc.profesores:</label> -->
+                <table class="table">
+                  <thead>
+                    <tr class="table-light">
+                      <th scope="col">Tipos</th>
+                      <th scope="col">Aulas</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let tipoAulas of colegioSvc.tiposAulas">
+                      <th scope="row">{{ tipoAulas[0].otro }}</th>
                       <td>
                         <div
                           class="form-check mt-2"
                           (click)="clickFormCheckMateriaAula(aula.nombre)"
-                          *ngFor="let aula of colegioSvc.aulaArray"
+                          *ngFor="let aula of tipoAulas"
                         >
                           <input
                             class="form-check-input"
@@ -170,7 +182,7 @@
                       bi bi-caret-down
                       position-absolute
                       top-50
-                      start-50
+                      end-0
                       translate-middle
                     "
                     viewBox="0 0 16 16"

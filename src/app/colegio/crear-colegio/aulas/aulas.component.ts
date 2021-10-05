@@ -58,6 +58,13 @@ export class AulasComponent implements OnInit {
     });
   }
 
+  
+
+  executeUsecase() {
+    let isClicked: boolean = false;
+    isClicked = true;
+  }
+
   openForEditAula(aula: Aula) {
     this.selectedAula = aula;
     Object.assign(this.temporalAula, aula)
