@@ -164,6 +164,10 @@ export class AuthService {
     await this.afAuth.signOut();
   }
 
+  joinSchool(idColegio: string){
+    
+  }
+
   //joya
   async createSchool(
     nombre: string,

@@ -147,7 +147,7 @@
       <!-- id="botonesEleccionUnirse" -->
       <div *ngIf="fueAUnirse == false">
         <div class="d-grid">
-          <button (click)="irUnirse()" disabled class="btn btn-primary btn-lg mt-4">
+          <button (click)="irUnirse()" class="btn btn-primary btn-lg mt-4">
             UNIRSE
           </button>
         </div>
@@ -159,7 +159,7 @@
             <div class="card-body">
               <!-- <h1 class="text-center">UNIRSE A COLEGIO</h1> -->
               <!-- [formGroup]="unirseColegioForm" (ngSubmit)="onUnirse()" -->
-              <form>
+              <form [formGroup]="unirseColegioForm" (ngSubmit)="onUnirse()">
                 <div class="form-group mt-4">
                   <label
                     >Codigo del Colegio
@@ -175,7 +175,6 @@
                 <div class="d-grid">
                   <button
                     type="submit"
-                    (click)="irUnirse()"
                     class="btn btn-primary btn-lg mt-4"
                   >
                     UNIRSE
