@@ -14,6 +14,7 @@ import { Colegio } from 'src/app/shared/interface/user.interface';
 })
 export class MenuPrincipalComponent implements OnInit {
   nombresDeEscuelasUsuario: Array<string> = [];
+  idsDeEscuelasUsuario: Array<string> = [];
 
   constructor(
     private router: Router,
@@ -29,6 +30,7 @@ export class MenuPrincipalComponent implements OnInit {
           .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
               this.nombresDeEscuelasUsuario.push(doc.data().nombre);
+              this.idsDeEscuelasUsuario.push(doc.data().id);
             });
           });
       }
@@ -53,7 +55,14 @@ export class MenuPrincipalComponent implements OnInit {
     }
   }
 
-  copyLink(){
-    
+  copyLink(nombreColegio: string) {
+    let codigo: string;
+    this.nombresDeEscuelasUsuario.forEach((escuela) => {
+      if (nombreColegio == escuela) {
+        codigo = this.idsDeEscuelasUsuario[this.nombresDeEscuelasUsuario.indexOf(escuela)];
+        navigator.clipboard.writeText(codigo).then().catch(e => console.error(e));
+        alert("¡Codigo copiado al portapapeles con exito!")
+      }
+    });
   }
 }
