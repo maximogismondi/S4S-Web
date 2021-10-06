@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
-import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Colegio } from 'src/app/shared/interface/user.interface';
+import { ColegioService } from '../services/colegio.service';
 
 @Component({
   selector: 'app-menu-principal',
@@ -13,13 +12,13 @@ import { Colegio } from 'src/app/shared/interface/user.interface';
   providers: [AuthService],
 })
 export class MenuPrincipalComponent implements OnInit {
-  nombresDeEscuelasUsuario: Array<string> = [];
-  idsDeEscuelasUsuario: Array<string> = [];
+  escuelasUsuario: Array<any> = [];
 
   constructor(
     private router: Router,
     private authSvc: AuthService,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private colegioSvc: ColegioService
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
@@ -29,20 +28,19 @@ export class MenuPrincipalComponent implements OnInit {
           .get()
           .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-              this.nombresDeEscuelasUsuario.push(doc.data().nombre);
-              this.idsDeEscuelasUsuario.push(doc.data().id);
+              this.escuelasUsuario.push({"nombre": doc.data().nombre, "id": doc.data().id, "tipoUsuario": "admin"});
             });
           });
 
-          // this.afs.firestore
-          // .collection('schools').doc().collection("usuarioExtensiones")
-          // .get()
-          // .then((querySnapshot) => {
-          //   querySnapshot.forEach((doc) => {
-          //     this.nombresDeEscuelasUsuario.push(doc.data().nombre);
-          //     this.idsDeEscuelasUsuario.push(doc.data().id);
-          //   });
-          // });
+        this.afs.firestore
+          .collection('schools')
+          .where('usuariosExtensiones', 'array-contains', user.uid)
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              this.escuelasUsuario.push({"nombre": doc.data().nombre, "id": doc.data().id, "tipoUsuario": "extension"});
+            });
+          });
       }
     });
   }
@@ -53,27 +51,29 @@ export class MenuPrincipalComponent implements OnInit {
     this.router.navigate(['/eleccion']);
   }
 
-  irCrearColegio(escuela: string) {
-    this.router.navigate(['/' + escuela + '/crear-colegio']);
+  irCrearColegio(nombreEscuela: string) {
+    this.router.navigate(['/' + nombreEscuela + '/crear-colegio']);
   }
 
-  async deleteSchool(escuela: string) {
-    if (confirm('¿Estas seguro/a que quieres eliminar ' + escuela + '?')) {
-      this.afs.collection('schools').doc(escuela).delete();
-      var i = this.nombresDeEscuelasUsuario.indexOf(escuela);
-      this.nombresDeEscuelasUsuario.splice(i, 1);
-      this.idsDeEscuelasUsuario.splice(i, 1);
+  async deleteSchool(escuela: any) {
+    if (confirm(`¿Estas seguro/a que eliminar ${escuela.nombre}?`)) {
+      this.afs.collection('schools').doc(escuela.nombre).delete();
+      this.escuelasUsuario.splice(this.escuelasUsuario.indexOf(escuela),1);
     }
   }
 
-  copyLink(nombreColegio: string) {
-    let codigo: string;
-    this.nombresDeEscuelasUsuario.forEach((escuela) => {
-      if (nombreColegio == escuela) {
-        codigo = this.idsDeEscuelasUsuario[this.nombresDeEscuelasUsuario.indexOf(escuela)];
-        navigator.clipboard.writeText(codigo).then().catch(e => console.error(e));
-        alert("¡Codigo copiado al portapapeles con exito!")
-      }
-    });
+  async leaveSchool(escuela: any) {
+    if (confirm(`¿Estas seguro/a que abandonar ${escuela.nombre}?`)) {
+      this.colegioSvc.usuariosExtensionesArray.splice(this.escuelasUsuario.indexOf(escuela),1);
+      this.afs.collection('schools').doc(escuela.nombre).update({usuariosExtensiones: this.colegioSvc.usuariosExtensionesArray});
+    }
+  }
+
+  copyLink(id: string) {
+    navigator.clipboard
+      .writeText(id)
+      .then()
+      .catch((e) => console.error(e));
+    alert('¡Codigo copiado al portapapeles con exito!');
   }
 }

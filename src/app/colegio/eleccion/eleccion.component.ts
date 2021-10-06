@@ -11,7 +11,7 @@ import { ColegioService } from '../services/colegio.service';
   selector: 'app-eleccion',
   templateUrl: './eleccion.component.html',
   styleUrls: ['./eleccion.component.scss'],
-  providers: [AuthService],
+  providers: [AuthService]
 })
 export class EleccionComponent implements OnInit {
   nombreColegio: string;
@@ -118,7 +118,6 @@ export class EleccionComponent implements OnInit {
                   usuariosExtensiones: this.colegioSvc.usuariosExtensionesArray,
                 });
                 this.router.navigate(['/' + nombreColegio + '/crear-colegio']);
-                // this.emailsDeUsuarios.push(doc.data().email);
               }
               else{
                 alert('No puedes unirte a un colegio que creaste.')
