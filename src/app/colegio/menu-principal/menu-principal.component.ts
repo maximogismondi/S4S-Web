@@ -33,6 +33,16 @@ export class MenuPrincipalComponent implements OnInit {
               this.idsDeEscuelasUsuario.push(doc.data().id);
             });
           });
+
+          // this.afs.firestore
+          // .collection('schools').doc().collection("usuarioExtensiones")
+          // .get()
+          // .then((querySnapshot) => {
+          //   querySnapshot.forEach((doc) => {
+          //     this.nombresDeEscuelasUsuario.push(doc.data().nombre);
+          //     this.idsDeEscuelasUsuario.push(doc.data().id);
+          //   });
+          // });
       }
     });
   }
@@ -52,6 +62,7 @@ export class MenuPrincipalComponent implements OnInit {
       this.afs.collection('schools').doc(escuela).delete();
       var i = this.nombresDeEscuelasUsuario.indexOf(escuela);
       this.nombresDeEscuelasUsuario.splice(i, 1);
+      this.idsDeEscuelasUsuario.splice(i, 1);
     }
   }
 

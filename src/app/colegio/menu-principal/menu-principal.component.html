@@ -155,7 +155,8 @@
       </div>
     </div>
 
-    <div class="col" *ngFor="let escuela of nombresDeEscuelasUsuario">
+    <div class="col" *ngFor="let escuela of nombresDeEscuelasUsuario;
+    let i = index">
       <div class="card" style="height: 100%">
         <div class="card-body">
           <p>
@@ -169,9 +170,8 @@
                 background-image: none;
               "
               data-bs-toggle="collapse"
-              data-bs-target="#collapseExample"
+              [attr.data-bs-target]="'#collapseExample' + i"
               aria-expanded="false"
-              aria-controls="collapseExample"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +189,7 @@
           </p>
           <div
             class="collapse position-absolute"
-            id="collapseExample"
+            [attr.id]="'collapseExample' + i"
             style="z-index: 11"
           >
             <div class="card card-body" (click)="copyLink(escuela)">
@@ -268,5 +268,48 @@
         </div>
       </div>
     </div>
+    
+<!--  -->
+
+    <div class="col" *ngFor="let escuela of nombresDeEscuelasUsuario;
+    let i = index">
+      <div class="card" style="height: 100%">
+        <div class="card-body">
+
+          <button
+            (click)="deleteSchool(escuela)"
+            type="button"
+            class="btn-close btn-close-white position-absolute top-0 end-0"
+            aria-label="Close"
+            style="z-index: 1"
+          ></button>
+          <div class="d-grid">
+            <button
+              (click)="irCrearColegio(escuela)"
+              class="btn btn-primary py-5 mx-auto ms-4"
+              style="width: 90%"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="35"
+                height="35"
+                fill="currentColor"
+                class="bi bi-arrow-right-circle"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="alert alert-light mt-4 text-center" role="alert">
+            {{ escuela }}
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
