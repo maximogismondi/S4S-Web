@@ -162,6 +162,19 @@
               <form [formGroup]="unirseColegioForm" (ngSubmit)="onUnirse()">
                 <div class="form-group mt-4">
                   <label
+                    >Nombre del Colegio
+                    <h6 class="text-danger d-inline-block">*</h6></label
+                  >
+                  <input
+                    type="text"
+                    required
+                    class="form-control"
+                    formControlName="nombreColegio"
+                  />
+                </div>
+                
+                <div class="form-group mt-4">
+                  <label
                     >Codigo del Colegio
                     <h6 class="text-danger d-inline-block">*</h6></label
                   >
@@ -169,14 +182,11 @@
                     type="text"
                     required
                     class="form-control"
-                    formControlName="codigoColegio"
+                    formControlName="idColegio"
                   />
                 </div>
                 <div class="d-grid">
-                  <button
-                    type="submit"
-                    class="btn btn-primary btn-lg mt-4"
-                  >
+                  <button type="submit" class="btn btn-primary btn-lg mt-4">
                     UNIRSE
                   </button>
                 </div>

@@ -5,9 +5,10 @@ export class User {
   displayName: string;
 }
 
-// export interface UserData extends User {
-//   colegios: Array<string>;
-// }
+export class UserDataExtra{
+  usuario: string;
+  tema: boolean;
+}
 
 export interface Colegio {
   id: string;

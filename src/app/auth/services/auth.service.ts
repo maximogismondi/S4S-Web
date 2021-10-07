@@ -21,6 +21,7 @@ export class AuthService {
   public userData: any;
   ingresoEmailCompleto: boolean = false;
   nombresDeEscuelas: Array<any> = [];
+  // idsDeEscuelas: Array<any> = [];
   existeEscuela: boolean = false;
 
   constructor(
@@ -36,6 +37,7 @@ export class AuthService {
           .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
               this.nombresDeEscuelas.push(doc.data().nombre);
+              // this.idsDeEscuelas.push(doc.data().id);
             });
           });
 
@@ -164,11 +166,11 @@ export class AuthService {
     await this.afAuth.signOut();
   }
 
-  joinSchool(idColegio: string){
-    // const schoolJoined: Colegio = {
-    //   id: idColegio
-    // }
-  }
+  // joinSchool(idColegio: string){
+  //   // const schoolJoined: Colegio = {
+  //   //   id: idColegio
+  //   // }
+  // }
 
   //joya
   async createSchool(

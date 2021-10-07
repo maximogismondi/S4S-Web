@@ -45,6 +45,7 @@ export class ColegioService {
   inicioModuloSeleccionado: Array<string> = [];
   profesorArray: Profesor[] = [];
   selectedProfesor: Profesor;
+  usuariosExtensionesArray: string[] = [];
   aulaArray: Aula[] = [];
   cursoArray: Curso[] = [];
   materiaArray: Materia[] = [];
@@ -57,7 +58,7 @@ export class ColegioService {
   botonPresionado: boolean = false;
   horarioGenerado: boolean = false;
   cursoMateriaArray: Curso[];
-  tiposAulas: Array<Aula []> = new Array();
+  tiposAulas: Array<Aula[]> = new Array();
 
   constructor(
     private router: Router,
@@ -125,6 +126,8 @@ export class ColegioService {
 
               this.materiaArray = school.materias;
 
+              this.usuariosExtensionesArray = school.usuariosExtensiones;
+
               this.cursoArray.forEach((curso) => {
                 curso.materias = [];
                 this.materiaArray.forEach((materia) => {
@@ -133,7 +136,9 @@ export class ColegioService {
                   }
                 });
               });
-              this.cursoMateriaArray = this.cursoArray.filter(curso => curso.materias.length > 0);
+              this.cursoMateriaArray = this.cursoArray.filter(
+                (curso) => curso.materias.length > 0
+              );
 
               if (!this.selectedProfesor) {
                 this.selectedProfesor = new Profesor(this.turnoArray);
@@ -151,18 +156,18 @@ export class ColegioService {
               this.botonPresionado = false;
               this.horarioGenerado = false;
 
-              this.tiposAulas = []
+              this.tiposAulas = [];
 
-              this.aulaArray.forEach(aula =>{
+              this.aulaArray.forEach((aula) => {
                 let agregado: boolean = false;
-                this.tiposAulas.forEach(tipoAulas => {
-                  if (tipoAulas.length > 0 && aula.otro == tipoAulas[0].otro){
+                this.tiposAulas.forEach((tipoAulas) => {
+                  if (tipoAulas.length > 0 && aula.otro == tipoAulas[0].otro) {
                     agregado = true;
                     tipoAulas.push(aula);
                   }
-                });  
-                if (!agregado){
-                  this.tiposAulas.push([aula])
+                });
+                if (!agregado) {
+                  this.tiposAulas.push([aula]);
                 }
               });
               // console.table(this.tiposAulas)
@@ -174,10 +179,7 @@ export class ColegioService {
   }
 
   async updateDBMateria() {
-    this.selectedMateria = new Materia(
-      this.profesorArray,
-      this.aulaArray
-    );
+    this.selectedMateria = new Materia(this.profesorArray, this.aulaArray);
     let materiaArrayDiccionario: Array<any> = [];
     this.materiaArray.forEach((materia) => {
       materiaArrayDiccionario.push({
@@ -224,8 +226,8 @@ export class ColegioService {
     if ('apellido' in selected) {
       arreglo.forEach((dato) => {
         if (
-          selected.nombre + selected.apellido ==
-          dato.nombre + dato.apellido && selected != dato 
+          selected.nombre + selected.apellido == dato.nombre + dato.apellido &&
+          selected != dato
         ) {
           existeDato = true;
           alert(
@@ -233,11 +235,11 @@ export class ColegioService {
           );
         }
       });
-    } else if('curso' in selected){
+    } else if ('curso' in selected) {
       arreglo.forEach((dato) => {
         if (
-          selected.nombre + selected.curso ==
-          dato.nombre + dato.curso && selected != dato 
+          selected.nombre + selected.curso == dato.nombre + dato.curso &&
+          selected != dato
         ) {
           existeDato = true;
           alert(
@@ -245,17 +247,16 @@ export class ColegioService {
           );
         }
       });
-    } 
-    else {
-        arreglo.forEach((dato) => {
-          if (selected.nombre == dato.nombre && selected != dato) {
-            existeDato = true;
-            alert(
-              'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre.'
-            );
-          }
-        });
-      }
-      return existeDato;
+    } else {
+      arreglo.forEach((dato) => {
+        if (selected.nombre == dato.nombre && selected != dato) {
+          existeDato = true;
+          alert(
+            'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre.'
+          );
+        }
+      });
+    }
+    return existeDato;
   }
 }

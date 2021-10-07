@@ -4,58 +4,38 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { Colegio } from 'src/app/shared/interface/user.interface';
+import { ColegioService } from '../services/colegio.service';
 
 @Component({
   selector: 'app-eleccion',
   templateUrl: './eleccion.component.html',
   styleUrls: ['./eleccion.component.scss'],
-  providers: [AuthService],
+  providers: [AuthService]
 })
 export class EleccionComponent implements OnInit {
   nombreColegio: string;
-  fueACrear:boolean = false;
-  fueAUnirse:boolean = false;
-  provinciasArgentina:any;
-  nombresDeEscuelasUsuario: Array<string> = [];
+  fueACrear: boolean = false;
+  fueAUnirse: boolean = false;
+  provinciasArgentina: any;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private authSvc: AuthService,
+    private colegioSvc: ColegioService,
     private afs: AngularFirestore,
     private http: HttpClient
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
-      if (user) {
-        this.afs.firestore
-          .collection('schools')
-          .where('userAdmin', '==', user.uid)
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              this.nombresDeEscuelasUsuario.push(doc.data().nombre);
-            });
-          });
-
-        this.afs.firestore
-          .collection('schools')
-          .where('userAdmin', '==', user.uid)
-          .get()
-          .then((data) => {
-            if( data.docs.length > 0 ) {
-              this.nombreColegio = data.docs[0].data().nombre;
-            }
-            
-          });
-      }
       this.http
-      .get(
-        'https://apis.datos.gob.ar/georef/api/provincias', {responseType: 'json'}
-      )
-      .subscribe((data) => {
-        this.provinciasArgentina = data;
-        this.provinciasArgentina = this.provinciasArgentina["provincias"];
-      });
+        .get('https://apis.datos.gob.ar/georef/api/provincias', {
+          responseType: 'json',
+        })
+        .subscribe((data) => {
+          this.provinciasArgentina = data;
+          this.provinciasArgentina = this.provinciasArgentina['provincias'];
+        });
     });
   }
 
@@ -74,6 +54,7 @@ export class EleccionComponent implements OnInit {
     });
 
     this.unirseColegioForm = this.fb.group({
+      nombreColegio: ['', Validators.required],
       idColegio: ['', Validators.required],
     });
   }
@@ -116,32 +97,81 @@ export class EleccionComponent implements OnInit {
   }
 
   async onUnirse() {
-    const {
-      idColegio
-    } = this.unirseColegioForm.value;
-    const school = await this.authSvc.joinSchool(
-      idColegio
-    );
+    const { nombreColegio, idColegio } = await this.unirseColegioForm.value;
+
+    if (nombreColegio) {
+      this.afs.firestore
+        .collection('schools')
+        .where('nombre', '==', nombreColegio)
+        .get()
+        .then((querySnapshot) => {
+          if (querySnapshot.size > 0) {
+            querySnapshot.forEach((doc) => {
+              if (
+                doc.data().id == idColegio &&
+                this.authSvc.userData.uid != doc.data().userAdmin
+              ) {
+                this.colegioSvc.usuariosExtensionesArray.push(
+                  this.authSvc.userData.uid
+                );
+                this.afs.collection('schools').doc(nombreColegio).update({
+                  usuariosExtensiones: this.colegioSvc.usuariosExtensionesArray,
+                });
+                this.router.navigate(['/' + nombreColegio + '/crear-colegio']);
+              }
+              else{
+                alert('No puedes unirte a un colegio que creaste.')
+              }
+            });
+          } else {
+            alert(
+              'El colegio ' +
+                nombreColegio +
+                ' no existe, por favor ingrese otro nombre.'
+            );
+          }
+        });
+    }
+
+    // if (nombreColegio) {
+    //   this.afs.firestore
+    //     .collection('schools')
+    //     .doc(nombreColegio)
+    //     .get()
+    //     .then((querySnapshot) => {
+    //       if (querySnapshot.data()) {
+    //         if (
+    //           querySnapshot.data()?.id == idColegio &&
+    //           this.authSvc.userData.uid != querySnapshot.data()?.userAdmin
+    //         ) {
+    //           this.colegioSvc.usuariosExtensionesArray.push(
+    //             this.authSvc.userData.uid
+    //           );
+    //           this.afs.collection('schools').doc(nombreColegio).update({
+    //             usuariosExtensiones: this.colegioSvc.usuariosExtensionesArray,
+    //           });
+    //           this.router.navigate(['/' + nombreColegio + '/crear-colegio']);
+    //         }
+    //       } else {
+    //         alert(
+    //           'El colegio ' +
+    //             nombreColegio +
+    //             ' no existe, por favor ingrese otro nombre'
+    //         );
+    //       }
+    //     });
+    // }
   }
 
   //joya
   irCrear() {
-    // document.getElementById('crear')!.style.display = 'block';
-    // document.getElementById('unirse')!.style.display = 'none';
-    // document.getElementById('botonesEleccionCrear')!.style.display = 'none';
-    // document.getElementById('botonesEleccionUnirse')!.style.display = 'block';
     this.fueACrear = true;
     this.fueAUnirse = false;
   }
 
   //joya
   irUnirse() {
-    // document.getElementById('crear')!.style.display = 'none';
-    // document.getElementById('unirse')!.style.display = 'block';
-    // document.getElementById('botonesEleccionCrear')!.style.display = 'block';
-    // document.getElementById('botonesEleccionUnirse')!.style.display = 'none';
     this.fueAUnirse = true;
     this.fueACrear = false;
   }
-
 }
