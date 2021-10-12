@@ -76,12 +76,9 @@ export class MenuPrincipalComponent implements OnInit {
         this.escuelasUsuario.indexOf(escuela),
         1
       );
-      this.afs
-        .collection('schools')
-        .doc(escuela.nombre)
-        .update({
-          usuariosExtensiones: this.colegioSvc.usuariosExtensionesArray,
-        });
+      this.afs.collection('schools').doc(escuela.nombre).update({
+        usuariosExtensiones: this.colegioSvc.usuariosExtensionesArray,
+      });
     }
   }
 
