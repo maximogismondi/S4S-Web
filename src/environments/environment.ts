@@ -2,6 +2,32 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+/* // SDK de Mercado Pago
+const mercadopago = require ('mercadopago');
+// Agrega credenciales
+mercadopago.configure({
+  access_token: 'TEST-5bd86ed1-ae42-4cf6-a63a-2bcc93bffb2b'
+});
+
+// Crea un objeto de preferencia
+let producto = {
+  items: [
+    {
+      title: 'Curso - S4S',
+      unit_price: 100,
+      quantity: 1,
+    }
+  ]
+};
+
+mercadopago.preferences.create(producto)
+.then(function(response){
+// Este valor reemplazará el string "<%= global.id %>" en tu HTML
+  global.id = response.body.id;
+}).catch(function(error){
+  console.log(error);
+}); */
+
 export const environment = {
   production: false,
   firebaseConfig: {

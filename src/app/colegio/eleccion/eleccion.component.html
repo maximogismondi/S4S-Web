@@ -3,13 +3,10 @@
     <div class="card-body">
       <!-- <h1 class="text-center mt-4">COLEGIO</h1> -->
       <h3 class="text-center mt-3">Scheduler For Schools</h3>
-      <div class="alert alert-light mt-2 text-danger" role="alert">
-        *Obligatorio
-      </div>
       <!-- id="botonesEleccionCrear" -->
       <div *ngIf="fueACrear == false">
         <div class="d-grid">
-          <button (click)="irCrear()" class="btn btn-primary btn-lg mt-2 py-4">
+          <button (click)="irCrear()" class="btn btn-primary btn-lg mt-5 py-4">
             CREAR
           </button>
         </div>
@@ -22,12 +19,15 @@
       </div>
       <!--id="crear" style="display: none"-->
       <div *ngIf="fueACrear">
-        <div class="mx-auto mt-2">
+        <div class="mx-auto mt-5">
           <div class="card">
             <div class="card-body">
+              <div class="alert alert-light mt-2 text-danger" role="alert">
+                *Obligatorio
+              </div>
               <!-- <h1 class="text-center">CREAR COLEGIO</h1> -->
               <form [formGroup]="crearColegioForm" (ngSubmit)="onCrear()">
-                <div class="form-group mt-3">
+                <div class="form-group mt-4">
                   <label
                     >Nombre del Colegio
                     <h6 class="text-danger d-inline-block">*</h6></label
@@ -157,6 +157,9 @@
         <div class="mx-auto mt-2">
           <div class="card">
             <div class="card-body">
+              <div class="alert alert-light mt-2 text-danger" role="alert">
+                *Obligatorio
+              </div>
               <!-- <h1 class="text-center">UNIRSE A COLEGIO</h1> -->
               <!-- [formGroup]="unirseColegioForm" (ngSubmit)="onUnirse()" -->
               <form [formGroup]="unirseColegioForm" (ngSubmit)="onUnirse()">

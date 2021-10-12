@@ -188,15 +188,24 @@
       </div>
 
       <div *ngIf="!colegioSvc.botonPresionado" class="d-grid">
-        <button (click)="finalizar()" class="btn btn-primary btn-lg mt-2">
-          Generar mis horarios ya!
-        </button>
+        <div *ngIf="colegioSvc.pagoFinalizado else pagar" class="d-grid">
+          <button (click)="finalizar()" class="btn btn-primary btn-lg mt-2">
+            Generar mis horarios ya!
+          </button>
+        </div>
+        <ng-template #pagar>
+          <h5 class="my-3">
+            <p>Usted esta por pagar un procesamiento de turnos, aulas, cursos, profesores y materias</p>
+          </h5>
+          <div class="cho-container"></div>
+        </ng-template>
+        
       </div>
     </div>
-    <ng-template #presionadoFinalizar>
+    <!-- <ng-template #presionadoFinalizar>
       <div class="d-flex justify-content-center my-5">
         <div class="spinner-border" role="status"></div>
       </div>
-    </ng-template>
+    </ng-template> -->
   </div>
 </div>

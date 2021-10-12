@@ -59,6 +59,7 @@ export class ColegioService {
   horarioGenerado: boolean = false;
   cursoMateriaArray: Curso[];
   tiposAulas: Array<Aula[]> = new Array();
+  pagoFinalizado: boolean = false;
 
   constructor(
     private router: Router,

@@ -18,6 +18,9 @@ import {
   // MateriaReducido,
 } from 'src/app/shared/interface/user.interface';
 import { ColegioService } from '../../services/colegio.service';
+import { MercadopagoService } from 'src/app/mercado-pago/service/mercadopago.service';
+
+declare const MercadoPago: any;
 
 @Component({
   selector: 'app-finalizar',
@@ -25,7 +28,7 @@ import { ColegioService } from '../../services/colegio.service';
   styleUrls: ['./finalizar.component.scss'],
 })
 export class FinalizarComponent implements OnInit {
-  clickMoreInfoSchool: boolean = false;
+  // clickMoreInfoSchool: boolean = false;
   horariosHechos: any = {};
   horariosAulasHechos: any = {};
   materiasProfesoresHechos: any = {};
@@ -33,10 +36,31 @@ export class FinalizarComponent implements OnInit {
   constructor(
     public colegioSvc: ColegioService,
     private http: HttpClient,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private _mercadopago: MercadopagoService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    this._mercadopago.createPreference(this.colegioSvc.cursoArray.length).then(res => {
+      const mp = new MercadoPago('TEST-5bd86ed1-ae42-4cf6-a63a-2bcc93bffb2b', {
+        locale: 'es-AR'
+      });
+
+      // Inicializa el checkout
+      mp.checkout({
+          preference: {
+              id: res.id
+          },
+          render: {
+                container: '.cho-container', // Indica el nombre de la clase donde se mostrará el botón de pago
+                label: 'Pagar', // Cambia el texto del botón de pago (opcional)
+          }
+      });
+    })
+
+    
+  }
 
   // _______________________________________FINALIZAR____________________________________________________________
   botonPresionado: boolean = false;

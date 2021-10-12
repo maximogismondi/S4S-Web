@@ -5,10 +5,10 @@ export class User {
   displayName: string;
 }
 
-export class UserDataExtra{
-  usuario: string;
-  tema: boolean;
-}
+// export class UserDataExtra{
+//   usuario: string;
+//   tema: boolean;
+// }
 
 export interface Colegio {
   id: string;
