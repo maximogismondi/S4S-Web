@@ -163,8 +163,7 @@
                 *Obligatorio
               </div>
               <form [formGroup]="unirseColegioForm" (ngSubmit)="onUnirse()">
-                <div *ngIf="seleccionoColegio == false; else colegioSeleccionado">
-                  <div class="form-group mt-4">
+                <div class="form-group mt-4">
                   <label
                     >Nombre del Colegio
                     <h6 class="text-danger d-inline-block">*</h6></label
@@ -174,19 +173,31 @@
                     required
                     class="form-control"
                     formControlName="nombreColegio"
-                    (input) = "buscarColegios()"
+                    (input)="buscarColegios()"
                   />
                 </div>
 
-                <div class="list-group">
-                  <button type="button" (click)="seleccionaColegio(colegio)" class="list-group-item list-group-item-action" *ngFor= "let colegio of colegiosBuscados">{{ colegio }}</button>
+                <div class="list-group" *ngIf="!seleccionoColegio">
+                  <button
+                    type="button"
+                    (click)="seleccionaColegio(colegioElegido)"
+                    class="list-group-item list-group-item-action"
+                    *ngFor="let colegioElegido of colegiosBuscados"
+                  >
+                    {{ colegioElegido }}
+                  </button>
                 </div>
-                </div>
-
-                <ng-template #colegioSeleccionado>
-                  <h1>Hola</h1>
-                </ng-template>
-                
+                <!-- <ng-template #colegioSeleccionado>
+                  
+                  <div class="card">
+                    <div class="card-body">
+                      {{ colegioElegido }}
+                      <button type="button" (click)="seleccionaColegio(colegioElegido)" class="btn-close btn-close-white" aria-label="Close"></button>
+                    
+                    </div>
+                    
+                  </div>
+                </ng-template> -->
 
                 <div class="form-group mt-4" *ngIf="seleccionoColegio">
                   <label
@@ -200,13 +211,12 @@
                     formControlName="idColegio"
                   />
                 </div>
-                
+
                 <div class="d-grid">
                   <button type="submit" class="btn btn-primary btn-lg mt-4">
                     UNIRSE
                   </button>
                 </div>
-                
               </form>
             </div>
           </div>

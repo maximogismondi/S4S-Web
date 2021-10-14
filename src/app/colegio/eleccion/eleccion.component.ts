@@ -19,6 +19,7 @@ export class EleccionComponent implements OnInit {
   localidadesProvincia: Array<any> = [];
   colegiosBuscados: Array<string> = [];
   seleccionoColegio: boolean = false;
+  colegioElegido: string = ' ';
 
   constructor(
     private router: Router,
@@ -189,24 +190,38 @@ export class EleccionComponent implements OnInit {
   }
 
   buscarColegios() {
-    this.colegiosBuscados = [];
+    this.seleccionoColegio = false;
     this.afs.firestore
       .collection('schools')
       .get()
       .then((querySnapshot) => {
+        this.colegiosBuscados = [];
         if (querySnapshot.size > 0) {
           querySnapshot.forEach((school) => {
-
-            if (school.data()["nombre"].toLowerCase().includes(this.unirseColegioForm.value["nombreColegio"].toLowerCase())){
-              this.colegiosBuscados.push(school.data()["nombre"]);
+            if (
+              school
+                .data()
+                ['nombre'].toLowerCase()
+                .includes(
+                  this.unirseColegioForm.value['nombreColegio'].toLowerCase()
+                )
+            ) {
+              this.colegiosBuscados.push(school.data()['nombre']);
             }
           });
         }
       });
   }
 
-  seleccionaColegio(colegio : string){
-    this.unirseColegioForm.value["nombreColegio"]=colegio;
-    this.seleccionoColegio = true;
+  seleccionaColegio(colegio: string) {
+    if (!this.seleccionoColegio) {
+      this.unirseColegioForm = this.fb.group({
+        nombreColegio: [colegio, Validators.required],
+      });
+      this.colegioElegido = colegio;
+      this.seleccionoColegio = true;
+    } else {
+      this.seleccionoColegio = false;
+    }
   }
 }
