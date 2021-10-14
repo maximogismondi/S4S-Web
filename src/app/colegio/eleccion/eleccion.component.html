@@ -187,6 +187,7 @@
                     required
                     class="form-control"
                     formControlName="nombreColegio"
+                    (change) = "buscarColegios()"
                   />
                 </div>
 
@@ -208,6 +209,7 @@
                     UNIRSE
                   </button>
                 </div>
+                <label *ngFor let aaaa of colegiosBuscados>{{ aaaa }}</label>
               </form>
             </div>
           </div>
