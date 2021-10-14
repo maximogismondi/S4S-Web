@@ -53,7 +53,7 @@ export class FinalizarComponent implements OnInit {
               id: res.id
           },
           render: {
-                container: '.cho-container', // Indica el nombre de la clase donde se mostrará el botón de pago
+                container: '.mercadoPagoBoton', // Indica el nombre de la clase donde se mostrará el botón de pago
                 label: 'Pagar', // Cambia el texto del botón de pago (opcional)
           }
       });
