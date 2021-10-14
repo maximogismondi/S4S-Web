@@ -243,17 +243,13 @@ export class AuthService {
       alert('El horario de finalizacion debe ser mayor que las 12:05 pm');
     } else {
       this.nombresDeEscuelas.forEach((nombreEscuela) => {
-        if (school.nombre == nombreEscuela) {
-          this.existeEscuela = true;
+        if (school.nombre.toLowerCase() == nombreEscuela.toLowerCase()) {
+          this.SchoolData(school);
+          this.router.navigate(['/' + school.nombre + '/crear-colegio']);
         }
       });
 
-      if (this.existeEscuela) {
-        alert('El nombre ya esta utilizado, por favor ingrese otro');
-      } else {
-        this.SchoolData(school);
-        this.router.navigate(['/' + school.nombre + '/crear-colegio']);
-      }
+      alert('El nombre ya esta utilizado, por favor ingrese otro');
 
       // confirm("Poner los valores que se piden");
     }

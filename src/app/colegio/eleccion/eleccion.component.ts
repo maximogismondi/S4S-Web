@@ -224,7 +224,7 @@ export class EleccionComponent implements OnInit {
         if (querySnapshot.size > 0) {
           querySnapshot.forEach((school) => {
 
-            if (school.data()["nombre"].includes(this.unirseColegioForm.value["nombreColegio"])){
+            if (school.data()["nombre"].toLowerCase().includes(this.unirseColegioForm.value["nombreColegio"].toLowerCase())){
               this.colegiosBuscados.push(school.data()["nombre"]);
             }
           });
