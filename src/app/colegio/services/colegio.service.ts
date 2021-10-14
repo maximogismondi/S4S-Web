@@ -76,8 +76,6 @@ export class ColegioService {
           .snapshotChanges()
           .subscribe((colegio) => {
             const school = colegio.payload.data() as Colegio;
-            console.log(colegio.payload)
-            console.log(school)
             
             this.duracionModulo = school.duracionModulo;
             this.inicioHorario = school.inicioHorario;

@@ -11,7 +11,7 @@ import { ColegioService } from '../services/colegio.service';
   selector: 'app-eleccion',
   templateUrl: './eleccion.component.html',
   styleUrls: ['./eleccion.component.scss'],
-  providers: [AuthService]
+  providers: [AuthService],
 })
 export class EleccionComponent implements OnInit {
   nombreColegio: string;
@@ -23,7 +23,6 @@ export class EleccionComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authSvc: AuthService,
-    private colegioSvc: ColegioService,
     private afs: AngularFirestore,
     private http: HttpClient
   ) {
@@ -111,16 +110,25 @@ export class EleccionComponent implements OnInit {
                 doc.data().id == idColegio &&
                 this.authSvc.userData.uid != doc.data().userAdmin
               ) {
-                this.colegioSvc.usuariosExtensionesArray.push(
-                  this.authSvc.userData.uid
-                );
-                this.afs.collection('schools').doc(nombreColegio).update({
-                  usuariosExtensiones: this.colegioSvc.usuariosExtensionesArray,
-                });
-                this.router.navigate(['/' + nombreColegio + '/crear-colegio']);
-              }
-              else{
-                alert('No puedes unirte a un colegio que creaste.')
+                this.afs.firestore
+                  .collection('schools')
+                  .where('nombre', '==', nombreColegio)
+                  .get()
+                  .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                      let usuariosExtensionesArray =
+                        doc.data().usuariosExtensiones;
+                      usuariosExtensionesArray.push(this.authSvc.userData.uid);
+                      this.afs.collection('schools').doc(nombreColegio).update({
+                        usuariosExtensiones: usuariosExtensionesArray,
+                      });
+                      this.router.navigate([
+                        '/' + nombreColegio + '/crear-colegio',
+                      ]);
+                    });
+                  });
+              } else {
+                alert('No puedes unirte a un colegio que creaste.');
               }
             });
           } else {

@@ -17,8 +17,7 @@ export class MenuPrincipalComponent implements OnInit {
   constructor(
     private router: Router,
     private authSvc: AuthService,
-    private afs: AngularFirestore,
-    private colegioSvc: ColegioService
+    private afs: AngularFirestore
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
@@ -72,13 +71,26 @@ export class MenuPrincipalComponent implements OnInit {
 
   async leaveSchool(escuela: any) {
     if (confirm(`¿Estas seguro/a que abandonar ${escuela.nombre}?`)) {
-      this.colegioSvc.usuariosExtensionesArray.splice(
-        this.escuelasUsuario.indexOf(escuela),
-        1
-      );
-      this.afs.collection('schools').doc(escuela.nombre).update({
-        usuariosExtensiones: this.colegioSvc.usuariosExtensionesArray,
-      });
+      this.afs.firestore
+        .collection('schools')
+        .where('nombre', '==', escuela.nombre)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            let usuariosExtensionesArray = doc.data().usuariosExtensiones;
+            usuariosExtensionesArray.splice(
+              usuariosExtensionesArray.indexOf(this.authSvc.userData.uid),
+              1
+            );
+            this.escuelasUsuario.splice(
+              this.escuelasUsuario.indexOf(escuela),
+              1
+            );
+            this.afs.collection('schools').doc(escuela.nombre).update({
+              usuariosExtensiones: usuariosExtensionesArray,
+            });
+          });
+        });
     }
   }
 
