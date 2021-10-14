@@ -163,7 +163,8 @@
                 *Obligatorio
               </div>
               <form [formGroup]="unirseColegioForm" (ngSubmit)="onUnirse()">
-                <div class="form-group mt-4">
+                <div *ngIf="seleccionoColegio == false; else colegioSeleccionado">
+                  <div class="form-group mt-4">
                   <label
                     >Nombre del Colegio
                     <h6 class="text-danger d-inline-block">*</h6></label
@@ -177,7 +178,17 @@
                   />
                 </div>
 
-                <div class="form-group mt-4" >
+                <div class="list-group">
+                  <button type="button" (click)="seleccionaColegio(colegio)" class="list-group-item list-group-item-action" *ngFor= "let colegio of colegiosBuscados">{{ colegio }}</button>
+                </div>
+                </div>
+
+                <ng-template #colegioSeleccionado>
+                  <h1>Hola</h1>
+                </ng-template>
+                
+
+                <div class="form-group mt-4" *ngIf="seleccionoColegio">
                   <label
                     >Codigo del Colegio
                     <h6 class="text-danger d-inline-block">*</h6></label
@@ -195,7 +206,7 @@
                     UNIRSE
                   </button>
                 </div>
-                <label *ngFor= "let aaaa of colegiosBuscados">{{ aaaa }}</label>
+                
               </form>
             </div>
           </div>

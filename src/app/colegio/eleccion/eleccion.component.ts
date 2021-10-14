@@ -18,6 +18,7 @@ export class EleccionComponent implements OnInit {
   provinciasArgentina: any;
   localidadesProvincia: Array<any> = [];
   colegiosBuscados: Array<string> = [];
+  seleccionoColegio: boolean = false;
 
   constructor(
     private router: Router,
@@ -157,35 +158,6 @@ export class EleccionComponent implements OnInit {
           }
         });
     }
-
-    // if (nombreColegio) {
-    //   this.afs.firestore
-    //     .collection('schools')
-    //     .doc(nombreColegio)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       if (querySnapshot.data()) {
-    //         if (
-    //           querySnapshot.data()?.id == idColegio &&
-    //           this.authSvc.userData.uid != querySnapshot.data()?.userAdmin
-    //         ) {
-    //           this.colegioSvc.usuariosExtensionesArray.push(
-    //             this.authSvc.userData.uid
-    //           );
-    //           this.afs.collection('schools').doc(nombreColegio).update({
-    //             usuariosExtensiones: this.colegioSvc.usuariosExtensionesArray,
-    //           });
-    //           this.router.navigate(['/' + nombreColegio + '/crear-colegio']);
-    //         }
-    //       } else {
-    //         alert(
-    //           'El colegio ' +
-    //             nombreColegio +
-    //             ' no existe, por favor ingrese otro nombre'
-    //         );
-    //       }
-    //     });
-    // }
   }
 
   //joya
@@ -199,6 +171,7 @@ export class EleccionComponent implements OnInit {
     this.fueAUnirse = true;
     this.fueACrear = false;
   }
+
   localidadesPorProvincia(provincia: string) {
     this.http
       .get(
@@ -230,5 +203,10 @@ export class EleccionComponent implements OnInit {
           });
         }
       });
+  }
+
+  seleccionaColegio(colegio : string){
+    this.unirseColegioForm.value["nombreColegio"]=colegio;
+    this.seleccionoColegio = true;
   }
 }
