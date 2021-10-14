@@ -214,14 +214,10 @@ export class EleccionComponent implements OnInit {
   }
 
   seleccionaColegio(colegio: string) {
-    if (!this.seleccionoColegio) {
-      this.unirseColegioForm = this.fb.group({
-        nombreColegio: [colegio, Validators.required],
-      });
-      this.colegioElegido = colegio;
-      this.seleccionoColegio = true;
-    } else {
-      this.seleccionoColegio = false;
-    }
+    this.unirseColegioForm = this.fb.group({
+      nombreColegio: [colegio, Validators.required],
+    });
+    this.colegioElegido = colegio;
+    this.seleccionoColegio = true;
   }
 }
