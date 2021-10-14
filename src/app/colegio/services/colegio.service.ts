@@ -45,7 +45,7 @@ export class ColegioService {
   inicioModuloSeleccionado: Array<string> = [];
   profesorArray: Profesor[] = [];
   selectedProfesor: Profesor;
-  usuariosExtensionesArray: string[] = [];
+  // usuariosExtensionesArray: string[] = [];
   aulaArray: Aula[] = [];
   cursoArray: Curso[] = [];
   materiaArray: Materia[] = [];
@@ -118,7 +118,7 @@ export class ColegioService {
 
             this.materiaArray = school.materias;
 
-            this.usuariosExtensionesArray = school.usuariosExtensiones;
+            // this.usuariosExtensionesArray = school.usuariosExtensiones;
 
             this.cursoArray.forEach((curso) => {
               curso.materias = [];

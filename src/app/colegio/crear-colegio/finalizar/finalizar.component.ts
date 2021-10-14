@@ -42,7 +42,7 @@ export class FinalizarComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this._mercadopago.createPreference(this.colegioSvc.cursoArray.length).then(res => {
+    this._mercadopago.createPreference(this.colegioSvc.cursoArray.length,this.colegioSvc.nombreColegio).then(res => {
       const mp = new MercadoPago('TEST-5bd86ed1-ae42-4cf6-a63a-2bcc93bffb2b', {
         locale: 'es-AR'
       });
