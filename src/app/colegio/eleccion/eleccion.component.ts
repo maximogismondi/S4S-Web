@@ -4,8 +4,6 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Colegio } from 'src/app/shared/interface/user.interface';
-import { ColegioService } from '../services/colegio.service';
 
 @Component({
   selector: 'app-eleccion',
@@ -26,14 +24,16 @@ export class EleccionComponent implements OnInit {
     private afs: AngularFirestore,
     private http: HttpClient
   ) {
-    authSvc.afAuth.authState.subscribe((user) => {
+    authSvc.afAuth.authState.subscribe(() => {
       this.http
         .get('https://apis.datos.gob.ar/georef/api/provincias', {
           responseType: 'json',
         })
         .subscribe((data) => {
-          this.provinciasArgentina = data;
-          this.provinciasArgentina = this.provinciasArgentina['provincias'];
+          let provinciasArgentina: any = data;
+          this.provinciasArgentina = provinciasArgentina['provincias'].sort(
+            (a: any, b: any) => a.nombre.localeCompare(b.nombre)
+          );
         });
     });
   }
@@ -116,15 +116,31 @@ export class EleccionComponent implements OnInit {
                   .get()
                   .then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
-                      let usuariosExtensionesArray =
-                        doc.data().usuariosExtensiones;
-                      usuariosExtensionesArray.push(this.authSvc.userData.uid);
-                      this.afs.collection('schools').doc(nombreColegio).update({
-                        usuariosExtensiones: usuariosExtensionesArray,
-                      });
-                      this.router.navigate([
-                        '/' + nombreColegio + '/crear-colegio',
-                      ]);
+                      if (
+                        !doc
+                          .data()
+                          .usuariosExtensiones.includes(
+                            this.authSvc.userData.uid
+                          )
+                      ) {
+                        let usuariosExtensionesArray =
+                          doc.data().usuariosExtensiones;
+                        usuariosExtensionesArray.push(
+                          this.authSvc.userData.uid
+                        );
+                        this.afs
+                          .collection('schools')
+                          .doc(nombreColegio)
+                          .update({
+                            usuariosExtensiones: usuariosExtensionesArray,
+                          });
+                        this.router.navigate([
+                          '/' + nombreColegio + '/crear-colegio',
+                        ]);
+                      } else {
+                        alert('Ya preteneces a '+ nombreColegio + ".");
+                      }
+
                     });
                   });
               } else {
