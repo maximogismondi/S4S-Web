@@ -8,17 +8,16 @@ export class MercadopagoService {
 
   constructor(private http: HttpClient) { }
 
-  createPreference(cantidad: number): Promise<any> {
-    
+  createPreference(cantidadCursos: number, escuela: string): Promise<any> {
     const headers = {
       Authorization: `Bearer TEST-2483069801956454-101216-eb9ad32d23c813bc9e019d954e121482-127906426`
     }
 
     let preference = {
       items: [{
-        title: "Cursos - S4S",
+        title: `${escuela} - cantidad de cursos a pagar: ${cantidadCursos} - S4S`,
         unit_price: 100,
-        quantity: cantidad,
+        quantity: cantidadCursos,
       }],
       back_urls: {
         "success": "http://localhost:4200/procesar-pago",
