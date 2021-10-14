@@ -17,6 +17,7 @@ export class EleccionComponent implements OnInit {
   fueAUnirse: boolean = false;
   provinciasArgentina: any;
   localidadesProvincia: Array<any> = [];
+  colegiosBuscados: Array<string> = [];
 
   constructor(
     private router: Router,
@@ -207,10 +208,27 @@ export class EleccionComponent implements OnInit {
           responseType: 'json',
         }
       )
-      .subscribe((data:any) => {
+      .subscribe((data: any) => {
         this.localidadesProvincia = data['localidades'].sort((a: any, b: any) =>
           a.nombre.localeCompare(b.nombre)
         );
+      });
+  }
+
+  buscarColegios() {
+    this.colegiosBuscados = [];
+    this.afs.firestore
+      .collection('schools')
+      .get()
+      .then((querySnapshot) => {
+        if (querySnapshot.size > 0) {
+          querySnapshot.forEach((school) => {
+
+            if (school.data()["nombre"].includes(this.unirseColegioForm.value["nombreColegio"])){
+              this.colegiosBuscados.push(school.data()["nombre"]);
+            }
+          });
+        }
       });
   }
 }
