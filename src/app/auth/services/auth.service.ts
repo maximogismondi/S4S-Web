@@ -175,8 +175,8 @@ export class AuthService {
   //joya
   async createSchool(
     nombre: string,
-    direccion: string,
     provincia: string,
+    localidad: string,
     telefono: string,
     duracionModulo: number,
     inicioHorario: string,
@@ -188,7 +188,7 @@ export class AuthService {
       userAdmin: this.userData.uid,
       nombre: nombre,
       // ejecutado: "no",
-      direccion: direccion,
+      localidad: localidad,
       provincia: provincia,
       telefono: telefono,
       duracionModulo: duracionModulo,
@@ -207,8 +207,8 @@ export class AuthService {
 
     if (
       String(school.nombre).length === 0 ||
-      String(school.direccion).length === 0 ||
       String(school.provincia).length === 0 ||
+      String(school.localidad).length === 0 ||
       String(school.telefono).length === 0 ||
       String(school.duracionModulo).length === 0 ||
       String(school.inicioHorario).length === 0 ||
@@ -303,8 +303,8 @@ export class AuthService {
       userAdmin: school.userAdmin,
       nombre: school.nombre,
       // ejecutado: school.ejecutado,
-      direccion: school.direccion,
       provincia: school.provincia,
+      localidad: school.localidad,
       telefono: '11' + school.telefono,
       duracionModulo: school.duracionModulo,
       inicioHorario: school.inicioHorario,

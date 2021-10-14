@@ -41,26 +41,18 @@
                 </div>
                 <div class="form-group mt-3">
                   <label
-                    >Direccion del Colegio
-                    <h6 class="text-danger d-inline-block">*</h6></label
-                  >
-                  <input
-                    type="text"
-                    required
-                    class="form-control"
-                    formControlName="direccion"
-                  />
-                </div>
-                <div class="form-group mt-3">
-                  <label
                     >Provincia
                     <h6 class="text-danger d-inline-block">*</h6></label
                   >
                   <select
                     class="form-select"
-                    aria-label="Default select example"
                     formControlName="provincia"
                     required
+                    (change)="
+                      localidadesPorProvincia(
+                        this.crearColegioForm.value['provincia']
+                      )
+                    "
                   >
                     <option
                       value="{{ provincia['nombre'] }}"
@@ -68,6 +60,28 @@
                       class="bg-white"
                     >
                       {{ provincia["nombre"] }}
+                    </option>
+                  </select>
+                </div>
+                <div
+                  class="form-group mt-3"
+                  *ngIf="localidadesProvincia.length > 0"
+                >
+                  <label
+                    >Localidad
+                    <h6 class="text-danger d-inline-block">*</h6></label
+                  >
+                  <select
+                    class="form-select"
+                    formControlName="localidad"
+                    required
+                  >
+                    <option
+                      value="{{ localidad['nombre'] }}"
+                      *ngFor="let localidad of localidadesProvincia"
+                      class="bg-white"
+                    >
+                      {{ localidad["nombre"] }}
                     </option>
                   </select>
                 </div>
@@ -175,7 +189,7 @@
                     formControlName="nombreColegio"
                   />
                 </div>
-                
+
                 <div class="form-group mt-4">
                   <label
                     >Codigo del Colegio
@@ -188,6 +202,7 @@
                     formControlName="idColegio"
                   />
                 </div>
+                
                 <div class="d-grid">
                   <button type="submit" class="btn btn-primary btn-lg mt-4">
                     UNIRSE

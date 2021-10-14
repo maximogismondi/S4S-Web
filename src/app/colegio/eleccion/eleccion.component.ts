@@ -16,6 +16,7 @@ export class EleccionComponent implements OnInit {
   fueACrear: boolean = false;
   fueAUnirse: boolean = false;
   provinciasArgentina: any;
+  localidadesProvincia: Array<any> = [];
 
   constructor(
     private router: Router,
@@ -44,8 +45,8 @@ export class EleccionComponent implements OnInit {
   ngOnInit(): void {
     this.crearColegioForm = this.fb.group({
       nombre: ['', Validators.required],
-      direccion: ['', Validators.required],
       provincia: ['', Validators.required],
+      localidad: ['', Validators.required],
       telefono: ['', Validators.required],
       duracionModulo: ['', Validators.required],
       inicioHorario: ['', Validators.required],
@@ -76,8 +77,8 @@ export class EleccionComponent implements OnInit {
   async onCrear() {
     const {
       nombre,
-      direccion,
       provincia,
+      localidad,
       telefono,
       duracionModulo,
       inicioHorario,
@@ -85,8 +86,8 @@ export class EleccionComponent implements OnInit {
     } = this.crearColegioForm.value;
     const school = await this.authSvc.createSchool(
       nombre,
-      direccion,
       provincia,
+      localidad,
       telefono,
       duracionModulo,
       inicioHorario,
@@ -138,9 +139,8 @@ export class EleccionComponent implements OnInit {
                           '/' + nombreColegio + '/crear-colegio',
                         ]);
                       } else {
-                        alert('Ya preteneces a '+ nombreColegio + ".");
+                        alert('Ya preteneces a ' + nombreColegio + '.');
                       }
-
                     });
                   });
               } else {
@@ -197,5 +197,20 @@ export class EleccionComponent implements OnInit {
   irUnirse() {
     this.fueAUnirse = true;
     this.fueACrear = false;
+  }
+  localidadesPorProvincia(provincia: string) {
+    this.http
+      .get(
+        'https://apis.datos.gob.ar/georef/api/localidades?campos=nombre&max=5000&provincia=' +
+          provincia,
+        {
+          responseType: 'json',
+        }
+      )
+      .subscribe((data:any) => {
+        this.localidadesProvincia = data['localidades'].sort((a: any, b: any) =>
+          a.nombre.localeCompare(b.nombre)
+        );
+      });
   }
 }
