@@ -126,10 +126,6 @@ export class ProfesoresComponent implements OnInit {
       this.colegioSvc.profesorArray = this.colegioSvc.profesorArray.filter(
         (x) => x != this.colegioSvc.selectedProfesor
       );
-      this.colegioSvc.materiaArray.forEach(materia => {
-        delete materia.profesoresCapacitados[this.colegioSvc.selectedProfesor.nombre+" "+this.colegioSvc.selectedProfesor.apellido]
-      });
-      this.colegioSvc.updateDBMateria();
       this.colegioSvc.updateDBProfesor();
     }
   }

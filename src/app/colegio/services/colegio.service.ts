@@ -60,6 +60,7 @@ export class ColegioService {
   cursoMateriaArray: Curso[];
   tiposAulas: Array<Aula[]> = new Array();
   pagoFinalizado: boolean = false;
+  materiasArrayValidas: any = {};
 
   constructor(
     private router: Router,
@@ -71,12 +72,13 @@ export class ColegioService {
   ) {
     authSvc.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.afs.collection("schools")
+        this.afs
+          .collection('schools')
           .doc(this.nombreColegio)
           .snapshotChanges()
           .subscribe((colegio) => {
             const school = colegio.payload.data() as Colegio;
-            
+
             this.duracionModulo = school.duracionModulo;
             this.inicioHorario = school.inicioHorario;
             this.finalizacionHorario = school.finalizacionHorario;
@@ -162,7 +164,17 @@ export class ColegioService {
                 this.tiposAulas.push([aula]);
               }
             });
-            // console.table(this.tiposAulas)
+            this.cursoArray.forEach((curso) => {
+              this.materiasArrayValidas[curso.nombre] = {};
+              this.materiaArray.forEach((materia) => {
+                if (materia.curso == curso.nombre) {
+                  this.materiasArrayValidas[curso.nombre][materia.nombre] =
+                  Object.values(materia.profesoresCapacitados).includes(true) &&
+                  Object.values(materia.aulasMateria).includes(true);
+                }
+              });
+            });
+            console.log(this.materiasArrayValidas);
           });
       }
     });
@@ -172,12 +184,20 @@ export class ColegioService {
     this.selectedMateria = new Materia(this.profesorArray, this.aulaArray);
     let materiaArrayDiccionario: Array<any> = [];
     this.materiaArray.forEach((materia) => {
+      let aulasMateria: any = {}
+      let profesoresMateria: any = {}
+      this.aulaArray.forEach((aula) =>{
+        if (materia.aulasMateria[aula.nombre])aulasMateria[aula.nombre] = materia.aulasMateria[aula.nombre]
+      })
+      this.profesorArray.forEach((profesor)=>{
+        if (materia.profesoresCapacitados[profesor.nombre]) profesoresMateria[profesor.nombre] = materia.profesoresCapacitados[profesor.nombre]
+      })
       materiaArrayDiccionario.push({
         nombre: materia.nombre,
         cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
         curso: materia.curso,
-        profesoresCapacitados: materia.profesoresCapacitados,
-        aulasMateria: materia.aulasMateria,
+        profesoresCapacitados: profesoresMateria,
+        aulasMateria: aulasMateria,
         cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
         // id: materia.id,
         // cantProfesores: materia.cantProfesores,

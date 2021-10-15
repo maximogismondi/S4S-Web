@@ -130,5 +130,6 @@ export class MateriasComponent implements OnInit {
         botonesCrearColegio: 6,
       });
     }
+    
   }
 }
