@@ -15,14 +15,14 @@ export class MercadopagoService {
 
     let preference = {
       items: [{
-        title: `${escuela} - cantidad de cursos a pagar: ${cantidadCursos} - S4S`,
+        title: `${escuela} - cantidad de cursos a pagar: ${cantidadCursos} - S4Schools`,
         unit_price: 100,
         quantity: cantidadCursos,
       }],
       back_urls: {
-        "success": "http://localhost:4200/procesar-pago",
-        "failure": "http://localhost:4200/procesar-pago",
-        "pending": "http://localhost:4200/procesar-pago"
+        "success": `http://localhost:4200/${escuela}/crear-colegio`,
+        "failure": `http://localhost:4200/${escuela}/crear-colegio`,
+        "pending": `http://localhost:4200/${escuela}/crear-colegio`
       },
       auto_return: 'approved',
       payment_methods: {
