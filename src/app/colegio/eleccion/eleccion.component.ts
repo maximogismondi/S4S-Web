@@ -100,7 +100,7 @@ export class EleccionComponent implements OnInit {
   }
 
   async onUnirse() {
-    console.log(await this.unirseColegioForm.value)
+    // console.log(await this.unirseColegioForm.value)
     const { nombreColegio, idColegio } = await this.unirseColegioForm.value;
 
     if (nombreColegio) {

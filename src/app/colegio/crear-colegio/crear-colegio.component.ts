@@ -18,7 +18,7 @@ export class CrearColegioComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(async (params) => {
       if (params['status'] == 'approved') {
-        console.log(window.location.href)
+        // console.log(window.location.href)
         this.colegioSvc.botonesCrearColegio = 6;
         this.colegioSvc.pagoFinalizado = true;
         // this.router.navigate(['/' + this.colegioSvc.nombreColegio + '/crear-colegio']);
