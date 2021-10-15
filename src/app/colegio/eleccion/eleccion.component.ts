@@ -100,6 +100,7 @@ export class EleccionComponent implements OnInit {
   }
 
   async onUnirse() {
+    console.log(await this.unirseColegioForm.value)
     const { nombreColegio, idColegio } = await this.unirseColegioForm.value;
 
     if (nombreColegio) {
@@ -110,10 +111,7 @@ export class EleccionComponent implements OnInit {
         .then((querySnapshot) => {
           if (querySnapshot.size > 0) {
             querySnapshot.forEach((doc) => {
-              if (
-                doc.data().id == idColegio &&
-                this.authSvc.userData.uid != doc.data().userAdmin
-              ) {
+              if (doc.data().id == idColegio) {
                 this.afs.firestore
                   .collection('schools')
                   .where('nombre', '==', nombreColegio)
@@ -125,7 +123,8 @@ export class EleccionComponent implements OnInit {
                           .data()
                           .usuariosExtensiones.includes(
                             this.authSvc.userData.uid
-                          )
+                          ) &&
+                        this.authSvc.userData.uid != doc.data().userAdmin
                       ) {
                         let usuariosExtensionesArray =
                           doc.data().usuariosExtensiones;
@@ -147,7 +146,7 @@ export class EleccionComponent implements OnInit {
                     });
                   });
               } else {
-                alert('No puedes unirte a un colegio que creaste.');
+                alert('El codigo es incorrecto');
               }
             });
           } else {
@@ -216,6 +215,7 @@ export class EleccionComponent implements OnInit {
   seleccionaColegio(colegio: string) {
     this.unirseColegioForm = this.fb.group({
       nombreColegio: [colegio, Validators.required],
+      idColegio: ['', Validators.required]
     });
     this.colegioElegido = colegio;
     this.seleccionoColegio = true;
