@@ -41,7 +41,7 @@ export class ProfesoresComponent implements OnInit {
 
   openForEditProfesor(profesor: Profesor) {
     this.colegioSvc.selectedProfesor = profesor;
-    Object.assign(this.temporalProfesor, profesor)
+    Object.assign(this.temporalProfesor, profesor);
   }
 
   addOrEditProfesor() {
@@ -60,7 +60,10 @@ export class ProfesoresComponent implements OnInit {
       ) {
         let existeDni: boolean = false;
         this.colegioSvc.profesorArray.forEach((dniProfe) => {
-          if (this.colegioSvc.selectedProfesor.dni == dniProfe.dni && this.colegioSvc.selectedProfesor != dniProfe) {
+          if (
+            this.colegioSvc.selectedProfesor.dni == dniProfe.dni &&
+            this.colegioSvc.selectedProfesor != dniProfe
+          ) {
             existeDni = true;
             alert(
               'El dni ya esta utilizado, edite el elemento creado o cree uno con distinto dni'
@@ -93,21 +96,24 @@ export class ProfesoresComponent implements OnInit {
             } else {
               alert('Coloque por lo menos un horario para el profesor/a');
             }
-            this.colegioSvc.materiaArray.forEach(materia => {
-              materia.profesoresCapacitados[this.colegioSvc.selectedProfesor.nombre+" "+this.colegioSvc.selectedProfesor.apellido] = false;
-            });
-          }
-          else {
-            this.colegioSvc.materiaArray.forEach(materia => {
-              materia.profesoresCapacitados[this.colegioSvc.selectedProfesor.nombre+" "+this.colegioSvc.selectedProfesor.apellido] = materia.profesoresCapacitados[this.temporalProfesor.nombre + " "+this.temporalProfesor.apellido];
-              delete materia.profesoresCapacitados[this.temporalProfesor.nombre + " "+this.temporalProfesor.apellido];
+          } else {
+            this.colegioSvc.materiaArray.forEach((materia) => {
+              materia.profesoresCapacitados[
+                this.colegioSvc.selectedProfesor.nombre +
+                  ' ' +
+                  this.colegioSvc.selectedProfesor.apellido
+              ] =
+                materia.profesoresCapacitados[
+                  this.temporalProfesor.nombre +
+                    ' ' +
+                    this.temporalProfesor.apellido
+                ];
             });
           }
           this.colegioSvc.updateDBMateria();
           this.colegioSvc.updateDBProfesor();
         }
       }
-
     } else {
       if (this.colegioSvc.selectedProfesor.dni < '1000000') {
         alert('Ingrese un dni valido');

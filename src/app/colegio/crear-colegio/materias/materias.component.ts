@@ -25,6 +25,7 @@ import { ColegioService } from '../../services/colegio.service';
   styleUrls: ['./materias.component.scss'],
 })
 export class MateriasComponent implements OnInit {
+  objectValues = Object.values;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -130,6 +131,5 @@ export class MateriasComponent implements OnInit {
         botonesCrearColegio: 6,
       });
     }
-    
   }
 }

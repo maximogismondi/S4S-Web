@@ -169,12 +169,14 @@ export class ColegioService {
               this.materiaArray.forEach((materia) => {
                 if (materia.curso == curso.nombre) {
                   this.materiasArrayValidas[curso.nombre][materia.nombre] =
-                  Object.values(materia.profesoresCapacitados).includes(true) &&
-                  Object.values(materia.aulasMateria).includes(true);
+                    Object.values(materia.profesoresCapacitados).includes(
+                      true
+                    ) &&
+                    Object.values(materia.aulasMateria).includes(true) &&
+                    materia.curso != '';
                 }
               });
             });
-            console.log(this.materiasArrayValidas);
           });
       }
     });
@@ -184,18 +186,36 @@ export class ColegioService {
     this.selectedMateria = new Materia(this.profesorArray, this.aulaArray);
     let materiaArrayDiccionario: Array<any> = [];
     this.materiaArray.forEach((materia) => {
-      let aulasMateria: any = {}
-      let profesoresMateria: any = {}
-      this.aulaArray.forEach((aula) =>{
-        if (materia.aulasMateria[aula.nombre])aulasMateria[aula.nombre] = materia.aulasMateria[aula.nombre]
-      })
-      this.profesorArray.forEach((profesor)=>{
-        if (materia.profesoresCapacitados[profesor.nombre]) profesoresMateria[profesor.nombre] = materia.profesoresCapacitados[profesor.nombre]
-      })
+      let aulasMateria: any = {};
+      let profesoresMateria: any = {};
+      let cursoMateria: string = '';
+      this.cursoArray.forEach((curso) => {
+        if (curso.nombre == materia.curso) {
+          cursoMateria = curso.nombre;
+        }
+      });
+      this.aulaArray.forEach((aula) => {
+        if (materia.aulasMateria[aula.nombre])
+          aulasMateria[aula.nombre] = materia.aulasMateria[aula.nombre];
+        else aulasMateria[aula.nombre] = false;
+      });
+      this.profesorArray.forEach((profesor) => {
+        if (
+          materia.profesoresCapacitados[
+            profesor.nombre + ' ' + profesor.apellido
+          ]
+        )
+          profesoresMateria[profesor.nombre + ' ' + profesor.apellido] =
+            materia.profesoresCapacitados[
+              profesor.nombre + ' ' + profesor.apellido
+            ];
+        else
+          profesoresMateria[profesor.nombre + ' ' + profesor.apellido] = false;
+      });
       materiaArrayDiccionario.push({
         nombre: materia.nombre,
         cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
-        curso: materia.curso,
+        curso: cursoMateria,
         profesoresCapacitados: profesoresMateria,
         aulasMateria: aulasMateria,
         cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,

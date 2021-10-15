@@ -164,7 +164,11 @@
                   let curso of colegioSvc.cursoMateriaArray;
                   let i = index
                 "
-                [ngClass]="{ 'alert-danger': colegioSvc.materiaArray }"
+                [ngClass]="{
+                  'alert-danger': objectValues(
+                    colegioSvc.materiasArrayValidas[curso.nombre]
+                  ).includes(false)
+                }"
                 class="list-group-item list-group-item-action"
                 data-bs-toggle="collapse"
                 [attr.data-bs-target]="'#collapseExample' + i"
@@ -198,6 +202,12 @@
                   >
                     <li
                       *ngIf="curso.nombre == materia.curso"
+                      [ngClass]="{
+                        'alert-danger':
+                          !colegioSvc.materiasArrayValidas[curso.nombre][
+                            materia.nombre
+                          ]
+                      }"
                       class="list-group-item list-group-item-action"
                       (click)="openForEditMateria(materia)"
                       [class.active]="materia == colegioSvc.selectedMateria"

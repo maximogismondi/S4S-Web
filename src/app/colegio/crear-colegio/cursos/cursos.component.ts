@@ -22,7 +22,7 @@ import { ColegioService } from '../../services/colegio.service';
 @Component({
   selector: 'app-cursos',
   templateUrl: './cursos.component.html',
-  styleUrls: ['./cursos.component.scss']
+  styleUrls: ['./cursos.component.scss'],
 })
 export class CursosComponent implements OnInit {
   selectedCurso = new Curso();
@@ -34,10 +34,9 @@ export class CursosComponent implements OnInit {
     public colegioSvc: ColegioService,
     private afs: AngularFirestore,
     private http: HttpClient
-  ) { }
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   // _______________________________________CURSOS______________________________________________________________
 
@@ -60,7 +59,7 @@ export class CursosComponent implements OnInit {
 
   openForEditCurso(curso: Curso) {
     this.selectedCurso = curso;
-    Object.assign(this.temporalCurso, curso)
+    Object.assign(this.temporalCurso, curso);
   }
 
   addOrEditCurso() {
@@ -79,10 +78,9 @@ export class CursosComponent implements OnInit {
         if (this.selectedCurso.id == 0) {
           this.selectedCurso.id = this.colegioSvc.cursoArray.length + 1;
           this.colegioSvc.cursoArray.push(this.selectedCurso);
-        }
-        else {
-          this.colegioSvc.materiaArray.forEach(materia => {
-            if(materia.curso == this.temporalCurso.nombre){
+        } else {
+          this.colegioSvc.materiaArray.forEach((materia) => {
+            if (materia.curso == this.temporalCurso.nombre) {
               materia.curso = this.selectedCurso.nombre;
             }
           });
@@ -101,7 +99,10 @@ export class CursosComponent implements OnInit {
 
   deleteCurso() {
     if (confirm('¿Estas seguro/a que quieres eliminar este curso?')) {
-      this.colegioSvc.cursoArray = this.colegioSvc.cursoArray.filter((x) => x != this.selectedCurso);
+      this.colegioSvc.cursoArray = this.colegioSvc.cursoArray.filter(
+        (x) => x != this.selectedCurso
+      );
+      this.colegioSvc.updateDBMateria();
       this.updateDBCurso();
     }
   }
@@ -116,6 +117,4 @@ export class CursosComponent implements OnInit {
       });
     }
   }
-
-
 }
