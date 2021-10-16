@@ -19,9 +19,11 @@ import { ProfesoresComponent } from './colegio/crear-colegio/profesores/profesor
 import { MateriasComponent } from './colegio/crear-colegio/materias/materias.component';
 import { FinalizarComponent } from './colegio/crear-colegio/finalizar/finalizar.component';
 import { CrearColegioModule } from './colegio/crear-colegio/crear-colegio.module';
+// import { ProcesarPagoComponent } from './mercado-pago/procesar-pago/procesar-pago.component';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, SendEmailComponent, ],
+  // ProcesarPagoComponent
   imports: [
     BrowserModule,
     AppRoutingModule,

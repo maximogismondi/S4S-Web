@@ -18,6 +18,9 @@ import {
   // MateriaReducido,
 } from 'src/app/shared/interface/user.interface';
 import { ColegioService } from '../../services/colegio.service';
+import { MercadopagoService } from 'src/app/mercado-pago/service/mercadopago.service';
+
+declare const MercadoPago: any;
 
 @Component({
   selector: 'app-finalizar',
@@ -25,7 +28,7 @@ import { ColegioService } from '../../services/colegio.service';
   styleUrls: ['./finalizar.component.scss'],
 })
 export class FinalizarComponent implements OnInit {
-  clickMoreInfoSchool: boolean = false;
+  // clickMoreInfoSchool: boolean = false;
   horariosHechos: any = {};
   horariosAulasHechos: any = {};
   materiasProfesoresHechos: any = {};
@@ -33,114 +36,135 @@ export class FinalizarComponent implements OnInit {
   constructor(
     public colegioSvc: ColegioService,
     private http: HttpClient,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private _mercadopago: MercadopagoService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._mercadopago
+      .createPreference(
+        this.colegioSvc.cursoArray.length,
+        this.colegioSvc.nombreColegio
+      )
+      .then((res) => {
+        const mp = new MercadoPago(
+          'TEST-5bd86ed1-ae42-4cf6-a63a-2bcc93bffb2b',
+          {
+            locale: 'es-AR',
+          }
+        );
+
+        // Inicializa el checkout
+        mp.checkout({
+          preference: {
+            id: res.id,
+          },
+          render: {
+            container: '.mercadoPagoBoton', // Indica el nombre de la clase donde se mostrará el botón de pago
+            label: 'Pagar', // Cambia el texto del botón de pago (opcional)
+          },
+        });
+      });
+  }
 
   // _______________________________________FINALIZAR____________________________________________________________
   botonPresionado: boolean = false;
   async finalizar() {
-    this.http
-      .get(
+    const token: any = (
+      await this.afs.firestore.collection('secrets').doc('token').get()
+    ).data();
+    let res: any = await this.http
+      .post(
         'https://s4s-algoritmo.herokuapp.com/algoritmo?idColegio=' +
           this.colegioSvc.nombreColegio,
+        { token: token['token'] },
         { responseType: 'text' }
       )
-      .subscribe((fecha) => {
-        this.afs
-          .doc(
-            'horariosHechos/' +
-              this.colegioSvc.nombreColegio +
-              '/horarios/' +
-              fecha
-          )
-          .snapshotChanges()
-          .pipe(
-            map((horariosReady) => {
-              if (horariosReady.payload.exists) {
-                // console.log('ejecuta el obvserver');
-                this.colegioSvc.horarioGenerado = true;
-                let horariosHechos = horariosReady.payload.get('horarios');
-                let horariosAulasHechos =
-                  horariosReady.payload.get('horariosAulas');
-                let materiasProfesoresHechos =
-                  horariosReady.payload.get('materiasProfesores');
+      .toPromise()
+      .then();
+      console.log(res)
+    this.afs
+      .doc(
+        'horariosHechos/' + this.colegioSvc.nombreColegio + '/horarios/' + res
+      )
+      .snapshotChanges()
+      .pipe(
+        map((horariosReady) => {
+          if (horariosReady.payload.exists) {
+            // console.log('ejecuta el obvserver');
+            this.colegioSvc.horarioGenerado = true;
+            let horariosHechos = horariosReady.payload.get('horarios');
+            let horariosAulasHechos =
+              horariosReady.payload.get('horariosAulas');
+            let materiasProfesoresHechos =
+              horariosReady.payload.get('materiasProfesores');
 
-                this.colegioSvc.cursoArray.forEach((curso) => {
-                  this.horariosHechos[curso.nombre] = {};
-                  this.colegioSvc.dias.forEach((dia) => {
-                    this.horariosHechos[curso.nombre][dia] = {};
-                    this.colegioSvc.turnoArray.forEach((turno) => {
-                      this.horariosHechos[curso.nombre][dia][
-                        turno.turno
-                      ] = [];
-                      turno.modulos.forEach((modulo) => {
-                        if (
-                          horariosHechos[curso.nombre][dia][turno.turno][
-                            turno.modulos.indexOf(modulo) + 1
-                          ].split('-')[0] == 'Hueco'
-                        ) {
-                          this.horariosHechos[curso.nombre][dia][
-                            turno.turno
-                          ].push('');
-                        } else {
-                          this.horariosHechos[curso.nombre][dia][
-                            turno.turno
-                          ].push(
-                            horariosHechos[curso.nombre][dia][turno.turno][
-                              turno.modulos.indexOf(modulo) + 1
-                            ].split('-')[0]
-                          );
-                        }
-                      });
-                    });
+            this.colegioSvc.cursoArray.forEach((curso) => {
+              this.horariosHechos[curso.nombre] = {};
+              this.colegioSvc.dias.forEach((dia) => {
+                this.horariosHechos[curso.nombre][dia] = {};
+                this.colegioSvc.turnoArray.forEach((turno) => {
+                  this.horariosHechos[curso.nombre][dia][turno.turno] = [];
+                  turno.modulos.forEach((modulo) => {
+                    if (
+                      horariosHechos[curso.nombre][dia][turno.turno][
+                        turno.modulos.indexOf(modulo) + 1
+                      ].split('-')[0] == 'Hueco'
+                    ) {
+                      this.horariosHechos[curso.nombre][dia][turno.turno].push(
+                        ''
+                      );
+                    } else {
+                      this.horariosHechos[curso.nombre][dia][turno.turno].push(
+                        horariosHechos[curso.nombre][dia][turno.turno][
+                          turno.modulos.indexOf(modulo) + 1
+                        ].split('-')[0]
+                      );
+                    }
                   });
                 });
+              });
+            });
 
-                this.colegioSvc.cursoArray.forEach((curso) => {
-                  this.horariosAulasHechos[curso.nombre] = {};
-                  this.colegioSvc.dias.forEach((dia) => {
-                    this.horariosAulasHechos[curso.nombre][dia] = {};
-                    this.colegioSvc.turnoArray.forEach((turno) => {
+            this.colegioSvc.cursoArray.forEach((curso) => {
+              this.horariosAulasHechos[curso.nombre] = {};
+              this.colegioSvc.dias.forEach((dia) => {
+                this.horariosAulasHechos[curso.nombre][dia] = {};
+                this.colegioSvc.turnoArray.forEach((turno) => {
+                  this.horariosAulasHechos[curso.nombre][dia][turno.turno] = [];
+                  turno.modulos.forEach((modulo) => {
+                    if (
+                      horariosAulasHechos[curso.nombre][dia][turno.turno][
+                        turno.modulos.indexOf(modulo) + 1
+                      ] == 'Hueco'
+                    ) {
                       this.horariosAulasHechos[curso.nombre][dia][
                         turno.turno
-                      ] = [];
-                      turno.modulos.forEach((modulo) => {
-                        if (
-                          horariosAulasHechos[curso.nombre][dia][turno.turno][
-                            turno.modulos.indexOf(modulo) + 1
-                          ] == 'Hueco'
-                        ) {
-                          this.horariosAulasHechos[curso.nombre][
-                            dia
-                          ][turno.turno].push('');
-                        } else {
-                          this.horariosAulasHechos[curso.nombre][
-                            dia
-                          ][turno.turno].push(
-                            horariosAulasHechos[curso.nombre][dia][turno.turno][
-                              turno.modulos.indexOf(modulo) + 1
-                            ]
-                          );
-                        }
-                      });
-                    });
+                      ].push('');
+                    } else {
+                      this.horariosAulasHechos[curso.nombre][dia][
+                        turno.turno
+                      ].push(
+                        horariosAulasHechos[curso.nombre][dia][turno.turno][
+                          turno.modulos.indexOf(modulo) + 1
+                        ]
+                      );
+                    }
                   });
                 });
+              });
+            });
 
-                this.colegioSvc.materiaArray.forEach((materia) => {
-                  this.materiasProfesoresHechos[materia.nombre+"-"+materia.curso] =
-                    materiasProfesoresHechos[materia.nombre+"-"+materia.curso];
-                });
-                // console.table(materiasProfesoresHechos)
-                this.colegioSvc.horarioGenerado = true;
-              }
-            })
-          )
-          .subscribe();
-      });
+            this.colegioSvc.materiaArray.forEach((materia) => {
+              this.materiasProfesoresHechos[
+                materia.nombre + '-' + materia.curso
+              ] =
+                materiasProfesoresHechos[materia.nombre + '-' + materia.curso];
+            });
+            this.colegioSvc.horarioGenerado = true;
+          }
+        })
+      ).subscribe();
     this.colegioSvc.botonPresionado = true;
   }
-
 }

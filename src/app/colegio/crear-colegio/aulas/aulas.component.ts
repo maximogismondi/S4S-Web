@@ -22,22 +22,21 @@ import { ColegioService } from '../../services/colegio.service';
 @Component({
   selector: 'app-aulas',
   templateUrl: './aulas.component.html',
-  styleUrls: ['./aulas.component.scss']
+  styleUrls: ['./aulas.component.scss'],
 })
 export class AulasComponent implements OnInit {
   selectedAula = new Aula();
   temporalAula = new Aula();
-  
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
     public colegioSvc: ColegioService,
     private afs: AngularFirestore,
     private http: HttpClient
-  ){}
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   // _________________________________________AULAS____________________________________________________________
 
@@ -58,8 +57,6 @@ export class AulasComponent implements OnInit {
     });
   }
 
-  
-
   executeUsecase() {
     let isClicked: boolean = false;
     isClicked = true;
@@ -67,7 +64,7 @@ export class AulasComponent implements OnInit {
 
   openForEditAula(aula: Aula) {
     this.selectedAula = aula;
-    Object.assign(this.temporalAula, aula)
+    Object.assign(this.temporalAula, aula);
   }
 
   addOrEditAula() {
@@ -77,18 +74,18 @@ export class AulasComponent implements OnInit {
       this.selectedAula.tipo != ''
     ) {
       if (
-        !this.colegioSvc.chequearRepeticionEnSubidaDatos(this.selectedAula, this.colegioSvc.aulaArray)
+        !this.colegioSvc.chequearRepeticionEnSubidaDatos(
+          this.selectedAula,
+          this.colegioSvc.aulaArray
+        )
       ) {
         if (this.selectedAula.id == 0) {
           this.selectedAula.id = this.colegioSvc.aulaArray.length + 1;
           this.colegioSvc.aulaArray.push(this.selectedAula);
-          this.colegioSvc.materiaArray.forEach(materia => {
-            materia.aulasMateria[this.selectedAula.nombre] = false;
-          });
         } else {
-          this.colegioSvc.materiaArray.forEach(materia => {
-            materia.aulasMateria[this.selectedAula.nombre] = materia.aulasMateria[this.temporalAula.nombre];
-            delete materia.aulasMateria[this.temporalAula.nombre];
+          this.colegioSvc.materiaArray.forEach((materia) => {
+            materia.aulasMateria[this.selectedAula.nombre] =
+              materia.aulasMateria[this.temporalAula.nombre];
           });
         }
         if (this.selectedAula.tipo == 'normal') {
@@ -108,10 +105,9 @@ export class AulasComponent implements OnInit {
 
   deleteAula() {
     if (confirm('¿Estas seguro/a que quieres eliminar este aula?')) {
-      this.colegioSvc.aulaArray = this.colegioSvc.aulaArray.filter((x) => x != this.selectedAula);
-      this.colegioSvc.materiaArray.forEach(materia => {
-        delete materia.aulasMateria[this.selectedAula.nombre]
-      });
+      this.colegioSvc.aulaArray = this.colegioSvc.aulaArray.filter(
+        (x) => x != this.selectedAula
+      );
       this.colegioSvc.updateDBMateria();
       this.updateDBAula();
     }

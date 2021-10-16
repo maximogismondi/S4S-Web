@@ -12,6 +12,7 @@ import {
   redirectUnauthorizedTo,
 } from '@angular/fire/auth-guard';
 import { pipe } from 'rxjs';
+// import { ProcesarPagoComponent } from './mercado-pago/procesar-pago/procesar-pago.component';
 
 const redirectToLoginWhenUserNotVerified = (redirect: any[]) => pipe(emailVerified, map((loggedIn:any) => loggedIn || redirect));
 const redirectToLoginWhenUserLogin = (redirect: any[]) => pipe(isNotAnonymous, map((loggedIn:any) => loggedIn || redirect));
@@ -78,6 +79,12 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectToVerifiedEmail },
   },
+  // {
+  //   path: 'procesar-pago',
+  //   component: ProcesarPagoComponent,
+  //   canActivate: [AngularFireAuthGuard],
+  //   data: { authGuardPipe: redirectToVerifiedEmail },
+  // }
 
 ];
 

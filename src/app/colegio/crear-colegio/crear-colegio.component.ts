@@ -15,7 +15,20 @@ export class CrearColegioComponent implements OnInit {
     this.colegioSvc.nombreColegio = this.activatedRoute.snapshot.paramMap.get("nombreColegio");
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe(async (params) => {
+      if (params['status'] == 'approved') {
+        // console.log(window.location.href)
+        this.colegioSvc.botonesCrearColegio = 6;
+        this.colegioSvc.pagoFinalizado = true;
+        // this.router.navigate(['/' + this.colegioSvc.nombreColegio + '/crear-colegio']);
+      }
+      else if( params['status'] == 'disapproved') {
+        alert('Error de Pago: GbFH6dhd84HSKfaWJWN7772yk7JGOD');
+        this.colegioSvc.botonesCrearColegio = 1;
+      }
+    });
+  }
 
   async clickeoBotones(boton: string) {
     if (boton == 'turnos' && this.colegioSvc.turnos != 0) {

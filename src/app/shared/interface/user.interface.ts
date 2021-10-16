@@ -5,16 +5,16 @@ export class User {
   displayName: string;
 }
 
-export class UserDataExtra{
-  usuario: string;
-  tema: boolean;
-}
+// export class UserDataExtra{
+//   usuario: string;
+//   tema: boolean;
+// }
 
 export interface Colegio {
   id: string;
   userAdmin: string;
   nombre: string;
-  direccion: string;
+  localidad: string;
   provincia: string;
   telefono: string;
   duracionModulo: number;

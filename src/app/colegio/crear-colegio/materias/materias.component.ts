@@ -25,6 +25,7 @@ import { ColegioService } from '../../services/colegio.service';
   styleUrls: ['./materias.component.scss'],
 })
 export class MateriasComponent implements OnInit {
+  objectValues = Object.values;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -107,7 +108,7 @@ export class MateriasComponent implements OnInit {
   }
 
   clickFormCheckMateriaAula(nombre: string) {
-    console.log(this.colegioSvc.selectedMateria.aulasMateria[nombre])
+    // console.log(this.colegioSvc.selectedMateria.aulasMateria[nombre])
     this.colegioSvc.selectedMateria.aulasMateria[nombre] =
       !this.colegioSvc.selectedMateria.aulasMateria[nombre];
   }
