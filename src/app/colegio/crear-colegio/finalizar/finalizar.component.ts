@@ -174,30 +174,31 @@ export class FinalizarComponent implements OnInit {
   exportAsExcelFile() {
     let jsonMaterias: any = [];
     this.colegioSvc.cursoArray.forEach((curso) => {
-      jsonMaterias.push({ nombre: curso.nombre });
-      let horarioCurso: any = [];
       this.colegioSvc.turnoArray.forEach((turno) => {
-        turno.modulos.forEach((modulo) => {
-          horarioCurso.push({
-            modulo: modulo.inicio + ' - ' + modulo.final,
-            lunes: '',
-            martes: '',
-            miercoles: '',
-            jueves: '',
-            viernes: '',
+        if (turno.modulos.length > 0) {
+          jsonMaterias.push({
+            Curso: curso.nombre,
+            Modulo: turno.turno,
           });
+        }
+        turno.modulos.forEach((modulo) => {
+          
+            jsonMaterias.push({
+              Modulo: modulo.inicio + ' - ' + modulo.final,
+            });
+          
           this.colegioSvc.dias.forEach((dia) => {
-            console.log(
-              horarioCurso[horarioCurso.length - 1],
-              horarioCurso[horarioCurso.length - 1]["lunes"]
-            );
-            horarioCurso[horarioCurso.length - 1][dia] =
-              this.horariosHechos[curso.nombre][turno.turno][dia][
+            jsonMaterias[jsonMaterias.length - 1][dia] =
+              this.horariosHechos[curso.nombre][dia][turno.turno][
                 modulo.inicio
               ];
           });
         });
+        if (turno.modulos.length > 0) {
+          jsonMaterias.push({});
+        }
       });
+      jsonMaterias.push({});
     });
     this.excelService.exportAsExcelFile(jsonMaterias, 'export-to-excel');
   }

@@ -73,7 +73,7 @@ export class ProfesoresComponent implements OnInit {
         if (!existeDni) {
           if (this.colegioSvc.selectedProfesor.id == 0) {
             let existeProfesorDisponible: boolean = false;
-            const dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+            const dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
             dias.forEach((dia) => {
               this.colegioSvc.turnoArray.forEach((turno) => {
                 turno.modulos.forEach((modulo) => {
