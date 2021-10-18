@@ -149,14 +149,14 @@ export class ProfesoresComponent implements OnInit {
       !this.colegioSvc.selectedProfesor.disponibilidad[dia][turno][modulo];
   }
 
-  async goFormMateria() {
-    this.colegioSvc.botonesCrearColegio = 5;
-    if (this.colegioSvc.botonesCrearColegioProgreso < 5) {
-      this.colegioSvc.botonesCrearColegioProgreso = 5;
-      this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-        botonesCrearColegioProgreso: 5,
-        botonesCrearColegio: 5,
-      });
-    }
-  }
+  // async goFormMateria() {
+  //   this.colegioSvc.botonesCrearColegio = 5;
+  //   if (this.colegioSvc.botonesCrearColegioProgreso < 5) {
+  //     this.colegioSvc.botonesCrearColegioProgreso = 5;
+  //     this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
+  //       botonesCrearColegioProgreso: 5,
+  //       botonesCrearColegio: 5,
+  //     });
+  //   }
+  // }
 }
