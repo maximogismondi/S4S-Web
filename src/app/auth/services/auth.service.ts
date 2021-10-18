@@ -242,14 +242,17 @@ export class AuthService {
     } else if (school.finalizacionHorario < '12:05') {
       alert('El horario de finalizacion debe ser mayor que las 12:05 pm');
     } else {
+      let existe: boolean = false;
       this.nombresDeEscuelas.forEach((nombreEscuela) => {
-        if (school.nombre.toLowerCase() != nombreEscuela.toLowerCase()) {
-          this.SchoolData(school);
-          this.router.navigate(['/' + school.nombre + '/crear-colegio']);
+        if (school.nombre.toLowerCase() == nombreEscuela.toLowerCase()) {
+          alert('El nombre ya esta utilizado, por favor ingrese otro');
+          existe = true;
         }
       });
-
-      alert('El nombre ya esta utilizado, por favor ingrese otro');
+      if (!existe) {
+        this.SchoolData(school);
+        this.router.navigate(['/' + school.nombre + '/crear-colegio']);
+      }
 
       // confirm("Poner los valores que se piden");
     }
