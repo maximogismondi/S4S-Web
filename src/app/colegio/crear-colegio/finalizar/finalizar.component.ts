@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { ExcelService } from './services/excel.service';
+
 import {
   Aula,
   Colegio,
@@ -37,7 +39,8 @@ export class FinalizarComponent implements OnInit {
     public colegioSvc: ColegioService,
     private http: HttpClient,
     private afs: AngularFirestore,
-    private _mercadopago: MercadopagoService
+    private _mercadopago: MercadopagoService,
+    private excelService:ExcelService
   ) {}
 
   ngOnInit(): void {
@@ -82,7 +85,7 @@ export class FinalizarComponent implements OnInit {
       )
       .toPromise()
       .then();
-      console.log(res)
+    console.log(res);
     this.afs
       .doc(
         'horariosHechos/' + this.colegioSvc.nombreColegio + '/horarios/' + res
@@ -164,7 +167,12 @@ export class FinalizarComponent implements OnInit {
             this.colegioSvc.horarioGenerado = true;
           }
         })
-      ).subscribe();
+      )
+      .subscribe();
     this.colegioSvc.botonPresionado = true;
+  }
+  exportAsExcelFile(){
+    let jsonMaterias: any = [{a:"a", b:"b"}, {a:"a1", b:"b2"}]
+    this.excelService.exportAsExcelFile(jsonMaterias, 'export-to-excel');
   }
 }

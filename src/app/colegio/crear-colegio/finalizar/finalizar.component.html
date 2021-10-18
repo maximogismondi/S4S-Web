@@ -188,11 +188,14 @@
       </div>
 
       <div *ngIf="!colegioSvc.botonPresionado" class="d-grid">
-        <div *ngIf="colegioSvc.pagoFinalizado else pagar" class="d-grid">
+        <div class="d-grid">
           <button (click)="finalizar()" class="btn btn-primary btn-lg mt-2">
             Generar mis horarios ya!
           </button>
         </div>
+        <button class="btn btn-primary" (click)="exportAsExcelFile()">
+          deownload
+        </button>
         <ng-template #pagar>
           <h5 class="my-3">Usted esta por pagar un procesamiento de:</h5>
           <ul class="list-group">
