@@ -19,6 +19,21 @@
                   class="form-control"
                 />
 
+                <p class="mt-2">
+                  <label>Curso</label>
+                  <select
+                    class="form-select"
+                    [(ngModel)]="colegioSvc.selectedMateria.curso"
+                  >
+                    <option
+                      *ngFor="let curso of colegioSvc.cursoArray"
+                      value="{{ curso.nombre }}"
+                    >
+                      {{ curso.nombre }}
+                    </option>
+                  </select>
+                </p>
+
                 <input
                   type="number"
                   min="1"
@@ -36,25 +51,10 @@
                     colegioSvc.selectedMateria.cantidadMaximaDeModulosPorDia
                   "
                   placeholder="Cantidad maxima de modulos por dia"
-                  class="form-control"
+                  class="form-control mt-2"
                 />
 
-                <p>
-                  <label class="mt-2">Curso</label>
-                  <select
-                    class="form-select"
-                    [(ngModel)]="colegioSvc.selectedMateria.curso"
-                  >
-                    <option
-                      *ngFor="let curso of colegioSvc.cursoArray"
-                      value="{{ curso.nombre }}"
-                    >
-                      {{ curso.nombre }}
-                    </option>
-                  </select>
-                </p>
-
-                <table class="table">
+                <table class="table mt-2">
                   <thead>
                     <tr class="table-light">
                       <th scope="col">Profesores</th>
@@ -173,6 +173,7 @@
                 data-bs-toggle="collapse"
                 [attr.data-bs-target]="'#collapseExample' + i"
                 aria-expanded="false"
+                
               >
                 <div>
                   <svg
@@ -196,6 +197,7 @@
                   <!-- aria-controls="'collapseExample' + i" -->
                   {{ curso.nombre }}
                   <svg
+                    
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"
@@ -203,7 +205,7 @@
                     class="
                       bi bi-caret-down
                       position-absolute
-                      top-50
+                      mt-2
                       end-0
                       translate-middle
                     "
@@ -213,29 +215,12 @@
                       d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"
                     />
                   </svg>
+
                   <div
                     *ngFor="let materia of colegioSvc.materiaArray"
                     class="collapse"
                     [attr.id]="'collapseExample' + i"
                   >
-                  <!-- <svg
-                        *ngIf="
-                          objectValues(
-                            colegioSvc.materiasArrayValidas[curso.nombre]
-                          ).includes(false)
-                        "
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-exclamation-triangle-fill"
-                        style="color: #dc3545"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
-                        ></path>
-                      </svg> -->
                     <li
                       *ngIf="curso.nombre == materia.curso"
                       [ngClass]="{
@@ -247,14 +232,25 @@
                       (click)="openForEditMateria(materia)"
                       [class.active]="materia == colegioSvc.selectedMateria"
                     >
-                    <svg *ngIf="
-                    objectValues(
-                      colegioSvc.materiasArrayValidas[curso.nombre]
-                    ).includes(false)
-                  "xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-lg" style="color: #dc3545" viewBox="0 0 16 16">
-                      <path d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0L7.005 3.1ZM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" fill="#000"/>
-                    </svg>
-                      
+                    
+                      <svg
+                        *ngIf="
+                          objectValues(
+                            colegioSvc.materiasArrayValidas[curso.nombre]
+                          ).includes(false)
+                        "
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-exclamation-triangle-fill me-1"
+                        style="color: #dc3545"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                        ></path>
+                      </svg>
                       <span>{{ materia.nombre }}</span>
                     </li>
                   </div>
