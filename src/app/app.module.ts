@@ -19,6 +19,7 @@ import { ProfesoresComponent } from './colegio/crear-colegio/profesores/profesor
 import { MateriasComponent } from './colegio/crear-colegio/materias/materias.component';
 import { FinalizarComponent } from './colegio/crear-colegio/finalizar/finalizar.component';
 import { CrearColegioModule } from './colegio/crear-colegio/crear-colegio.module';
+import {ExcelService} from './colegio/crear-colegio/finalizar/services/excel.service'
 // import { ProcesarPagoComponent } from './mercado-pago/procesar-pago/procesar-pago.component';
 
 @NgModule({
@@ -33,7 +34,8 @@ import { CrearColegioModule } from './colegio/crear-colegio/crear-colegio.module
     AngularFireAuthModule,
     HttpClientModule
   ],
-  providers: [AuthService],
+  providers: [AuthService,ExcelService],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

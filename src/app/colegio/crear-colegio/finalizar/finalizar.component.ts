@@ -40,7 +40,7 @@ export class FinalizarComponent implements OnInit {
     private http: HttpClient,
     private afs: AngularFirestore,
     private _mercadopago: MercadopagoService,
-    private excelService:ExcelService
+    private excelService: ExcelService
   ) {}
 
   ngOnInit(): void {
@@ -107,22 +107,23 @@ export class FinalizarComponent implements OnInit {
               this.colegioSvc.dias.forEach((dia) => {
                 this.horariosHechos[curso.nombre][dia] = {};
                 this.colegioSvc.turnoArray.forEach((turno) => {
-                  this.horariosHechos[curso.nombre][dia][turno.turno] = [];
+                  this.horariosHechos[curso.nombre][dia][turno.turno] = {};
                   turno.modulos.forEach((modulo) => {
                     if (
                       horariosHechos[curso.nombre][dia][turno.turno][
                         turno.modulos.indexOf(modulo) + 1
                       ].split('-')[0] == 'Hueco'
                     ) {
-                      this.horariosHechos[curso.nombre][dia][turno.turno].push(
-                        ''
-                      );
+                      this.horariosHechos[curso.nombre][dia][turno.turno][
+                        modulo.inicio
+                      ] = '';
                     } else {
-                      this.horariosHechos[curso.nombre][dia][turno.turno].push(
+                      this.horariosHechos[curso.nombre][dia][turno.turno][
+                        modulo.inicio
+                      ] =
                         horariosHechos[curso.nombre][dia][turno.turno][
                           turno.modulos.indexOf(modulo) + 1
-                        ].split('-')[0]
-                      );
+                        ].split('-')[0];
                     }
                   });
                 });
@@ -134,24 +135,23 @@ export class FinalizarComponent implements OnInit {
               this.colegioSvc.dias.forEach((dia) => {
                 this.horariosAulasHechos[curso.nombre][dia] = {};
                 this.colegioSvc.turnoArray.forEach((turno) => {
-                  this.horariosAulasHechos[curso.nombre][dia][turno.turno] = [];
+                  this.horariosAulasHechos[curso.nombre][dia][turno.turno] = {};
                   turno.modulos.forEach((modulo) => {
                     if (
                       horariosAulasHechos[curso.nombre][dia][turno.turno][
                         turno.modulos.indexOf(modulo) + 1
                       ] == 'Hueco'
                     ) {
-                      this.horariosAulasHechos[curso.nombre][dia][
-                        turno.turno
-                      ].push('');
+                      this.horariosAulasHechos[curso.nombre][dia][turno.turno][
+                        modulo.inicio
+                      ] = '';
                     } else {
-                      this.horariosAulasHechos[curso.nombre][dia][
-                        turno.turno
-                      ].push(
+                      this.horariosAulasHechos[curso.nombre][dia][turno.turno][
+                        modulo.inicio
+                      ] =
                         horariosAulasHechos[curso.nombre][dia][turno.turno][
                           turno.modulos.indexOf(modulo) + 1
-                        ]
-                      );
+                        ];
                     }
                   });
                 });
@@ -171,8 +171,34 @@ export class FinalizarComponent implements OnInit {
       .subscribe();
     this.colegioSvc.botonPresionado = true;
   }
-  exportAsExcelFile(){
-    let jsonMaterias: any = [{a:"a", b:"b"}, {a:"a1", b:"b2"}]
+  exportAsExcelFile() {
+    let jsonMaterias: any = [];
+    this.colegioSvc.cursoArray.forEach((curso) => {
+      jsonMaterias.push({ nombre: curso.nombre });
+      let horarioCurso: any = [];
+      this.colegioSvc.turnoArray.forEach((turno) => {
+        turno.modulos.forEach((modulo) => {
+          horarioCurso.push({
+            modulo: modulo.inicio + ' - ' + modulo.final,
+            lunes: '',
+            martes: '',
+            miercoles: '',
+            jueves: '',
+            viernes: '',
+          });
+          this.colegioSvc.dias.forEach((dia) => {
+            console.log(
+              horarioCurso[horarioCurso.length - 1],
+              horarioCurso[horarioCurso.length - 1]["lunes"]
+            );
+            horarioCurso[horarioCurso.length - 1][dia] =
+              this.horariosHechos[curso.nombre][turno.turno][dia][
+                modulo.inicio
+              ];
+          });
+        });
+      });
+    });
     this.excelService.exportAsExcelFile(jsonMaterias, 'export-to-excel');
   }
 }

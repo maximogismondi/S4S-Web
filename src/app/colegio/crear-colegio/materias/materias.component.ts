@@ -26,6 +26,7 @@ import { ColegioService } from '../../services/colegio.service';
 })
 export class MateriasComponent implements OnInit {
   objectValues = Object.values;
+  
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -132,4 +133,5 @@ export class MateriasComponent implements OnInit {
       });
     }
   }
+
 }
