@@ -26,7 +26,14 @@ import { ColegioService } from '../../services/colegio.service';
 })
 export class ProfesoresComponent implements OnInit {
   temporalProfesor = new Profesor(this.colegioSvc.turnoArray);
-
+  disponibilidadTotal = false;
+  disponibilidadDiaria: any = {
+    Lunes: false,
+    Martes: false,
+    Miercoles: false,
+    Jueves: false,
+    Viernes: false,
+  };
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -144,9 +151,33 @@ export class ProfesoresComponent implements OnInit {
     }
   }
 
-  clickFormCheck(dia: string, turno: string, modulo: string) {
-    this.colegioSvc.selectedProfesor.disponibilidad[dia][turno][modulo] =
-      !this.colegioSvc.selectedProfesor.disponibilidad[dia][turno][modulo];
+  clickFormCheck(dia: any, turno: string, modulo: any) {
+    if (dia != null) {
+      if (modulo != null) {
+        this.colegioSvc.selectedProfesor.disponibilidad[dia][turno][modulo] =
+          !this.colegioSvc.selectedProfesor.disponibilidad[dia][turno][modulo];
+      } else {
+        this.disponibilidadDiaria[dia] = !this.disponibilidadDiaria[dia];
+        this.colegioSvc.turnoArray.forEach((turno) => {
+          turno.modulos.forEach((modulo) => {
+            this.colegioSvc.selectedProfesor.disponibilidad[dia][turno.turno][
+              modulo.inicio
+            ] = this.disponibilidadDiaria[dia];
+          });
+        });
+      }
+    } else {
+      this.disponibilidadTotal = !this.disponibilidadTotal;
+      this.colegioSvc.dias.forEach((dia) => {
+        this.colegioSvc.turnoArray.forEach((turno) => {
+          turno.modulos.forEach((modulo) => {
+            this.colegioSvc.selectedProfesor.disponibilidad[dia][turno.turno][
+              modulo.inicio
+            ] = this.disponibilidadTotal;
+          });
+        });
+      });
+    }
   }
 
   // async goFormMateria() {
