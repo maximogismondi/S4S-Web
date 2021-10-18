@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { ExcelService } from './services/excel.service';
+
 import {
   Aula,
   Colegio,
@@ -37,7 +39,8 @@ export class FinalizarComponent implements OnInit {
     public colegioSvc: ColegioService,
     private http: HttpClient,
     private afs: AngularFirestore,
-    private _mercadopago: MercadopagoService
+    private _mercadopago: MercadopagoService,
+    private excelService: ExcelService
   ) {}
 
   ngOnInit(): void {
@@ -82,7 +85,7 @@ export class FinalizarComponent implements OnInit {
       )
       .toPromise()
       .then();
-      console.log(res)
+    console.log(res);
     this.afs
       .doc(
         'horariosHechos/' + this.colegioSvc.nombreColegio + '/horarios/' + res
@@ -104,22 +107,23 @@ export class FinalizarComponent implements OnInit {
               this.colegioSvc.dias.forEach((dia) => {
                 this.horariosHechos[curso.nombre][dia] = {};
                 this.colegioSvc.turnoArray.forEach((turno) => {
-                  this.horariosHechos[curso.nombre][dia][turno.turno] = [];
+                  this.horariosHechos[curso.nombre][dia][turno.turno] = {};
                   turno.modulos.forEach((modulo) => {
                     if (
                       horariosHechos[curso.nombre][dia][turno.turno][
                         turno.modulos.indexOf(modulo) + 1
                       ].split('-')[0] == 'Hueco'
                     ) {
-                      this.horariosHechos[curso.nombre][dia][turno.turno].push(
-                        ''
-                      );
+                      this.horariosHechos[curso.nombre][dia][turno.turno][
+                        modulo.inicio
+                      ] = '';
                     } else {
-                      this.horariosHechos[curso.nombre][dia][turno.turno].push(
+                      this.horariosHechos[curso.nombre][dia][turno.turno][
+                        modulo.inicio
+                      ] =
                         horariosHechos[curso.nombre][dia][turno.turno][
                           turno.modulos.indexOf(modulo) + 1
-                        ].split('-')[0]
-                      );
+                        ].split('-')[0];
                     }
                   });
                 });
@@ -131,24 +135,23 @@ export class FinalizarComponent implements OnInit {
               this.colegioSvc.dias.forEach((dia) => {
                 this.horariosAulasHechos[curso.nombre][dia] = {};
                 this.colegioSvc.turnoArray.forEach((turno) => {
-                  this.horariosAulasHechos[curso.nombre][dia][turno.turno] = [];
+                  this.horariosAulasHechos[curso.nombre][dia][turno.turno] = {};
                   turno.modulos.forEach((modulo) => {
                     if (
                       horariosAulasHechos[curso.nombre][dia][turno.turno][
                         turno.modulos.indexOf(modulo) + 1
                       ] == 'Hueco'
                     ) {
-                      this.horariosAulasHechos[curso.nombre][dia][
-                        turno.turno
-                      ].push('');
+                      this.horariosAulasHechos[curso.nombre][dia][turno.turno][
+                        modulo.inicio
+                      ] = '';
                     } else {
-                      this.horariosAulasHechos[curso.nombre][dia][
-                        turno.turno
-                      ].push(
+                      this.horariosAulasHechos[curso.nombre][dia][turno.turno][
+                        modulo.inicio
+                      ] =
                         horariosAulasHechos[curso.nombre][dia][turno.turno][
                           turno.modulos.indexOf(modulo) + 1
-                        ]
-                      );
+                        ];
                     }
                   });
                 });
@@ -164,7 +167,39 @@ export class FinalizarComponent implements OnInit {
             this.colegioSvc.horarioGenerado = true;
           }
         })
-      ).subscribe();
+      )
+      .subscribe();
     this.colegioSvc.botonPresionado = true;
+  }
+  exportAsExcelFile() {
+    let jsonMaterias: any = [];
+    this.colegioSvc.cursoArray.forEach((curso) => {
+      this.colegioSvc.turnoArray.forEach((turno) => {
+        if (turno.modulos.length > 0) {
+          jsonMaterias.push({
+            Curso: curso.nombre,
+            Modulo: turno.turno,
+          });
+        }
+        turno.modulos.forEach((modulo) => {
+          
+            jsonMaterias.push({
+              Modulo: modulo.inicio + ' - ' + modulo.final,
+            });
+          
+          this.colegioSvc.dias.forEach((dia) => {
+            jsonMaterias[jsonMaterias.length - 1][dia] =
+              this.horariosHechos[curso.nombre][dia][turno.turno][
+                modulo.inicio
+              ];
+          });
+        });
+        if (turno.modulos.length > 0) {
+          jsonMaterias.push({});
+        }
+      });
+      jsonMaterias.push({});
+    });
+    this.excelService.exportAsExcelFile(jsonMaterias, 'export-to-excel');
   }
 }

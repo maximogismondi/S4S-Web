@@ -48,23 +48,23 @@
               class="text-black"
             >
               <li
-                *ngIf="horariosHechos[colegioSvc.cursoActual][dia]['manana'][colegioSvc.turnoArray[0].modulos.indexOf(modulo)] != ''"
+                *ngIf="horariosHechos[colegioSvc.cursoActual][dia]['manana'][modulo.inicio] != ''"
                 class="list-group-item list-group-item-action"
                 data-bs-toggle="collapse"
                 [attr.data-bs-target]="'#collapseExampleManana' + d + m"
                 aria-expanded="false"
               >
                 <div>
-                  {{horariosHechos[colegioSvc.cursoActual][dia]["manana"][colegioSvc.turnoArray[0].modulos.indexOf(modulo)]}}
+                  {{horariosHechos[colegioSvc.cursoActual][dia]["manana"][modulo.inicio]}}
                   <div
                     class="collapse"
                     [attr.id]="'collapseExampleManana' + d + m"
                   >
                     <li class="list-group-item">
-                      <span>{{horariosAulasHechos[colegioSvc.cursoActual][dia]["manana"][colegioSvc.turnoArray[0].modulos.indexOf(modulo)]}}</span>
+                      <span>{{horariosAulasHechos[colegioSvc.cursoActual][dia]["manana"][modulo.inicio]}}</span>
                     </li>
                     <li class="list-group-item">
-                      <span>{{materiasProfesoresHechos[horariosHechos[colegioSvc.cursoActual][dia]["manana"][colegioSvc.turnoArray[0].modulos.indexOf(modulo)]+"-"+colegioSvc.cursoActual]}}</span>
+                      <span>{{materiasProfesoresHechos[horariosHechos[colegioSvc.cursoActual][dia]["manana"][modulo.inicio]]}}</span>
                     </li>
                   </div>
                 </div>
@@ -93,23 +93,23 @@
               class="text-black"
             >
               <li
-                *ngIf="horariosHechos[colegioSvc.cursoActual][dia]['tarde'][colegioSvc.turnoArray[1].modulos.indexOf(modulo)] != ''"
+                *ngIf="horariosHechos[colegioSvc.cursoActual][dia]['tarde'][modulo.inicio] != ''"
                 class="list-group-item list-group-item-action"
                 data-bs-toggle="collapse"
                 [attr.data-bs-target]="'#collapseExampleTarde' + d + m"
                 aria-expanded="false"
               >
                 <div>
-                  {{horariosHechos[colegioSvc.cursoActual][dia]["tarde"][colegioSvc.turnoArray[1].modulos.indexOf(modulo)]}}
+                  {{horariosHechos[colegioSvc.cursoActual][dia]["tarde"][modulo.inicio]}}
                   <div
                     class="collapse"
                     [attr.id]="'collapseExampleTarde' + d + m"
                   >
                     <li class="list-group-item">
-                      <span>{{horariosAulasHechos[colegioSvc.cursoActual][dia]["tarde"][colegioSvc.turnoArray[1].modulos.indexOf(modulo)]}}</span>
+                      <span>{{horariosAulasHechos[colegioSvc.cursoActual][dia]["tarde"][modulo.inicio]}}</span>
                     </li>
                     <li class="list-group-item">
-                      <span>{{materiasProfesoresHechos[horariosHechos[colegioSvc.cursoActual][dia]["tarde"][colegioSvc.turnoArray[1].modulos.indexOf(modulo)]+"-"+colegioSvc.cursoActual]}}</span>
+                      <span>{{materiasProfesoresHechos[horariosHechos[colegioSvc.cursoActual][dia]["tarde"][modulo.inicio]]}}</span>
                     </li>
                   </div>
                 </div>
@@ -138,23 +138,23 @@
               class="text-black"
             >
               <li
-                *ngIf="horariosHechos[colegioSvc.cursoActual][dia]['noche'][colegioSvc.turnoArray[2].modulos.indexOf(modulo)] != ''"
+                *ngIf="horariosHechos[colegioSvc.cursoActual][dia]['noche'][modulo.inicio] != ''"
                 class="list-group-item list-group-item-action"
                 data-bs-toggle="collapse"
                 [attr.data-bs-target]="'#collapseExampleNoche' + d + m"
                 aria-expanded="false"
               >
                 <div>
-                  {{horariosHechos[colegioSvc.cursoActual][dia]["noche"][colegioSvc.turnoArray[2].modulos.indexOf(modulo)]}}
+                  {{horariosHechos[colegioSvc.cursoActual][dia]["noche"][modulo.inicio]}}
                   <div
                     class="collapse"
                     [attr.id]="'collapseExampleNoche' + d + m"
                   >
                     <li class="list-group-item">
-                      <span>{{horariosAulasHechos[colegioSvc.cursoActual][dia]["noche"][colegioSvc.turnoArray[2].modulos.indexOf(modulo)]}}</span>
+                      <span>{{horariosAulasHechos[colegioSvc.cursoActual][dia]["noche"][modulo.inicio]}}</span>
                     </li>
                     <li class="list-group-item">
-                      <span>{{materiasProfesoresHechos[horariosHechos[colegioSvc.cursoActual][dia]["noche"][colegioSvc.turnoArray[2].modulos.indexOf(modulo)]+"-"+colegioSvc.cursoActual]}}</span>
+                      <span>{{materiasProfesoresHechos[horariosHechos[colegioSvc.cursoActual][dia]["noche"][modulo.inicio]]}}</span>
                     </li>
                   </div>
                 </div>
@@ -187,9 +187,13 @@
         </button>
       </div>
 
+      <button class="btn btn-primary" (click)="exportAsExcelFile()">
+        deownload
+      </button>
+
       <div *ngIf="!colegioSvc.botonPresionado" class="d-grid">
-        <!--  -->
-        <div *ngIf="colegioSvc.pagoFinalizado else pagar" class="d-grid">
+        <!-- *ngIf="colegioSvc.pagoFinalizado else pagar" -->
+        <div  class="d-grid">
           <button (click)="finalizar()" class="btn btn-primary btn-lg mt-2">
             Generar mis horarios ya!
           </button>

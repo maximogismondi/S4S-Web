@@ -70,7 +70,7 @@ export class Profesor {
   disponibilidad: any = {};
   constructor(turnoArray: Array<Turno>) {
     let mapDisponibilidad: any = {};
-    const dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+    const dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
     dias.forEach((dia) => {
       mapDisponibilidad[dia] = {};
       turnoArray.forEach((turno) => {

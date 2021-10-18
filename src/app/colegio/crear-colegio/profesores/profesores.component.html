@@ -13,7 +13,7 @@
             <div class="card-body">
               <div
                 *ngIf="
-                colegioSvc.disponibilidadProfesor == false;
+                  colegioSvc.disponibilidadProfesor == false;
                   else disponibilidadTabla
                 "
                 class="form-group"
@@ -78,8 +78,41 @@
                       <th scope="col">Jueves</th>
                       <th class="rounded-end" scope="col">Viernes</th>
                     </tr>
+                    <tr>
+                      <td>
+                        <div
+                          class="form-check ms-3"
+                          (click)="clickFormCheck(null, '', null)"
+                        >
+                          <input
+                            checked
+                            class="form-check-input"
+                            type="checkbox"
+                            [(ngModel)]="disponibilidadTotal"
+                          />
+                        </div>
+                      </td>
+                      <td></td>
+                      <td *ngFor="let dia of colegioSvc.dias">
+                        <div
+                          class="form-check ms-3"
+                          (click)="clickFormCheck(dia, '', null)"
+                        >
+                          <input
+                            checked
+                            class="form-check-input"
+                            type="checkbox"
+                            [(ngModel)]="disponibilidadDiaria[dia]"
+                          />
+                        </div>
+                      </td>
+                    </tr>
                   </thead>
                   <tbody>
+                    <td colspan="7" class="table-active">
+                      TURNO MAÑANA ({{ colegioSvc.inicioHorario }} am - 12:00
+                      pm)
+                    </td>
                     <tr
                       *ngFor="let modulo of colegioSvc.turnoArray[0].modulos"
                       class="bg-secondary"
@@ -87,95 +120,17 @@
                       <td colspan="2" class="bg-light text-black">
                         {{ modulo.inicio }} - {{ modulo.final }}
                       </td>
-                      <td>
+                      <td *ngFor="let dia of colegioSvc.dias">
                         <div
                           class="form-check ms-3"
-                          (click)="
-                            clickFormCheck('lunes', 'manana', modulo.inicio)
-                          "
+                          (click)="clickFormCheck(dia, 'manana', modulo.inicio)"
                         >
                           <input
                             checked
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['lunes'][
-                                'manana'
-                              ][modulo.inicio]
-                            "
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="form-check ms-3"
-                          (click)="
-                            clickFormCheck('martes', 'manana', modulo.inicio)
-                          "
-                        >
-                          <input
-                            checked
-                            class="form-check-input"
-                            type="checkbox"
-                            [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['martes'][
-                                'manana'
-                              ][modulo.inicio]
-                            "
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="form-check ms-4"
-                          (click)="
-                            clickFormCheck('miercoles', 'manana', modulo.inicio)
-                          "
-                        >
-                          <input
-                            checked
-                            class="form-check-input"
-                            type="checkbox"
-                            [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['miercoles'][
-                                'manana'
-                              ][modulo.inicio]
-                            "
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="form-check ms-3"
-                          (click)="
-                            clickFormCheck('jueves', 'manana', modulo.inicio)
-                          "
-                        >
-                          <input
-                            checked
-                            class="form-check-input"
-                            type="checkbox"
-                            [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['jueves'][
-                                'manana'
-                              ][modulo.inicio]
-                            "
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="form-check ms-3"
-                          (click)="
-                            clickFormCheck('viernes', 'manana', modulo.inicio)
-                          "
-                        >
-                          <input
-                            checked
-                            class="form-check-input"
-                            type="checkbox"
-                            [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['viernes'][
+                              colegioSvc.selectedProfesor.disponibilidad[dia][
                                 'manana'
                               ][modulo.inicio]
                             "
@@ -183,7 +138,9 @@
                         </div>
                       </td>
                     </tr>
-
+                    <td colspan="7" class="table-active">
+                      TURNO TARDE (12:00 pm - 18:00 pm)
+                    </td>
                     <tr
                       *ngFor="let modulo of colegioSvc.turnoArray[1].modulos"
                       class="bg-secondary"
@@ -191,95 +148,17 @@
                       <td colspan="2" class="bg-light text-black">
                         {{ modulo.inicio }} - {{ modulo.final }}
                       </td>
-                      <td>
+                      <td *ngFor="let dia of colegioSvc.dias">
                         <div
                           class="form-check ms-3"
-                          (click)="
-                            clickFormCheck('lunes', 'tarde', modulo.inicio)
-                          "
+                          (click)="clickFormCheck(dia, 'tarde', modulo.inicio)"
                         >
                           <input
                             checked
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['lunes']['tarde'][
-                                modulo.inicio
-                              ]
-                            "
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="form-check ms-3"
-                          (click)="
-                            clickFormCheck('martes', 'tarde', modulo.inicio)
-                          "
-                        >
-                          <input
-                            checked
-                            class="form-check-input"
-                            type="checkbox"
-                            [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['martes'][
-                                'tarde'
-                              ][modulo.inicio]
-                            "
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="form-check ms-4"
-                          (click)="
-                            clickFormCheck('miercoles', 'tarde', modulo.inicio)
-                          "
-                        >
-                          <input
-                            checked
-                            class="form-check-input"
-                            type="checkbox"
-                            [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['miercoles'][
-                                'tarde'
-                              ][modulo.inicio]
-                            "
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="form-check ms-3"
-                          (click)="
-                            clickFormCheck('jueves', 'tarde', modulo.inicio)
-                          "
-                        >
-                          <input
-                            checked
-                            class="form-check-input"
-                            type="checkbox"
-                            [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['jueves'][
-                                'tarde'
-                              ][modulo.inicio]
-                            "
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="form-check ms-3"
-                          (click)="
-                            clickFormCheck('viernes', 'tarde', modulo.inicio)
-                          "
-                        >
-                          <input
-                            checked
-                            class="form-check-input"
-                            type="checkbox"
-                            [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['viernes'][
+                              colegioSvc.selectedProfesor.disponibilidad[dia][
                                 'tarde'
                               ][modulo.inicio]
                             "
@@ -287,7 +166,10 @@
                         </div>
                       </td>
                     </tr>
-
+                    <td colspan="7" class="table-active">
+                      TURNO NOCHE (18:00 pm -
+                      {{ colegioSvc.finalizacionHorario }} pm)
+                    </td>
                     <tr
                       *ngFor="let modulo of colegioSvc.turnoArray[2].modulos"
                       class="bg-secondary"
@@ -295,95 +177,17 @@
                       <td colspan="2" class="bg-light text-black">
                         {{ modulo.inicio }} - {{ modulo.final }}
                       </td>
-                      <td>
+                      <td *ngFor="let dia of colegioSvc.dias">
                         <div
                           class="form-check ms-3"
-                          (click)="
-                            clickFormCheck('lunes', 'noche', modulo.inicio)
-                          "
+                          (click)="clickFormCheck(dia, 'noche', modulo.inicio)"
                         >
                           <input
                             checked
                             class="form-check-input"
                             type="checkbox"
                             [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['lunes']['noche'][
-                                modulo.inicio
-                              ]
-                            "
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="form-check ms-3"
-                          (click)="
-                            clickFormCheck('martes', 'noche', modulo.inicio)
-                          "
-                        >
-                          <input
-                            checked
-                            class="form-check-input"
-                            type="checkbox"
-                            [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['martes'][
-                                'noche'
-                              ][modulo.inicio]
-                            "
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="form-check ms-4"
-                          (click)="
-                            clickFormCheck('miercoles', 'noche', modulo.inicio)
-                          "
-                        >
-                          <input
-                            checked
-                            class="form-check-input"
-                            type="checkbox"
-                            [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['miercoles'][
-                                'noche'
-                              ][modulo.inicio]
-                            "
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="form-check ms-3"
-                          (click)="
-                            clickFormCheck('jueves', 'noche', modulo.inicio)
-                          "
-                        >
-                          <input
-                            checked
-                            class="form-check-input"
-                            type="checkbox"
-                            [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['jueves'][
-                                'noche'
-                              ][modulo.inicio]
-                            "
-                          />
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          class="form-check ms-3"
-                          (click)="
-                            clickFormCheck('viernes', 'noche', modulo.inicio)
-                          "
-                        >
-                          <input
-                            checked
-                            class="form-check-input"
-                            type="checkbox"
-                            [(ngModel)]="
-                            colegioSvc.selectedProfesor.disponibilidad['viernes'][
+                              colegioSvc.selectedProfesor.disponibilidad[dia][
                                 'noche'
                               ][modulo.inicio]
                             "
