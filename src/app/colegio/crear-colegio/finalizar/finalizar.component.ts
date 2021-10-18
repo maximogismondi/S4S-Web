@@ -48,7 +48,7 @@ export class FinalizarComponent implements OnInit {
       )
       .then((res) => {
         const mp = new MercadoPago(
-          'TEST-5bd86ed1-ae42-4cf6-a63a-2bcc93bffb2b',
+          'APP_USR-0cdb1915-b8d1-4dd1-8e25-90db91a59232',
           {
             locale: 'es-AR',
           }

@@ -10,13 +10,13 @@ export class MercadopagoService {
 
   createPreference(cantidadCursos: number, escuela: string): Promise<any> {
     const headers = {
-      Authorization: `Bearer TEST-2483069801956454-101216-eb9ad32d23c813bc9e019d954e121482-127906426`
+      Authorization: `Bearer APP_USR-2706885163404337-101513-1d9906c97a2c3067664dce6bad38248b-457911102`
     }
 
     let preference = {
       items: [{
         title: `${escuela} - cantidad de cursos a pagar: ${cantidadCursos} - S4Schools`,
-        unit_price: 100,
+        unit_price: 1,
         quantity: cantidadCursos,
       }],
       back_urls: {

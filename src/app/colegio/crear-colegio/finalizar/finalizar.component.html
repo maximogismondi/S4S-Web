@@ -188,6 +188,7 @@
       </div>
 
       <div *ngIf="!colegioSvc.botonPresionado" class="d-grid">
+        <!--  -->
         <div *ngIf="colegioSvc.pagoFinalizado else pagar" class="d-grid">
           <button (click)="finalizar()" class="btn btn-primary btn-lg mt-2">
             Generar mis horarios ya!
