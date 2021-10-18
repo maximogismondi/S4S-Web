@@ -243,7 +243,7 @@ export class AuthService {
       alert('El horario de finalizacion debe ser mayor que las 12:05 pm');
     } else {
       this.nombresDeEscuelas.forEach((nombreEscuela) => {
-        if (school.nombre.toLowerCase() == nombreEscuela.toLowerCase()) {
+        if (school.nombre.toLowerCase() != nombreEscuela.toLowerCase()) {
           this.SchoolData(school);
           this.router.navigate(['/' + school.nombre + '/crear-colegio']);
         }
