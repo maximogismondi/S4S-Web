@@ -31,7 +31,7 @@ export class CrearColegioComponent implements OnInit {
   }
 
   async clickeoBotones(boton: string) {
-    if (boton == 'turnos' && this.colegioSvc.turnos != 0) {
+    if (boton == 'turnos') {
       this.colegioSvc.botonesCrearColegio = 1;
     } else if (boton == 'aulas') {
       this.colegioSvc.botonesCrearColegio = 2;

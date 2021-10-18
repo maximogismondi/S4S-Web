@@ -123,15 +123,15 @@ export class MateriasComponent implements OnInit {
     }
   }
 
-  async goFormFinalizar() {
-    this.colegioSvc.botonesCrearColegio = 6;
-    if (this.colegioSvc.botonesCrearColegioProgreso < 6) {
-      this.colegioSvc.botonesCrearColegioProgreso = 6;
-      this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-        botonesCrearColegioProgreso: 6,
-        botonesCrearColegio: 6,
-      });
-    }
-  }
+  // async goFormFinalizar() {
+  //   this.colegioSvc.botonesCrearColegio = 6;
+  //   if (this.colegioSvc.botonesCrearColegioProgreso < 6) {
+  //     this.colegioSvc.botonesCrearColegioProgreso = 6;
+  //     this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
+  //       botonesCrearColegioProgreso: 6,
+  //       botonesCrearColegio: 6,
+  //     });
+  //   }
+  // }
 
 }

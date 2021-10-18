@@ -12,75 +12,74 @@
     <div class="card">
       <div class="card-body">
         <div class="row align-items-end">
+          <!-- *ngIf="colegioSvc.botonesCrearColegioProgreso >= 1; else bloquearBoton" -->
+
           <button
-            *ngIf="colegioSvc.botonesCrearColegioProgreso >= 1; else bloquearBoton"
             [ngClass]="{ 'btn-primary': colegioSvc.botonesCrearColegio == 1 }"
             class="col btn mx-2"
             (click)="clickeoBotones('turnos')"
           >
-            Turnos
-          </button>
-          <button
-            *ngIf="
+            Turnos</button
+          ><!-- *ngIf="
             colegioSvc.botonesCrearColegioProgreso >= 2 && colegioSvc.turnos != 0;
               else bloquearBoton0
-            "
+            " -->
+          <button
             [ngClass]="{ 'btn-primary': colegioSvc.botonesCrearColegio == 2 }"
             class="col btn me-2"
             (click)="clickeoBotones('aulas')"
           >
             Aulas
           </button>
-          <button
-            *ngIf="
+          <!-- *ngIf="
             colegioSvc.botonesCrearColegioProgreso >= 3 && colegioSvc.turnos != 0 && colegioSvc.aulas != 0;
               else bloquearBoton1
-            "
+            " -->
+          <button
             [ngClass]="{ 'btn-primary': colegioSvc.botonesCrearColegio == 3 }"
             class="col btn me-2"
             (click)="clickeoBotones('cursos')"
           >
-            Cursos
-          </button>
-          <button
-            *ngIf="
+            Cursos</button
+          ><!-- *ngIf="
             colegioSvc.botonesCrearColegioProgreso >= 4 &&
               colegioSvc.turnos != 0 &&
                 colegioSvc.aulas != 0 &&
                 colegioSvc.cursos != 0;
               else bloquearBoton2
-            "
+            " -->
+          <button
             [ngClass]="{ 'btn-primary': colegioSvc.botonesCrearColegio == 4 }"
             class="col btn me-2"
             (click)="clickeoBotones('profesores')"
           >
-            Profesores
-          </button>
-          <button
-            *ngIf="
+            Profesores</button
+          ><!-- *ngIf="
             colegioSvc.botonesCrearColegioProgreso >= 5 &&
               colegioSvc.turnos != 0 &&
                 colegioSvc.aulas != 0 &&
                 colegioSvc.cursos != 0 &&
                 colegioSvc.profesores != 0;
               else bloquearBoton3
-            "
+            " -->
+          <button
             [ngClass]="{ 'btn-primary': colegioSvc.botonesCrearColegio == 5 }"
             class="col btn me-2"
             (click)="clickeoBotones('materias')"
           >
             Materias
           </button>
-          <button
-            *ngIf="
-            colegioSvc.botonesCrearColegioProgreso >= 6 &&
-              colegioSvc.turnos != 0 &&
+          <!-- *ngIf="
+              colegioSvc.botonesCrearColegioProgreso >= 6 &&
+                colegioSvc.turnos != 0 &&
                 colegioSvc.aulas != 0 &&
                 colegioSvc.cursos != 0 &&
                 colegioSvc.profesores != 0 &&
                 colegioSvc.materias != 0;
               else bloquearBoton4
-            "
+            " -->
+          <button
+            
             [ngClass]="{ 'btn-primary': colegioSvc.botonesCrearColegio == 6 }"
             class="col btn me-2"
             (click)="clickeoBotones('finalizar')"
@@ -88,7 +87,8 @@
             Finalizar
           </button>
         </div>
-        <ng-template #bloquearBoton>
+
+        <!-- <ng-template #bloquearBoton>
           <button class="col btn btn-light me-2 disabled">Turnos</button>
         </ng-template>
         <ng-template #bloquearBoton0>
@@ -102,10 +102,10 @@
         </ng-template>
         <ng-template #bloquearBoton3>
           <button class="col btn btn-light me-2 disabled">Materias</button>
-        </ng-template>
+        </ng-template> 
         <ng-template #bloquearBoton4>
           <button class="col btn btn-light me-2 disabled">Finalizar</button>
-        </ng-template>
+        </ng-template>-->
       </div>
     </div>
   </div>
@@ -114,53 +114,62 @@
 <div *ngIf="colegioSvc.botonesCrearColegio == 1" class="container mx-auto my-4">
   <app-turnos></app-turnos>
 </div>
-
+<!-- && colegioSvc.turnos != 0  -->
 <div
-  *ngIf="colegioSvc.botonesCrearColegio == 2 && colegioSvc.turnos != 0"
+  *ngIf="colegioSvc.botonesCrearColegio == 2 "
   class="container mx-auto my-4"
   id="divAula"
 >
   <app-aulas></app-aulas>
 </div>
-
+<!--&& colegioSvc.turnos != 0 &&
+    colegioSvc.aulas != 0  -->
 <div
-  *ngIf="colegioSvc.botonesCrearColegio == 3 && colegioSvc.turnos != 0 && colegioSvc.aulas != 0"
+  *ngIf="
+    colegioSvc.botonesCrearColegio == 3 
+    
+  "
   class="container mx-auto my-4"
   id="divCurso"
 >
   <app-cursos></app-cursos>
 </div>
-
+<!--&& colegioSvc.turnos != 0 &&
+    colegioSvc.aulas != 0 &&
+    colegioSvc.cursos != 0 -->
 <div
-  *ngIf="colegioSvc.botonesCrearColegio == 4 && colegioSvc.turnos != 0 && colegioSvc.aulas != 0 && colegioSvc.cursos != 0"
+  *ngIf="
+    colegioSvc.botonesCrearColegio == 4 
+    
+  "
   class="container mx-auto my-4"
   id="divProfesor"
 >
   <app-profesores></app-profesores>
 </div>
-
-<div
-  *ngIf="
-  colegioSvc.botonesCrearColegio == 5 &&
+<!-- &&
     colegioSvc.turnos != 0 &&
     colegioSvc.aulas != 0 &&
     colegioSvc.cursos != 0 &&
-    colegioSvc.profesores != 0
+    colegioSvc.profesores != 0 -->
+<div
+  *ngIf="
+    colegioSvc.botonesCrearColegio == 5 
   "
   class="container mx-auto my-4"
   id="divMateria"
 >
   <app-materias></app-materias>
 </div>
-
-<div
-  *ngIf="
-  colegioSvc.botonesCrearColegio == 6 &&
+<!-- &&
     colegioSvc.turnos != 0 &&
     colegioSvc.aulas != 0 &&
     colegioSvc.cursos != 0 &&
     colegioSvc.profesores != 0 &&
-    colegioSvc.materias != 0
+    colegioSvc.materias != 0 -->
+<div
+  *ngIf="
+    colegioSvc.botonesCrearColegio == 6 
   "
   class="container mx-auto my-4"
   id="divFinalizar"
