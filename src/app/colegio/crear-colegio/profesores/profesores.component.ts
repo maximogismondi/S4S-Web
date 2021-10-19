@@ -135,6 +135,11 @@ export class ProfesoresComponent implements OnInit {
           }
           this.colegioSvc.updateDBMateria();
           this.colegioSvc.updateDBProfesor();
+
+          this.disponibilidadTotal = false;
+          this.colegioSvc.dias.forEach((dia) => {
+            this.disponibilidadDiaria[dia] = false;
+          });
         }
       }
     } else {
@@ -160,14 +165,11 @@ export class ProfesoresComponent implements OnInit {
   }
 
   availabilityProfesor() {
-    if (!this.colegioSvc.disponibilidadProfesor) {
-      this.colegioSvc.disponibilidadProfesor = true;
-    } else {
-      this.colegioSvc.disponibilidadProfesor = false;
-    }
+    this.colegioSvc.disponibilidadProfesor =
+      !this.colegioSvc.disponibilidadProfesor;
   }
 
-  clickFormCheck(dia: any, turno: string, modulo: any) {
+  clickDisponibilidadCheck(dia: any, turno: string, modulo: any) {
     if (dia != null) {
       if (modulo != null) {
         this.colegioSvc.selectedProfesor.disponibilidad[dia][turno][modulo] =

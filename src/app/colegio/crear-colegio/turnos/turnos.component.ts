@@ -23,6 +23,10 @@ import { ColegioService } from '../../services/colegio.service';
 })
 export class TurnosComponent implements OnInit {
 
+  ingresoDuracion: boolean = false;
+  // ingresoDuracion: boolean = false;
+  // ingresoDuracion: boolean = false;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -31,9 +35,22 @@ export class TurnosComponent implements OnInit {
     private http: HttpClient
   ) {}
 
-  ngOnInit(): void {}
+  turnosForm: FormGroup;
+
+  ngOnInit(): void {
+    this.turnosForm = this.fb.group({
+      duracionModulo: ['', Validators.required],
+    });
+  }
 
   // _______________________________________TURNOS______________________________________________________________
+  async onTurno() {
+    const {
+      duracionModulo,
+
+    } = this.turnosForm.value;
+
+  }
 
   updateDBTurnos() {
     let turnoArrayDiccionario: Array<any> = [];
@@ -213,6 +230,18 @@ export class TurnosComponent implements OnInit {
 
     this.updateDBTurnos();
   }
+
+  ingresoDuracionModulo(){
+    this.ingresoDuracion = !this.ingresoDuracion;
+  }
+
+  // seleccionaColegio(colegio: string) {
+  //   this.turnosForm = this.fb.group({
+  //     idColegio: ['', Validators.required]
+  //   });
+  //   this.colegioElegido = colegio;
+  //   this.seleccionoColegio = true;
+  // } 
 
   // turnoActual(turno: string) {
   //   this.turnoSeleccionado = turno;
