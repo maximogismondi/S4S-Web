@@ -49,6 +49,22 @@ export class ProfesoresComponent implements OnInit {
   openForEditProfesor(profesor: Profesor) {
     this.colegioSvc.selectedProfesor = profesor;
     Object.assign(this.temporalProfesor, profesor);
+    this.disponibilidadTotal = true;
+    this.colegioSvc.dias.forEach((dia) => {
+      this.disponibilidadDiaria[dia] = true;
+      this.colegioSvc.turnoArray.forEach((turno) => {
+        turno.modulos.forEach((modulo) => {
+          if (
+            !this.colegioSvc.selectedProfesor.disponibilidad[dia][turno.turno][
+              modulo.inicio
+            ]
+          ) {
+            this.disponibilidadTotal = false;
+            this.disponibilidadDiaria[dia] = false;
+          }
+        });
+      });
+    });
   }
 
   addOrEditProfesor() {
@@ -178,6 +194,22 @@ export class ProfesoresComponent implements OnInit {
         });
       });
     }
+    this.disponibilidadTotal = true;
+    this.colegioSvc.dias.forEach((dia) => {
+      this.disponibilidadDiaria[dia] = true;
+      this.colegioSvc.turnoArray.forEach((turno) => {
+        turno.modulos.forEach((modulo) => {
+          if (
+            !this.colegioSvc.selectedProfesor.disponibilidad[dia][turno.turno][
+              modulo.inicio
+            ]
+          ) {
+            this.disponibilidadTotal = false;
+            this.disponibilidadDiaria[dia] = false;
+          }
+        });
+      });
+    });
   }
 
   // async goFormMateria() {
