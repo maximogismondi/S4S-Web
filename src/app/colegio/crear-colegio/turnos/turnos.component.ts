@@ -24,6 +24,9 @@ import { ColegioService } from '../../services/colegio.service';
 export class TurnosComponent implements OnInit {
 
   ingresoDuracion: boolean = false;
+  habilitoManana: boolean = false;
+  habilitoTarde: boolean = false;
+  habilitoNoche: boolean = false;
   // ingresoDuracion: boolean = false;
   // ingresoDuracion: boolean = false;
 
@@ -50,6 +53,18 @@ export class TurnosComponent implements OnInit {
 
     } = this.turnosForm.value;
 
+  }
+
+  habilitarTurno(turno: string){
+    if(turno == "manana"){
+      this.habilitoManana = !this.habilitoManana;
+    }
+    else if(turno == "tarde"){
+      this.habilitoTarde = !this.habilitoTarde;
+    }
+    else{
+      this.habilitoNoche = !this.habilitoNoche;
+    }
   }
 
   updateDBTurnos() {
