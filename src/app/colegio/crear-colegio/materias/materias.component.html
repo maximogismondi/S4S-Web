@@ -196,7 +196,8 @@
                   </svg>
                   <!-- aria-controls="'collapseExample' + i" -->
                   {{ curso.nombre }}
-                  <span class="badge badge-primary badge-pill bg-primary">{{colegioSvc.materiasArrayValidas[curso.nombre].lenght}}</span>
+                  <span class="badge badge-primary float-end badge-pill bg-primary">{{objectKeys(colegioSvc.materiasArrayValidas[curso.nombre]).length
+                    }}</span>
 
                   <div
                     *ngFor="let materia of colegioSvc.materiaArray"

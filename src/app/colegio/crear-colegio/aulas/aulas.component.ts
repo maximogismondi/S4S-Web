@@ -25,6 +25,7 @@ import { ColegioService } from '../../services/colegio.service';
   styleUrls: ['./aulas.component.scss'],
 })
 export class AulasComponent implements OnInit {
+  objectKeys = Object.keys;
   selectedAula = new Aula();
   temporalAula = new Aula();
 

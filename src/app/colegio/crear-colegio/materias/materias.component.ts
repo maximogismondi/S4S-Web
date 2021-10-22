@@ -25,6 +25,7 @@ import { ColegioService } from '../../services/colegio.service';
   styleUrls: ['./materias.component.scss'],
 })
 export class MateriasComponent implements OnInit {
+  objectKeys = Object.keys;
   objectValues = Object.values;
   
   constructor(

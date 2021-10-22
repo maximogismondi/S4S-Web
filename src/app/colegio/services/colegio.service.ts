@@ -54,7 +54,7 @@ export class ColegioService {
   nombreMateria: string;
   aulaMateria: string;
   cursoActual: string;
-  dias: Array<string>= ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
+  dias: Array<string> = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
   botonPresionado: boolean = false;
   horarioGenerado: boolean = false;
   cursoMateriaArray: Curso[];
