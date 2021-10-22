@@ -79,18 +79,18 @@ export class ColegioService {
           .subscribe((colegio) => {
             const school = colegio.payload.data() as Colegio;
 
-            this.duracionModulo = school.duracionModulo;
-            this.inicioHorario = school.inicioHorario;
-            this.finalizacionHorario = school.finalizacionHorario;
+            // this.duracionModulo = school.duracionModulo;
+            // this.inicioHorario = school.inicioHorario;
+            // this.finalizacionHorario = school.finalizacionHorario;
             if (this.inicioModuloSeleccionado.length == 0) {
               this.inicioModuloSeleccionado.push('05:00', '12:00', '18:00');
-              if (school.inicioHorario < '12:00') {
-                this.inicioModuloSeleccionado[0] = school.inicioHorario;
-              } else if (school.inicioHorario < '18:00') {
-                this.inicioModuloSeleccionado[1] = school.inicioHorario;
-              } else {
-                this.inicioModuloSeleccionado[2] = school.inicioHorario;
-              }
+              // if (school.inicioHorario < '12:00') {
+              //   this.inicioModuloSeleccionado[0] = school.inicioHorario;
+              // } else if (school.inicioHorario < '18:00') {
+              //   this.inicioModuloSeleccionado[1] = school.inicioHorario;
+              // } else {
+              //   this.inicioModuloSeleccionado[2] = school.inicioHorario;
+              // }
             }
 
             this.horaInicial = Number(String(this.inicioHorario).split(':')[0]);

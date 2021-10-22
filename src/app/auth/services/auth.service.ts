@@ -178,9 +178,9 @@ export class AuthService {
     provincia: string,
     localidad: string,
     telefono: string,
-    duracionModulo: number,
-    inicioHorario: string,
-    finalizacionHorario: string,
+    // duracionModulo: number,
+    // inicioHorario: string,
+    // finalizacionHorario: string,
     id: string
   ) {
     const school: Colegio = {
@@ -191,9 +191,9 @@ export class AuthService {
       localidad: localidad,
       provincia: provincia,
       telefono: telefono,
-      duracionModulo: duracionModulo,
-      inicioHorario: inicioHorario,
-      finalizacionHorario: finalizacionHorario,
+      // duracionModulo: 0,
+      // inicioHorario: " ",
+      // finalizacionHorario: " ",
       botonesCrearColegioProgreso: 1,
       // botonesCrearColegio: 1,
       usuariosExtensiones: [],
@@ -209,12 +209,13 @@ export class AuthService {
       String(school.nombre).length === 0 ||
       String(school.provincia).length === 0 ||
       String(school.localidad).length === 0 ||
-      String(school.telefono).length === 0 ||
-      String(school.duracionModulo).length === 0 ||
-      String(school.inicioHorario).length === 0 ||
-      String(school.finalizacionHorario).length === 0 ||
-      String(school.inicioHorario).length === 0 ||
-      String(school.finalizacionHorario).length === 0
+      String(school.telefono).length === 0 
+      // ||
+      // String(school.duracionModulo).length === 0 ||
+      // String(school.inicioHorario).length === 0 ||
+      // String(school.finalizacionHorario).length === 0 ||
+      // String(school.inicioHorario).length === 0 ||
+      // String(school.finalizacionHorario).length === 0
     ) {
       alert('Completar los casilleros obligatorios');
       // Poner los valores que se piden
@@ -224,24 +225,26 @@ export class AuthService {
       alert(
         'El numero de telefono no es igual a los 8 digitos, recuerda que no debe contener ningun espacio, ningun signo y debe ser de tamaño 8'
       );
-    } else if (school.duracionModulo > 60 || school.duracionModulo < 20) {
-      // console.log(school.duracionModulo)
-      alert(
-        'La duracion de cada modulo debe estar entre 20 a 60 min (incluidos los extremos)'
-      );
-    } else if (
-      school.inicioHorario > school.finalizacionHorario &&
-      school.finalizacionHorario != ' 00:00'
-    ) {
-      alert('El horario de finalizacion es mas chico que el de inicio');
-    } else if (
-      (school.inicioHorario < '05:00' && school.inicioHorario >= '00:00') ||
-      school.inicioHorario > '12:05'
-    ) {
-      alert('El horario de inicio debe ser entre 05:00 - 12:05 pm');
-    } else if (school.finalizacionHorario < '12:05') {
-      alert('El horario de finalizacion debe ser mayor que las 12:05 pm');
-    } else {
+    } 
+    // else if (school.duracionModulo > 60 || school.duracionModulo < 20) {
+    //   // console.log(school.duracionModulo)
+    //   alert(
+    //     'La duracion de cada modulo debe estar entre 20 a 60 min (incluidos los extremos)'
+    //   );
+    // } else if (
+    //   school.inicioHorario > school.finalizacionHorario &&
+    //   school.finalizacionHorario != ' 00:00'
+    // ) {
+    //   alert('El horario de finalizacion es mas chico que el de inicio');
+    // } else if (
+    //   (school.inicioHorario < '05:00' && school.inicioHorario >= '00:00') ||
+    //   school.inicioHorario > '12:05'
+    // ) {
+    //   alert('El horario de inicio debe ser entre 05:00 - 12:05 pm');
+    // } else if (school.finalizacionHorario < '12:05') {
+    //   alert('El horario de finalizacion debe ser mayor que las 12:05 pm');
+    // } 
+    else {
       let existe: boolean = false;
       this.nombresDeEscuelas.forEach((nombreEscuela) => {
         if (school.nombre.toLowerCase() == nombreEscuela.toLowerCase()) {
@@ -305,9 +308,9 @@ export class AuthService {
       provincia: school.provincia,
       localidad: school.localidad,
       telefono: '11' + school.telefono,
-      duracionModulo: school.duracionModulo,
-      inicioHorario: school.inicioHorario,
-      finalizacionHorario: school.finalizacionHorario,
+      // duracionModulo: school.duracionModulo,
+      // inicioHorario: school.inicioHorario,
+      // finalizacionHorario: school.finalizacionHorario,
       botonesCrearColegioProgreso: school.botonesCrearColegioProgreso,
       // botonesCrearColegio: school.botonesCrearColegio,
       usuariosExtensiones: [],

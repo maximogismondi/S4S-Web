@@ -17,9 +17,9 @@ export interface Colegio {
   localidad: string;
   provincia: string;
   telefono: string;
-  duracionModulo: number;
-  inicioHorario: string;
-  finalizacionHorario: string;
+  // duracionModulo: number;
+  // inicioHorario: string;
+  // finalizacionHorario: string;
   botonesCrearColegioProgreso: number;
   usuariosExtensiones: Array<string>;
   aulas: Array<Aula>;

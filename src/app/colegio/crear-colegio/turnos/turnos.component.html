@@ -1,8 +1,59 @@
 <div class="col-md-8 mx-auto">
   <ul class="list-group">
+    <form [formGroup]="turnosForm" (ngSubmit)="onTurno()"></form>
     <div class="text-secondary">
-      <h6>Duracion de cada modulo: {{ colegioSvc.duracionModulo }} min</h6>
+      <h6>
+        Duracion de cada modulo:
+        <input
+          type="number"
+          placeholder="Ej: 40"
+          min="20"
+          max="60"
+          required
+          class="form-control d-inline w-25 mx-1"
+          formControlName="duracionModulo"
+        />
+        mins
+
+        <button
+          *ngIf="ingresoDuracion"
+          class="btn btn-primary ms-2"
+          (click)="ingresoDuracionModulo()"
+        >
+          <svg
+            *ngIf="ingresoDuracion"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            class="bi bi-check-lg"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"
+            />
+          </svg>
+          <svg
+            *ngIf="!ingresoDuracion"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            class="bi bi-pencil-square"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+            />
+          </svg>
+        </button>
+      </h6>
     </div>
+
     <table class="table text-center">
       <thead>
         <tr class="table-light">
@@ -17,11 +68,47 @@
       </thead>
       <tbody>
         <!-- MAÑANA -->
-        <tr *ngIf="12 >= colegioSvc.horaInicial && colegioSvc.horaInicial >= 5">
-          <td colspan="7" class="table-active">
-            TURNO MAÑANA ({{ colegioSvc.inicioHorario }} am - 12:00 pm)
+        <!-- *ngIf="12 >= colegioSvc.horaInicial && colegioSvc.horaInicial >= 5" -->
+        <tr>
+          <td colspan="2" class="table-active"></td>
+          <td
+            colspan="4"
+            class="table-active"
+            *ngIf="habilitoManana; else noHabilitoManana"
+          >
+            TURNO MAÑANA (
+            <input
+              type="Time"
+              required
+              class="form-control d-inline w-25 mx-1"
+              formControlName="duracionModulo"
+            />
+            -
+            <input
+              type="Time"
+              required
+              class="form-control d-inline w-25 mx-1"
+              formControlName="duracionModulo"
+            />
+            )
+          </td>
+
+          <ng-template #noHabilitoManana>
+            <td colspan="4" class="table-active">
+              TURNO MAÑANA ( DESHABILITADO )
+            </td>
+          </ng-template>
+
+          <td colspan="1" class="table-active">
+            <div
+              class="form-check form-switch d-inline-block float-end"
+              (click)="habilitarTurno('manana')"
+            >
+              <input class="form-check-input" type="checkbox" role="switch" />
+            </div>
           </td>
         </tr>
+        <!-- FILA DE CLASE -->
         <tr
           *ngFor="let turno of colegioSvc.turnoArray[0].modulos"
           class="bg-white"
@@ -46,7 +133,8 @@
             </svg>
           </td>
         </tr>
-        <tr>
+        <!-- BOTON ADD MODULO -->
+        <tr *ngIf="habilitoManana">
           <td colspan="3"></td>
           <td colspan="2">
             <div class="input-group">
@@ -74,17 +162,50 @@
         </tr>
 
         <!-- TARDE -->
-        <tr
-          *ngIf="
+        <!-- *ngIf="
             18 >= colegioSvc.horaFinal && colegioSvc.horaFinal > 12;
             else turnoNoche
-          "
-        >
-          <td colspan="7" class="table-active">
-            TURNO TARDE (12:00 pm - {{ colegioSvc.finalizacionHorario }} pm)
-          </td>
-        </tr>
-        <ng-template #turnoNoche>
+          " -->
+          <tr>
+            <td colspan="2" class="table-active"></td>
+            <td
+              colspan="4"
+              class="table-active"
+              *ngIf="habilitoTarde; else noHabilitoTarde"
+            >
+              TURNO TARDE (
+              <input
+                type="Time"
+                required
+                class="form-control d-inline w-25 mx-1"
+                formControlName="duracionModulo"
+              />
+              -
+              <input
+                type="Time"
+                required
+                class="form-control d-inline w-25 mx-1"
+                formControlName="duracionModulo"
+              />
+              )
+            </td>
+  
+            <ng-template #noHabilitoTarde>
+              <td colspan="4" class="table-active">
+                TURNO TARDE ( DESHABILITADO )
+              </td>
+            </ng-template>
+  
+            <td colspan="1" class="table-active">
+              <div
+                class="form-check form-switch d-inline-block float-end"
+                (click)="habilitarTurno('tarde')"
+              >
+                <input class="form-check-input" type="checkbox" role="switch" />
+              </div>
+            </td>
+          </tr>
+        <!-- <ng-template #turnoNoche>
           <tr *ngIf="colegioSvc.horaFinal == 12; else turnoNoche2"></tr>
           <ng-template #turnoNoche2>
             <tr>
@@ -93,7 +214,7 @@
               </td>
             </tr>
           </ng-template>
-        </ng-template>
+        </ng-template> -->
 
         <tr
           *ngFor="let turno of colegioSvc.turnoArray[1].modulos"
@@ -119,14 +240,12 @@
             </svg>
           </td>
         </tr>
-
-        <tr
-          *ngIf="
+        <!-- *ngIf="
             (18 >= colegioSvc.horaFinal && colegioSvc.horaFinal > 12) ||
               18 <= colegioSvc.horaFinal;
             else turnoNoche3
-          "
-        >
+          " -->
+        <tr *ngIf="habilitoTarde">
           <td colspan="3"></td>
           <td colspan="2">
             <div class="input-group">
@@ -153,12 +272,52 @@
           </td>
           <td colspan="3"></td>
         </tr>
-        <ng-template #turnoNoche3></ng-template>
+        <!-- <ng-template #turnoNoche3></ng-template> -->
 
         <!-- NOCHE -->
-        <tr *ngIf="colegioSvc.horaFinal > 18">
+        <!-- <tr *ngIf="colegioSvc.horaFinal > 18">
           <td colspan="7" class="table-active">
             TURNO NOCHE (18:00 pm - {{ colegioSvc.finalizacionHorario }} pm)
+          </td>
+        </tr> -->
+
+        <tr>
+          <td colspan="2" class="table-active"></td>
+          <td
+            colspan="4"
+            class="table-active"
+            *ngIf="habilitoNoche; else noHabilitoNoche"
+          >
+            TURNO NOCHE (
+            <input
+              type="Time"
+              required
+              class="form-control d-inline w-25 mx-1"
+              formControlName="duracionModulo"
+            />
+            -
+            <input
+              type="Time"
+              required
+              class="form-control d-inline w-25 mx-1"
+              formControlName="duracionModulo"
+            />
+            )
+          </td>
+
+          <ng-template #noHabilitoNoche>
+            <td colspan="4" class="table-active">
+              TURNO NOCHE ( DESHABILITADO )
+            </td>
+          </ng-template>
+
+          <td colspan="1" class="table-active">
+            <div
+              class="form-check form-switch d-inline-block float-end"
+              (click)="habilitarTurno('noche')"
+            >
+              <input class="form-check-input" type="checkbox" role="switch" />
+            </div>
           </td>
         </tr>
 
@@ -186,8 +345,8 @@
             </svg>
           </td>
         </tr>
-
-        <tr *ngIf="colegioSvc.horaFinal > 18">
+        <!-- *ngIf="colegioSvc.horaFinal > 18" -->
+        <tr *ngIf="habilitoNoche">
           <td colspan="3"></td>
           <td colspan="2">
             <div class="input-group">

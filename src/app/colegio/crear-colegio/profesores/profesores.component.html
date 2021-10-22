@@ -82,7 +82,7 @@
                       <td>
                         <div
                           class="form-check ms-3"
-                          (click)="clickFormCheck(null, '', null)"
+                          (click)="clickDisponibilidadCheck(null, '', null)"
                         >
                           <input
                             checked
@@ -96,7 +96,7 @@
                       <td *ngFor="let dia of colegioSvc.dias">
                         <div
                           class="form-check ms-3"
-                          (click)="clickFormCheck(dia, '', null)"
+                          (click)="clickDisponibilidadCheck(dia, '', null)"
                         >
                           <input
                             checked
@@ -123,7 +123,7 @@
                       <td *ngFor="let dia of colegioSvc.dias">
                         <div
                           class="form-check ms-3"
-                          (click)="clickFormCheck(dia, 'manana', modulo.inicio)"
+                          (click)="clickDisponibilidadCheck(dia, 'manana', modulo.inicio)"
                         >
                           <input
                             checked
@@ -151,7 +151,7 @@
                       <td *ngFor="let dia of colegioSvc.dias">
                         <div
                           class="form-check ms-3"
-                          (click)="clickFormCheck(dia, 'tarde', modulo.inicio)"
+                          (click)="clickDisponibilidadCheck(dia, 'tarde', modulo.inicio)"
                         >
                           <input
                             checked
@@ -180,7 +180,7 @@
                       <td *ngFor="let dia of colegioSvc.dias">
                         <div
                           class="form-check ms-3"
-                          (click)="clickFormCheck(dia, 'noche', modulo.inicio)"
+                          (click)="clickDisponibilidadCheck(dia, 'noche', modulo.inicio)"
                         >
                           <input
                             checked
