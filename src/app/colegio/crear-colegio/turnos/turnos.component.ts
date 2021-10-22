@@ -56,7 +56,21 @@ export class TurnosComponent implements OnInit {
 
   // _______________________________________TURNOS______________________________________________________________
   async onTurno() {
-    const { duracionModulo } = this.turnosForm.value;
+    const {
+      duracionModulo,
+      inicioMananaModulo,
+      inicioTardeModulo,
+      inicioNocheModulo,
+      finalMananaModulo,
+      finalTardeModulo,
+      finalNocheModulo,
+    } = this.turnosForm.value;
+
+    if(duracionModulo){
+      this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
+        turnos: duracionModulo,
+      });
+    }
   }
 
   habilitarTurno(turno: string) {
