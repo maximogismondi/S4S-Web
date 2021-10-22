@@ -22,7 +22,6 @@ import { ColegioService } from '../../services/colegio.service';
   styleUrls: ['./turnos.component.scss'],
 })
 export class TurnosComponent implements OnInit {
-
   ingresoDuracion: boolean = false;
   habilitoManana: boolean = false;
   habilitoTarde: boolean = false;
@@ -43,26 +42,29 @@ export class TurnosComponent implements OnInit {
   ngOnInit(): void {
     this.turnosForm = this.fb.group({
       duracionModulo: ['', Validators.required],
+      // habilitoManana: ['', Validators.required],
+      // habilitoTarde: ['', Validators.required],
+      // habilitoNoche: ['', Validators.required],
+      inicioMananaModulo: ['', Validators.required],
+      inicioTardeModulo: ['', Validators.required],
+      inicioNocheModulo: ['', Validators.required],
+      finalMananaModulo: ['', Validators.required],
+      finalTardeModulo: ['', Validators.required],
+      finalNocheModulo: ['', Validators.required],
     });
   }
 
   // _______________________________________TURNOS______________________________________________________________
   async onTurno() {
-    const {
-      duracionModulo,
-
-    } = this.turnosForm.value;
-
+    const { duracionModulo } = this.turnosForm.value;
   }
 
-  habilitarTurno(turno: string){
-    if(turno == "manana"){
+  habilitarTurno(turno: string) {
+    if (turno == 'manana') {
       this.habilitoManana = !this.habilitoManana;
-    }
-    else if(turno == "tarde"){
+    } else if (turno == 'tarde') {
       this.habilitoTarde = !this.habilitoTarde;
-    }
-    else{
+    } else {
       this.habilitoNoche = !this.habilitoNoche;
     }
   }
@@ -148,16 +150,6 @@ export class TurnosComponent implements OnInit {
   }
 
   addModulo(turnoSeleccionado: string) {
-    if (
-      this.colegioSvc.turnoArray[0].modulos.length +
-        this.colegioSvc.turnoArray[1].modulos.length +
-        this.colegioSvc.turnoArray[2].modulos.length ==
-      0
-    ) {
-      alert(
-        'Los modulos creados son para las clases, de lo contrario se consideraran como recreos/horas de almuerzo'
-      );
-    }
     this.colegioSvc.turnoSeleccionado = turnoSeleccionado;
     let horaInicial: string = String(
       this.colegioSvc.inicioModuloSeleccionado[
@@ -171,7 +163,8 @@ export class TurnosComponent implements OnInit {
     ).split(':')[1];
 
     let horasAux: number = Number(horaInicial);
-    let minutosAux: number = Number(minutosInicial) + this.colegioSvc.duracionModulo;
+    let minutosAux: number =
+      Number(minutosInicial) + this.colegioSvc.duracionModulo;
 
     while (minutosAux >= 60) {
       minutosAux = minutosAux - 60;
@@ -205,8 +198,8 @@ export class TurnosComponent implements OnInit {
           ? 1
           : -1
       );
-      this.colegioSvc.profesorArray.forEach(profesor => {
-        this.colegioSvc.dias.forEach(dia => {
+      this.colegioSvc.profesorArray.forEach((profesor) => {
+        this.colegioSvc.dias.forEach((dia) => {
           profesor.disponibilidad[dia][turnoSeleccionado][inicio] = false;
         });
       });
@@ -219,8 +212,8 @@ export class TurnosComponent implements OnInit {
 
   deleteModulo(turnoSeleccionado: string, modulo: Modulo) {
     // console.log(turno);
-    this.colegioSvc.profesorArray.forEach(profesor => {
-      this.colegioSvc.dias.forEach(dia => {
+    this.colegioSvc.profesorArray.forEach((profesor) => {
+      this.colegioSvc.dias.forEach((dia) => {
         delete profesor.disponibilidad[dia][turnoSeleccionado][modulo.inicio];
       });
     });
@@ -246,7 +239,7 @@ export class TurnosComponent implements OnInit {
     this.updateDBTurnos();
   }
 
-  ingresoDuracionModulo(){
+  ingresoDuracionModulo() {
     this.ingresoDuracion = !this.ingresoDuracion;
   }
 
@@ -256,7 +249,7 @@ export class TurnosComponent implements OnInit {
   //   });
   //   this.colegioElegido = colegio;
   //   this.seleccionoColegio = true;
-  // } 
+  // }
 
   // turnoActual(turno: string) {
   //   this.turnoSeleccionado = turno;
