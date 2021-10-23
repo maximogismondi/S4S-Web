@@ -31,7 +31,7 @@ export class Turno {
   turno: string;
   inicio: string;
   finalizacion: string;
-  habilitado: boolean = false;
+  habilitado: boolean;
   modulos: Array<Modulo> = [];
   constructor(turno: string) {
     this.turno = turno;

@@ -11,7 +11,7 @@ import { ColegioService } from '../services/colegio.service';
 })
 export class CrearColegioComponent implements OnInit {
   
-  constructor(public colegioSvc: ColegioService,private activatedRoute: ActivatedRoute) {
+  constructor(public colegioSvc: ColegioService, private activatedRoute: ActivatedRoute) {
     this.colegioSvc.nombreColegio = this.activatedRoute.snapshot.paramMap.get("nombreColegio");
   }
 

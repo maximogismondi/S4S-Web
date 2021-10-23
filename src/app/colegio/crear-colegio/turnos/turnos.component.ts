@@ -22,10 +22,10 @@ import { ColegioService } from '../../services/colegio.service';
   styleUrls: ['./turnos.component.scss'],
 })
 export class TurnosComponent implements OnInit {
-  ingresoDuracion: boolean = false;
-  habilitoManana: boolean = false;
-  habilitoTarde: boolean = false;
-  habilitoNoche: boolean = false;
+  // ingresoDuracion: boolean = false;
+  // habilitoManana: boolean = false;
+  // habilitoTarde: boolean = false;
+  // habilitoNoche: boolean = false;
   // ingresoDuracion: boolean = false;
   // ingresoDuracion: boolean = false;
 
@@ -37,50 +37,101 @@ export class TurnosComponent implements OnInit {
     private http: HttpClient
   ) {}
 
-  turnosForm: FormGroup;
+  // turnosForm: FormGroup;
 
   ngOnInit(): void {
-    this.turnosForm = this.fb.group({
-      duracionModulo: ['', Validators.required],
-      // habilitoManana: ['', Validators.required],
-      // habilitoTarde: ['', Validators.required],
-      // habilitoNoche: ['', Validators.required],
-      inicioMananaModulo: ['', Validators.required],
-      inicioTardeModulo: ['', Validators.required],
-      inicioNocheModulo: ['', Validators.required],
-      finalMananaModulo: ['', Validators.required],
-      finalTardeModulo: ['', Validators.required],
-      finalNocheModulo: ['', Validators.required],
-    });
+    // this.turnosForm = this.fb.group({
+    //   duracionModulo: ['', Validators.required],
+    //   habilitoManana: ['', Validators.required],
+    //   habilitoTarde: ['', Validators.required],
+    //   habilitoNoche: ['', Validators.required],
+    //   inicioMananaModulo: ['', Validators.required],
+    //   inicioTardeModulo: ['', Validators.required],
+    //   inicioNocheModulo: ['', Validators.required],
+    //   finalMananaModulo: ['', Validators.required],
+    //   finalTardeModulo: ['', Validators.required],
+    //   finalNocheModulo: ['', Validators.required],
+    // });
   }
 
   // _______________________________________TURNOS______________________________________________________________
-  async onTurno() {
-    const {
-      duracionModulo,
-      inicioMananaModulo,
-      inicioTardeModulo,
-      inicioNocheModulo,
-      finalMananaModulo,
-      finalTardeModulo,
-      finalNocheModulo,
-    } = this.turnosForm.value;
+  // async onTurno() {
+  //   const {
+  //     duracionModulo,
+  //     inicioMananaModulo,
+  //     inicioTardeModulo,
+  //     inicioNocheModulo,
+  //     finalMananaModulo,
+  //     finalTardeModulo,
+  //     finalNocheModulo,
+  //   } = await this.turnosForm.value;
 
-    if(duracionModulo){
+  //   if(duracionModulo){
+  //     this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
+  //       duracionModulo: duracionModulo,
+  //     });
+  //   }
+
+  //   if(inicioMananaModulo && finalMananaModulo && this.habilitoManana){
+  //     this.colegioSvc.turnoArray[0].habilitado = true;
+  //     this.colegioSvc.turnoArray[0].inicio = inicioMananaModulo;
+  //     this.colegioSvc.turnoArray[0].finalizacion = finalMananaModulo;
+  //   }
+  //   else{
+  //     this.colegioSvc.turnoArray[0].habilitado = false;
+  //     this.colegioSvc.turnoArray[0].inicio = " ";
+  //     this.colegioSvc.turnoArray[0].finalizacion = " ";
+  //   }
+
+  // }
+
+  completarTurnos() {
+    if (
+      this.colegioSvc.duracionModulo > 60 ||
+      this.colegioSvc.duracionModulo < 20
+    ) {
+      alert(
+        'La duracion de cada modulo debe estar entre 20 a 60 min (incluidos los extremos)'
+      );
+    } else {
       this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-        turnos: duracionModulo,
+        duracionModulo: this.colegioSvc.duracionModulo,
+      });
+    }
+
+    if( String(this.colegioSvc.turnoArray[0].inicio) >  String(this.colegioSvc.turnoArray[0].finalizacion)){
+      alert(
+        'El inicio del turno mañana no puede ser mayor que la finalizacion del mismo.'
+      );
+    }
+    else if( String(this.colegioSvc.turnoArray[1].inicio) >  String(this.colegioSvc.turnoArray[1].finalizacion)){
+      alert(
+        'El inicio del turno tarde no puede ser mayor que la finalizacion del mismo.'
+      );
+    }
+    else if( String(this.colegioSvc.turnoArray[2].inicio) >  String(this.colegioSvc.turnoArray[2].finalizacion)){
+      alert(
+        'El inicio del turno noche no puede ser mayor que la finalizacion del mismo.'
+      );
+    }
+    else {
+      this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
+        turnos: this.colegioSvc.turnoArray,
       });
     }
   }
 
-  habilitarTurno(turno: string) {
+  habilitarODeshabilitarTurno(turno: string) {
     if (turno == 'manana') {
-      this.habilitoManana = !this.habilitoManana;
+      this.colegioSvc.turnoArray[0].habilitado = !this.colegioSvc.turnoArray[0].habilitado;
     } else if (turno == 'tarde') {
-      this.habilitoTarde = !this.habilitoTarde;
-    } else {
-      this.habilitoNoche = !this.habilitoNoche;
+      this.colegioSvc.turnoArray[1].habilitado = !this.colegioSvc.turnoArray[1].habilitado;
+    } else if (turno == 'noche') {
+      this.colegioSvc.turnoArray[2].habilitado = !this.colegioSvc.turnoArray[2].habilitado;
     }
+    this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
+      turnos: this.colegioSvc.turnoArray,
+    });
   }
 
   updateDBTurnos() {
@@ -253,9 +304,9 @@ export class TurnosComponent implements OnInit {
     this.updateDBTurnos();
   }
 
-  ingresoDuracionModulo() {
-    this.ingresoDuracion = !this.ingresoDuracion;
-  }
+  // ingresoDuracionModulo() {
+  //   this.ingresoDuracion = !this.ingresoDuracion;
+  // }
 
   // seleccionaColegio(colegio: string) {
   //   this.turnosForm = this.fb.group({
