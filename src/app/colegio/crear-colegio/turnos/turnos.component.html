@@ -11,7 +11,7 @@
           required
           class="form-control d-inline w-25 mx-1"
           [(ngModel)]="colegioSvc.duracionModulo"
-          (input)="completarTurnos(true)"
+          (input)="cambiarDuracionModulo()"
         />
         <!-- onkeydown="return false" formControlName="duracionModulo" placeholder="Ej: 40"-->
 
@@ -110,10 +110,12 @@
             TURNO MAÑANA (
             <input
               type="Time"
+              min="00:00"
+              max="{{colegioSvc.turnoArray[0].finalizacion}}"
               required
               class="form-control d-inline w-25 mx-1"
               [(ngModel)]="colegioSvc.turnoArray[0].inicio"
-              (input)="completarTurnos(false)"
+              (input)="completarTurnos(0)"
             />
             <!-- formControlName="inicioMananaModulo"formControlName="finalMananaModulo" -->
             -
@@ -122,7 +124,7 @@
               required
               class="form-control d-inline w-25 mx-1"
               [(ngModel)]="colegioSvc.turnoArray[0].finalizacion"
-              (input)="completarTurnos(false)"
+              (input)="completarTurnos(0)"
             />
             )
           </td>
@@ -251,7 +253,7 @@
               required
               class="form-control d-inline w-25 mx-1"
               [(ngModel)]="colegioSvc.turnoArray[1].inicio"
-              (input)="completarTurnos(false)"
+              (input)="completarTurnos(1)"
             />
             <!-- formControlName="inicioMananaModulo"formControlName="finalMananaModulo" -->
             -
@@ -260,7 +262,7 @@
               required
               class="form-control d-inline w-25 mx-1"
               [(ngModel)]="colegioSvc.turnoArray[1].finalizacion"
-              (input)="completarTurnos(false)"
+              (input)="completarTurnos(1)"
             />
             )
           </td>
@@ -310,18 +312,18 @@
           <td
             colspan="2"
             class="text-black"
-            *ngIf="colegioSvc.turnoArray[0].habilitado"
+            *ngIf="colegioSvc.turnoArray[1].habilitado"
           >
             {{ turno.inicio }} - {{ turno.final }}
           </td>
           <td
             colspan="4"
             class="text-black"
-            *ngIf="colegioSvc.turnoArray[0].habilitado"
+            *ngIf="colegioSvc.turnoArray[1].habilitado"
           >
             CLASE
           </td>
-          <td class="bg-light" *ngIf="colegioSvc.turnoArray[0].habilitado">
+          <td class="bg-light" *ngIf="colegioSvc.turnoArray[1].habilitado">
             <svg
               (click)="deleteModulo('tarde', turno)"
               xmlns="http://www.w3.org/2000/svg"
@@ -389,7 +391,7 @@
               required
               class="form-control d-inline w-25 mx-1"
               [(ngModel)]="colegioSvc.turnoArray[2].inicio"
-              (input)="completarTurnos(false)"
+              (input)="completarTurnos(2)"
             />
             <!-- formControlName="inicioMananaModulo"formControlName="finalMananaModulo" -->
             -
@@ -398,7 +400,7 @@
               required
               class="form-control d-inline w-25 mx-1"
               [(ngModel)]="colegioSvc.turnoArray[2].finalizacion"
-              (input)="completarTurnos(false)"
+              (input)="completarTurnos(2)"
             />
             )
           </td>
@@ -448,18 +450,18 @@
           <td
             colspan="2"
             class="text-black"
-            *ngIf="colegioSvc.turnoArray[0].habilitado"
+            *ngIf="colegioSvc.turnoArray[2].habilitado"
           >
             {{ turno.inicio }} - {{ turno.final }}
           </td>
           <td
             colspan="4"
             class="text-black"
-            *ngIf="colegioSvc.turnoArray[0].habilitado"
+            *ngIf="colegioSvc.turnoArray[2].habilitado"
           >
             CLASE
           </td>
-          <td class="bg-light" *ngIf="colegioSvc.turnoArray[0].habilitado">
+          <td class="bg-light" *ngIf="colegioSvc.turnoArray[2].habilitado">
             <svg
               (click)="deleteModulo('noche', turno)"
               xmlns="http://www.w3.org/2000/svg"

@@ -25,11 +25,11 @@ export class ColegioService {
   duracionModulo: number;
   inicioHorario: string;
   finalizacionHorario: string;
-  turnos: number;
-  aulas: number;
-  materias: number;
-  cursos: number;
-  profesores: number;
+  // turnos: number;
+  // aulas: number;
+  // materias: number;
+  // cursos: number;
+  // profesores: number;
   horaInicial: number;
   horaFinal: number;
   inicioModuloSeleccionado: Array<string> = [];
@@ -88,44 +88,29 @@ export class ColegioService {
             this.horaFinal = Number(
               String(this.finalizacionHorario).split(':')[0]
             );
-            this.turnos =
-              this.school.turnos[0].modulos.length +
-              this.school.turnos[1].modulos.length +
-              this.school.turnos[2].modulos.length;
-              
-            this.aulas = this.school.aulas.length;
-            this.materias = this.school.materias.length;
-            this.cursos = this.school.cursos.length;
-            this.profesores = this.school.profesores.length;
+            // this.turnos =
+            //   this.school.turnos[0].modulos.length +
+            //   this.school.turnos[1].modulos.length +
+            //   this.school.turnos[2].modulos.length;
 
-            this.botonesCrearColegio =
-              this.school.botonesCrearColegio;
-            
-            this.turnoArray = this.school.turnos;
+            // this.aulas = this.school.aulas.length;
+            // this.materias = this.school.materias.length;
+            // this.cursos = this.school.cursos.length;
+            // this.profesores = this.school.profesores.length;
+
+            this.botonesCrearColegio = this.school.botonesCrearColegio;
+
+            this.turnoArray[0] = Object.assign(new Turno("manana"),this.school.turnos[0]) as Turno
+            this.turnoArray[1] = Object.assign(new Turno("manana"),this.school.turnos[1]) as Turno
+            this.turnoArray[2] = Object.assign(new Turno("manana"),this.school.turnos[2]) as Turno
 
             if (this.inicioModuloSeleccionado.length == 0) {
-              this.inicioModuloSeleccionado.push(this.school.turnos[0].inicio, this.school.turnos[1].inicio, this.school.turnos[2].inicio);
-              if (
-                this.school.turnos[0].inicio <
-                this.turnoArray[0].finalizacion
-              ) {
-                this.inicioModuloSeleccionado[0] =
-                  this.school.turnos[0].inicio;
-              } else if (
-                this.school.turnos[1].inicio <
-                this.turnoArray[1].finalizacion
-              ) {
-                this.inicioModuloSeleccionado[1] =
-                  this.school.turnos[1].inicio;
-              } else if (
-                this.school.turnos[2].inicio <
-                this.turnoArray[2].finalizacion
-              ) {
-                this.inicioModuloSeleccionado[2] =
-                  this.school.turnos[2].inicio;
-              }
+              this.inicioModuloSeleccionado.push(
+                this.school.turnos[0].inicio,
+                this.school.turnos[1].inicio,
+                this.school.turnos[2].inicio
+              );
             }
-
             this.aulaArray = this.school.aulas;
 
             this.cursoArray = this.school.cursos;

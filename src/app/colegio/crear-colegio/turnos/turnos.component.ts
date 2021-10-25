@@ -42,7 +42,7 @@ export class TurnosComponent implements OnInit {
 
   // _______________________________________TURNOS______________________________________________________________
 
-  completarTurnos(cambioDuracion: boolean) {
+  cambiarDuracionModulo() {
     if (
       this.colegioSvc.duracionModulo > 60 ||
       this.colegioSvc.duracionModulo < 20
@@ -50,69 +50,49 @@ export class TurnosComponent implements OnInit {
       alert(
         'La duracion de cada modulo debe estar entre 20 a 60 min (incluidos los extremos)'
       );
-    } else if (cambioDuracion) {
-      this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-        duracionModulo: this.colegioSvc.duracionModulo,
-      });
-
-      this.colegioSvc.turnoArray[0].modulos = [];
-      this.colegioSvc.turnoArray[1].modulos = [];
-      this.colegioSvc.turnoArray[2].modulos = [];
     }
+    this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
+      duracionModulo: this.colegioSvc.duracionModulo,
+    });
 
+    this.colegioSvc.turnoArray[0].modulos = [];
+    this.colegioSvc.turnoArray[1].modulos = [];
+    this.colegioSvc.turnoArray[2].modulos = [];
+
+    this.updateDBTurnos();
+  }
+
+  completarTurnos(nTurno: number) {
     if (
-      String(this.colegioSvc.turnoArray[0].inicio) >=
-      String(this.colegioSvc.turnoArray[0].finalizacion)
+      String(this.colegioSvc.turnoArray[nTurno].inicio) >=
+      String(this.colegioSvc.turnoArray[nTurno].finalizacion)
     ) {
       alert(
         'El inicio del turno mañana no puede ser mayor que la finalizacion del mismo.'
       );
-    } else if (
-      String(this.colegioSvc.turnoArray[1].inicio) >=
-      String(this.colegioSvc.turnoArray[1].finalizacion)
-    ) {
-      alert(
-        'El inicio del turno tarde no puede ser mayor que la finalizacion del mismo.'
+
+      Object.assign(
+        this.colegioSvc.turnoArray[nTurno],
+        this.colegioSvc.school.turnos[nTurno]
       );
-    } else if (
-      String(this.colegioSvc.turnoArray[2].inicio) >=
-      String(this.colegioSvc.turnoArray[2].finalizacion)
-    ) {
-      alert(
-        'El inicio del turno noche no puede ser mayor que la finalizacion del mismo.'
-      );
+      
+      // console.log(this.colegioSvc.turnoArray[nTurno].inicio);
     } else {
-      this.colegioSvc.turnoArray.forEach((turno) => {
-        let arregloTemporalModulos: Modulo[] = [];
-        turno.modulos.forEach((modulo) => {
-          if (
-            turno.inicio <= modulo.inicio &&
-            turno.finalizacion >= modulo.final
-          ) {
-            arregloTemporalModulos.push(modulo);
-          }
-        });
-        turno.modulos = arregloTemporalModulos;
+      let arregloTemporalModulos: Modulo[] = [];
+      this.colegioSvc.turnoArray[nTurno].modulos.forEach((modulo) => {
+        if (
+          this.colegioSvc.turnoArray[nTurno].inicio <= modulo.inicio &&
+          this.colegioSvc.turnoArray[nTurno].finalizacion >= modulo.final
+        ) {
+          arregloTemporalModulos.push(modulo);
+        }
       });
+      this.colegioSvc.turnoArray[nTurno].modulos = arregloTemporalModulos;
 
-      this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-        turnos: this.colegioSvc.turnoArray,
-      });
+      this.updateDBTurnos();
 
-      this.colegioSvc.inicioModuloSeleccionado[
-        this.turnoSeleccionado == 'manana'
-          ? 0
-          : this.turnoSeleccionado == 'tarde'
-          ? 1
-          : 2
-      ] =
-        this.colegioSvc.turnoArray[
-          this.turnoSeleccionado == 'manana'
-            ? 0
-            : this.turnoSeleccionado == 'tarde'
-            ? 1
-            : 2
-        ].inicio;
+      this.colegioSvc.inicioModuloSeleccionado[nTurno] =
+        this.colegioSvc.turnoArray[nTurno].inicio;
     }
   }
 
@@ -127,9 +107,7 @@ export class TurnosComponent implements OnInit {
       this.colegioSvc.turnoArray[2].habilitado =
         !this.colegioSvc.turnoArray[2].habilitado;
     }
-    this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-      turnos: this.colegioSvc.turnoArray,
-    });
+    this.updateDBTurnos();
   }
 
   updateDBTurnos() {
