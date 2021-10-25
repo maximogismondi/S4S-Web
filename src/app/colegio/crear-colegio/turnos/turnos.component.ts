@@ -54,6 +54,7 @@ export class TurnosComponent implements OnInit {
     // }
 
     if (this.inicioModuloSeleccionado.length == 0) {
+      console.log(this.colegioSvc.turnoArray[0].inicio)
       this.inicioModuloSeleccionado.push('05:00', '12:00', '18:00');
       if (
         this.colegioSvc.school.turnos[0].inicio <
@@ -120,7 +121,7 @@ export class TurnosComponent implements OnInit {
 
   // }
 
-  completarTurnos() {
+  completarTurnos(cambioDuracion: boolean) {
     if (
       this.colegioSvc.duracionModulo > 60 ||
       this.colegioSvc.duracionModulo < 20
@@ -128,7 +129,7 @@ export class TurnosComponent implements OnInit {
       alert(
         'La duracion de cada modulo debe estar entre 20 a 60 min (incluidos los extremos)'
       );
-    } else {
+    } else if(cambioDuracion){
       this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
         duracionModulo: this.colegioSvc.duracionModulo,
       });
@@ -173,32 +174,10 @@ export class TurnosComponent implements OnInit {
       this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
         turnos: this.colegioSvc.turnoArray,
       });
-      if (this.inicioModuloSeleccionado.length == 0) {
-        this.inicioModuloSeleccionado.push(
-          this.colegioSvc.turnoArray[0].inicio,
-          this.colegioSvc.turnoArray[1].inicio,
-          this.colegioSvc.turnoArray[2].inicio
-        );
-        if (
-          this.colegioSvc.school.turnos[0].inicio <
-          this.colegioSvc.turnoArray[0].finalizacion
-        ) {
-          this.inicioModuloSeleccionado[0] =
-            this.colegioSvc.school.turnos[0].inicio;
-        } else if (
-          this.colegioSvc.school.turnos[1].inicio <
-          this.colegioSvc.turnoArray[1].finalizacion
-        ) {
-          this.inicioModuloSeleccionado[1] =
-            this.colegioSvc.school.turnos[1].inicio;
-        } else if (
-          this.colegioSvc.school.turnos[2].inicio <
-          this.colegioSvc.turnoArray[2].finalizacion
-        ) {
-          this.inicioModuloSeleccionado[2] =
-            this.colegioSvc.school.turnos[2].inicio;
-        }
-      }
+
+      this.inicioModuloSeleccionado[
+        this.turnoSeleccionado == 'manana' ? 0 : this.turnoSeleccionado == 'tarde' ? 1 : 2
+      ] = this.colegioSvc.turnoArray[this.turnoSeleccionado == 'manana' ? 0 : this.turnoSeleccionado == 'tarde' ? 1 : 2].inicio;
     }
   }
 

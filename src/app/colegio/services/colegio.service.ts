@@ -91,6 +91,7 @@ export class ColegioService {
               this.school.turnos[0].modulos.length +
               this.school.turnos[1].modulos.length +
               this.school.turnos[2].modulos.length;
+              
             this.aulas = this.school.aulas.length;
             this.materias = this.school.materias.length;
             this.cursos = this.school.cursos.length;
