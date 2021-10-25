@@ -78,7 +78,7 @@ export class FinalizarComponent implements OnInit {
     ).data();
     let res: any = await this.http
       .post(
-        'https://s4s-algoritmo.herokuapp.com/algoritmo?idColegio=' +
+        'https://s4s-algoritmo.herokuapp.com/algoritmo?nombreColegio=' +
           this.colegioSvc.nombreColegio,
         { token: token['token'] },
         { responseType: 'text' }
@@ -88,7 +88,7 @@ export class FinalizarComponent implements OnInit {
     console.log(res);
     this.afs
       .doc(
-        'horariosHechos/' + this.colegioSvc.nombreColegio + '/horarios/' + res
+        'schools/' + this.colegioSvc.nombreColegio + '/horarios/' + res
       )
       .snapshotChanges()
       .pipe(

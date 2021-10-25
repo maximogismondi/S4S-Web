@@ -27,7 +27,8 @@ import { ColegioService } from '../../services/colegio.service';
 export class MateriasComponent implements OnInit {
   objectKeys = Object.keys;
   objectValues = Object.values;
-  
+  tipoAulaSeccionada: any = {};
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -42,6 +43,16 @@ export class MateriasComponent implements OnInit {
 
   openForEditMateria(materia: Materia) {
     this.colegioSvc.selectedMateria = materia;
+    this.colegioSvc.tiposAulas.forEach((tipo) => {
+      this.tipoAulaSeccionada[tipo[0].otro] = true;
+      tipo.forEach((aula) => {
+        if (
+          this.colegioSvc.selectedMateria.aulasMateria[aula.nombre] == false
+        ) {
+          this.tipoAulaSeccionada[tipo[0].otro] = false;
+        }
+      });
+    });
   }
 
   addOrEditMateria() {
@@ -109,10 +120,30 @@ export class MateriasComponent implements OnInit {
       !this.colegioSvc.selectedMateria.profesoresCapacitados[nombre];
   }
 
-  clickFormCheckMateriaAula(nombre: string) {
+  clickFormCheckMateriaAula(nombre: string, tipoAula: string = '') {
     // console.log(this.colegioSvc.selectedMateria.aulasMateria[nombre])
-    this.colegioSvc.selectedMateria.aulasMateria[nombre] =
-      !this.colegioSvc.selectedMateria.aulasMateria[nombre];
+    if (tipoAula == '') {
+      this.colegioSvc.selectedMateria.aulasMateria[nombre] =
+        !this.colegioSvc.selectedMateria.aulasMateria[nombre];
+      if (!this.colegioSvc.selectedMateria.aulasMateria[nombre]) {
+        this.colegioSvc.aulaArray.forEach(aula =>{
+          if (aula.nombre == nombre){
+            this.tipoAulaSeccionada[tipoAula] =  false     
+          }
+        })
+        this.tipoAulaSeccionada[tipoAula];
+      }
+    } else {
+      this.tipoAulaSeccionada[tipoAula] = !this.tipoAulaSeccionada[tipoAula];
+      this.colegioSvc.tiposAulas.forEach((tipo) => {
+        if (tipo[0].otro == tipoAula) {
+          tipo.forEach((aula) => {
+            this.colegioSvc.selectedMateria.aulasMateria[aula.nombre] =
+              this.tipoAulaSeccionada[tipoAula];
+          });
+        }
+      });
+    }
   }
 
   deleteMateria() {
@@ -134,5 +165,4 @@ export class MateriasComponent implements OnInit {
   //     });
   //   }
   // }
-
 }

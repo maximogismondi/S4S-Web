@@ -106,7 +106,26 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let tipoAulas of colegioSvc.tiposAulas">
-                      <th scope="row">{{ tipoAulas[0].otro }}</th>
+                      <th scope="row">
+                        <div
+                          class="form-check mt-2"
+                          (click)="
+                            clickFormCheckMateriaAula('', tipoAulas[0].otro)
+                          "
+                        >
+                          {{ tipoAulas[0].otro }}
+
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            [(ngModel)]="
+                              this.tipoAulaSeccionada[tipoAulas[0].otro]
+                            "
+                          />
+
+                          <label class="form-check-label"> </label>
+                        </div>
+                      </th>
                       <td>
                         <div
                           class="form-check mt-2"
@@ -173,7 +192,6 @@
                 data-bs-toggle="collapse"
                 [attr.data-bs-target]="'#collapseExample' + i"
                 aria-expanded="false"
-                
               >
                 <div>
                   <svg
@@ -196,8 +214,13 @@
                   </svg>
                   <!-- aria-controls="'collapseExample' + i" -->
                   {{ curso.nombre }}
-                  <span class="badge badge-primary float-end badge-pill bg-primary">{{objectKeys(colegioSvc.materiasArrayValidas[curso.nombre]).length
-                    }}</span>
+                  <span
+                    class="badge badge-primary float-end badge-pill bg-primary"
+                    >{{
+                      objectKeys(colegioSvc.materiasArrayValidas[curso.nombre])
+                        .length
+                    }}</span
+                  >
 
                   <div
                     *ngFor="let materia of colegioSvc.materiaArray"
@@ -215,7 +238,6 @@
                       (click)="openForEditMateria(materia)"
                       [class.active]="materia == colegioSvc.selectedMateria"
                     >
-                    
                       <svg
                         *ngIf="
                           objectValues(
