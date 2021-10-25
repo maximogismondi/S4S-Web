@@ -32,6 +32,7 @@ export class ColegioService {
   profesores: number;
   horaInicial: number;
   horaFinal: number;
+  inicioModuloSeleccionado: Array<string> = [];
   botonesCrearColegio: number = 1;
   // botonesCrearColegio: number;
   disponibilidadProfesor: boolean = false;
@@ -99,8 +100,31 @@ export class ColegioService {
 
             this.botonesCrearColegio =
               this.school.botonesCrearColegio;
-
+            
             this.turnoArray = this.school.turnos;
+
+            if (this.inicioModuloSeleccionado.length == 0) {
+              this.inicioModuloSeleccionado.push(this.school.turnos[0].inicio, this.school.turnos[1].inicio, this.school.turnos[2].inicio);
+              if (
+                this.school.turnos[0].inicio <
+                this.turnoArray[0].finalizacion
+              ) {
+                this.inicioModuloSeleccionado[0] =
+                  this.school.turnos[0].inicio;
+              } else if (
+                this.school.turnos[1].inicio <
+                this.turnoArray[1].finalizacion
+              ) {
+                this.inicioModuloSeleccionado[1] =
+                  this.school.turnos[1].inicio;
+              } else if (
+                this.school.turnos[2].inicio <
+                this.turnoArray[2].finalizacion
+              ) {
+                this.inicioModuloSeleccionado[2] =
+                  this.school.turnos[2].inicio;
+              }
+            }
 
             this.aulaArray = this.school.aulas;
 
