@@ -125,14 +125,16 @@ export class MateriasComponent implements OnInit {
     if (tipoAula == '') {
       this.colegioSvc.selectedMateria.aulasMateria[nombre] =
         !this.colegioSvc.selectedMateria.aulasMateria[nombre];
-      if (!this.colegioSvc.selectedMateria.aulasMateria[nombre]) {
-        this.colegioSvc.aulaArray.forEach(aula =>{
-          if (aula.nombre == nombre){
-            this.tipoAulaSeccionada[tipoAula] =  false     
-          }
-        })
-        this.tipoAulaSeccionada[tipoAula];
-      }
+      this.tipoAulaSeccionada[tipoAula] = true;
+      this.colegioSvc.tiposAulas.forEach((tipo) => {
+        if (tipo[0].otro == tipoAula) {
+          tipo.forEach((aula) => {
+            if (!this.colegioSvc.selectedMateria.aulasMateria[aula.nombre]) {
+              this.tipoAulaSeccionada[tipoAula] = false;
+            }
+          });
+        }
+      });
     } else {
       this.tipoAulaSeccionada[tipoAula] = !this.tipoAulaSeccionada[tipoAula];
       this.colegioSvc.tiposAulas.forEach((tipo) => {
