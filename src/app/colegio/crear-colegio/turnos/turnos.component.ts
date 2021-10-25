@@ -405,10 +405,10 @@ export class TurnosComponent implements OnInit {
 
   // async goFormAula() {
   //   this.colegioSvc.botonesCrearColegio = 2;
-  //   if (this.colegioSvc.botonesCrearColegioProgreso < 2) {
-  //     this.colegioSvc.botonesCrearColegioProgreso = 2;
+  //   if (this.colegioSvc.botonesCrearColegio < 2) {
+  //     this.colegioSvc.botonesCrearColegio = 2;
   //     this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-  //       botonesCrearColegioProgreso: 2,
+  //       botonesCrearColegio: 2,
   //       botonesCrearColegio: 2,
   //     });
   //   }

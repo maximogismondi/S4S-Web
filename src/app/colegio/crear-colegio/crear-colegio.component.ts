@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ColegioService } from '../services/colegio.service';
@@ -11,7 +12,7 @@ import { ColegioService } from '../services/colegio.service';
 })
 export class CrearColegioComponent implements OnInit {
   
-  constructor(public colegioSvc: ColegioService, private activatedRoute: ActivatedRoute) {
+  constructor(public colegioSvc: ColegioService, private activatedRoute: ActivatedRoute, private afs: AngularFirestore) {
     this.colegioSvc.nombreColegio = this.activatedRoute.snapshot.paramMap.get("nombreColegio");
   }
 
@@ -44,5 +45,8 @@ export class CrearColegioComponent implements OnInit {
     } else if (boton == 'finalizar') {
       this.colegioSvc.botonesCrearColegio = 6;
     }
+    this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
+      botonesCrearColegio: this.colegioSvc.botonesCrearColegio,
+    });
   }
 }

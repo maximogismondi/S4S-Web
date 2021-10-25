@@ -116,10 +116,10 @@ export class AulasComponent implements OnInit {
 
   // async goFormCurso() {
   //   this.colegioSvc.botonesCrearColegio = 3;
-  //   if (this.colegioSvc.botonesCrearColegioProgreso < 3) {
-  //     this.colegioSvc.botonesCrearColegioProgreso = 3;
+  //   if (this.colegioSvc.botonesCrearColegio < 3) {
+  //     this.colegioSvc.botonesCrearColegio = 3;
   //     this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-  //       botonesCrearColegioProgreso: 3,
+  //       botonesCrearColegio: 3,
   //       botonesCrearColegio: 3,
   //     });
   //   }

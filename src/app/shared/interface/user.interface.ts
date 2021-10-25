@@ -18,7 +18,7 @@ export class Colegio {
   provincia: string;
   telefono: string;
   duracionModulo: number;
-  botonesCrearColegioProgreso: number;
+  botonesCrearColegio: number;
   usuariosExtensiones: Array<string>;
   aulas: Array<Aula>;
   turnos: Array<Turno>;

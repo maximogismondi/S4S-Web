@@ -33,7 +33,7 @@ export class ColegioService {
   horaInicial: number;
   horaFinal: number;
   botonesCrearColegio: number = 1;
-  botonesCrearColegioProgreso: number;
+  // botonesCrearColegio: number;
   disponibilidadProfesor: boolean = false;
   disponibilidadProfesorSemana: Array<Array<Array<boolean>>> = [];
   turnoArray: Array<Turno> = [
@@ -97,8 +97,8 @@ export class ColegioService {
             this.cursos = this.school.cursos.length;
             this.profesores = this.school.profesores.length;
 
-            this.botonesCrearColegioProgreso =
-              this.school.botonesCrearColegioProgreso;
+            this.botonesCrearColegio =
+              this.school.botonesCrearColegio;
 
             this.turnoArray = this.school.turnos;
 

@@ -216,10 +216,10 @@ export class ProfesoresComponent implements OnInit {
 
   // async goFormMateria() {
   //   this.colegioSvc.botonesCrearColegio = 5;
-  //   if (this.colegioSvc.botonesCrearColegioProgreso < 5) {
-  //     this.colegioSvc.botonesCrearColegioProgreso = 5;
+  //   if (this.colegioSvc.botonesCrearColegio < 5) {
+  //     this.colegioSvc.botonesCrearColegio = 5;
   //     this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-  //       botonesCrearColegioProgreso: 5,
+  //       botonesCrearColegio: 5,
   //       botonesCrearColegio: 5,
   //     });
   //   }
