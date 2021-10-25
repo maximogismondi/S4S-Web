@@ -28,6 +28,8 @@ export class TurnosComponent implements OnInit {
   // habilitoNoche: boolean = false;
   // ingresoDuracion: boolean = false;
   // ingresoDuracion: boolean = false;
+  turnoSeleccionado: string;
+  inicioModuloSeleccionado: Array<string> = [];
 
   constructor(
     private router: Router,
@@ -40,6 +42,27 @@ export class TurnosComponent implements OnInit {
   // turnosForm: FormGroup;
 
   ngOnInit(): void {
+    // if (this.inicioModuloSeleccionado.length == 0) {
+    //   this.inicioModuloSeleccionado.push('05:00', '12:00', '18:00');
+    //    if (school.inicioHorario < '12:00') {
+    //      this.inicioModuloSeleccionado[0] = school.inicioHorario;
+    //    } else if (school.inicioHorario < '18:00') {
+    //      this.inicioModuloSeleccionado[1] = school.inicioHorario;
+    //    } else {
+    //      this.inicioModuloSeleccionado[2] = school.inicioHorario;
+    //    }
+    // }
+
+    if (this.inicioModuloSeleccionado.length == 0) {
+      this.inicioModuloSeleccionado.push('05:00', '12:00', '18:00');
+      if (this.colegioSvc.school.turnos[0].inicio < this.colegioSvc.turnoArray[0].finalizacion) {
+        this.inicioModuloSeleccionado[0] = this.colegioSvc.school.turnos[0].inicio;
+      } else if (this.colegioSvc.school.turnos[1].inicio < this.colegioSvc.turnoArray[1].finalizacion) {
+        this.inicioModuloSeleccionado[1] = this.colegioSvc.school.turnos[1].inicio;
+      } else if (this.colegioSvc.school.turnos[2].inicio < this.colegioSvc.turnoArray[2].finalizacion){
+        this.inicioModuloSeleccionado[2] = this.colegioSvc.school.turnos[2].inicio;
+      }
+    }
     // this.turnosForm = this.fb.group({
     //   duracionModulo: ['', Validators.required],
     //   habilitoManana: ['', Validators.required],
@@ -97,37 +120,70 @@ export class TurnosComponent implements OnInit {
       this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
         duracionModulo: this.colegioSvc.duracionModulo,
       });
+
+      this.colegioSvc.turnoArray[0].modulos = [];
+      this.colegioSvc.turnoArray[1].modulos = [];
+      this.colegioSvc.turnoArray[2].modulos = [];
+      
+      // this.colegioSvc.turnoArray.forEach((turno) => {
+      //   if (turno.turno == 'manana') {
+      //     this.colegioSvc.turnoArray[0].modulos = [];
+      //   } else if (turno.turno == 'tarde') {
+      //     this.colegioSvc.turnoArray[0].modulos = [];
+      //   } else if (turno.turno == 'noche') {
+      //     this.colegioSvc.turnoArray[0].modulos = [];
+      //   }
+      // });
     }
 
-    if( String(this.colegioSvc.turnoArray[0].inicio) >  String(this.colegioSvc.turnoArray[0].finalizacion)){
+    if (
+      String(this.colegioSvc.turnoArray[0].inicio) >
+      String(this.colegioSvc.turnoArray[0].finalizacion)
+    ) {
       alert(
         'El inicio del turno mañana no puede ser mayor que la finalizacion del mismo.'
       );
-    }
-    else if( String(this.colegioSvc.turnoArray[1].inicio) >  String(this.colegioSvc.turnoArray[1].finalizacion)){
+    } else if (
+      String(this.colegioSvc.turnoArray[1].inicio) >
+      String(this.colegioSvc.turnoArray[1].finalizacion)
+    ) {
       alert(
         'El inicio del turno tarde no puede ser mayor que la finalizacion del mismo.'
       );
-    }
-    else if( String(this.colegioSvc.turnoArray[2].inicio) >  String(this.colegioSvc.turnoArray[2].finalizacion)){
+    } else if (
+      String(this.colegioSvc.turnoArray[2].inicio) >
+      String(this.colegioSvc.turnoArray[2].finalizacion)
+    ) {
       alert(
         'El inicio del turno noche no puede ser mayor que la finalizacion del mismo.'
       );
-    }
-    else {
+    } else {
       this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
         turnos: this.colegioSvc.turnoArray,
       });
+      if (this.inicioModuloSeleccionado.length == 0) {
+        this.inicioModuloSeleccionado.push(this.colegioSvc.turnoArray[0].inicio, this.colegioSvc.turnoArray[1].inicio, this.colegioSvc.turnoArray[2].inicio);
+        if (this.colegioSvc.school.turnos[0].inicio < this.colegioSvc.turnoArray[0].finalizacion) {
+          this.inicioModuloSeleccionado[0] = this.colegioSvc.school.turnos[0].inicio;
+        } else if (this.colegioSvc.school.turnos[1].inicio < this.colegioSvc.turnoArray[1].finalizacion) {
+          this.inicioModuloSeleccionado[1] = this.colegioSvc.school.turnos[1].inicio;
+        } else if (this.colegioSvc.school.turnos[2].inicio < this.colegioSvc.turnoArray[2].finalizacion){
+          this.inicioModuloSeleccionado[2] = this.colegioSvc.school.turnos[2].inicio;
+        }
+      }
     }
   }
 
   habilitarODeshabilitarTurno(turno: string) {
     if (turno == 'manana') {
-      this.colegioSvc.turnoArray[0].habilitado = !this.colegioSvc.turnoArray[0].habilitado;
+      this.colegioSvc.turnoArray[0].habilitado =
+        !this.colegioSvc.turnoArray[0].habilitado;
     } else if (turno == 'tarde') {
-      this.colegioSvc.turnoArray[1].habilitado = !this.colegioSvc.turnoArray[1].habilitado;
+      this.colegioSvc.turnoArray[1].habilitado =
+        !this.colegioSvc.turnoArray[1].habilitado;
     } else if (turno == 'noche') {
-      this.colegioSvc.turnoArray[2].habilitado = !this.colegioSvc.turnoArray[2].habilitado;
+      this.colegioSvc.turnoArray[2].habilitado =
+        !this.colegioSvc.turnoArray[2].habilitado;
     }
     this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
       turnos: this.colegioSvc.turnoArray,
@@ -144,10 +200,32 @@ export class TurnosComponent implements OnInit {
           final: modulo.final,
         });
       });
-      turnoArrayDiccionario.push({
-        turno: turno.turno,
-        modulos: modulosTurno,
-      });
+
+      if (turno.turno == 'manana') {
+        turnoArrayDiccionario.push({
+          turno: turno.turno,
+          inicio: turno.inicio,
+          finalizacion: turno.finalizacion,
+          habilitado: turno.habilitado,
+          modulos: modulosTurno,
+        });
+      } else if (turno.turno == 'tarde') {
+        turnoArrayDiccionario.push({
+          turno: turno.turno,
+          inicio: turno.inicio,
+          finalizacion: turno.finalizacion,
+          habilitado: turno.habilitado,
+          modulos: modulosTurno,
+        });
+      } else if (turno.turno == 'noche') {
+        turnoArrayDiccionario.push({
+          turno: turno.turno,
+          inicio: turno.inicio,
+          finalizacion: turno.finalizacion,
+          habilitado: turno.habilitado,
+          modulos: modulosTurno,
+        });
+      }
     });
     this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
       turnos: turnoArrayDiccionario,
@@ -156,27 +234,33 @@ export class TurnosComponent implements OnInit {
 
   moduloValido(horaInicial: string, horaFinal: string): string {
     //fuera de horario
-    if (horaInicial < this.colegioSvc.inicioHorario) {
+    if (horaInicial < this.colegioSvc.turnoArray[0].inicio) {
       return 'Fuera de Horario';
     }
-    if (horaFinal > this.colegioSvc.finalizacionHorario) {
+    if (horaFinal > this.colegioSvc.turnoArray[0].finalizacion) {
+      return 'Fuera de Horario';
+    }
+    if (horaFinal > this.colegioSvc.turnoArray[1].finalizacion) {
+      return 'Fuera de Horario';
+    }
+    if (horaFinal > this.colegioSvc.turnoArray[2].finalizacion) {
       return 'Fuera de Horario';
     }
 
     //fuera de turno
-    if (this.colegioSvc.turnoSeleccionado == 'manana') {
-      if (horaFinal > '12:00') {
+    if (this.turnoSeleccionado == 'manana') {
+      if (horaFinal > this.colegioSvc.turnoArray[0].finalizacion) {
         return 'Fuera de Turno';
       }
-    } else if (this.colegioSvc.turnoSeleccionado == 'tarde') {
-      if (horaInicial < '12:00') {
+    } else if (this.turnoSeleccionado == 'tarde') {
+      if (horaInicial < this.colegioSvc.turnoArray[1].inicio) {
         return 'Fuera de Turno';
       }
-      if (horaFinal > '18:00') {
+      if (horaFinal > this.colegioSvc.turnoArray[1].finalizacion) {
         return 'Fuera de Turno';
       }
     } else {
-      if (horaInicial < '18:00') {
+      if (horaInicial < this.colegioSvc.turnoArray[1].inicio) {
         return 'Fuera de Turno';
       }
     }
@@ -186,9 +270,9 @@ export class TurnosComponent implements OnInit {
       let iModulos = 0;
       iModulos <
       this.colegioSvc.turnoArray[
-        this.colegioSvc.turnoSeleccionado == 'manana'
+        this.turnoSeleccionado == 'manana'
           ? 0
-          : this.colegioSvc.turnoSeleccionado == 'tarde'
+          : this.turnoSeleccionado == 'tarde'
           ? 1
           : 2
       ].modulos.length;
@@ -196,9 +280,9 @@ export class TurnosComponent implements OnInit {
     ) {
       let modulo: Modulo =
         this.colegioSvc.turnoArray[
-          this.colegioSvc.turnoSeleccionado == 'manana'
+          this.turnoSeleccionado == 'manana'
             ? 0
-            : this.colegioSvc.turnoSeleccionado == 'tarde'
+            : this.turnoSeleccionado == 'tarde'
             ? 1
             : 2
         ].modulos[iModulos];
@@ -215,14 +299,14 @@ export class TurnosComponent implements OnInit {
   }
 
   addModulo(turnoSeleccionado: string) {
-    this.colegioSvc.turnoSeleccionado = turnoSeleccionado;
+    this.turnoSeleccionado = turnoSeleccionado;
     let horaInicial: string = String(
-      this.colegioSvc.inicioModuloSeleccionado[
+      this.inicioModuloSeleccionado[
         turnoSeleccionado == 'manana' ? 0 : turnoSeleccionado == 'tarde' ? 1 : 2
       ]
     ).split(':')[0];
     let minutosInicial: string = String(
-      this.colegioSvc.inicioModuloSeleccionado[
+      this.inicioModuloSeleccionado[
         turnoSeleccionado == 'manana' ? 0 : turnoSeleccionado == 'tarde' ? 1 : 2
       ]
     ).split(':')[1];
@@ -252,7 +336,7 @@ export class TurnosComponent implements OnInit {
       this.colegioSvc.turnoArray[
         turnoSeleccionado == 'manana' ? 0 : turnoSeleccionado == 'tarde' ? 1 : 2
       ].modulos.push(new Modulo(inicio, fin));
-      this.colegioSvc.inicioModuloSeleccionado[
+      this.inicioModuloSeleccionado[
         turnoSeleccionado == 'manana' ? 0 : turnoSeleccionado == 'tarde' ? 1 : 2
       ] = horaFinal + ':' + minutoFinal;
       this.colegioSvc.turnoArray[
