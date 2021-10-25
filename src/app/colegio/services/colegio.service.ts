@@ -30,11 +30,10 @@ export class ColegioService {
   materias: number;
   cursos: number;
   profesores: number;
-  turnoSeleccionado: string;
   horaInicial: number;
   horaFinal: number;
   botonesCrearColegio: number = 1;
-  botonesCrearColegioProgreso: number;
+  // botonesCrearColegio: number;
   disponibilidadProfesor: boolean = false;
   disponibilidadProfesorSemana: Array<Array<Array<boolean>>> = [];
   turnoArray: Array<Turno> = [
@@ -42,7 +41,6 @@ export class ColegioService {
     new Turno('tarde'),
     new Turno('noche'),
   ];
-  inicioModuloSeleccionado: Array<string> = [];
   profesorArray: Profesor[] = [];
   selectedProfesor: Profesor;
   // usuariosExtensionesArray: string[] = [];
@@ -61,6 +59,7 @@ export class ColegioService {
   tiposAulas: Array<Aula[]> = new Array();
   pagoFinalizado: boolean = false;
   materiasArrayValidas: any = {};
+  school: Colegio;
 
   constructor(
     private router: Router,
@@ -77,21 +76,11 @@ export class ColegioService {
           .doc(this.nombreColegio)
           .snapshotChanges()
           .subscribe((colegio) => {
-            const school = colegio.payload.data() as Colegio;
+            this.school = colegio.payload.data() as Colegio;
 
-            // this.duracionModulo = school.duracionModulo;
+            this.duracionModulo = this.school.duracionModulo;
             // this.inicioHorario = school.inicioHorario;
             // this.finalizacionHorario = school.finalizacionHorario;
-            if (this.inicioModuloSeleccionado.length == 0) {
-              this.inicioModuloSeleccionado.push('05:00', '12:00', '18:00');
-              // if (school.inicioHorario < '12:00') {
-              //   this.inicioModuloSeleccionado[0] = school.inicioHorario;
-              // } else if (school.inicioHorario < '18:00') {
-              //   this.inicioModuloSeleccionado[1] = school.inicioHorario;
-              // } else {
-              //   this.inicioModuloSeleccionado[2] = school.inicioHorario;
-              // }
-            }
 
             this.horaInicial = Number(String(this.inicioHorario).split(':')[0]);
 
@@ -99,26 +88,27 @@ export class ColegioService {
               String(this.finalizacionHorario).split(':')[0]
             );
             this.turnos =
-              school.turnos[0].modulos.length +
-              school.turnos[1].modulos.length +
-              school.turnos[2].modulos.length;
-            this.aulas = school.aulas.length;
-            this.materias = school.materias.length;
-            this.cursos = school.cursos.length;
-            this.profesores = school.profesores.length;
+              this.school.turnos[0].modulos.length +
+              this.school.turnos[1].modulos.length +
+              this.school.turnos[2].modulos.length;
+              
+            this.aulas = this.school.aulas.length;
+            this.materias = this.school.materias.length;
+            this.cursos = this.school.cursos.length;
+            this.profesores = this.school.profesores.length;
 
-            this.botonesCrearColegioProgreso =
-              school.botonesCrearColegioProgreso;
+            this.botonesCrearColegio =
+              this.school.botonesCrearColegio;
 
-            this.turnoArray = school.turnos;
+            this.turnoArray = this.school.turnos;
 
-            this.aulaArray = school.aulas;
+            this.aulaArray = this.school.aulas;
 
-            this.cursoArray = school.cursos;
+            this.cursoArray = this.school.cursos;
 
-            this.profesorArray = school.profesores;
+            this.profesorArray = this.school.profesores;
 
-            this.materiaArray = school.materias;
+            this.materiaArray = this.school.materias;
 
             // this.usuariosExtensionesArray = school.usuariosExtensiones;
 

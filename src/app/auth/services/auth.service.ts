@@ -191,10 +191,10 @@ export class AuthService {
       localidad: localidad,
       provincia: provincia,
       telefono: telefono,
-      // duracionModulo: 0,
+      duracionModulo: 40,
       // inicioHorario: " ",
       // finalizacionHorario: " ",
-      botonesCrearColegioProgreso: 1,
+      botonesCrearColegio: 1,
       // botonesCrearColegio: 1,
       usuariosExtensiones: [],
       aulas: [],
@@ -209,7 +209,7 @@ export class AuthService {
       String(school.nombre).length === 0 ||
       String(school.provincia).length === 0 ||
       String(school.localidad).length === 0 ||
-      String(school.telefono).length === 0 
+      String(school.telefono).length === 0
       // ||
       // String(school.duracionModulo).length === 0 ||
       // String(school.inicioHorario).length === 0 ||
@@ -225,7 +225,7 @@ export class AuthService {
       alert(
         'El numero de telefono no es igual a los 8 digitos, recuerda que no debe contener ningun espacio, ningun signo y debe ser de tamaño 8'
       );
-    } 
+    }
     // else if (school.duracionModulo > 60 || school.duracionModulo < 20) {
     //   // console.log(school.duracionModulo)
     //   alert(
@@ -243,7 +243,7 @@ export class AuthService {
     //   alert('El horario de inicio debe ser entre 05:00 - 12:05 pm');
     // } else if (school.finalizacionHorario < '12:05') {
     //   alert('El horario de finalizacion debe ser mayor que las 12:05 pm');
-    // } 
+    // }
     else {
       let existe: boolean = false;
       this.nombresDeEscuelas.forEach((nombreEscuela) => {
@@ -293,10 +293,31 @@ export class AuthService {
             final: modulo.final,
           });
         });
-        turnoArrayDiccionario.push({
-          turno: turno.turno,
-          modulos: modulosTurno,
-        });
+        if (turno.turno == 'manana') {
+          turnoArrayDiccionario.push({
+            turno: turno.turno,
+            inicio: '05:00',
+            finalizacion: '12:00',
+            habilitado: false,
+            modulos: modulosTurno,
+          });
+        } else if (turno.turno == 'tarde') {
+          turnoArrayDiccionario.push({
+            turno: turno.turno,
+            inicio: '12:00',
+            finalizacion: '18:00',
+            habilitado: false,
+            modulos: modulosTurno,
+          });
+        } else if (turno.turno == 'noche') {
+          turnoArrayDiccionario.push({
+            turno: turno.turno,
+            inicio: '18:00',
+            finalizacion: '23:00',
+            habilitado: false,
+            modulos: modulosTurno,
+          });
+        }
       }
     );
 
@@ -308,10 +329,10 @@ export class AuthService {
       provincia: school.provincia,
       localidad: school.localidad,
       telefono: '11' + school.telefono,
-      // duracionModulo: school.duracionModulo,
+      duracionModulo: school.duracionModulo,
       // inicioHorario: school.inicioHorario,
       // finalizacionHorario: school.finalizacionHorario,
-      botonesCrearColegioProgreso: school.botonesCrearColegioProgreso,
+      botonesCrearColegio: school.botonesCrearColegio,
       // botonesCrearColegio: school.botonesCrearColegio,
       usuariosExtensiones: [],
       aulas: [],

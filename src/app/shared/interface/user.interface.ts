@@ -10,17 +10,15 @@ export class User {
 //   tema: boolean;
 // }
 
-export interface Colegio {
+export class Colegio {
   id: string;
   userAdmin: string;
   nombre: string;
   localidad: string;
   provincia: string;
   telefono: string;
-  // duracionModulo: number;
-  // inicioHorario: string;
-  // finalizacionHorario: string;
-  botonesCrearColegioProgreso: number;
+  duracionModulo: number;
+  botonesCrearColegio: number;
   usuariosExtensiones: Array<string>;
   aulas: Array<Aula>;
   turnos: Array<Turno>;
@@ -31,6 +29,9 @@ export interface Colegio {
 
 export class Turno {
   turno: string;
+  inicio: string;
+  finalizacion: string;
+  habilitado: boolean;
   modulos: Array<Modulo> = [];
   constructor(turno: string) {
     this.turno = turno;

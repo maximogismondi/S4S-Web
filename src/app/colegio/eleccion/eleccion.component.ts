@@ -141,7 +141,7 @@ export class EleccionComponent implements OnInit {
                           '/' + nombreColegio + '/crear-colegio',
                         ]);
                       } else {
-                        alert('Ya preteneces a ' + nombreColegio + '.');
+                        alert('Ya perteneces a ' + nombreColegio + '.');
                       }
                     });
                   });

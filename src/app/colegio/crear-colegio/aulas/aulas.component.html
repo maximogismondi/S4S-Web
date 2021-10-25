@@ -186,12 +186,13 @@
                 [attr.data-bs-target]="'#collapseExample' + i"
                 aria-expanded="false"
               >
-                <div
-                  (click)="executeUsecase()"
-                >
+                <div (click)="executeUsecase()">
                   <!-- aria-controls="'collapseExample' + i" -->
                   {{ tipoAulas[0].otro }}
-                  <span class="badge badge-primary badge-pill bg-primary float-end">{{tipoAulas.length}}</span>
+                  <span
+                    class="badge badge-primary badge-pill bg-primary float-end"
+                    >{{ tipoAulas.length }}</span
+                  >
                   <div
                     *ngFor="let aula of tipoAulas"
                     class="collapse"
@@ -216,7 +217,7 @@
           <div class="d-grid">
             <button
               *ngIf="
-                colegioSvc.botonesCrearColegioProgreso <= 2 &&
+                colegioSvc.botonesCrearColegio <= 2 &&
                 colegioSvc.aulaArray.length != 0
               "
               (click)="goFormCurso()"

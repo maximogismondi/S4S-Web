@@ -157,10 +157,10 @@ export class MateriasComponent implements OnInit {
 
   // async goFormFinalizar() {
   //   this.colegioSvc.botonesCrearColegio = 6;
-  //   if (this.colegioSvc.botonesCrearColegioProgreso < 6) {
-  //     this.colegioSvc.botonesCrearColegioProgreso = 6;
+  //   if (this.colegioSvc.botonesCrearColegio < 6) {
+  //     this.colegioSvc.botonesCrearColegio = 6;
   //     this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-  //       botonesCrearColegioProgreso: 6,
+  //       botonesCrearColegio: 6,
   //       botonesCrearColegio: 6,
   //     });
   //   }

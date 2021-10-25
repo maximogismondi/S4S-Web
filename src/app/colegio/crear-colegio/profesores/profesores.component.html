@@ -109,9 +109,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <td colspan="7" class="table-active">
-                      TURNO MAÑANA ({{ colegioSvc.inicioHorario }} am - 12:00
-                      pm)
+                    <td colspan="7" class="table-active" *ngIf="colegioSvc.turnoArray[0].habilitado">
+                      TURNO MAÑANA ({{colegioSvc.turnoArray[0].inicio}} - {{colegioSvc.turnoArray[0].finalizacion}})
                     </td>
                     <tr
                       *ngFor="let modulo of colegioSvc.turnoArray[0].modulos"
@@ -138,8 +137,8 @@
                         </div>
                       </td>
                     </tr>
-                    <td colspan="7" class="table-active">
-                      TURNO TARDE (12:00 pm - 18:00 pm)
+                    <td colspan="7" class="table-active" *ngIf="colegioSvc.turnoArray[1].habilitado">
+                      TURNO TARDE ({{colegioSvc.turnoArray[1].inicio}} - {{colegioSvc.turnoArray[1].finalizacion}})
                     </td>
                     <tr
                       *ngFor="let modulo of colegioSvc.turnoArray[1].modulos"
@@ -166,9 +165,8 @@
                         </div>
                       </td>
                     </tr>
-                    <td colspan="7" class="table-active">
-                      TURNO NOCHE (18:00 pm -
-                      {{ colegioSvc.finalizacionHorario }} pm)
+                    <td colspan="7" class="table-active" *ngIf="colegioSvc.turnoArray[2].habilitado">
+                      TURNO NOCHE ({{colegioSvc.turnoArray[2].inicio}} - {{colegioSvc.turnoArray[2].finalizacion}})
                     </td>
                     <tr
                       *ngFor="let modulo of colegioSvc.turnoArray[2].modulos"
@@ -228,7 +226,7 @@
           <div class="d-grid">
             <button
               *ngIf="
-                colegioSvc.botonesCrearColegioProgreso <= 4 && colegioSvc.profesorArray.length != 0
+                colegioSvc.botonesCrearColegio <= 4 && colegioSvc.profesorArray.length != 0
               "
               (click)="goFormMateria()"
               class="btn btn-primary btn-lg mt-4"
