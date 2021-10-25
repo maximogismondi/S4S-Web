@@ -12,9 +12,8 @@
           class="form-control d-inline w-25 mx-1"
           [(ngModel)]="colegioSvc.duracionModulo"
           (input)="completarTurnos()"
-          onkeydown="return false"
         />
-        <!-- formControlName="duracionModulo" placeholder="Ej: 40"-->
+        <!-- onkeydown="return false" formControlName="duracionModulo" placeholder="Ej: 40"-->
 
         mins
 
@@ -166,15 +165,26 @@
         </tr>
 
         <!-- FILA DE CLASE -->
+
         <tr
           *ngFor="let turno of colegioSvc.turnoArray[0].modulos"
           class="bg-white"
         >
-          <td colspan="2" class="text-black">
+          <td
+            colspan="2"
+            class="text-black"
+            *ngIf="colegioSvc.turnoArray[0].habilitado"
+          >
             {{ turno.inicio }} - {{ turno.final }}
           </td>
-          <td colspan="4" class="text-black">CLASE</td>
-          <td class="bg-light">
+          <td
+            colspan="4"
+            class="text-black"
+            *ngIf="colegioSvc.turnoArray[0].habilitado"
+          >
+            CLASE
+          </td>
+          <td class="bg-light" *ngIf="colegioSvc.turnoArray[0].habilitado">
             <svg
               (click)="deleteModulo('manana', turno)"
               xmlns="http://www.w3.org/2000/svg"
@@ -297,11 +307,21 @@
           *ngFor="let turno of colegioSvc.turnoArray[1].modulos"
           class="bg-white"
         >
-          <td colspan="2" class="text-black">
+          <td
+            colspan="2"
+            class="text-black"
+            *ngIf="colegioSvc.turnoArray[0].habilitado"
+          >
             {{ turno.inicio }} - {{ turno.final }}
           </td>
-          <td colspan="4" class="text-black">CLASE</td>
-          <td class="bg-light">
+          <td
+            colspan="4"
+            class="text-black"
+            *ngIf="colegioSvc.turnoArray[0].habilitado"
+          >
+            CLASE
+          </td>
+          <td class="bg-light" *ngIf="colegioSvc.turnoArray[0].habilitado">
             <svg
               (click)="deleteModulo('tarde', turno)"
               xmlns="http://www.w3.org/2000/svg"
@@ -425,11 +445,21 @@
           *ngFor="let turno of colegioSvc.turnoArray[2].modulos"
           class="bg-white"
         >
-          <td colspan="2" class="text-black">
+          <td
+            colspan="2"
+            class="text-black"
+            *ngIf="colegioSvc.turnoArray[0].habilitado"
+          >
             {{ turno.inicio }} - {{ turno.final }}
           </td>
-          <td colspan="4" class="text-black">CLASE</td>
-          <td class="bg-light">
+          <td
+            colspan="4"
+            class="text-black"
+            *ngIf="colegioSvc.turnoArray[0].habilitado"
+          >
+            CLASE
+          </td>
+          <td class="bg-light" *ngIf="colegioSvc.turnoArray[0].habilitado">
             <svg
               (click)="deleteModulo('noche', turno)"
               xmlns="http://www.w3.org/2000/svg"

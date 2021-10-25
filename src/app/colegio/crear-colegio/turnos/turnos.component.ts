@@ -55,12 +55,24 @@ export class TurnosComponent implements OnInit {
 
     if (this.inicioModuloSeleccionado.length == 0) {
       this.inicioModuloSeleccionado.push('05:00', '12:00', '18:00');
-      if (this.colegioSvc.school.turnos[0].inicio < this.colegioSvc.turnoArray[0].finalizacion) {
-        this.inicioModuloSeleccionado[0] = this.colegioSvc.school.turnos[0].inicio;
-      } else if (this.colegioSvc.school.turnos[1].inicio < this.colegioSvc.turnoArray[1].finalizacion) {
-        this.inicioModuloSeleccionado[1] = this.colegioSvc.school.turnos[1].inicio;
-      } else if (this.colegioSvc.school.turnos[2].inicio < this.colegioSvc.turnoArray[2].finalizacion){
-        this.inicioModuloSeleccionado[2] = this.colegioSvc.school.turnos[2].inicio;
+      if (
+        this.colegioSvc.school.turnos[0].inicio <
+        this.colegioSvc.turnoArray[0].finalizacion
+      ) {
+        this.inicioModuloSeleccionado[0] =
+          this.colegioSvc.school.turnos[0].inicio;
+      } else if (
+        this.colegioSvc.school.turnos[1].inicio <
+        this.colegioSvc.turnoArray[1].finalizacion
+      ) {
+        this.inicioModuloSeleccionado[1] =
+          this.colegioSvc.school.turnos[1].inicio;
+      } else if (
+        this.colegioSvc.school.turnos[2].inicio <
+        this.colegioSvc.turnoArray[2].finalizacion
+      ) {
+        this.inicioModuloSeleccionado[2] =
+          this.colegioSvc.school.turnos[2].inicio;
       }
     }
     // this.turnosForm = this.fb.group({
@@ -124,7 +136,7 @@ export class TurnosComponent implements OnInit {
       this.colegioSvc.turnoArray[0].modulos = [];
       this.colegioSvc.turnoArray[1].modulos = [];
       this.colegioSvc.turnoArray[2].modulos = [];
-      
+
       // this.colegioSvc.turnoArray.forEach((turno) => {
       //   if (turno.turno == 'manana') {
       //     this.colegioSvc.turnoArray[0].modulos = [];
@@ -162,13 +174,29 @@ export class TurnosComponent implements OnInit {
         turnos: this.colegioSvc.turnoArray,
       });
       if (this.inicioModuloSeleccionado.length == 0) {
-        this.inicioModuloSeleccionado.push(this.colegioSvc.turnoArray[0].inicio, this.colegioSvc.turnoArray[1].inicio, this.colegioSvc.turnoArray[2].inicio);
-        if (this.colegioSvc.school.turnos[0].inicio < this.colegioSvc.turnoArray[0].finalizacion) {
-          this.inicioModuloSeleccionado[0] = this.colegioSvc.school.turnos[0].inicio;
-        } else if (this.colegioSvc.school.turnos[1].inicio < this.colegioSvc.turnoArray[1].finalizacion) {
-          this.inicioModuloSeleccionado[1] = this.colegioSvc.school.turnos[1].inicio;
-        } else if (this.colegioSvc.school.turnos[2].inicio < this.colegioSvc.turnoArray[2].finalizacion){
-          this.inicioModuloSeleccionado[2] = this.colegioSvc.school.turnos[2].inicio;
+        this.inicioModuloSeleccionado.push(
+          this.colegioSvc.turnoArray[0].inicio,
+          this.colegioSvc.turnoArray[1].inicio,
+          this.colegioSvc.turnoArray[2].inicio
+        );
+        if (
+          this.colegioSvc.school.turnos[0].inicio <
+          this.colegioSvc.turnoArray[0].finalizacion
+        ) {
+          this.inicioModuloSeleccionado[0] =
+            this.colegioSvc.school.turnos[0].inicio;
+        } else if (
+          this.colegioSvc.school.turnos[1].inicio <
+          this.colegioSvc.turnoArray[1].finalizacion
+        ) {
+          this.inicioModuloSeleccionado[1] =
+            this.colegioSvc.school.turnos[1].inicio;
+        } else if (
+          this.colegioSvc.school.turnos[2].inicio <
+          this.colegioSvc.turnoArray[2].finalizacion
+        ) {
+          this.inicioModuloSeleccionado[2] =
+            this.colegioSvc.school.turnos[2].inicio;
         }
       }
     }
@@ -233,22 +261,11 @@ export class TurnosComponent implements OnInit {
   }
 
   moduloValido(horaInicial: string, horaFinal: string): string {
-    //fuera de horario
-    if (horaInicial < this.colegioSvc.turnoArray[0].inicio) {
-      return 'Fuera de Horario';
-    }
-    if (horaFinal > this.colegioSvc.turnoArray[0].finalizacion) {
-      return 'Fuera de Horario';
-    }
-    if (horaFinal > this.colegioSvc.turnoArray[1].finalizacion) {
-      return 'Fuera de Horario';
-    }
-    if (horaFinal > this.colegioSvc.turnoArray[2].finalizacion) {
-      return 'Fuera de Horario';
-    }
-
     //fuera de turno
     if (this.turnoSeleccionado == 'manana') {
+      if (horaInicial < this.colegioSvc.turnoArray[0].inicio) {
+        return 'Fuera de Turno';
+      }
       if (horaFinal > this.colegioSvc.turnoArray[0].finalizacion) {
         return 'Fuera de Turno';
       }
@@ -259,8 +276,11 @@ export class TurnosComponent implements OnInit {
       if (horaFinal > this.colegioSvc.turnoArray[1].finalizacion) {
         return 'Fuera de Turno';
       }
-    } else {
-      if (horaInicial < this.colegioSvc.turnoArray[1].inicio) {
+    } else if (this.turnoSeleccionado == 'noche') {
+      if (horaInicial < this.colegioSvc.turnoArray[2].inicio) {
+        return 'Fuera de Turno';
+      }
+      if (horaFinal > this.colegioSvc.turnoArray[2].finalizacion) {
         return 'Fuera de Turno';
       }
     }
