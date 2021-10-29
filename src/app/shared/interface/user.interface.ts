@@ -91,22 +91,12 @@ export class Materia {
   cantidadDeModulosTotal: string = '';
   cantidadMaximaDeModulosPorDia: string = '';
   curso: string = '';
-  profesoresCapacitados: any = {};
-  aulasMateria: any = {};
+  profesoresCapacitados: Array<string> = [];
+  aulasMateria: Array<string> = [];
 
-  constructor(profesorArray: Array<Profesor>, aulaArray: Array<Aula>) {
-    // let mapProfesoresCapacitados: any = {};
-    // let mapAulaMateria: any = {};
-    this.profesoresCapacitados = {};
-    this.aulasMateria = {};
-
-    profesorArray.forEach((profesor) => {
-      this.profesoresCapacitados[profesor.nombre + ' ' + profesor.apellido] = false;
-    });
-
-    aulaArray.forEach((aula) => {
-      this.aulasMateria[aula.nombre] = false;
-    });
+  constructor() {
+    this.profesoresCapacitados = [];
+    this.aulasMateria = [];
   }
 
 }

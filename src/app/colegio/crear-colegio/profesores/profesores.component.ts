@@ -121,16 +121,27 @@ export class ProfesoresComponent implements OnInit {
             }
           } else {
             this.colegioSvc.materiaArray.forEach((materia) => {
-              materia.profesoresCapacitados[
-                this.colegioSvc.selectedProfesor.nombre +
-                  ' ' +
-                  this.colegioSvc.selectedProfesor.apellido
-              ] =
-                materia.profesoresCapacitados[
+              if (
+                materia.profesoresCapacitados.includes(
                   this.temporalProfesor.nombre +
                     ' ' +
                     this.temporalProfesor.apellido
-                ];
+                )
+              ) {
+                materia.profesoresCapacitados.splice(
+                  materia.profesoresCapacitados.indexOf(
+                    this.temporalProfesor.nombre +
+                      ' ' +
+                      this.temporalProfesor.apellido
+                  ),
+                  1
+                );
+                materia.profesoresCapacitados.push(
+                  this.colegioSvc.selectedProfesor.nombre +
+                    ' ' +
+                    this.colegioSvc.selectedProfesor.apellido
+                );
+              }
             });
           }
           this.colegioSvc.updateDBMateria();
@@ -157,9 +168,29 @@ export class ProfesoresComponent implements OnInit {
 
   deleteProfesor() {
     if (confirm('¿Estas seguro/a que quieres eliminar este profesor/a?')) {
+      this.colegioSvc.materiaArray.forEach((materia) => {
+        if (
+          materia.profesoresCapacitados.includes(
+            this.colegioSvc.selectedProfesor.nombre +
+              ' ' +
+              this.colegioSvc.selectedProfesor.apellido
+          )
+        ) {
+          console.log("a")
+          materia.profesoresCapacitados.splice(
+            materia.profesoresCapacitados.indexOf(
+              this.colegioSvc.selectedProfesor.nombre +
+                ' ' +
+                this.colegioSvc.selectedProfesor.apellido
+            ),
+            1
+          );
+        }
+      });
       this.colegioSvc.profesorArray = this.colegioSvc.profesorArray.filter(
         (x) => x != this.colegioSvc.selectedProfesor
       );
+      this.colegioSvc.updateDBMateria();
       this.colegioSvc.updateDBProfesor();
     }
   }
@@ -213,15 +244,4 @@ export class ProfesoresComponent implements OnInit {
       });
     });
   }
-
-  // async goFormMateria() {
-  //   this.colegioSvc.botonesCrearColegio = 5;
-  //   if (this.colegioSvc.botonesCrearColegio < 5) {
-  //     this.colegioSvc.botonesCrearColegio = 5;
-  //     this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-  //       botonesCrearColegio: 5,
-  //       botonesCrearColegio: 5,
-  //     });
-  //   }
-  // }
 }

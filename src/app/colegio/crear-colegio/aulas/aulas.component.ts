@@ -85,8 +85,13 @@ export class AulasComponent implements OnInit {
           this.colegioSvc.aulaArray.push(this.selectedAula);
         } else {
           this.colegioSvc.materiaArray.forEach((materia) => {
-            materia.aulasMateria[this.selectedAula.nombre] =
-              materia.aulasMateria[this.temporalAula.nombre];
+            if (materia.aulasMateria.includes(this.temporalAula.nombre)) {
+              materia.aulasMateria.splice(
+                materia.aulasMateria.indexOf(this.temporalAula.nombre),
+                1
+              );
+              materia.aulasMateria.push(this.selectedAula.nombre);
+            }
           });
         }
         if (this.selectedAula.tipo == 'normal') {
@@ -109,6 +114,14 @@ export class AulasComponent implements OnInit {
       this.colegioSvc.aulaArray = this.colegioSvc.aulaArray.filter(
         (x) => x != this.selectedAula
       );
+      this.colegioSvc.materiaArray.forEach((materia) => {
+        if (materia.aulasMateria.includes(this.selectedAula.nombre)) {
+          materia.aulasMateria.splice(
+            materia.aulasMateria.indexOf(this.selectedAula.nombre),
+            1
+          );
+        }
+      });
       this.colegioSvc.updateDBMateria();
       this.updateDBAula();
     }

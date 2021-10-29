@@ -98,23 +98,19 @@ export class CursosComponent implements OnInit {
   }
 
   deleteCurso() {
-    if (confirm('¿Estas seguro/a que quieres eliminar este curso?')) {
+    if (confirm('¿Estas seguro/a que quieres eliminar este curso? Esto eliminará todas las materias pertenecientes al mismo')) {
       this.colegioSvc.cursoArray = this.colegioSvc.cursoArray.filter(
         (x) => x != this.selectedCurso
       );
+      this.colegioSvc.materiaArray.forEach((materia) => {
+        if (materia.curso == this.selectedCurso.nombre) {
+          this.colegioSvc.materiaArray = this.colegioSvc.materiaArray.filter(
+            (x) => x != materia
+          );
+        }
+      });
       this.colegioSvc.updateDBMateria();
       this.updateDBCurso();
     }
   }
-
-  // async goFormProfesor() {
-  //   this.colegioSvc.botonesCrearColegio = 4;
-  //   if (this.colegioSvc.botonesCrearColegio < 4) {
-  //     this.colegioSvc.botonesCrearColegio = 4;
-  //     this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-  //       botonesCrearColegio: 4,
-  //       botonesCrearColegio: 4,
-  //     });
-  //   }
-  // }
 }

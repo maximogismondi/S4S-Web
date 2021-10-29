@@ -27,7 +27,6 @@ import { ColegioService } from '../../services/colegio.service';
 export class MateriasComponent implements OnInit {
   objectKeys = Object.keys;
   objectValues = Object.values;
-  tipoAulaSeccionada: any = {};
 
   constructor(
     private router: Router,
@@ -37,20 +36,14 @@ export class MateriasComponent implements OnInit {
     private http: HttpClient
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.colegioSvc.selectedMateria = new Materia();
+  }
 
   // _______________________________________MATERIAS____________________________________________________________
 
   openForEditMateria(materia: Materia) {
     this.colegioSvc.selectedMateria = materia;
-    this.colegioSvc.tiposAulas.forEach((tipo) => {
-      this.tipoAulaSeccionada[tipo[0].otro] = true
-      tipo.forEach((aulaTipo) => {
-        if (!this.colegioSvc.selectedMateria.aulasMateria[aulaTipo.nombre]) {
-          this.tipoAulaSeccionada[tipo[0].otro] = false;
-        }
-      });
-    });
   }
 
   addOrEditMateria() {
@@ -68,34 +61,15 @@ export class MateriasComponent implements OnInit {
         )
       ) {
         if (this.colegioSvc.selectedMateria.id == 0) {
-          let existeProfesorCapacitado: boolean = false;
-
-          this.colegioSvc.profesorArray.forEach((profesor) => {
-            if (
-              this.colegioSvc.selectedMateria.profesoresCapacitados[
-                profesor.nombre + ' ' + profesor.apellido
-              ]
-            ) {
-              existeProfesorCapacitado = true;
-            }
-          });
-
-          if (existeProfesorCapacitado) {
-            let existeAula: boolean = false;
-
-            this.colegioSvc.aulaArray.forEach((aula) => {
-              if (this.colegioSvc.selectedMateria.aulasMateria[aula.nombre]) {
-                existeAula = true;
-              }
-            });
-
-            if (existeAula) {
+          if (
+            this.colegioSvc.selectedMateria.profesoresCapacitados.length > 0
+          ) {
+            if (this.colegioSvc.selectedMateria.aulasMateria.length > 0) {
               this.colegioSvc.selectedMateria.id =
                 this.colegioSvc.materiaArray.length + 1;
               this.colegioSvc.materiaArray.push(
                 this.colegioSvc.selectedMateria
               );
-
             } else {
               alert('Coloque por lo menos un aula para la materia creada');
             }
@@ -103,9 +77,6 @@ export class MateriasComponent implements OnInit {
             alert('Coloque por lo menos un profesor para la materia creada');
           }
         }
-        this.colegioSvc.tiposAulas.forEach((tipo) => {
-          this.tipoAulaSeccionada[tipo[0].otro] = false
-        }); 
         this.colegioSvc.updateDBMateria();
       }
     } else {
@@ -118,44 +89,66 @@ export class MateriasComponent implements OnInit {
   }
 
   clickFormCheckMateriaProfesor(nombre: string) {
-    this.colegioSvc.selectedMateria.profesoresCapacitados[nombre] =
-      !this.colegioSvc.selectedMateria.profesoresCapacitados[nombre];
-  }
-
-  clickFormCheckMateriaAula(nombre: string, tipoAula: string = '') {
-    // console.log(this.colegioSvc.selectedMateria.aulasMateria[nombre])
-    if (tipoAula == '') {
-      this.colegioSvc.selectedMateria.aulasMateria[nombre] =
-        !this.colegioSvc.selectedMateria.aulasMateria[nombre];
-      this.colegioSvc.aulaArray.forEach((aula) => {
-        if (aula.nombre == nombre) {
-          this.tipoAulaSeccionada[aula.otro] = true;
-          this.colegioSvc.tiposAulas.forEach((tipo) => {
-            if (tipo[0].otro == aula.otro) {
-              tipo.forEach((aulaTipo) => {
-                if (
-                  !this.colegioSvc.selectedMateria.aulasMateria[aulaTipo.nombre]
-                ) {
-                  this.tipoAulaSeccionada[aula.otro] = false;
-                }
-              });
-            }
-          });
-        }
-      });
+    if (
+      this.colegioSvc.selectedMateria.profesoresCapacitados.includes(nombre)
+    ) {
+      this.colegioSvc.selectedMateria.profesoresCapacitados =
+        this.colegioSvc.selectedMateria.profesoresCapacitados.filter(
+          (profesor) => {
+            return profesor != nombre;
+          }
+        );
     } else {
-      this.tipoAulaSeccionada[tipoAula] = !this.tipoAulaSeccionada[tipoAula];
-      this.colegioSvc.tiposAulas.forEach((tipo) => {
-        if (tipo[0].otro == tipoAula) {
-          tipo.forEach((aula) => {
-            this.colegioSvc.selectedMateria.aulasMateria[aula.nombre] =
-              this.tipoAulaSeccionada[tipoAula];
-          });
-        }
-      });
+      this.colegioSvc.selectedMateria.profesoresCapacitados.push(nombre);
     }
   }
 
+  clickFormCheckMateriaAula(nombre: string, tipoAula: Array<Aula> = []) {
+    if (tipoAula.length == 0) {
+      if (this.colegioSvc.selectedMateria.aulasMateria.includes(nombre)) {
+        this.colegioSvc.selectedMateria.aulasMateria =
+          this.colegioSvc.selectedMateria.aulasMateria.filter((aula) => {
+            return aula != nombre;
+          });
+      } else {
+        this.colegioSvc.selectedMateria.aulasMateria.push(nombre);
+      }
+    } else {
+      if (this.tipoAulaCompleto(tipoAula)) {
+        this.colegioSvc.aulaArray.forEach((aula) => {
+          if (aula.otro == tipoAula[0].otro) {
+            this.colegioSvc.selectedMateria.aulasMateria =
+              this.colegioSvc.selectedMateria.aulasMateria.filter((aulaAux) => {
+                return aulaAux != aula.nombre;
+              });
+          }
+        });
+      } else {
+        this.colegioSvc.aulaArray.forEach((aula) => {
+          if (aula.otro == tipoAula[0].otro) {
+            if (
+              !this.colegioSvc.selectedMateria.aulasMateria.includes(
+                aula.nombre
+              )
+            ) {
+              this.colegioSvc.selectedMateria.aulasMateria.push(aula.nombre);
+            }
+          }
+        });
+      }
+    }
+  }
+
+  tipoAulaCompleto(tipoAula: Array<Aula>) {
+    let aulaCompleto = true;
+    tipoAula.forEach((aula) => {
+      if (!this.colegioSvc.selectedMateria.aulasMateria.includes(aula.nombre)) {
+        aulaCompleto = false;
+      }
+    });
+    return aulaCompleto;
+  }
+  
   deleteMateria() {
     if (confirm('¿Estas seguro/a que quieres eliminar esta materia?')) {
       this.colegioSvc.materiaArray = this.colegioSvc.materiaArray.filter(
