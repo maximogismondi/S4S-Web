@@ -82,7 +82,6 @@ export class Profesor {
         });
       });
     });
-    
     this.disponibilidad = mapDisponibilidad;
   }
 }
@@ -100,5 +99,4 @@ export class Materia {
     this.profesoresCapacitados = [];
     this.aulasMateria = [];
   }
-
 }

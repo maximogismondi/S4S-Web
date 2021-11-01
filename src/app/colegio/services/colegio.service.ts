@@ -105,11 +105,11 @@ export class ColegioService {
               this.school.turnos[0]
             ) as Turno;
             this.turnoArray[1] = Object.assign(
-              new Turno('manana'),
+              new Turno('tarde'),
               this.school.turnos[1]
             ) as Turno;
             this.turnoArray[2] = Object.assign(
-              new Turno('manana'),
+              new Turno('noche'),
               this.school.turnos[2]
             ) as Turno;
 

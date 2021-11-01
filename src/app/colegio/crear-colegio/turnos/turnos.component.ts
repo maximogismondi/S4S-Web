@@ -129,7 +129,7 @@ export class TurnosComponent implements OnInit {
   }
 
   estadoTurno(turno: string) {
-    let nTurno = turno == 'mañana' ? 0 : turno == 'tarde' ? 1 : 2;
+    let nTurno = turno == 'manana' ? 0 : turno == 'tarde' ? 1 : 2;
     this.colegioSvc.turnoArray[nTurno].habilitado =
       !this.colegioSvc.turnoArray[nTurno].habilitado;
     this.updateDBTurnos();
@@ -146,6 +146,7 @@ export class TurnosComponent implements OnInit {
         });
       });
       arrayTurnos.push({
+        nombre: turno.turno,
         inicio: turno.inicio,
         finalizacion: turno.finalizacion,
         habilitado: turno.habilitado,
@@ -237,6 +238,12 @@ export class TurnosComponent implements OnInit {
         }
         return 0;
       });
+      this.colegioSvc.profesorArray.forEach((profesor) => {
+        this.colegioSvc.dias.forEach((dia) => {
+          profesor.disponibilidad[dia][turnoSeleccionado][nuevoModulo.inicio] = false;
+        });
+      });
+      this.colegioSvc.updateDBProfesor();
       this.updateDBTurnos();
     }
   }

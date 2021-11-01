@@ -87,15 +87,11 @@ export class FinalizarComponent implements OnInit {
       .then();
     console.log(res);
     this.afs
-      .doc(
-        'schools/' + this.colegioSvc.nombreColegio + '/horarios/' + res
-      )
+      .doc('schools/' + this.colegioSvc.nombreColegio + '/horarios/' + res)
       .snapshotChanges()
       .pipe(
         map((horariosReady) => {
           if (horariosReady.payload.exists) {
-            // console.log('ejecuta el obvserver');
-            this.colegioSvc.horarioGenerado = true;
             let horariosHechos = horariosReady.payload.get('horarios');
             let horariosAulasHechos =
               horariosReady.payload.get('horariosAulas');
@@ -107,25 +103,27 @@ export class FinalizarComponent implements OnInit {
               this.colegioSvc.dias.forEach((dia) => {
                 this.horariosHechos[curso.nombre][dia] = {};
                 this.colegioSvc.turnoArray.forEach((turno) => {
-                  this.horariosHechos[curso.nombre][dia][turno.turno] = {};
-                  turno.modulos.forEach((modulo) => {
-                    if (
-                      horariosHechos[curso.nombre][dia][turno.turno][
-                        turno.modulos.indexOf(modulo) + 1
-                      ].split('-')[0] == 'Hueco'
-                    ) {
-                      this.horariosHechos[curso.nombre][dia][turno.turno][
-                        modulo.inicio
-                      ] = '';
-                    } else {
-                      this.horariosHechos[curso.nombre][dia][turno.turno][
-                        modulo.inicio
-                      ] =
+                  if (turno.habilitado == true) {
+                    this.horariosHechos[curso.nombre][dia][turno.turno] = {};
+                    turno.modulos.forEach((modulo) => {
+                      if (
                         horariosHechos[curso.nombre][dia][turno.turno][
                           turno.modulos.indexOf(modulo) + 1
-                        ].split('-')[0];
-                    }
-                  });
+                        ].split('-')[0] == 'Hueco'
+                      ) {
+                        this.horariosHechos[curso.nombre][dia][turno.turno][
+                          modulo.inicio
+                        ] = '';
+                      } else {
+                        this.horariosHechos[curso.nombre][dia][turno.turno][
+                          modulo.inicio
+                        ] =
+                          horariosHechos[curso.nombre][dia][turno.turno][
+                            turno.modulos.indexOf(modulo) + 1
+                          ].split('-')[0];
+                      }
+                    });
+                  }
                 });
               });
             });
@@ -135,25 +133,28 @@ export class FinalizarComponent implements OnInit {
               this.colegioSvc.dias.forEach((dia) => {
                 this.horariosAulasHechos[curso.nombre][dia] = {};
                 this.colegioSvc.turnoArray.forEach((turno) => {
-                  this.horariosAulasHechos[curso.nombre][dia][turno.turno] = {};
-                  turno.modulos.forEach((modulo) => {
-                    if (
-                      horariosAulasHechos[curso.nombre][dia][turno.turno][
-                        turno.modulos.indexOf(modulo) + 1
-                      ] == 'Hueco'
-                    ) {
-                      this.horariosAulasHechos[curso.nombre][dia][turno.turno][
-                        modulo.inicio
-                      ] = '';
-                    } else {
-                      this.horariosAulasHechos[curso.nombre][dia][turno.turno][
-                        modulo.inicio
-                      ] =
+                  if (turno.habilitado == true) {
+                    this.horariosAulasHechos[curso.nombre][dia][turno.turno] =
+                      {};
+                    turno.modulos.forEach((modulo) => {
+                      if (
                         horariosAulasHechos[curso.nombre][dia][turno.turno][
                           turno.modulos.indexOf(modulo) + 1
-                        ];
-                    }
-                  });
+                        ] == 'Hueco'
+                      ) {
+                        this.horariosAulasHechos[curso.nombre][dia][
+                          turno.turno
+                        ][modulo.inicio] = '';
+                      } else {
+                        this.horariosAulasHechos[curso.nombre][dia][
+                          turno.turno
+                        ][modulo.inicio] =
+                          horariosAulasHechos[curso.nombre][dia][turno.turno][
+                            turno.modulos.indexOf(modulo) + 1
+                          ];
+                      }
+                    });
+                  }
                 });
               });
             });
@@ -182,11 +183,10 @@ export class FinalizarComponent implements OnInit {
           });
         }
         turno.modulos.forEach((modulo) => {
-          
-            jsonMaterias.push({
-              Modulo: modulo.inicio + ' - ' + modulo.final,
-            });
-          
+          jsonMaterias.push({
+            Modulo: modulo.inicio + ' - ' + modulo.final,
+          });
+
           this.colegioSvc.dias.forEach((dia) => {
             jsonMaterias[jsonMaterias.length - 1][dia] =
               this.horariosHechos[curso.nombre][dia][turno.turno][
