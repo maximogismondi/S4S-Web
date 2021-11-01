@@ -20,9 +20,9 @@ export class MercadopagoService {
         quantity: cantidadCursos,
       }],
       back_urls: {
-        "success": `https://s4schools.com/${escuela}/crear-colegio`,
-        "failure": `https://s4schools.com/${escuela}/crear-colegio`,
-        "pending": `https://s4schools.com/${escuela}/crear-colegio`
+        "success": `http://localhost:4200/${escuela}/crear-colegio`,
+        "failure": `http://localhost:4200/${escuela}/crear-colegio`,
+        "pending": `http://localhost:4200/${escuela}/crear-colegio`
       },
       auto_return: 'approved',
       payment_methods: {

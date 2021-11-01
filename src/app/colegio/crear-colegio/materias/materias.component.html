@@ -65,20 +65,20 @@
                       <td>
                         <div
                           class="form-check mt-2"
+                          *ngFor="let profesor of colegioSvc.profesorArray"
                           (click)="
                             clickFormCheckMateriaProfesor(
                               profesor.nombre + ' ' + profesor.apellido
                             )
                           "
-                          *ngFor="let profesor of colegioSvc.profesorArray"
                         >
                           <input
                             class="form-check-input"
                             type="checkbox"
-                            [(ngModel)]="
-                              colegioSvc.selectedMateria.profesoresCapacitados[
+                            [ngModel]="
+                              colegioSvc.selectedMateria.profesoresCapacitados.includes(
                                 profesor.nombre + ' ' + profesor.apellido
-                              ]
+                              )
                             "
                             id="{{ profesor.nombre }} {{ profesor.apellido }}"
                           />
@@ -106,7 +106,22 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let tipoAulas of colegioSvc.tiposAulas">
-                      <th scope="row">{{ tipoAulas[0].otro }}</th>
+                      <th scope="row">
+                        <div
+                          class="form-check mt-2"
+                          (click)="clickFormCheckMateriaAula('', tipoAulas)"
+                        >
+                          {{ tipoAulas[0].otro }}
+
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            [ngModel]="tipoAulaCompleto(tipoAulas)"
+                          />
+
+                          <label class="form-check-label"> </label>
+                        </div>
+                      </th>
                       <td>
                         <div
                           class="form-check mt-2"
@@ -116,10 +131,10 @@
                           <input
                             class="form-check-input"
                             type="checkbox"
-                            [(ngModel)]="
-                              colegioSvc.selectedMateria.aulasMateria[
+                            [ngModel]="
+                              colegioSvc.selectedMateria.aulasMateria.includes(
                                 aula.nombre
-                              ]
+                              )
                             "
                             id="{{ aula.nombre }}"
                           />
@@ -173,7 +188,6 @@
                 data-bs-toggle="collapse"
                 [attr.data-bs-target]="'#collapseExample' + i"
                 aria-expanded="false"
-                
               >
                 <div>
                   <svg
@@ -196,25 +210,13 @@
                   </svg>
                   <!-- aria-controls="'collapseExample' + i" -->
                   {{ curso.nombre }}
-                  <svg
-                    
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="
-                      bi bi-caret-down
-                      position-absolute
-                      mt-2
-                      end-0
-                      translate-middle
-                    "
-                    viewBox="0 0 16 16"
+                  <span
+                    class="badge badge-primary float-end badge-pill bg-primary"
+                    >{{
+                      objectKeys(colegioSvc.materiasArrayValidas[curso.nombre])
+                        .length
+                    }}</span
                   >
-                    <path
-                      d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"
-                    />
-                  </svg>
 
                   <div
                     *ngFor="let materia of colegioSvc.materiaArray"
@@ -232,7 +234,6 @@
                       (click)="openForEditMateria(materia)"
                       [class.active]="materia == colegioSvc.selectedMateria"
                     >
-                    
                       <svg
                         *ngIf="
                           objectValues(
@@ -265,7 +266,7 @@
           <div class="d-grid">
             <button
               *ngIf="
-                colegioSvc.botonesCrearColegioProgreso <= 5 &&
+                colegioSvc.botonesCrearColegio <= 5 &&
                 colegioSvc.materiaArray.length != 0
               "
               (click)="goFormFinalizar()"

@@ -1,8 +1,90 @@
 <div class="col-md-8 mx-auto">
   <ul class="list-group">
-    <div class="text-secondary">
-      <h6>Duracion de cada modulo: {{ colegioSvc.duracionModulo }} min</h6>
+    <!-- <form [formGroup]="turnosForm" (ngSubmit)="onTurno()"></form> -->
+    <div>
+      <h6>
+        Duracion de cada modulo:
+        <input
+          type="number"
+          min="20"
+          max="60"
+          required
+          class="form-control d-inline w-25 mx-1"
+          [(ngModel)]="colegioSvc.duracionModulo"
+          (input)="cambiarDuracionModulo()"
+        />
+
+        mins
+
+        <button
+          class="btn btn-primary float-end mx-2"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseExample"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            class="bi bi-info-circle-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+            />
+          </svg>
+        </button>
+
+        <div class="collapse text-secondary" id="collapseExample">
+          <div class="card card-body mt-3">
+            <h6 class="d-inline">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-info-circle mb-1"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                />
+                <path
+                  d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+                />
+              </svg>
+              Los modulos creados son para las clases, de lo contrario se
+              consideraran como recreos/horas de almuerzo.
+            </h6>
+            <br />
+            <h6 class="d-inline">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-info-circle mb-1"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                />
+                <path
+                  d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+                />
+              </svg>
+
+              En el caso de cambiar la duracion del modulo se borraran todos los
+              modulos creados.
+            </h6>
+          </div>
+        </div>
+      </h6>
     </div>
+
     <table class="table text-center">
       <thead>
         <tr class="table-light">
@@ -17,20 +99,84 @@
       </thead>
       <tbody>
         <!-- MAÑANA -->
-        <tr *ngIf="12 >= colegioSvc.horaInicial && colegioSvc.horaInicial >= 5">
-          <td colspan="7" class="table-active">
-            TURNO MAÑANA ({{ colegioSvc.inicioHorario }} am - 12:00 pm)
+        <tr
+          *ngIf="colegioSvc.turnoArray[0].habilitado; else mananaDeshabilitado"
+        >
+          <td colspan="2" class="table-active"></td>
+          <td colspan="4" class="table-active">
+            TURNO MAÑANA (
+            <input
+              type="Time"
+              min="00:00"
+              max="{{ colegioSvc.turnoArray[0].finalizacion }}"
+              required
+              class="form-control d-inline w-25 mx-1"
+              [(ngModel)]="colegioSvc.turnoArray[0].inicio"
+              (input)="completarTurnos(0)"
+            />
+            <!-- formControlName="inicioMananaModulo"formControlName="finalMananaModulo" -->
+            -
+            <input
+              type="Time"
+              required
+              class="form-control d-inline w-25 mx-1"
+              [(ngModel)]="colegioSvc.turnoArray[0].finalizacion"
+              (input)="completarTurnos(0)"
+            />
+            )
+          </td>
+          <td colspan="1" class="table-active">
+            <div
+              class="form-check form-switch d-inline-block float-end my-3"
+              (click)="estadoTurno('manana')"
+            >
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                checked
+              />
+            </div>
           </td>
         </tr>
+        <ng-template #mananaDeshabilitado>
+          <tr>
+            <td colspan="2" class="table-active"></td>
+
+            <td colspan="4" class="table-active">
+              <label class="my-2"> TURNO MAÑANA ( DESHABILITADO ) </label>
+            </td>
+            <td colspan="1" class="table-active">
+              <div
+                class="form-check form-switch d-inline-block float-end my-3"
+                (click)="estadoTurno('manana')"
+              >
+                <input class="form-check-input" type="checkbox" role="switch" />
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <!-- FILA DE CLASE -->
         <tr
           *ngFor="let turno of colegioSvc.turnoArray[0].modulos"
           class="bg-white"
         >
-          <td colspan="2" class="text-black">
+          <td
+            colspan="2"
+            class="text-black"
+            *ngIf="colegioSvc.turnoArray[0].habilitado"
+          >
             {{ turno.inicio }} - {{ turno.final }}
           </td>
-          <td colspan="4" class="text-black">CLASE</td>
-          <td class="bg-light">
+          <td
+            colspan="4"
+            class="text-black"
+            *ngIf="colegioSvc.turnoArray[0].habilitado"
+          >
+            CLASE
+          </td>
+          <td class="bg-light" *ngIf="colegioSvc.turnoArray[0].habilitado">
             <svg
               (click)="deleteModulo('manana', turno)"
               xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +192,17 @@
             </svg>
           </td>
         </tr>
-        <tr>
+
+        <!-- BOTON ADD MODULO -->
+        <tr
+          *ngIf="
+            this.colegioSvc.duracionModulo >= 20 &&
+            this.colegioSvc.duracionModulo <= 60 &&
+            colegioSvc.turnoArray[0].inicio != '' &&
+            colegioSvc.turnoArray[0].finalizacion != '' &&
+            colegioSvc.turnoArray[0].habilitado
+          "
+        >
           <td colspan="3"></td>
           <td colspan="2">
             <div class="input-group">
@@ -74,36 +230,85 @@
         </tr>
 
         <!-- TARDE -->
+        <tr></tr>
         <tr
-          *ngIf="
-            18 >= colegioSvc.horaFinal && colegioSvc.horaFinal > 12;
-            else turnoNoche
-          "
+          *ngIf="colegioSvc.turnoArray[1].habilitado; else tardeDeshabilitado"
         >
-          <td colspan="7" class="table-active">
-            TURNO TARDE (12:00 pm - {{ colegioSvc.finalizacionHorario }} pm)
+          <td colspan="2" class="table-active"></td>
+          <td colspan="4" class="table-active">
+            TURNO TARDE (
+            <input
+              type="Time"
+              min="00:00"
+              max="{{ colegioSvc.turnoArray[1].finalizacion }}"
+              required
+              class="form-control d-inline w-25 mx-1"
+              [(ngModel)]="colegioSvc.turnoArray[1].inicio"
+              (input)="completarTurnos(1)"
+            />
+
+            <input
+              type="Time"
+              required
+              class="form-control d-inline w-25 mx-1"
+              [(ngModel)]="colegioSvc.turnoArray[1].finalizacion"
+              (input)="completarTurnos(1)"
+            />
+            )
+          </td>
+          <td colspan="1" class="table-active">
+            <div
+              class="form-check form-switch d-inline-block float-end my-3"
+              (click)="estadoTurno('tarde')"
+            >
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                checked
+              />
+            </div>
           </td>
         </tr>
-        <ng-template #turnoNoche>
-          <tr *ngIf="colegioSvc.horaFinal == 12; else turnoNoche2"></tr>
-          <ng-template #turnoNoche2>
-            <tr>
-              <td colspan="7" class="table-active">
-                TURNO TARDE (12:00 am - 18:00 pm)
-              </td>
-            </tr>
-          </ng-template>
+        <ng-template #tardeDeshabilitado>
+          <tr>
+            <td colspan="2" class="table-active"></td>
+
+            <td colspan="4" class="table-active">
+              <label class="my-2"> TURNO TARDE ( DESHABILITADO ) </label>
+            </td>
+            <td colspan="1" class="table-active">
+              <div
+                class="form-check form-switch d-inline-block float-end my-3"
+                (click)="estadoTurno('tarde')"
+              >
+                <input class="form-check-input" type="checkbox" role="switch" />
+              </div>
+            </td>
+          </tr>
         </ng-template>
+
+        <!-- FILA DE CLASE -->
 
         <tr
           *ngFor="let turno of colegioSvc.turnoArray[1].modulos"
           class="bg-white"
         >
-          <td colspan="2" class="text-black">
+          <td
+            colspan="2"
+            class="text-black"
+            *ngIf="colegioSvc.turnoArray[1].habilitado"
+          >
             {{ turno.inicio }} - {{ turno.final }}
           </td>
-          <td colspan="4" class="text-black">CLASE</td>
-          <td class="bg-light">
+          <td
+            colspan="4"
+            class="text-black"
+            *ngIf="colegioSvc.turnoArray[1].habilitado"
+          >
+            CLASE
+          </td>
+          <td class="bg-light" *ngIf="colegioSvc.turnoArray[1].habilitado">
             <svg
               (click)="deleteModulo('tarde', turno)"
               xmlns="http://www.w3.org/2000/svg"
@@ -120,11 +325,14 @@
           </td>
         </tr>
 
+        <!-- BOTON ADD MODULO -->
         <tr
           *ngIf="
-            (18 >= colegioSvc.horaFinal && colegioSvc.horaFinal > 12) ||
-              18 <= colegioSvc.horaFinal;
-            else turnoNoche3
+            this.colegioSvc.duracionModulo >= 20 &&
+            this.colegioSvc.duracionModulo <= 60 &&
+            colegioSvc.turnoArray[1].inicio != '' &&
+            colegioSvc.turnoArray[1].finalizacion != '' &&
+            colegioSvc.turnoArray[1].habilitado
           "
         >
           <td colspan="3"></td>
@@ -151,26 +359,87 @@
               </button>
             </div>
           </td>
-          <td colspan="3"></td>
         </tr>
-        <ng-template #turnoNoche3></ng-template>
 
         <!-- NOCHE -->
-        <tr *ngIf="colegioSvc.horaFinal > 18">
-          <td colspan="7" class="table-active">
-            TURNO NOCHE (18:00 pm - {{ colegioSvc.finalizacionHorario }} pm)
+        <tr
+          *ngIf="colegioSvc.turnoArray[2].habilitado; else nocheDeshabilitado"
+        >
+          <td colspan="2" class="table-active"></td>
+          <td colspan="4" class="table-active">
+            TURNO NOCHE (
+            <input
+              type="Time"
+              min="00:00"
+              max="{{ colegioSvc.turnoArray[2].finalizacion }}"
+              required
+              class="form-control d-inline w-25 mx-1"
+              [(ngModel)]="colegioSvc.turnoArray[2].inicio"
+              (input)="completarTurnos(2)"
+            />
+            -
+            <input
+              type="Time"
+              required
+              class="form-control d-inline w-25 mx-1"
+              [(ngModel)]="colegioSvc.turnoArray[2].finalizacion"
+              (input)="completarTurnos(2)"
+            />
+            )
+          </td>
+          <td colspan="1" class="table-active">
+            <div
+              class="form-check form-switch d-inline-block float-end my-3"
+              (click)="estadoTurno('noche')"
+            >
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                checked
+              />
+            </div>
           </td>
         </tr>
+        <ng-template #nocheDeshabilitado>
+          <tr>
+            <td colspan="2" class="table-active"></td>
+
+            <td colspan="4" class="table-active">
+              <label class="my-2"> TURNO NOCHE ( DESHABILITADO ) </label>
+            </td>
+            <td colspan="1" class="table-active">
+              <div
+                class="form-check form-switch d-inline-block float-end my-3"
+                (click)="estadoTurno('noche')"
+              >
+                <input class="form-check-input" type="checkbox" role="switch" />
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <!-- FILA DE CLASE -->
 
         <tr
           *ngFor="let turno of colegioSvc.turnoArray[2].modulos"
           class="bg-white"
         >
-          <td colspan="2" class="text-black">
+          <td
+            colspan="2"
+            class="text-black"
+            *ngIf="colegioSvc.turnoArray[2].habilitado"
+          >
             {{ turno.inicio }} - {{ turno.final }}
           </td>
-          <td colspan="4" class="text-black">CLASE</td>
-          <td class="bg-light">
+          <td
+            colspan="4"
+            class="text-black"
+            *ngIf="colegioSvc.turnoArray[2].habilitado"
+          >
+            CLASE
+          </td>
+          <td class="bg-light" *ngIf="colegioSvc.turnoArray[2].habilitado">
             <svg
               (click)="deleteModulo('noche', turno)"
               xmlns="http://www.w3.org/2000/svg"
@@ -187,7 +456,16 @@
           </td>
         </tr>
 
-        <tr *ngIf="colegioSvc.horaFinal > 18">
+        <!-- BOTON ADD MODULO -->
+        <tr
+          *ngIf="
+            this.colegioSvc.duracionModulo >= 20 &&
+            this.colegioSvc.duracionModulo <= 60 &&
+            colegioSvc.turnoArray[2].inicio != '' &&
+            colegioSvc.turnoArray[2].finalizacion != '' &&
+            colegioSvc.turnoArray[2].habilitado
+          "
+        >
           <td colspan="3"></td>
           <td colspan="2">
             <div class="input-group">
@@ -212,43 +490,8 @@
               </button>
             </div>
           </td>
-          <td colspan="3"></td>
         </tr>
       </tbody>
     </table>
   </ul>
-  <!-- <div class="d-grid">
-    <button
-      *ngIf="
-        colegioSvc.botonesCrearColegioProgreso <= 1 &&
-        (colegioSvc.turnoArray[0].modulos.length > 2 ||
-          colegioSvc.turnoArray[0].modulos.length == 0) &&
-        (colegioSvc.turnoArray[1].modulos.length > 2 ||
-          colegioSvc.turnoArray[1].modulos.length == 0) &&
-        (colegioSvc.turnoArray[2].modulos.length > 2 ||
-          colegioSvc.turnoArray[2].modulos.length == 0) &&
-        colegioSvc.turnoArray[0].modulos.length +
-          colegioSvc.turnoArray[1].modulos.length +
-          colegioSvc.turnoArray[2].modulos.length >
-          2
-      "
-      (click)="goFormAula()"
-      class="btn btn-primary btn-lg mt-4"
-    >
-      SIGUIENTE
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="1.10em"
-        height="1.10em"
-        fill="currentColor"
-        class="bi bi-arrow-right"
-        viewBox="0 0 16 16"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-        />
-      </svg>
-    </button>
-  </div> -->
 </div>

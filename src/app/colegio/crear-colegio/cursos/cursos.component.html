@@ -24,9 +24,9 @@
                   class="form-select"
                   [(ngModel)]="selectedCurso.turnoPreferido"
                 >
-                  <option value="manana">Mañana</option>
-                  <option value="tarde">Tarde</option>
-                  <option value="noche">Noche</option>
+                  <option *ngIf="colegioSvc.turnoArray[0].habilitado" value="manana">Mañana</option>
+                  <option *ngIf="colegioSvc.turnoArray[1].habilitado" value="tarde">Tarde</option>
+                  <option *ngIf="colegioSvc.turnoArray[2].habilitado" value="noche">Noche</option>
                 </select>
 
                 <input
@@ -74,7 +74,7 @@
         <td colspan="2">
           <div class="d-grid">
             <button
-              *ngIf="colegioSvc.botonesCrearColegioProgreso <= 3 && colegioSvc.cursoArray.length != 0"
+              *ngIf="colegioSvc.botonesCrearColegio <= 3 && colegioSvc.cursoArray.length != 0"
               (click)="goFormProfesor()"
               class="btn btn-primary btn-lg mt-4"
             >

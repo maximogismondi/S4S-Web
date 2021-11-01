@@ -10,7 +10,7 @@ export class User {
 //   tema: boolean;
 // }
 
-export interface Colegio {
+export class Colegio {
   id: string;
   userAdmin: string;
   nombre: string;
@@ -18,9 +18,7 @@ export interface Colegio {
   provincia: string;
   telefono: string;
   duracionModulo: number;
-  inicioHorario: string;
-  finalizacionHorario: string;
-  botonesCrearColegioProgreso: number;
+  botonesCrearColegio: number;
   usuariosExtensiones: Array<string>;
   aulas: Array<Aula>;
   turnos: Array<Turno>;
@@ -31,6 +29,9 @@ export interface Colegio {
 
 export class Turno {
   turno: string;
+  inicio: string;
+  finalizacion: string;
+  habilitado: boolean;
   modulos: Array<Modulo> = [];
   constructor(turno: string) {
     this.turno = turno;
@@ -68,6 +69,7 @@ export class Profesor {
   apellido: string = '';
   dni: string = '';
   disponibilidad: any = {};
+
   constructor(turnoArray: Array<Turno>) {
     let mapDisponibilidad: any = {};
     const dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
@@ -90,22 +92,11 @@ export class Materia {
   cantidadDeModulosTotal: string = '';
   cantidadMaximaDeModulosPorDia: string = '';
   curso: string = '';
-  profesoresCapacitados: any = {};
-  aulasMateria: any = {};
+  profesoresCapacitados: Array<string> = [];
+  aulasMateria: Array<string> = [];
 
-  constructor(profesorArray: Array<Profesor>, aulaArray: Array<Aula>) {
-    // let mapProfesoresCapacitados: any = {};
-    // let mapAulaMateria: any = {};
-    this.profesoresCapacitados = {};
-    this.aulasMateria = {};
-
-    profesorArray.forEach((profesor) => {
-      this.profesoresCapacitados[profesor.nombre + ' ' + profesor.apellido] = false;
-    });
-
-    aulaArray.forEach((aula) => {
-      this.aulasMateria[aula.nombre] = false;
-    });
+  constructor() {
+    this.profesoresCapacitados = [];
+    this.aulasMateria = [];
   }
-
 }

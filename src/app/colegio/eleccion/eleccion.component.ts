@@ -51,9 +51,9 @@ export class EleccionComponent implements OnInit {
       provincia: ['', Validators.required],
       localidad: ['', Validators.required],
       telefono: ['', Validators.required],
-      duracionModulo: ['', Validators.required],
-      inicioHorario: ['', Validators.required],
-      finalizacionHorario: ['', Validators.required],
+      // duracionModulo: ['', Validators.required],
+      // inicioHorario: ['', Validators.required],
+      // finalizacionHorario: ['', Validators.required],
     });
 
     this.unirseColegioForm = this.fb.group({
@@ -83,18 +83,18 @@ export class EleccionComponent implements OnInit {
       provincia,
       localidad,
       telefono,
-      duracionModulo,
-      inicioHorario,
-      finalizacionHorario,
+      // duracionModulo,
+      // inicioHorario,
+      // finalizacionHorario,
     } = this.crearColegioForm.value;
     const school = await this.authSvc.createSchool(
       nombre,
       provincia,
       localidad,
       telefono,
-      duracionModulo,
-      inicioHorario,
-      finalizacionHorario,
+      // duracionModulo,
+      // inicioHorario,
+      // finalizacionHorario,
       await this.id
     );
   }
@@ -141,7 +141,7 @@ export class EleccionComponent implements OnInit {
                           '/' + nombreColegio + '/crear-colegio',
                         ]);
                       } else {
-                        alert('Ya preteneces a ' + nombreColegio + '.');
+                        alert('Ya perteneces a ' + nombreColegio + '.');
                       }
                     });
                   });
