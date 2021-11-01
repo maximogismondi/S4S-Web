@@ -69,6 +69,7 @@ export class Profesor {
   apellido: string = '';
   dni: string = '';
   disponibilidad: any = {};
+
   constructor(turnoArray: Array<Turno>) {
     let mapDisponibilidad: any = {};
     const dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
@@ -81,6 +82,7 @@ export class Profesor {
         });
       });
     });
+    
     this.disponibilidad = mapDisponibilidad;
   }
 }

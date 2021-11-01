@@ -3,8 +3,6 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { AuthService } from 'src/app/auth/services/auth.service';
 import {
   Aula,
   Colegio,
@@ -176,7 +174,6 @@ export class ProfesoresComponent implements OnInit {
               this.colegioSvc.selectedProfesor.apellido
           )
         ) {
-          console.log("a")
           materia.profesoresCapacitados.splice(
             materia.profesoresCapacitados.indexOf(
               this.colegioSvc.selectedProfesor.nombre +

@@ -250,12 +250,21 @@ export class TurnosComponent implements OnInit {
         ? 1
         : 2;
 
+    this.colegioSvc.profesorArray.forEach((profesor) => {
+      ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'].forEach((dia) => {
+        delete profesor.disponibilidad[dia][turnoSeleccionado][
+          moduloBorrar.inicio
+        ];
+      });
+    });
+
     this.colegioSvc.turnoArray[nTurno].modulos = this.colegioSvc.turnoArray[
       nTurno
     ].modulos.filter((modulo) => {
       return modulo.inicio != moduloBorrar.inicio;
     });
 
+    this.colegioSvc.updateDBProfesor();
     this.updateDBTurnos();
   }
 }
