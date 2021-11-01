@@ -165,6 +165,7 @@ export class FinalizarComponent implements OnInit {
               ] =
                 materiasProfesoresHechos[materia.nombre + '-' + materia.curso];
             });
+
             this.colegioSvc.horarioGenerado = true;
           }
         })
@@ -176,26 +177,28 @@ export class FinalizarComponent implements OnInit {
     let jsonMaterias: any = [];
     this.colegioSvc.cursoArray.forEach((curso) => {
       this.colegioSvc.turnoArray.forEach((turno) => {
-        if (turno.modulos.length > 0) {
-          jsonMaterias.push({
-            Curso: curso.nombre,
-            Modulo: turno.turno,
-          });
-        }
-        turno.modulos.forEach((modulo) => {
-          jsonMaterias.push({
-            Modulo: modulo.inicio + ' - ' + modulo.final,
-          });
+        if (turno.habilitado == true) {
+          if (turno.modulos.length > 0) {
+            jsonMaterias.push({
+              Curso: curso.nombre,
+              Modulo: turno.turno,
+            });
+          }
+          turno.modulos.forEach((modulo) => {
+            jsonMaterias.push({
+              Modulo: modulo.inicio + ' - ' + modulo.final,
+            });
 
-          this.colegioSvc.dias.forEach((dia) => {
-            jsonMaterias[jsonMaterias.length - 1][dia] =
-              this.horariosHechos[curso.nombre][dia][turno.turno][
-                modulo.inicio
-              ];
+            this.colegioSvc.dias.forEach((dia) => {
+              jsonMaterias[jsonMaterias.length - 1][dia] =
+                this.horariosHechos[curso.nombre][dia][turno.turno][
+                  modulo.inicio
+                ];
+            });
           });
-        });
-        if (turno.modulos.length > 0) {
-          jsonMaterias.push({});
+          if (turno.modulos.length > 0) {
+            jsonMaterias.push({});
+          }
         }
       });
       jsonMaterias.push({});

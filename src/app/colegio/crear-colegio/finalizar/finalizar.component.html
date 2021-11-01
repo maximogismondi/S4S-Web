@@ -1,7 +1,7 @@
 <div class="col-md-8 mx-auto">
   <div class="card mt-6">
-    <div class="card-body">
-      <p *ngIf="colegioSvc.horarioGenerado">
+    <div class="card-body text-center">
+      <ng-container *ngIf="colegioSvc.horarioGenerado">
         <label class="mt-2">Cursos</label>
         <select class="form-select" [(ngModel)]="colegioSvc.cursoActual">
           <option
@@ -11,7 +11,7 @@
             {{ curso.nombre }}
           </option>
         </select>
-      </p>
+      </ng-container>
 
       <table *ngIf="colegioSvc.horarioGenerado" class="table text-center">
         <thead>
@@ -79,7 +79,9 @@
                           materiasProfesoresHechos[
                             horariosHechos[colegioSvc.cursoActual][dia][
                               "manana"
-                            ][modulo.inicio]
+                            ][modulo.inicio] +
+                              "-" +
+                              colegioSvc.cursoActual
                           ]
                         }}</span>
                       </li>
@@ -217,10 +219,31 @@
               </td>
             </tr>
           </ng-container>
-
-          
         </tbody>
       </table>
+
+      <button
+        *ngIf="colegioSvc.horarioGenerado"
+        class="btn btn-primary my-2"
+        (click)="exportAsExcelFile()"
+      >
+        Descargar Horarios 
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-download ms-1"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
+          />
+          <path
+            d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
+          />
+        </svg>
+      </button>
 
       <div
         *ngIf="colegioSvc.botonPresionado && !colegioSvc.horarioGenerado"
@@ -244,10 +267,6 @@
           Generando Horarios (Esto podria demorar)...
         </button>
       </div>
-
-      <button class="btn btn-primary" (click)="exportAsExcelFile()">
-        deownload
-      </button>
 
       <div *ngIf="!colegioSvc.botonPresionado" class="d-grid">
         <!-- *ngIf="colegioSvc.pagoFinalizado else pagar" -->
