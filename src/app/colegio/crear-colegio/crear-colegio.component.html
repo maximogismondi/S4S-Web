@@ -12,7 +12,7 @@
     <div class="card">
       <div class="card-body">
         <div class="row align-items-end">
-          <!-- *ngIf="colegioSvc.botonesCrearColegio >= 1; else bloquearBoton" -->
+          <!-- *ngIf="colegioSvc.botonesCrearColegioProgreso >= 1; else bloquearBoton" -->
 
           <button
             [ngClass]="{ 'btn-primary': colegioSvc.botonesCrearColegio == 1 }"
@@ -21,7 +21,7 @@
           >
             Turnos</button
           ><!-- *ngIf="
-            colegioSvc.botonesCrearColegio >= 2 && colegioSvc.turnos != 0;
+            colegioSvc.botonesCrearColegioProgreso >= 2 && colegioSvc.turnos != 0;
               else bloquearBoton0
             " -->
           <button
@@ -32,7 +32,7 @@
             Aulas
           </button>
           <!-- *ngIf="
-            colegioSvc.botonesCrearColegio >= 3 && colegioSvc.turnos != 0 && colegioSvc.aulas != 0;
+            colegioSvc.botonesCrearColegioProgreso >= 3 && colegioSvc.turnos != 0 && colegioSvc.aulas != 0;
               else bloquearBoton1
             " -->
           <button
@@ -42,7 +42,7 @@
           >
             Cursos</button
           ><!-- *ngIf="
-            colegioSvc.botonesCrearColegio >= 4 &&
+            colegioSvc.botonesCrearColegioProgreso >= 4 &&
               colegioSvc.turnos != 0 &&
                 colegioSvc.aulas != 0 &&
                 colegioSvc.cursos != 0;
@@ -55,7 +55,7 @@
           >
             Profesores</button
           ><!-- *ngIf="
-            colegioSvc.botonesCrearColegio >= 5 &&
+            colegioSvc.botonesCrearColegioProgreso >= 5 &&
               colegioSvc.turnos != 0 &&
                 colegioSvc.aulas != 0 &&
                 colegioSvc.cursos != 0 &&
@@ -70,7 +70,7 @@
             Materias
           </button>
           <!-- *ngIf="
-              colegioSvc.botonesCrearColegio >= 6 &&
+              colegioSvc.botonesCrearColegioProgreso >= 6 &&
                 colegioSvc.turnos != 0 &&
                 colegioSvc.aulas != 0 &&
                 colegioSvc.cursos != 0 &&

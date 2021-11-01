@@ -25,16 +25,16 @@ export class ColegioService {
   duracionModulo: number;
   inicioHorario: string;
   finalizacionHorario: string;
-  // turnos: number;
-  // aulas: number;
-  // materias: number;
-  // cursos: number;
-  // profesores: number;
+  turnos: number;
+  aulas: number;
+  materias: number;
+  cursos: number;
+  profesores: number;
+  turnoSeleccionado: string;
   horaInicial: number;
   horaFinal: number;
-  inicioModuloSeleccionado: Array<string> = [];
   botonesCrearColegio: number = 1;
-  // botonesCrearColegio: number;
+  botonesCrearColegioProgreso: number;
   disponibilidadProfesor: boolean = false;
   disponibilidadProfesorSemana: Array<Array<Array<boolean>>> = [];
   turnoArray: Array<Turno> = [
@@ -42,6 +42,7 @@ export class ColegioService {
     new Turno('tarde'),
     new Turno('noche'),
   ];
+  inicioModuloSeleccionado: Array<string> = [];
   profesorArray: Profesor[] = [];
   selectedProfesor: Profesor;
   // usuariosExtensionesArray: string[] = [];
@@ -53,14 +54,13 @@ export class ColegioService {
   nombreMateria: string;
   aulaMateria: string;
   cursoActual: string;
-  dias: Array<string> = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
+  dias: Array<string>= ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
   botonPresionado: boolean = false;
   horarioGenerado: boolean = false;
   cursoMateriaArray: Curso[];
   tiposAulas: Array<Aula[]> = new Array();
   pagoFinalizado: boolean = false;
   materiasArrayValidas: any = {};
-  school: Colegio;
 
   constructor(
     private router: Router,
@@ -77,56 +77,48 @@ export class ColegioService {
           .doc(this.nombreColegio)
           .snapshotChanges()
           .subscribe((colegio) => {
-            this.school = colegio.payload.data() as Colegio;
+            const school = colegio.payload.data() as Colegio;
 
-            this.duracionModulo = this.school.duracionModulo;
-            // this.inicioHorario = school.inicioHorario;
-            // this.finalizacionHorario = school.finalizacionHorario;
+            this.duracionModulo = school.duracionModulo;
+            this.inicioHorario = school.inicioHorario;
+            this.finalizacionHorario = school.finalizacionHorario;
+            if (this.inicioModuloSeleccionado.length == 0) {
+              this.inicioModuloSeleccionado.push('05:00', '12:00', '18:00');
+              if (school.inicioHorario < '12:00') {
+                this.inicioModuloSeleccionado[0] = school.inicioHorario;
+              } else if (school.inicioHorario < '18:00') {
+                this.inicioModuloSeleccionado[1] = school.inicioHorario;
+              } else {
+                this.inicioModuloSeleccionado[2] = school.inicioHorario;
+              }
+            }
 
             this.horaInicial = Number(String(this.inicioHorario).split(':')[0]);
 
             this.horaFinal = Number(
               String(this.finalizacionHorario).split(':')[0]
             );
-            // this.turnos =
-            //   this.school.turnos[0].modulos.length +
-            //   this.school.turnos[1].modulos.length +
-            //   this.school.turnos[2].modulos.length;
+            this.turnos =
+              school.turnos[0].modulos.length +
+              school.turnos[1].modulos.length +
+              school.turnos[2].modulos.length;
+            this.aulas = school.aulas.length;
+            this.materias = school.materias.length;
+            this.cursos = school.cursos.length;
+            this.profesores = school.profesores.length;
 
-            // this.aulas = this.school.aulas.length;
-            // this.materias = this.school.materias.length;
-            // this.cursos = this.school.cursos.length;
-            // this.profesores = this.school.profesores.length;
+            this.botonesCrearColegioProgreso =
+              school.botonesCrearColegioProgreso;
 
-            this.botonesCrearColegio = this.school.botonesCrearColegio;
+            this.turnoArray = school.turnos;
 
-            this.turnoArray[0] = Object.assign(
-              new Turno('manana'),
-              this.school.turnos[0]
-            ) as Turno;
-            this.turnoArray[1] = Object.assign(
-              new Turno('tarde'),
-              this.school.turnos[1]
-            ) as Turno;
-            this.turnoArray[2] = Object.assign(
-              new Turno('noche'),
-              this.school.turnos[2]
-            ) as Turno;
+            this.aulaArray = school.aulas;
 
-            if (this.inicioModuloSeleccionado.length == 0) {
-              this.inicioModuloSeleccionado.push(
-                this.school.turnos[0].inicio,
-                this.school.turnos[1].inicio,
-                this.school.turnos[2].inicio
-              );
-            }
-            this.aulaArray = this.school.aulas;
+            this.cursoArray = school.cursos;
 
-            this.cursoArray = this.school.cursos;
+            this.profesorArray = school.profesores;
 
-            this.profesorArray = this.school.profesores;
-
-            this.materiaArray = this.school.materias;
+            this.materiaArray = school.materias;
 
             // this.usuariosExtensionesArray = school.usuariosExtensiones;
 
@@ -146,7 +138,10 @@ export class ColegioService {
               this.selectedProfesor = new Profesor(this.turnoArray);
             }
             if (!this.selectedMateria) {
-              this.selectedMateria = new Materia();
+              this.selectedMateria = new Materia(
+                this.profesorArray,
+                this.aulaArray
+              );
             }
             if (this.cursoArray.length > 0) {
               this.cursoActual = this.cursoArray[0].nombre;
@@ -160,7 +155,7 @@ export class ColegioService {
             this.aulaArray.forEach((aula) => {
               let agregado: boolean = false;
               this.tiposAulas.forEach((tipoAulas) => {
-                if (aula.otro == tipoAulas[0].otro) {
+                if (tipoAulas.length > 0 && aula.otro == tipoAulas[0].otro) {
                   agregado = true;
                   tipoAulas.push(aula);
                 }
@@ -174,8 +169,10 @@ export class ColegioService {
               this.materiaArray.forEach((materia) => {
                 if (materia.curso == curso.nombre) {
                   this.materiasArrayValidas[curso.nombre][materia.nombre] =
-                    materia.profesoresCapacitados.length > 0 &&
-                    materia.aulasMateria.length > 0 &&
+                    Object.values(materia.profesoresCapacitados).includes(
+                      true
+                    ) &&
+                    Object.values(materia.aulasMateria).includes(true) &&
                     materia.curso != '';
                 }
               });
@@ -186,16 +183,47 @@ export class ColegioService {
   }
 
   async updateDBMateria() {
-    this.selectedMateria = new Materia();
+    this.selectedMateria = new Materia(this.profesorArray, this.aulaArray);
     let materiaArrayDiccionario: Array<any> = [];
     this.materiaArray.forEach((materia) => {
+      let aulasMateria: any = {};
+      let profesoresMateria: any = {};
+      let cursoMateria: string = '';
+      this.cursoArray.forEach((curso) => {
+        if (curso.nombre == materia.curso) {
+          cursoMateria = curso.nombre;
+        }
+      });
+      this.aulaArray.forEach((aula) => {
+        if (materia.aulasMateria[aula.nombre])
+          aulasMateria[aula.nombre] = materia.aulasMateria[aula.nombre];
+        else aulasMateria[aula.nombre] = false;
+      });
+      this.profesorArray.forEach((profesor) => {
+        if (
+          materia.profesoresCapacitados[
+            profesor.nombre + ' ' + profesor.apellido
+          ]
+        )
+          profesoresMateria[profesor.nombre + ' ' + profesor.apellido] =
+            materia.profesoresCapacitados[
+              profesor.nombre + ' ' + profesor.apellido
+            ];
+        else
+          profesoresMateria[profesor.nombre + ' ' + profesor.apellido] = false;
+      });
       materiaArrayDiccionario.push({
         nombre: materia.nombre,
         cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
-        curso: materia.curso,
-        profesoresCapacitados: materia.profesoresCapacitados,
-        aulasMateria: materia.aulasMateria,
+        curso: cursoMateria,
+        profesoresCapacitados: profesoresMateria,
+        aulasMateria: aulasMateria,
         cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
+        // id: materia.id,
+        // cantProfesores: materia.cantProfesores,
+        // espacioEntreDias: materia.espacioEntreDias,
+        // tipoAula: materia.tipo,
+        // otro: materia.otro,
       });
     });
     this.afs.collection('schools').doc(this.nombreColegio).update({

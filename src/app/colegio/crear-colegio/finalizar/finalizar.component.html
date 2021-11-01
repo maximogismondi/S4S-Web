@@ -1,7 +1,7 @@
 <div class="col-md-8 mx-auto">
   <div class="card mt-6">
-    <div class="card-body text-center">
-      <ng-container *ngIf="colegioSvc.horarioGenerado">
+    <div class="card-body">
+      <p *ngIf="colegioSvc.horarioGenerado">
         <label class="mt-2">Cursos</label>
         <select class="form-select" [(ngModel)]="colegioSvc.cursoActual">
           <option
@@ -11,7 +11,7 @@
             {{ curso.nombre }}
           </option>
         </select>
-      </ng-container>
+      </p>
 
       <table *ngIf="colegioSvc.horarioGenerado" class="table text-center">
         <thead>
@@ -27,223 +27,142 @@
         </thead>
         <tbody>
           <!-- MAÑANA -->
-          <tr *ngIf="colegioSvc.turnoArray[0].habilitado">
+          <tr
+            *ngIf="12 >= colegioSvc.horaInicial && colegioSvc.horaInicial >= 5"
+          >
             <td colspan="7" class="table-active">INICIO ACTIVIDADES</td>
           </tr>
-          <ng-container *ngIf="colegioSvc.turnoArray[0].habilitado">
-            <tr
-              *ngFor="
-                let modulo of colegioSvc.turnoArray[0].modulos;
-                let m = index
-              "
-              class="bg-white"
+          <tr
+            *ngFor="
+              let modulo of colegioSvc.turnoArray[0].modulos;
+              let m = index
+            "
+            class="bg-white"
+          >
+            <td colspan="2" class="text-black">
+              {{ modulo.inicio }} - {{ modulo.final }}
+            </td>
+            <td
+              *ngFor="let dia of colegioSvc.dias; let d = index"
+              colspan="1"
+              class="text-black"
             >
-              <td colspan="2" class="text-black">
-                {{ modulo.inicio }} - {{ modulo.final }}
-              </td>
-              <td
-                *ngFor="let dia of colegioSvc.dias; let d = index"
-                colspan="1"
-                class="text-black"
+              <li
+                *ngIf="horariosHechos[colegioSvc.cursoActual][dia]['manana'][modulo.inicio] != ''"
+                class="list-group-item list-group-item-action"
+                data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapseExampleManana' + d + m"
+                aria-expanded="false"
               >
-                <li
-                  *ngIf="
-                    horariosHechos[colegioSvc.cursoActual][dia]['manana'][
-                      modulo.inicio
-                    ] != ''
-                  "
-                  class="list-group-item list-group-item-action"
-                  data-bs-toggle="collapse"
-                  [attr.data-bs-target]="'#collapseExampleManana' + d + m"
-                  aria-expanded="false"
-                >
-                  <div>
-                    {{
-                      horariosHechos[colegioSvc.cursoActual][dia]["manana"][
-                        modulo.inicio
-                      ]
-                    }}
-                    <div
-                      class="collapse"
-                      [attr.id]="'collapseExampleManana' + d + m"
-                    >
-                      <li class="list-group-item">
-                        <span>{{
-                          horariosAulasHechos[colegioSvc.cursoActual][dia][
-                            "manana"
-                          ][modulo.inicio]
-                        }}</span>
-                      </li>
-                      <li class="list-group-item">
-                        <span>{{
-                          materiasProfesoresHechos[
-                            horariosHechos[colegioSvc.cursoActual][dia][
-                              "manana"
-                            ][modulo.inicio] +
-                              "-" +
-                              colegioSvc.cursoActual
-                          ]
-                        }}</span>
-                      </li>
-                    </div>
+                <div>
+                  {{horariosHechos[colegioSvc.cursoActual][dia]["manana"][modulo.inicio]}}
+                  <div
+                    class="collapse"
+                    [attr.id]="'collapseExampleManana' + d + m"
+                  >
+                    <li class="list-group-item">
+                      <span>{{horariosAulasHechos[colegioSvc.cursoActual][dia]["manana"][modulo.inicio]}}</span>
+                    </li>
+                    <li class="list-group-item">
+                      <span>{{materiasProfesoresHechos[horariosHechos[colegioSvc.cursoActual][dia]["manana"][modulo.inicio]]}}</span>
+                    </li>
                   </div>
-                </li>
-              </td>
-            </tr>
-          </ng-container>
+                </div>
+              </li>
+            </td>
+          </tr>
 
           <!-- TARDE -->
-          <tr *ngIf="colegioSvc.turnoArray[1].habilitado">
-            <td colspan="7" class="table-active">INICIO ACTIVIDADES</td>
-          </tr>
-          <ng-container *ngIf="colegioSvc.turnoArray[1].habilitado">
-            <tr
-              *ngFor="
-                let modulo of colegioSvc.turnoArray[1].modulos;
-                let m = index
-              "
-              class="bg-white"
-            >
-              <td colspan="2" class="text-black">
-                {{ modulo.inicio }} - {{ modulo.final }}
-              </td>
-              <td
-                *ngFor="let dia of colegioSvc.dias; let d = index"
-                colspan="1"
-                class="text-black"
-              >
-                <li
-                  *ngIf="
-                    horariosHechos[colegioSvc.cursoActual][dia]['tarde'][
-                      modulo.inicio
-                    ] != ''
-                  "
-                  class="list-group-item list-group-item-action"
-                  data-bs-toggle="collapse"
-                  [attr.data-bs-target]="'#collapseExampleTarde' + d + m"
-                  aria-expanded="false"
-                >
-                  <div>
-                    {{
-                      horariosHechos[colegioSvc.cursoActual][dia]["tarde"][
-                        modulo.inicio
-                      ]
-                    }}
-                    <div
-                      class="collapse"
-                      [attr.id]="'collapseExampleTarde' + d + m"
-                    >
-                      <li class="list-group-item">
-                        <span>{{
-                          horariosAulasHechos[colegioSvc.cursoActual][dia][
-                            "tarde"
-                          ][modulo.inicio]
-                        }}</span>
-                      </li>
-                      <li class="list-group-item">
-                        <span>{{
-                          materiasProfesoresHechos[
-                            horariosHechos[colegioSvc.cursoActual][dia][
-                              "tarde"
-                            ][modulo.inicio]
-                          ]
-                        }}</span>
-                      </li>
-                    </div>
-                  </div>
-                </li>
-              </td>
+           <tr *ngIf="18 >= colegioSvc.horaFinal && colegioSvc.horaFinal > 12">
+              <td colspan="7" class="table-active"></td>
             </tr>
-          </ng-container>
+
+            <tr
+            *ngFor="
+              let modulo of colegioSvc.turnoArray[1].modulos;
+              let m = index
+            "
+            class="bg-white"
+          >
+            <td colspan="2" class="text-black">
+              {{ modulo.inicio }} - {{ modulo.final }}
+            </td>
+            <td
+              *ngFor="let dia of colegioSvc.dias; let d = index"
+              colspan="1"
+              class="text-black"
+            >
+              <li
+                *ngIf="horariosHechos[colegioSvc.cursoActual][dia]['tarde'][modulo.inicio] != ''"
+                class="list-group-item list-group-item-action"
+                data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapseExampleTarde' + d + m"
+                aria-expanded="false"
+              >
+                <div>
+                  {{horariosHechos[colegioSvc.cursoActual][dia]["tarde"][modulo.inicio]}}
+                  <div
+                    class="collapse"
+                    [attr.id]="'collapseExampleTarde' + d + m"
+                  >
+                    <li class="list-group-item">
+                      <span>{{horariosAulasHechos[colegioSvc.cursoActual][dia]["tarde"][modulo.inicio]}}</span>
+                    </li>
+                    <li class="list-group-item">
+                      <span>{{materiasProfesoresHechos[horariosHechos[colegioSvc.cursoActual][dia]["tarde"][modulo.inicio]]}}</span>
+                    </li>
+                  </div>
+                </div>
+              </li>
+            </td>
+          </tr>
 
           <!-- NOCHE -->
-          <tr *ngIf="colegioSvc.turnoArray[2].habilitado">
-            <td colspan="7" class="table-active">INICIO ACTIVIDADES</td>
-          </tr>
-          <ng-container *ngIf="colegioSvc.turnoArray[2].habilitado">
-            <tr
-              *ngFor="
-                let modulo of colegioSvc.turnoArray[2].modulos;
-                let m = index
-              "
-              class="bg-white"
-            >
-              <td colspan="2" class="text-black">
-                {{ modulo.inicio }} - {{ modulo.final }}
-              </td>
-              <td
-                *ngFor="let dia of colegioSvc.dias; let d = index"
-                colspan="1"
-                class="text-black"
-              >
-                <li
-                  *ngIf="
-                    horariosHechos[colegioSvc.cursoActual][dia]['noche'][
-                      modulo.inicio
-                    ] != ''
-                  "
-                  class="list-group-item list-group-item-action"
-                  data-bs-toggle="collapse"
-                  [attr.data-bs-target]="'#collapseExampleNoche' + d + m"
-                  aria-expanded="false"
-                >
-                  <div>
-                    {{
-                      horariosHechos[colegioSvc.cursoActual][dia]["noche"][
-                        modulo.inicio
-                      ]
-                    }}
-                    <div
-                      class="collapse"
-                      [attr.id]="'collapseExampleNoche' + d + m"
-                    >
-                      <li class="list-group-item">
-                        <span>{{
-                          horariosAulasHechos[colegioSvc.cursoActual][dia][
-                            "noche"
-                          ][modulo.inicio]
-                        }}</span>
-                      </li>
-                      <li class="list-group-item">
-                        <span>{{
-                          materiasProfesoresHechos[
-                            horariosHechos[colegioSvc.cursoActual][dia][
-                              "noche"
-                            ][modulo.inicio]
-                          ]
-                        }}</span>
-                      </li>
-                    </div>
-                  </div>
-                </li>
-              </td>
+           <tr *ngIf="colegioSvc.horaFinal > 18">
+              <td colspan="7" class="table-active"></td>
             </tr>
-          </ng-container>
+
+            <tr
+            *ngFor="
+              let modulo of colegioSvc.turnoArray[2].modulos;
+              let m = index
+            "
+            class="bg-white"
+          >
+            <td colspan="2" class="text-black">
+              {{ modulo.inicio }} - {{ modulo.final }}
+            </td>
+            <td
+              *ngFor="let dia of colegioSvc.dias; let d = index"
+              colspan="1"
+              class="text-black"
+            >
+              <li
+                *ngIf="horariosHechos[colegioSvc.cursoActual][dia]['noche'][modulo.inicio] != ''"
+                class="list-group-item list-group-item-action"
+                data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapseExampleNoche' + d + m"
+                aria-expanded="false"
+              >
+                <div>
+                  {{horariosHechos[colegioSvc.cursoActual][dia]["noche"][modulo.inicio]}}
+                  <div
+                    class="collapse"
+                    [attr.id]="'collapseExampleNoche' + d + m"
+                  >
+                    <li class="list-group-item">
+                      <span>{{horariosAulasHechos[colegioSvc.cursoActual][dia]["noche"][modulo.inicio]}}</span>
+                    </li>
+                    <li class="list-group-item">
+                      <span>{{materiasProfesoresHechos[horariosHechos[colegioSvc.cursoActual][dia]["noche"][modulo.inicio]]}}</span>
+                    </li>
+                  </div>
+                </div>
+              </li>
+            </td>
+          </tr>
         </tbody>
       </table>
-
-      <button
-        *ngIf="colegioSvc.horarioGenerado"
-        class="btn btn-primary my-2"
-        (click)="exportAsExcelFile()"
-      >
-        Descargar Horarios 
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-download ms-1"
-          viewBox="0 0 16 16"
-        >
-          <path
-            d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
-          />
-          <path
-            d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
-          />
-        </svg>
-      </button>
 
       <div
         *ngIf="colegioSvc.botonPresionado && !colegioSvc.horarioGenerado"
@@ -268,9 +187,13 @@
         </button>
       </div>
 
+      <button class="btn btn-primary" (click)="exportAsExcelFile()">
+        deownload
+      </button>
+
       <div *ngIf="!colegioSvc.botonPresionado" class="d-grid">
         <!-- *ngIf="colegioSvc.pagoFinalizado else pagar" -->
-        <div class="d-grid">
+        <div  class="d-grid">
           <button (click)="finalizar()" class="btn btn-primary btn-lg mt-2">
             Generar mis horarios ya!
           </button>
@@ -278,62 +201,27 @@
         <ng-template #pagar>
           <h5 class="my-3">Usted esta por pagar un procesamiento de:</h5>
           <ul class="list-group">
-            <li
-              class="
-                list-group-item
-                d-flex
-                justify-content-between
-                align-items-center
-              "
-            >
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               Aulas
-              <span class="badge badge-primary badge-pill bg-primary">{{
-                colegioSvc.aulaArray.length
-              }}</span>
+              <span class="badge badge-primary badge-pill bg-primary">{{colegioSvc.aulaArray.length}}</span>
             </li>
-            <li
-              class="
-                list-group-item
-                d-flex
-                justify-content-between
-                align-items-center
-              "
-            >
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               Cursos
-              <span class="badge badge-primary badge-pill bg-primary">{{
-                colegioSvc.cursoArray.length
-              }}</span>
+              <span class="badge badge-primary badge-pill bg-primary">{{colegioSvc.cursoArray.length}}</span>
             </li>
-            <li
-              class="
-                list-group-item
-                d-flex
-                justify-content-between
-                align-items-center
-              "
-            >
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               Profesores
-              <span class="badge badge-primary badge-pill bg-primary">{{
-                colegioSvc.profesorArray.length
-              }}</span>
+              <span class="badge badge-primary badge-pill bg-primary">{{colegioSvc.profesorArray.length}}</span>
             </li>
-            <li
-              class="
-                list-group-item
-                d-flex
-                justify-content-between
-                align-items-center
-              "
-            >
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               Materias
-              <span class="badge badge-primary badge-pill bg-primary"
-                >{{ colegioSvc.materiaArray.length }}
-              </span>
+              <span class="badge badge-primary badge-pill bg-primary">{{colegioSvc.materiaArray.length}} </span>
             </li>
           </ul>
-
+          
           <div class="mercadoPagoBoton mt-5"></div>
         </ng-template>
+        
       </div>
     </div>
   </div>

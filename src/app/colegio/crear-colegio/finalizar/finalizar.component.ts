@@ -78,7 +78,7 @@ export class FinalizarComponent implements OnInit {
     ).data();
     let res: any = await this.http
       .post(
-        'https://s4s-algoritmo.herokuapp.com/algoritmo?nombreColegio=' +
+        'https://s4s-algoritmo.herokuapp.com/algoritmo?idColegio=' +
           this.colegioSvc.nombreColegio,
         { token: token['token'] },
         { responseType: 'text' }
@@ -87,11 +87,15 @@ export class FinalizarComponent implements OnInit {
       .then();
     console.log(res);
     this.afs
-      .doc('schools/' + this.colegioSvc.nombreColegio + '/horarios/' + res)
+      .doc(
+        'horariosHechos/' + this.colegioSvc.nombreColegio + '/horarios/' + res
+      )
       .snapshotChanges()
       .pipe(
         map((horariosReady) => {
           if (horariosReady.payload.exists) {
+            // console.log('ejecuta el obvserver');
+            this.colegioSvc.horarioGenerado = true;
             let horariosHechos = horariosReady.payload.get('horarios');
             let horariosAulasHechos =
               horariosReady.payload.get('horariosAulas');
@@ -103,27 +107,25 @@ export class FinalizarComponent implements OnInit {
               this.colegioSvc.dias.forEach((dia) => {
                 this.horariosHechos[curso.nombre][dia] = {};
                 this.colegioSvc.turnoArray.forEach((turno) => {
-                  if (turno.habilitado == true) {
-                    this.horariosHechos[curso.nombre][dia][turno.turno] = {};
-                    turno.modulos.forEach((modulo) => {
-                      if (
+                  this.horariosHechos[curso.nombre][dia][turno.turno] = {};
+                  turno.modulos.forEach((modulo) => {
+                    if (
+                      horariosHechos[curso.nombre][dia][turno.turno][
+                        turno.modulos.indexOf(modulo) + 1
+                      ].split('-')[0] == 'Hueco'
+                    ) {
+                      this.horariosHechos[curso.nombre][dia][turno.turno][
+                        modulo.inicio
+                      ] = '';
+                    } else {
+                      this.horariosHechos[curso.nombre][dia][turno.turno][
+                        modulo.inicio
+                      ] =
                         horariosHechos[curso.nombre][dia][turno.turno][
                           turno.modulos.indexOf(modulo) + 1
-                        ].split('-')[0] == 'Hueco'
-                      ) {
-                        this.horariosHechos[curso.nombre][dia][turno.turno][
-                          modulo.inicio
-                        ] = '';
-                      } else {
-                        this.horariosHechos[curso.nombre][dia][turno.turno][
-                          modulo.inicio
-                        ] =
-                          horariosHechos[curso.nombre][dia][turno.turno][
-                            turno.modulos.indexOf(modulo) + 1
-                          ].split('-')[0];
-                      }
-                    });
-                  }
+                        ].split('-')[0];
+                    }
+                  });
                 });
               });
             });
@@ -133,28 +135,25 @@ export class FinalizarComponent implements OnInit {
               this.colegioSvc.dias.forEach((dia) => {
                 this.horariosAulasHechos[curso.nombre][dia] = {};
                 this.colegioSvc.turnoArray.forEach((turno) => {
-                  if (turno.habilitado == true) {
-                    this.horariosAulasHechos[curso.nombre][dia][turno.turno] =
-                      {};
-                    turno.modulos.forEach((modulo) => {
-                      if (
+                  this.horariosAulasHechos[curso.nombre][dia][turno.turno] = {};
+                  turno.modulos.forEach((modulo) => {
+                    if (
+                      horariosAulasHechos[curso.nombre][dia][turno.turno][
+                        turno.modulos.indexOf(modulo) + 1
+                      ] == 'Hueco'
+                    ) {
+                      this.horariosAulasHechos[curso.nombre][dia][turno.turno][
+                        modulo.inicio
+                      ] = '';
+                    } else {
+                      this.horariosAulasHechos[curso.nombre][dia][turno.turno][
+                        modulo.inicio
+                      ] =
                         horariosAulasHechos[curso.nombre][dia][turno.turno][
                           turno.modulos.indexOf(modulo) + 1
-                        ] == 'Hueco'
-                      ) {
-                        this.horariosAulasHechos[curso.nombre][dia][
-                          turno.turno
-                        ][modulo.inicio] = '';
-                      } else {
-                        this.horariosAulasHechos[curso.nombre][dia][
-                          turno.turno
-                        ][modulo.inicio] =
-                          horariosAulasHechos[curso.nombre][dia][turno.turno][
-                            turno.modulos.indexOf(modulo) + 1
-                          ];
-                      }
-                    });
-                  }
+                        ];
+                    }
+                  });
                 });
               });
             });
@@ -165,7 +164,6 @@ export class FinalizarComponent implements OnInit {
               ] =
                 materiasProfesoresHechos[materia.nombre + '-' + materia.curso];
             });
-
             this.colegioSvc.horarioGenerado = true;
           }
         })
@@ -177,28 +175,27 @@ export class FinalizarComponent implements OnInit {
     let jsonMaterias: any = [];
     this.colegioSvc.cursoArray.forEach((curso) => {
       this.colegioSvc.turnoArray.forEach((turno) => {
-        if (turno.habilitado == true) {
-          if (turno.modulos.length > 0) {
-            jsonMaterias.push({
-              Curso: curso.nombre,
-              Modulo: turno.turno,
-            });
-          }
-          turno.modulos.forEach((modulo) => {
+        if (turno.modulos.length > 0) {
+          jsonMaterias.push({
+            Curso: curso.nombre,
+            Modulo: turno.turno,
+          });
+        }
+        turno.modulos.forEach((modulo) => {
+          
             jsonMaterias.push({
               Modulo: modulo.inicio + ' - ' + modulo.final,
             });
-
-            this.colegioSvc.dias.forEach((dia) => {
-              jsonMaterias[jsonMaterias.length - 1][dia] =
-                this.horariosHechos[curso.nombre][dia][turno.turno][
-                  modulo.inicio
-                ];
-            });
+          
+          this.colegioSvc.dias.forEach((dia) => {
+            jsonMaterias[jsonMaterias.length - 1][dia] =
+              this.horariosHechos[curso.nombre][dia][turno.turno][
+                modulo.inicio
+              ];
           });
-          if (turno.modulos.length > 0) {
-            jsonMaterias.push({});
-          }
+        });
+        if (turno.modulos.length > 0) {
+          jsonMaterias.push({});
         }
       });
       jsonMaterias.push({});

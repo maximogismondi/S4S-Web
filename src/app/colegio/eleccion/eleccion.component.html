@@ -19,26 +19,16 @@
               <form [formGroup]="crearColegioForm" (ngSubmit)="onCrear()">
                 <div class="form-group mt-4">
                   <label
-                    >Nombre y color del Colegio
+                    >Nombre del Colegio
                     <h6 class="text-danger d-inline-block">*</h6></label
                   >
                   <input
                     type="text"
                     required
-                    class="form-control d-inline-block w-75"
+                    class="form-control"
                     formControlName="nombre"
                   />
-                  <!-- <div class="form-group d-inline-block mt-3 mx-5">
-                  <input
-                    type="color"
-                    class="form-control form-control-color"
-                    id="exampleColorInput"
-                    value="#563d7c"
-                    title="Elige el color de tu Colegio"
-                  />
-                </div> -->
                 </div>
-
                 <div class="form-group mt-3">
                   <label
                     >Provincia
@@ -103,10 +93,9 @@
                       class="form-control"
                       formControlName="telefono"
                     />
-                    <!-- onkeydown="return false" -->
                   </div>
                 </div>
-                <!-- <div class="form-group mt-3">
+                <div class="form-group mt-3">
                   <label
                     >Duracion de cada modulo (en minutos)
                     <h6 class="text-danger d-inline-block">*</h6></label
@@ -144,7 +133,7 @@
                     class="form-control"
                     formControlName="finalizacionHorario"
                   />
-                </div> -->
+                </div>
 
                 <div class="d-grid">
                   <button
@@ -198,7 +187,7 @@
                     {{ colegioElegido }}
                   </button>
                 </div>
-
+                
                 <!-- <ng-template #colegioSeleccionado>
                   
                   <div class="card">

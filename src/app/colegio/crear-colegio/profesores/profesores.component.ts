@@ -3,6 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import {
   Aula,
   Colegio,
@@ -119,36 +121,20 @@ export class ProfesoresComponent implements OnInit {
             }
           } else {
             this.colegioSvc.materiaArray.forEach((materia) => {
-              if (
-                materia.profesoresCapacitados.includes(
+              materia.profesoresCapacitados[
+                this.colegioSvc.selectedProfesor.nombre +
+                  ' ' +
+                  this.colegioSvc.selectedProfesor.apellido
+              ] =
+                materia.profesoresCapacitados[
                   this.temporalProfesor.nombre +
                     ' ' +
                     this.temporalProfesor.apellido
-                )
-              ) {
-                materia.profesoresCapacitados.splice(
-                  materia.profesoresCapacitados.indexOf(
-                    this.temporalProfesor.nombre +
-                      ' ' +
-                      this.temporalProfesor.apellido
-                  ),
-                  1
-                );
-                materia.profesoresCapacitados.push(
-                  this.colegioSvc.selectedProfesor.nombre +
-                    ' ' +
-                    this.colegioSvc.selectedProfesor.apellido
-                );
-              }
+                ];
             });
           }
           this.colegioSvc.updateDBMateria();
           this.colegioSvc.updateDBProfesor();
-
-          this.disponibilidadTotal = false;
-          this.colegioSvc.dias.forEach((dia) => {
-            this.disponibilidadDiaria[dia] = false;
-          });
         }
       }
     } else {
@@ -166,38 +152,22 @@ export class ProfesoresComponent implements OnInit {
 
   deleteProfesor() {
     if (confirm('¿Estas seguro/a que quieres eliminar este profesor/a?')) {
-      this.colegioSvc.materiaArray.forEach((materia) => {
-        if (
-          materia.profesoresCapacitados.includes(
-            this.colegioSvc.selectedProfesor.nombre +
-              ' ' +
-              this.colegioSvc.selectedProfesor.apellido
-          )
-        ) {
-          materia.profesoresCapacitados.splice(
-            materia.profesoresCapacitados.indexOf(
-              this.colegioSvc.selectedProfesor.nombre +
-                ' ' +
-                this.colegioSvc.selectedProfesor.apellido
-            ),
-            1
-          );
-        }
-      });
       this.colegioSvc.profesorArray = this.colegioSvc.profesorArray.filter(
         (x) => x != this.colegioSvc.selectedProfesor
       );
-      this.colegioSvc.updateDBMateria();
       this.colegioSvc.updateDBProfesor();
     }
   }
 
   availabilityProfesor() {
-    this.colegioSvc.disponibilidadProfesor =
-      !this.colegioSvc.disponibilidadProfesor;
+    if (!this.colegioSvc.disponibilidadProfesor) {
+      this.colegioSvc.disponibilidadProfesor = true;
+    } else {
+      this.colegioSvc.disponibilidadProfesor = false;
+    }
   }
 
-  clickDisponibilidadCheck(dia: any, turno: string, modulo: any) {
+  clickFormCheck(dia: any, turno: string, modulo: any) {
     if (dia != null) {
       if (modulo != null) {
         this.colegioSvc.selectedProfesor.disponibilidad[dia][turno][modulo] =
@@ -241,4 +211,15 @@ export class ProfesoresComponent implements OnInit {
       });
     });
   }
+
+  // async goFormMateria() {
+  //   this.colegioSvc.botonesCrearColegio = 5;
+  //   if (this.colegioSvc.botonesCrearColegioProgreso < 5) {
+  //     this.colegioSvc.botonesCrearColegioProgreso = 5;
+  //     this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
+  //       botonesCrearColegioProgreso: 5,
+  //       botonesCrearColegio: 5,
+  //     });
+  //   }
+  // }
 }
