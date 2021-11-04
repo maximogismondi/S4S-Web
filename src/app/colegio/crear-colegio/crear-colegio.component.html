@@ -15,7 +15,7 @@
           <!-- *ngIf="colegioSvc.botonesCrearColegio >= 1; else bloquearBoton" -->
 
           <button
-            [ngClass]="{ 'btn-primary': colegioSvc.botonesCrearColegio == 1 }"
+            [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'turnos' }"
             class="col btn mx-2"
             (click)="clickeoBotones('turnos')"
           >
@@ -25,7 +25,7 @@
               else bloquearBoton0
             " -->
           <button
-            [ngClass]="{ 'btn-primary': colegioSvc.botonesCrearColegio == 2 }"
+            [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'aulas' }"
             class="col btn me-2"
             (click)="clickeoBotones('aulas')"
           >
@@ -36,7 +36,7 @@
               else bloquearBoton1
             " -->
           <button
-            [ngClass]="{ 'btn-primary': colegioSvc.botonesCrearColegio == 3 }"
+            [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'cursos' }"
             class="col btn me-2"
             (click)="clickeoBotones('cursos')"
           >
@@ -49,7 +49,7 @@
               else bloquearBoton2
             " -->
           <button
-            [ngClass]="{ 'btn-primary': colegioSvc.botonesCrearColegio == 4 }"
+            [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'profesores' }"
             class="col btn me-2"
             (click)="clickeoBotones('profesores')"
           >
@@ -63,7 +63,7 @@
               else bloquearBoton3
             " -->
           <button
-            [ngClass]="{ 'btn-primary': colegioSvc.botonesCrearColegio == 5 }"
+            [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'materias' }"
             class="col btn me-2"
             (click)="clickeoBotones('materias')"
           >
@@ -79,8 +79,7 @@
               else bloquearBoton4
             " -->
           <button
-            
-            [ngClass]="{ 'btn-primary': colegioSvc.botonesCrearColegio == 6 }"
+            [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'finalizar' }"
             class="col btn me-2"
             (click)="clickeoBotones('finalizar')"
           >
@@ -111,12 +110,12 @@
   </div>
 </div>
 
-<div *ngIf="colegioSvc.botonesCrearColegio == 1" class="container mx-auto my-4">
+<div *ngIf="colegioSvc.seccion == 'turnos'" class="container mx-auto my-4">
   <app-turnos></app-turnos>
 </div>
 <!-- && colegioSvc.turnos != 0  -->
 <div
-  *ngIf="colegioSvc.botonesCrearColegio == 2 "
+  *ngIf="colegioSvc.seccion == 'aulas'"
   class="container mx-auto my-4"
   id="divAula"
 >
@@ -125,10 +124,7 @@
 <!--&& colegioSvc.turnos != 0 &&
     colegioSvc.aulas != 0  -->
 <div
-  *ngIf="
-    colegioSvc.botonesCrearColegio == 3 
-    
-  "
+  *ngIf="colegioSvc.seccion == 'cursos'"
   class="container mx-auto my-4"
   id="divCurso"
 >
@@ -138,39 +134,21 @@
     colegioSvc.aulas != 0 &&
     colegioSvc.cursos != 0 -->
 <div
-  *ngIf="
-    colegioSvc.botonesCrearColegio == 4 
-    
-  "
+  *ngIf="colegioSvc.seccion == 'profesores'"
   class="container mx-auto my-4"
   id="divProfesor"
 >
   <app-profesores></app-profesores>
 </div>
-<!-- &&
-    colegioSvc.turnos != 0 &&
-    colegioSvc.aulas != 0 &&
-    colegioSvc.cursos != 0 &&
-    colegioSvc.profesores != 0 -->
 <div
-  *ngIf="
-    colegioSvc.botonesCrearColegio == 5 
-  "
+  *ngIf="colegioSvc.seccion == 'materias'"
   class="container mx-auto my-4"
   id="divMateria"
 >
   <app-materias></app-materias>
 </div>
-<!-- &&
-    colegioSvc.turnos != 0 &&
-    colegioSvc.aulas != 0 &&
-    colegioSvc.cursos != 0 &&
-    colegioSvc.profesores != 0 &&
-    colegioSvc.materias != 0 -->
 <div
-  *ngIf="
-    colegioSvc.botonesCrearColegio == 6 
-  "
+  *ngIf="colegioSvc.seccion == 'finalizar'"
   class="container mx-auto my-4"
   id="divFinalizar"
 >

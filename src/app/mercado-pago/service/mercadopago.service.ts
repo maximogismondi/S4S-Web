@@ -20,9 +20,9 @@ export class MercadopagoService {
         quantity: cantidadCursos,
       }],
       back_urls: {
-        "success": `http://localhost:4200/${escuela}/crear-colegio`,
-        "failure": `http://localhost:4200/${escuela}/crear-colegio`,
-        "pending": `http://localhost:4200/${escuela}/crear-colegio`
+        "success": `http://localhost:4200/${escuela}/crear-colegio/turnos`,
+        "failure": `http://localhost:4200/${escuela}/crear-colegio/turnos`,
+        "pending": `http://localhost:4200/${escuela}/crear-colegio/turnos`
       },
       auto_return: 'approved',
       payment_methods: {

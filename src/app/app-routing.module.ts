@@ -62,7 +62,7 @@ const routes: Routes = [
     data: { authGuardPipe: redirectToLogin },
   },
   {
-    path: ':nombreColegio/crear-colegio',
+    path: ':nombreColegio/crear-colegio/:seccion',
     loadChildren: () =>
       import('./colegio/crear-colegio/crear-colegio.module').then(
         (m) => m.CrearColegioModule

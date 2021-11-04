@@ -20,7 +20,7 @@ import {
   providedIn: 'root',
 })
 export class ColegioService {
-  nombreColegio: any;
+  nombreColegio: string;
   // nombreColegio: string;
   duracionModulo: number;
   inicioHorario: string;
@@ -33,7 +33,7 @@ export class ColegioService {
   horaInicial: number;
   horaFinal: number;
   inicioModuloSeleccionado: Array<string> = [];
-  botonesCrearColegio: number = 1;
+  seccion: string = 'turnos';
   // botonesCrearColegio: number;
   disponibilidadProfesor: boolean = false;
   disponibilidadProfesorSemana: Array<Array<Array<boolean>>> = [];
@@ -97,8 +97,6 @@ export class ColegioService {
             // this.materias = this.school.materias.length;
             // this.cursos = this.school.cursos.length;
             // this.profesores = this.school.profesores.length;
-
-            this.botonesCrearColegio = this.school.botonesCrearColegio;
 
             this.turnoArray[0] = Object.assign(
               new Turno('manana'),
@@ -191,11 +189,12 @@ export class ColegioService {
     this.materiaArray.forEach((materia) => {
       materiaArrayDiccionario.push({
         nombre: materia.nombre,
-        cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
         curso: materia.curso,
+        cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
+        cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
+        cantidadMinimaDeModulosPorDia: materia.cantidadMinimaDeModulosPorDia,
         profesoresCapacitados: materia.profesoresCapacitados,
         aulasMateria: materia.aulasMateria,
-        cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
       });
     });
     this.afs.collection('schools').doc(this.nombreColegio).update({

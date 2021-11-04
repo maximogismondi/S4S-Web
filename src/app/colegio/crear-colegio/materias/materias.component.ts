@@ -49,9 +49,12 @@ export class MateriasComponent implements OnInit {
   addOrEditMateria() {
     if (
       this.colegioSvc.selectedMateria.nombre != '' &&
-      this.colegioSvc.selectedMateria.cantidadDeModulosTotal != '' &&
       this.colegioSvc.selectedMateria.curso != '' &&
-      this.colegioSvc.selectedMateria.cantidadMaximaDeModulosPorDia != '' &&
+      this.colegioSvc.selectedMateria.cantidadDeModulosTotal != undefined &&
+      this.colegioSvc.selectedMateria.cantidadMaximaDeModulosPorDia !=
+        undefined &&
+      this.colegioSvc.selectedMateria.cantidadMinimaDeModulosPorDia !=
+        undefined &&
       this.colegioSvc.selectedMateria.nombre.length <= 30
     ) {
       if (
@@ -60,24 +63,44 @@ export class MateriasComponent implements OnInit {
           this.colegioSvc.materiaArray
         )
       ) {
-        if (this.colegioSvc.selectedMateria.id == 0) {
+        if (
+          this.colegioSvc.selectedMateria.cantidadMaximaDeModulosPorDia >=
+          this.colegioSvc.selectedMateria.cantidadMinimaDeModulosPorDia
+        ) {
           if (
-            this.colegioSvc.selectedMateria.profesoresCapacitados.length > 0
+            this.colegioSvc.selectedMateria.cantidadMaximaDeModulosPorDia <=
+              this.colegioSvc.selectedMateria.cantidadDeModulosTotal &&
+            this.colegioSvc.selectedMateria.cantidadMinimaDeModulosPorDia <=
+              this.colegioSvc.selectedMateria.cantidadDeModulosTotal
           ) {
-            if (this.colegioSvc.selectedMateria.aulasMateria.length > 0) {
-              this.colegioSvc.selectedMateria.id =
-                this.colegioSvc.materiaArray.length + 1;
-              this.colegioSvc.materiaArray.push(
-                this.colegioSvc.selectedMateria
-              );
+            if (
+              this.colegioSvc.selectedMateria.profesoresCapacitados.length > 0
+            ) {
+              if (this.colegioSvc.selectedMateria.aulasMateria.length > 0) {
+                if (this.colegioSvc.selectedMateria.id == 0) {
+                  this.colegioSvc.selectedMateria.id =
+                    this.colegioSvc.materiaArray.length + 1;
+                  this.colegioSvc.materiaArray.push(
+                    this.colegioSvc.selectedMateria
+                  );
+                }
+                this.colegioSvc.updateDBMateria();
+              } else {
+                alert('Coloque por lo menos un aula para la materia creada');
+              }
             } else {
-              alert('Coloque por lo menos un aula para la materia creada');
+              alert('Coloque por lo menos un profesor para la materia creada');
             }
           } else {
-            alert('Coloque por lo menos un profesor para la materia creada');
+            alert(
+              'La cantidad de modulos por dia no puede ser mayor a la cantidad maxima de modulos por dia'
+            );
           }
+        } else {
+          alert(
+            'La cantidad máxima de modulos por día no puede ser menor a la cantidad mínima'
+          );
         }
-        this.colegioSvc.updateDBMateria();
       }
     } else {
       if (this.colegioSvc.selectedMateria.nombre.length > 30) {
@@ -148,7 +171,7 @@ export class MateriasComponent implements OnInit {
     });
     return aulaCompleto;
   }
-  
+
   deleteMateria() {
     if (confirm('¿Estas seguro/a que quieres eliminar esta materia?')) {
       this.colegioSvc.materiaArray = this.colegioSvc.materiaArray.filter(

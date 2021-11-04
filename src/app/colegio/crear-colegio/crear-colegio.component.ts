@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ColegioService } from '../services/colegio.service';
 
@@ -11,42 +11,37 @@ import { ColegioService } from '../services/colegio.service';
   providers: [AuthService],
 })
 export class CrearColegioComponent implements OnInit {
-  
-  constructor(public colegioSvc: ColegioService, private activatedRoute: ActivatedRoute, private afs: AngularFirestore) {
-    this.colegioSvc.nombreColegio = this.activatedRoute.snapshot.paramMap.get("nombreColegio");
+  constructor(
+    public colegioSvc: ColegioService,
+    private activatedRoute: ActivatedRoute,
+    private afs: AngularFirestore,
+    private router: Router
+  ) {
+    this.colegioSvc.nombreColegio = this.activatedRoute.snapshot.paramMap.get(
+      'nombreColegio'
+    ) as string;
+    this.colegioSvc.seccion = this.activatedRoute.snapshot.paramMap.get(
+      'seccion'
+    ) as string;
+    console.log(this.colegioSvc.seccion);
   }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(async (params) => {
       if (params['status'] == 'approved') {
-        // console.log(window.location.href)
-        this.colegioSvc.botonesCrearColegio = 6;
+        this.colegioSvc.seccion = 'finalizar';
         this.colegioSvc.pagoFinalizado = true;
-        // this.router.navigate(['/' + this.colegioSvc.nombreColegio + '/crear-colegio']);
-      }
-      else if( params['status'] == 'disapproved') {
+      } else if (params['status'] == 'disapproved') {
         alert('Error de Pago: GbFH6dhd84HSKfaWJWN7772yk7JGOD');
-        this.colegioSvc.botonesCrearColegio = 1;
+        this.colegioSvc.seccion = 'turnos';
       }
     });
   }
 
-  async clickeoBotones(boton: string) {
-    if (boton == 'turnos') {
-      this.colegioSvc.botonesCrearColegio = 1;
-    } else if (boton == 'aulas') {
-      this.colegioSvc.botonesCrearColegio = 2;
-    } else if (boton == 'cursos') {
-      this.colegioSvc.botonesCrearColegio = 3;
-    } else if (boton == 'profesores') {
-      this.colegioSvc.botonesCrearColegio = 4;
-    } else if (boton == 'materias') {
-      this.colegioSvc.botonesCrearColegio = 5;
-    } else if (boton == 'finalizar') {
-      this.colegioSvc.botonesCrearColegio = 6;
-    }
-    this.afs.collection('schools').doc(this.colegioSvc.nombreColegio).update({
-      botonesCrearColegio: this.colegioSvc.botonesCrearColegio,
-    });
+  clickeoBotones(seccion: string) {
+    this.router.navigate([
+      this.colegioSvc.nombreColegio + '/crear-colegio/' + seccion,
+    ]);
+    this.colegioSvc.seccion = seccion
   }
 }

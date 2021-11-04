@@ -92,9 +92,6 @@ export class EleccionComponent implements OnInit {
       provincia,
       localidad,
       telefono,
-      // duracionModulo,
-      // inicioHorario,
-      // finalizacionHorario,
       await this.id
     );
   }
@@ -138,7 +135,7 @@ export class EleccionComponent implements OnInit {
                             usuariosExtensiones: usuariosExtensionesArray,
                           });
                         this.router.navigate([
-                          '/' + nombreColegio + '/crear-colegio',
+                          '/' + nombreColegio + '/crear-colegio/turnos',
                         ]);
                       } else {
                         alert('Ya perteneces a ' + nombreColegio + '.');

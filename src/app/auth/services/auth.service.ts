@@ -194,7 +194,6 @@ export class AuthService {
       duracionModulo: 40,
       // inicioHorario: " ",
       // finalizacionHorario: " ",
-      botonesCrearColegio: 1,
       // botonesCrearColegio: 1,
       usuariosExtensiones: [],
       aulas: [],
@@ -254,7 +253,7 @@ export class AuthService {
       });
       if (!existe) {
         this.SchoolData(school);
-        this.router.navigate(['/' + school.nombre + '/crear-colegio']);
+        this.router.navigate(['/' + school.nombre + '/crear-colegio/turnos']);
       }
 
       // confirm("Poner los valores que se piden");
@@ -332,7 +331,6 @@ export class AuthService {
       duracionModulo: school.duracionModulo,
       // inicioHorario: school.inicioHorario,
       // finalizacionHorario: school.finalizacionHorario,
-      botonesCrearColegio: school.botonesCrearColegio,
       // botonesCrearColegio: school.botonesCrearColegio,
       usuariosExtensiones: [],
       aulas: [],

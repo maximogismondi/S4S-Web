@@ -48,10 +48,20 @@
                   type="number"
                   min="1"
                   [(ngModel)]="
+                    colegioSvc.selectedMateria.cantidadMinimaDeModulosPorDia
+                  "
+                  placeholder="Cantidad minima de modulos por dia"
+                  class="form-control mt-2"
+                />
+
+                <input
+                  type="number"
+                  min="1"
+                  [(ngModel)]="
                     colegioSvc.selectedMateria.cantidadMaximaDeModulosPorDia
                   "
                   placeholder="Cantidad maxima de modulos por dia"
-                  class="form-control mt-2"
+                  class="form-control d-inline mt-2"
                 />
 
                 <table class="table mt-2">
