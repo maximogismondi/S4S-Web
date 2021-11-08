@@ -32,10 +32,17 @@ declare const MercadoPago: any;
 export class FinalizarComponent implements OnInit {
   // clickMoreInfoSchool: boolean = false;
   horariosHechos: any = {};
+  progreso: Array<any> = [];
+  progresoSeccion: any;
+  progresoTotal: number = -1;
+  indice: number = 0;
   horariosAulasHechos: any = {};
   materiasProfesoresHechos: any = {};
 
   constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private authSvc: AuthService,
     public colegioSvc: ColegioService,
     private http: HttpClient,
     private afs: AngularFirestore,
@@ -44,30 +51,29 @@ export class FinalizarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._mercadopago
-      .createPreference(
-        this.colegioSvc.cursoArray.length,
-        this.colegioSvc.nombreColegio
-      )
-      .then((res) => {
-        const mp = new MercadoPago(
-          'APP_USR-0cdb1915-b8d1-4dd1-8e25-90db91a59232',
-          {
-            locale: 'es-AR',
-          }
-        );
-
-        // Inicializa el checkout
-        mp.checkout({
-          preference: {
-            id: res.id,
-          },
-          render: {
-            container: '.mercadoPagoBoton', // Indica el nombre de la clase donde se mostrará el botón de pago
-            label: 'Pagar', // Cambia el texto del botón de pago (opcional)
-          },
-        });
-      });
+    // this._mercadopago
+    //   .createPreference(
+    //     this.colegioSvc.cursoArray.length,
+    //     this.colegioSvc.nombreColegio
+    //   )
+    //   .then((res) => {
+    //     const mp = new MercadoPago(
+    //       'APP_USR-0cdb1915-b8d1-4dd1-8e25-90db91a59232',
+    //       {
+    //         locale: 'es-AR',
+    //       }
+    //     );
+    //     // Inicializa el checkout
+    //     mp.checkout({
+    //       preference: {
+    //         id: res.id,
+    //       },
+    //       render: {
+    //         container: '.mercadoPagoBoton', // Indica el nombre de la clase donde se mostrará el botón de pago
+    //         label: 'Pagar', // Cambia el texto del botón de pago (opcional)
+    //       },
+    //     });
+    //   });
   }
 
   // _______________________________________FINALIZAR____________________________________________________________
@@ -85,6 +91,40 @@ export class FinalizarComponent implements OnInit {
       )
       .toPromise()
       .then();
+    // let res = '2021-11-01 16:05:00';
+    if (res) {
+      this.afs
+        .collection('schools')
+        .doc(this.colegioSvc.nombreColegio)
+        .collection('horarios')
+        .doc(res)
+        .snapshotChanges()
+        .pipe(
+          map((generacionHorario) => {
+            this.progreso = generacionHorario.payload.get('progreso');
+            Object.keys(this.progreso[this.indice]).forEach(
+              (key: string | number) => {
+                this.progresoSeccion = this.progreso[this.indice][key];
+              }
+            );
+            this.progresoSeccion = this.progresoSeccion + '%';
+            if (
+              (this.progresoSeccion == '5%' && this.indice == 0) ||
+              (this.progresoSeccion == '5%' && this.indice == 1) ||
+              (this.progresoSeccion == '25%' && this.indice == 2) ||
+              (this.progresoSeccion == '10%' && this.indice == 3) ||
+              (this.progresoSeccion == '5%' && this.indice == 4) ||
+              (this.progresoSeccion == '30%' && this.indice == 5) ||
+              (this.progresoSeccion == '20%' && this.indice == 6)
+            ) {
+              this.indice++;
+            }
+            this.progresoTotal++;
+          })
+        )
+        .subscribe();
+    }
+
     console.log(res);
     this.afs
       .doc('schools/' + this.colegioSvc.nombreColegio + '/horarios/' + res)

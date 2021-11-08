@@ -72,7 +72,7 @@ export class TurnosComponent implements OnInit {
       String(this.colegioSvc.turnoArray[nTurno].finalizacion)
     ) {
       alert(
-        'El inicio del turno mañana tiene que ser menor a la finalizacion del mismo.'
+        'El inicio del turno tiene que ser menor a la finalizacion del mismo.'
       );
       turnoValido = false;
     }
@@ -84,7 +84,7 @@ export class TurnosComponent implements OnInit {
         this.colegioSvc.turnoArray[nTurno + 1].habilitado == true
       ) {
         alert(
-          'El inicio del turno mañana tiene que ser mayor al inicio del turno tarde.'
+          'El finalizacion del turno mañana tiene que ser menor al inicio del turno tarde.'
         );
         turnoValido = false;
       }
@@ -95,7 +95,7 @@ export class TurnosComponent implements OnInit {
         this.colegioSvc.turnoArray[nTurno - 1].habilitado == true
       ) {
         alert(
-          'El inicio del turno tarde tiene que ser mayor al finalizacion del turno mañana.'
+          'El inicio del turno tarde tiene que ser mayor a la finalizacion del turno mañana.'
         );
         turnoValido = false;
       }
@@ -106,7 +106,7 @@ export class TurnosComponent implements OnInit {
         this.colegioSvc.turnoArray[nTurno - 1].habilitado == true
       ) {
         alert(
-          'El inicio del turno noche tiene que ser mayor al finalizacion del turno tarde.'
+          'El inicio del turno noche tiene que ser mayor a la finalizacion del turno tarde.'
         );
         turnoValido = false;
       }
