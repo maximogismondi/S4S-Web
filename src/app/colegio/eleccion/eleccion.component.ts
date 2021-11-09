@@ -135,7 +135,7 @@ export class EleccionComponent implements OnInit {
                             usuariosExtensiones: usuariosExtensionesArray,
                           });
                         this.router.navigate([
-                          '/' + nombreColegio + '/crear-colegio/turnos',
+nombreColegio,'crear-colegio','turnos'
                         ]);
                       } else {
                         alert('Ya perteneces a ' + nombreColegio + '.');

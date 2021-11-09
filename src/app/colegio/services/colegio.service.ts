@@ -44,10 +44,7 @@ export class ColegioService {
   horariosFinal: Array<string> = [];
   nombreMateria: string;
   aulaMateria: string;
-  cursoActual: string;
   dias: Array<string> = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
-  botonPresionado: boolean = false;
-  horarioGenerado: boolean = false;
   cursoMateriaArray: Curso[];
   tiposAulas: Array<Aula[]> = new Array();
   pagoFinalizado: boolean = false;
@@ -125,12 +122,6 @@ export class ColegioService {
             if (!this.selectedMateria) {
               this.selectedMateria = new Materia();
             }
-            if (this.cursoArray.length > 0) {
-              this.cursoActual = this.cursoArray[0].nombre;
-            }
-
-            this.botonPresionado = false;
-            this.horarioGenerado = false;
 
             this.tiposAulas = [];
 

@@ -55,11 +55,15 @@ export class MenuPrincipalComponent implements OnInit {
   ngOnInit(): void {}
 
   irEleccion() {
-    this.router.navigate(['/eleccion']);
+    this.router.navigate(['eleccion']);
+  }
+
+  irHorariosGenerados(nombreEscuela: string) {
+    this.router.navigate([nombreEscuela,'horarios-generados']);
   }
 
   irCrearColegio(nombreEscuela: string) {
-    this.router.navigate(['/' + nombreEscuela + '/crear-colegio/turnos']);
+    this.router.navigate([nombreEscuela,'crear-colegio','turnos']);
   }
 
   async deleteSchool(escuela: any) {

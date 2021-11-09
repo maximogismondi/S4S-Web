@@ -1,9 +1,9 @@
 <div class="col-md-8 mx-auto">
   <div class="card mt-6">
     <div class="card-body text-center">
-      <ng-container *ngIf="colegioSvc.horarioGenerado">
+      <ng-container *ngIf="horarioGenerado">
         <label class="mt-2">Cursos</label>
-        <select class="form-select" [(ngModel)]="colegioSvc.cursoActual">
+        <select class="form-select" [(ngModel)]="this.cursoActual">
           <option
             *ngFor="let curso of colegioSvc.cursoArray"
             value="{{ curso.nombre }}"
@@ -13,7 +13,7 @@
         </select>
       </ng-container>
 
-      <table *ngIf="colegioSvc.horarioGenerado" class="table text-center">
+      <table *ngIf="horarioGenerado" class="table text-center mt-2">
         <thead>
           <tr class="table-light">
             <th class="rounded-start" scope="col">Horarios</th>
@@ -48,7 +48,7 @@
               >
                 <li
                   *ngIf="
-                    horariosHechos[colegioSvc.cursoActual][dia]['manana'][
+                    horariosHechos[this.cursoActual][dia]['manana'][
                       modulo.inicio
                     ] != ''
                   "
@@ -59,7 +59,7 @@
                 >
                   <div>
                     {{
-                      horariosHechos[colegioSvc.cursoActual][dia]["manana"][
+                      horariosHechos[this.cursoActual][dia]["manana"][
                         modulo.inicio
                       ]
                     }}
@@ -69,7 +69,7 @@
                     >
                       <li class="list-group-item">
                         <span>{{
-                          horariosAulasHechos[colegioSvc.cursoActual][dia][
+                          horariosAulasHechos[this.cursoActual][dia][
                             "manana"
                           ][modulo.inicio]
                         }}</span>
@@ -77,11 +77,11 @@
                       <li class="list-group-item">
                         <span>{{
                           materiasProfesoresHechos[
-                            horariosHechos[colegioSvc.cursoActual][dia][
+                            horariosHechos[this.cursoActual][dia][
                               "manana"
                             ][modulo.inicio] +
                               "-" +
-                              colegioSvc.cursoActual
+                              this.cursoActual
                           ]
                         }}</span>
                       </li>
@@ -114,7 +114,7 @@
               >
                 <li
                   *ngIf="
-                    horariosHechos[colegioSvc.cursoActual][dia]['tarde'][
+                    horariosHechos[this.cursoActual][dia]['tarde'][
                       modulo.inicio
                     ] != ''
                   "
@@ -125,7 +125,7 @@
                 >
                   <div>
                     {{
-                      horariosHechos[colegioSvc.cursoActual][dia]["tarde"][
+                      horariosHechos[this.cursoActual][dia]["tarde"][
                         modulo.inicio
                       ]
                     }}
@@ -135,7 +135,7 @@
                     >
                       <li class="list-group-item">
                         <span>{{
-                          horariosAulasHechos[colegioSvc.cursoActual][dia][
+                          horariosAulasHechos[this.cursoActual][dia][
                             "tarde"
                           ][modulo.inicio]
                         }}</span>
@@ -143,11 +143,11 @@
                       <li class="list-group-item">
                         <span>{{
                           materiasProfesoresHechos[
-                            horariosHechos[colegioSvc.cursoActual][dia][
+                            horariosHechos[this.cursoActual][dia][
                               "tarde"
                             ][modulo.inicio] +
                               "-" +
-                              colegioSvc.cursoActual
+                              this.cursoActual
                           ]
                         }}</span>
                       </li>
@@ -180,7 +180,7 @@
               >
                 <li
                   *ngIf="
-                    horariosHechos[colegioSvc.cursoActual][dia]['noche'][
+                    horariosHechos[this.cursoActual][dia]['noche'][
                       modulo.inicio
                     ] != ''
                   "
@@ -191,7 +191,7 @@
                 >
                   <div>
                     {{
-                      horariosHechos[colegioSvc.cursoActual][dia]["noche"][
+                      horariosHechos[this.cursoActual][dia]["noche"][
                         modulo.inicio
                       ]
                     }}
@@ -201,7 +201,7 @@
                     >
                       <li class="list-group-item">
                         <span>{{
-                          horariosAulasHechos[colegioSvc.cursoActual][dia][
+                          horariosAulasHechos[this.cursoActual][dia][
                             "noche"
                           ][modulo.inicio]
                         }}</span>
@@ -209,11 +209,11 @@
                       <li class="list-group-item">
                         <span>{{
                           materiasProfesoresHechos[
-                            horariosHechos[colegioSvc.cursoActual][dia][
+                            horariosHechos[this.cursoActual][dia][
                               "noche"
                             ][modulo.inicio] +
                               "-" +
-                              colegioSvc.cursoActual
+                              this.cursoActual
                           ]
                         }}</span>
                       </li>
@@ -227,7 +227,7 @@
       </table>
 
       <button
-        *ngIf="colegioSvc.horarioGenerado"
+        *ngIf="horarioGenerado"
         class="btn btn-primary my-2"
         (click)="exportAsExcelFile()"
       >
@@ -250,7 +250,7 @@
       </button>
 
       <div
-        *ngIf="colegioSvc.botonPresionado && !colegioSvc.horarioGenerado"
+        *ngIf="botonPresionado && !horarioGenerado"
         class="card-title text-center"
       >
         <h5 class="my-3">
@@ -280,23 +280,9 @@
             {{ progresoTotal }}%
           </div>
         </div>
-
-        <!-- <button
-          *ngIf="colegioSvc.botonPresionado && !colegioSvc.horarioGenerado"
-          class="btn btn-primary"
-          type="button"
-          disabled
-        >
-          <span
-            class="spinner-grow spinner-grow-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          Generando Horarios (Esto podria demorar)...
-        </button> -->
       </div>
 
-      <div *ngIf="!colegioSvc.botonPresionado" class="d-grid">
+      <div *ngIf="!botonPresionado" class="d-grid">
         <!-- *ngIf="colegioSvc.pagoFinalizado else pagar" -->
         <div class="d-grid">
           <button (click)="finalizar()" class="btn btn-primary btn-lg mt-2">

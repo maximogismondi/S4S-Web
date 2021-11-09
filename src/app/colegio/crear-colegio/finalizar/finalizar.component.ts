@@ -31,12 +31,17 @@ declare const MercadoPago: any;
 })
 export class FinalizarComponent implements OnInit {
   // clickMoreInfoSchool: boolean = false;
-  horariosHechos: any = {};
   progresoSeccion: number = 0;
   progresoTotal: number = 0;
-  indiceProgreso: number = 0;
+  indiceProgreso: number = 1;
+
+  cursoActual: string = '';
+  horariosHechos: any = {};
   horariosAulasHechos: any = {};
   materiasProfesoresHechos: any = {};
+
+  botonPresionado: boolean = false;
+  horarioGenerado: boolean = false;
 
   constructor(
     private router: Router,
@@ -47,7 +52,11 @@ export class FinalizarComponent implements OnInit {
     private afs: AngularFirestore,
     private _mercadopago: MercadopagoService,
     private excelService: ExcelService
-  ) {}
+  ) {
+    if (this.colegioSvc.cursoArray.length > 0) {
+      this.cursoActual = this.colegioSvc.cursoArray[0].nombre;
+    }
+  }
 
   ngOnInit(): void {
     // this._mercadopago
@@ -76,9 +85,8 @@ export class FinalizarComponent implements OnInit {
   }
 
   // _______________________________________FINALIZAR____________________________________________________________
-  botonPresionado: boolean = false;
   async finalizar() {
-    this.colegioSvc.botonPresionado = true;
+    this.botonPresionado = true;
     const token: any = (
       await this.afs.firestore.collection('secrets').doc('token').get()
     ).data();
@@ -102,7 +110,7 @@ export class FinalizarComponent implements OnInit {
         .pipe(
           map((generacionHorario) => {
             let progreso = generacionHorario.payload.get('progreso');
-            if (progreso) {
+            if (progreso && progreso.length > 0) {
               this.indiceProgreso = progreso.length;
 
               // console.log(this.indiceProgreso);
@@ -114,7 +122,7 @@ export class FinalizarComponent implements OnInit {
                   break;
                 case 2:
                   this.progresoSeccion = Math.round(
-                    (progreso[this.indiceProgreso - 1] * 100) / 10
+                    (progreso[this.indiceProgreso - 1] * 100) / 5
                   );
                   break;
                 case 3:
@@ -139,7 +147,7 @@ export class FinalizarComponent implements OnInit {
                   break;
                 case 7:
                   this.progresoSeccion = Math.round(
-                    (progreso[this.indiceProgreso - 1] * 100) / 15
+                    (progreso[this.indiceProgreso - 1] * 100) / 20
                   );
                   break;
               }
@@ -211,7 +219,6 @@ export class FinalizarComponent implements OnInit {
                         this.horariosAulasHechos[curso.nombre][dia] = {};
                         this.colegioSvc.turnoArray.forEach((turno) => {
                           if (turno.habilitado == true) {
-                            console.log('b');
                             this.horariosAulasHechos[curso.nombre][dia][
                               turno.turno
                             ] = {};
@@ -239,7 +246,6 @@ export class FinalizarComponent implements OnInit {
                     });
 
                     this.colegioSvc.materiaArray.forEach((materia) => {
-                      console.log('c');
                       this.materiasProfesoresHechos[
                         materia.nombre + '-' + materia.curso
                       ] =
@@ -248,7 +254,7 @@ export class FinalizarComponent implements OnInit {
                         ];
                     });
 
-                    this.colegioSvc.horarioGenerado = true;
+                    this.horarioGenerado = true;
                   }
                 });
             }
