@@ -250,22 +250,32 @@
         class="card-title text-center"
       >
         <h5 class="my-3">
-          <p>Gracias por utilizar S4S. Generando Horarios (Esto podria demorar)...</p>
+          <p>
+            Gracias por utilizar S4S. Generando Horarios (Esto podria
+            demorar)...
+          </p>
         </h5>
 
+        <label>Paso {{ indiceProgreso }}/7</label>
+        <div class="progress h-50 mt-4">
+          <div
+            class="progress-bar progress-bar-striped progress-bar-animated"
+            role="progressbar"
+            [ngStyle]="{ width: progresoSeccion + '%' }"
+          >
+            {{ progresoSeccion }}%
+          </div>
+        </div>
 
         <div class="progress h-50 mt-4">
           <div
             class="progress-bar progress-bar-striped progress-bar-animated"
             role="progressbar"
-            aria-valuemin="0"
-            aria-valuemax="100"
             [ngStyle]="{ width: progresoTotal + '%' }"
           >
             {{ progresoTotal }}%
           </div>
         </div>
-        <label>{{ indice }}/{{ progreso.length }}</label>
 
         <!-- <button
           *ngIf="colegioSvc.botonPresionado && !colegioSvc.horarioGenerado"
