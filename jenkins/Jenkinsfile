@@ -1,24 +1,17 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:8-alpine'
-            args '-p 3000:3000'
-        }
-    }
+    // agent {
+    //     docker {
+    //         image 'node:8-alpine'
+    //         args '-p 3000:3000'
+    //     }
+    // }
     environment { 
-        CI = 'true'
         FIREBASE_DEPLOY_TOKEN = credentials('firebase-deploy-token')
     }
     stages {
         stage('Build') {
             steps {
-                sh 'npm install'
-            }
-        }
-        stage('Staging') { 
-            steps {
-                sh './jenkins/scripts/staging.sh' 
-                input message: 'Finished using the Staging version of the Web App? (Click "Proceed" to continue)' 
+                sh 'npm ci'
             }
         }
         stage('Production') { 
