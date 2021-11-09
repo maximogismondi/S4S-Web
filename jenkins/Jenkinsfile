@@ -5,6 +5,10 @@ pipeline {
     //         args '-p 3000:3000'
     //     }
     // }
+    agent {
+        label 's4s'
+    }
+
     environment { 
         FIREBASE_DEPLOY_TOKEN = credentials('firebase-deploy-token')
     }
