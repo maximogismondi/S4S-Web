@@ -10,6 +10,8 @@ import { AuthService } from '../auth/services/auth.service';
   providers: [AuthService],
 })
 export class HomeComponent implements OnInit {
+  windowScrollInY: number = 0;
+
   // noVerificado: boolean = true;
 
   constructor(
@@ -24,7 +26,11 @@ export class HomeComponent implements OnInit {
     // });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    window.onscroll = () => {
+      this.windowScrollInY = window.scrollY;
+    };
+  }
 
   gotoLogin() {
     // if (!this.noVerificado) {
