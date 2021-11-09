@@ -1,4 +1,3 @@
-
 <!--!INICIO-->
 <div class="container col-xxl-8 px-4 py-3">
   <div class="row flex-lg-row-reverse align-items-center g-5 py-5 bg-light">
@@ -18,27 +17,24 @@
           </div>
           <div class="carousel-item">
             <img
-            style="max-width: 626px; max-height: 417px"
+              style="max-width: 626px; max-height: 417px"
               src="https://imgur.com/VxEXJtK.jpg"
               class="d-block w-100"
             />
           </div>
           <div class="carousel-item">
-            <img
-              src="https://imgur.com/IK4DSIQ.jpg"
-              class="d-block w-100"
-            />
+            <img src="https://imgur.com/IK4DSIQ.jpg" class="d-block w-100" />
           </div>
           <div class="carousel-item">
             <img
-            style="max-width: 626px; max-height: 417px"
+              style="max-width: 626px; max-height: 417px"
               src="https://imgur.com/xpDFdpA.jpg"
               class="d-block w-100"
             />
           </div>
           <div class="carousel-item">
             <img
-            style="max-width: 626px; max-height: 417px"
+              style="max-width: 626px; max-height: 417px"
               src="https://imgur.com/TVKAiJG.jpg"
               class="d-block w-100"
             />
@@ -71,77 +67,14 @@
           href="/home#MasInfo"
         >
           Más info
-      </a>
-      <!-- (click)="functionScrollToDownMoreInfo()" -->
+        </a>
+        <!-- (click)="functionScrollToDownMoreInfo()" -->
       </div>
     </div>
   </div>
 </div>
 
-<!--
-    CREAR HORARIO Y MAS INFO
-    <div class="container">
-        <h1 style="color: white; text-align: center;">Crea un horario para tu instituto</h1>
-        <div class="row my-5">
-            <div class="col-md-5 mx-auto mt-5 my-5">
-                <div class="card" style="opacity: 0.95">
-                    <div class="card-body">
-                        <div>
-                            <h4 class="card-title" style="font-weight: bold;">Organizador de Horarios</h4>
-                            <h6>IMG DE UN HORARIO ESCOLAR</h6>
-                            <p class="card-text">
-                                Con nuestro Software, podras crear tus propios horarios escolares para tu institucion.
-                                Empieza ahora mismo con tan solo un click.
-                            </p>
-                            <button type="button" (click)="gotoList()" class="btn btn-primary">Empezar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5 mx-auto mt-5 my-5">
-                <div class="card" style="opacity: 0.95">
-                    <div class="card-body">
-                        <div>
-                            <h4 class="card-title" style="font-weight: bold;">Empresa</h4>
-                            <h6>IMG DE NUESTRO LOGO</h6>
-                            <p class="card-text">
-                                Todo lo que te gusta de S4S.
-                                Conoce todo sobre nosotros, precionando el siguiente boton.
-                            </p>
-                            <button type="button" class="btn btn-primary">Mas informacion</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-FLECHA
-<div style="display: flex; justify-content: center; align-items: center">
-  <a
-    (click)="functionScrollToDown()"
-    id="buttonScrollToDown"
-    style="
-      -webkit-animation: nod 3s ease infinite;
-      -moz-animation: nod 3s ease infinite;
-      -o-animation: nod 3s ease infinite;
-      animation: nod 3s ease infinite;
-    "
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="50"
-      height="50"
-      fill="currentColor"
-      class="bi bi-caret-down"
-      viewBox="0 0 16 16"
-    >
-      <path
-        d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"
-      />
-    </svg>
-  </a>
-</div>-->
+<hr class="featurette-divider" />
 
 <!--!SEPARADOR-->
 <div class="container-fuid">
@@ -166,19 +99,14 @@ FLECHA
         loading="lazy"
       />
       <p>
-        Asi se vera el horario escolar, hecho en nuestra pagina. Si quiere puede
-        descargarlo para verlo mejor, pero no le servira para fines de lucro, ya
-        que este tiene marca de agua y solo es una muestra, si quiere crear un
-        horario precione el boton "EMPEZAR"
+        Asi se vera el horario escolar, hecho en nuestra pagina. Si desea crear un
+        horario, presione el boton "EMPEZAR".
       </p>
       <div class="mb-5 py-3">
-        <a type="button" href="https://imgur.com/8M6eYNs.jpg" download class="btn btn-primary btn-lg px-4">
-          Descargar ejemplo
-        </a>
         <button
           type="button"
           (click)="gotoLogin()"
-          class="btn btn-light btn-lg px-4 mx-3"
+          class="btn btn-primary btn-lg w-100"
         >
           Empezar
         </button>
@@ -205,8 +133,8 @@ FLECHA
         <div class="circulo mx-auto" id="circulo1"></div>
         <h4 class="py-2">INICIA SESION</h4>
         <p>
-          INICIA SESION CON TU CUENTA DE GOOGLE O REGISTRATE EN
-          NUESTRA PAGINA WEB Y UNETE A UN COLEGIO O CREA EL TUYO
+          INICIA SESION CON TU CUENTA DE GOOGLE O REGISTRATE EN NUESTRA PAGINA
+          WEB Y UNETE A UN COLEGIO O CREA EL TUYO
         </p>
       </div>
 
@@ -241,7 +169,7 @@ FLECHA
 </div>
 
 <!--!MAS SOBRE S4S-->
-<div class="container-fuid bg-light">
+<div class="container-fuid bg-light" id="MasInfo">
   <div class="container px-1 py-5" id="custom-cards">
     <h2 class="pb-2 border-bottom" style="text-align: center">Más sobre S4S</h2>
 
@@ -480,7 +408,15 @@ FLECHA
 </div>
 
 <!--!FLECHA-->
-<div style="display:inline-block; position: fixed; bottom: 50px; right: 20px; z-index: 100;">
+<div
+  style="
+    display: inline-block;
+    position: fixed;
+    bottom: 50px;
+    right: 20px;
+    z-index: 100;
+  "
+>
   <button
     (click)="functionScrollToUp()"
     id="buttonScrollToUp"
@@ -492,20 +428,37 @@ FLECHA
     "
     class="btn btn-primary rounded-circle"
   >
-  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="30" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
-    <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-  </svg>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="25"
+      height="30"
+      fill="currentColor"
+      class="bi bi-caret-up-fill"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
+      />
+    </svg>
   </button>
 </div>
 
 <!--!FOOTER-->
 <div class="container-fuid">
   <div class="col-md-max mx-auto">
-    <div class="bg-dark" style="box-shadow: none; opacity: 0.95; border: none; background-image: none; text-align: center;">
+    <div
+      class="bg-dark"
+      style="
+        box-shadow: none;
+        opacity: 0.95;
+        border: none;
+        background-image: none;
+        text-align: center;
+      "
+    >
       <div class="card-body">
         <span class="text-muted"> Copyright © 2021 The S4S Company </span>
       </div>
     </div>
   </div>
 </div>
-

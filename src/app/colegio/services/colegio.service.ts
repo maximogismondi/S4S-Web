@@ -21,20 +21,13 @@ import {
 })
 export class ColegioService {
   nombreColegio: string;
-  // nombreColegio: string;
   duracionModulo: number;
   inicioHorario: string;
   finalizacionHorario: string;
-  // turnos: number;
-  // aulas: number;
-  // materias: number;
-  // cursos: number;
-  // profesores: number;
   horaInicial: number;
   horaFinal: number;
   inicioModuloSeleccionado: Array<string> = [];
   seccion: string = 'turnos';
-  // botonesCrearColegio: number;
   disponibilidadProfesor: boolean = false;
   disponibilidadProfesorSemana: Array<Array<Array<boolean>>> = [];
   turnoArray: Array<Turno> = [
@@ -44,7 +37,6 @@ export class ColegioService {
   ];
   profesorArray: Profesor[] = [];
   selectedProfesor: Profesor;
-  // usuariosExtensionesArray: string[] = [];
   aulaArray: Aula[] = [];
   cursoArray: Curso[] = [];
   materiaArray: Materia[] = [];
@@ -80,23 +72,12 @@ export class ColegioService {
             this.school = colegio.payload.data() as Colegio;
 
             this.duracionModulo = this.school.duracionModulo;
-            // this.inicioHorario = school.inicioHorario;
-            // this.finalizacionHorario = school.finalizacionHorario;
 
             this.horaInicial = Number(String(this.inicioHorario).split(':')[0]);
 
             this.horaFinal = Number(
               String(this.finalizacionHorario).split(':')[0]
             );
-            // this.turnos =
-            //   this.school.turnos[0].modulos.length +
-            //   this.school.turnos[1].modulos.length +
-            //   this.school.turnos[2].modulos.length;
-
-            // this.aulas = this.school.aulas.length;
-            // this.materias = this.school.materias.length;
-            // this.cursos = this.school.cursos.length;
-            // this.profesores = this.school.profesores.length;
 
             this.turnoArray[0] = Object.assign(
               new Turno('manana'),
@@ -125,8 +106,6 @@ export class ColegioService {
             this.profesorArray = this.school.profesores;
 
             this.materiaArray = this.school.materias;
-
-            // this.usuariosExtensionesArray = school.usuariosExtensiones;
 
             this.cursoArray.forEach((curso) => {
               curso.materias = [];

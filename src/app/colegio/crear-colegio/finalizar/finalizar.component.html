@@ -227,7 +227,7 @@
         class="btn btn-primary my-2"
         (click)="exportAsExcelFile()"
       >
-        Descargar Horarios 
+        Descargar Horarios
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -250,10 +250,34 @@
         class="card-title text-center"
       >
         <h5 class="my-3">
-          <p>Gracias por utilizar S4S.</p>
+          <p>
+            Gracias por utilizar S4S. Generando Horarios (Esto podria
+            demorar)...
+          </p>
         </h5>
 
-        <button
+        <label>Paso {{ indiceProgreso }}/7</label>
+        <div class="progress h-50 mt-4">
+          <div
+            class="progress-bar progress-bar-striped progress-bar-animated"
+            role="progressbar"
+            [ngStyle]="{ width: progresoSeccion + '%' }"
+          >
+            {{ progresoSeccion }}%
+          </div>
+        </div>
+
+        <div class="progress h-50 mt-4">
+          <div
+            class="progress-bar progress-bar-striped progress-bar-animated"
+            role="progressbar"
+            [ngStyle]="{ width: progresoTotal + '%' }"
+          >
+            {{ progresoTotal }}%
+          </div>
+        </div>
+
+        <!-- <button
           *ngIf="colegioSvc.botonPresionado && !colegioSvc.horarioGenerado"
           class="btn btn-primary"
           type="button"
@@ -265,7 +289,7 @@
             aria-hidden="true"
           ></span>
           Generando Horarios (Esto podria demorar)...
-        </button>
+        </button> -->
       </div>
 
       <div *ngIf="!colegioSvc.botonPresionado" class="d-grid">
@@ -275,6 +299,7 @@
             Generar mis horarios ya!
           </button>
         </div>
+
         <ng-template #pagar>
           <h5 class="my-3">Usted esta por pagar un procesamiento de:</h5>
           <ul class="list-group">
