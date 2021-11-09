@@ -144,9 +144,6 @@ export class FinalizarComponent implements OnInit {
                   break;
               }
 
-              // this.progresoTotal++;
-              // this.progresoTotal = progreso[this.indiceProgreso];
-              // console.log(this.progresoSeccion, this.indiceProgreso);
               this.progresoTotal = 0;
               progreso.forEach((seccion: number) => {
                 this.progresoTotal += seccion;
@@ -163,7 +160,11 @@ export class FinalizarComponent implements OnInit {
                 .get()
                 .toPromise()
                 .then((horariosReady) => {
-                  if (horariosReady.exists) {
+                  if (
+                    horariosReady.get('horarios') &&
+                    horariosReady.get('horariosAulas') &&
+                    horariosReady.get('materiasProfesores')
+                  ) {
                     let horariosHechos = horariosReady.get('horarios');
                     let horariosAulasHechos =
                       horariosReady.get('horariosAulas');
@@ -210,6 +211,7 @@ export class FinalizarComponent implements OnInit {
                         this.horariosAulasHechos[curso.nombre][dia] = {};
                         this.colegioSvc.turnoArray.forEach((turno) => {
                           if (turno.habilitado == true) {
+                            console.log('b');
                             this.horariosAulasHechos[curso.nombre][dia][
                               turno.turno
                             ] = {};
@@ -237,6 +239,7 @@ export class FinalizarComponent implements OnInit {
                     });
 
                     this.colegioSvc.materiaArray.forEach((materia) => {
+                      console.log('c');
                       this.materiasProfesoresHechos[
                         materia.nombre + '-' + materia.curso
                       ] =
