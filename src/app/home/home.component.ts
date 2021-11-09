@@ -37,14 +37,14 @@ export class HomeComponent implements OnInit {
     //   this.router.navigate(['/verificacion-email']);
     // } else
     if (this.authSvc.userData && this.authSvc.userData.emailVerified) {
-      this.router.navigate(['/menu-principal']);
+      this.router.navigate(['menu-principal']);
     } else if (
       this.authSvc.userData &&
       this.authSvc.userData.emailVerified == false
     ) {
-      this.router.navigate(['/verificacion-email']);
+      this.router.navigate(['verificacion-email']);
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['login']);
     }
     //revisar
     // else if (this.aServ.userData.emailVerified) {

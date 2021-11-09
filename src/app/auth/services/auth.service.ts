@@ -87,7 +87,7 @@ export class AuthService {
       })
       .catch((error) => {
         alert('No existe una cuenta con ese email, por favor registrese');
-        this.router.navigate(['/register']);
+        this.router.navigate(['register']);
         return null;
 
         // console.log(error.code);
@@ -253,7 +253,7 @@ export class AuthService {
       });
       if (!existe) {
         this.SchoolData(school);
-        this.router.navigate(['/' + school.nombre + '/crear-colegio/turnos']);
+        this.router.navigate([school.nombre,'crear-colegio','turnos']);
       }
 
       // confirm("Poner los valores que se piden");

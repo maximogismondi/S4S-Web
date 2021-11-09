@@ -40,8 +40,10 @@ export class CrearColegioComponent implements OnInit {
 
   clickeoBotones(seccion: string) {
     this.router.navigate([
-      this.colegioSvc.nombreColegio + '/crear-colegio/' + seccion,
+      this.colegioSvc.nombreColegio,
+      'crear-colegio',
+      seccion,
     ]);
-    this.colegioSvc.seccion = seccion
+    this.colegioSvc.seccion = seccion;
   }
 }
