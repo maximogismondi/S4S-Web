@@ -90,7 +90,8 @@ export class Materia {
   nombre: string = '';
   cantidadDeModulosTotal: number;
   cantidadMaximaDeModulosPorDia: number;
-  cantidadMinimaDeModulosPorDia: number;;
+  cantidadMinimaDeModulosPorDia: number;
+  profesorSimultaneo: boolean = false;
   curso: string = '';
   profesoresCapacitados: Array<string> = [];
   aulasMateria: Array<string> = [];

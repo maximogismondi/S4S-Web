@@ -160,6 +160,7 @@ export class ColegioService {
       materiaArrayDiccionario.push({
         nombre: materia.nombre,
         curso: materia.curso,
+        profesorSimultaneo:materia.profesorSimultaneo,
         cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
         cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
         cantidadMinimaDeModulosPorDia: materia.cantidadMinimaDeModulosPorDia,
