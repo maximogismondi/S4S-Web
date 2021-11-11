@@ -8,7 +8,10 @@
       </div>
     </div>
   </div>
-  <div class="card mb-5">
+  <div
+    class="card mb-5"
+    *ngIf="documentos.length > 0; else sinHorariosGenerados"
+  >
     <div class="card-body text-center">
       <label class="mt-2">Fecha y Hora generacion</label>
       <select
@@ -266,4 +269,11 @@
       </ng-container>
     </div>
   </div>
+  <ng-template #sinHorariosGenerados>
+    <div class="card mb-5">
+      <div class="card-body">
+        <h3 class="text-center my-2">Aun no tienes colegios generados</h3>
+      </div>
+    </div>
+  </ng-template>
 </div>

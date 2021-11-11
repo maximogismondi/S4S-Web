@@ -15,14 +15,17 @@ export class CrearColegioComponent implements OnInit {
     public colegioSvc: ColegioService,
     private activatedRoute: ActivatedRoute,
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private authSvc: AuthService
   ) {
+
     this.colegioSvc.nombreColegio = this.activatedRoute.snapshot.paramMap.get(
       'nombreColegio'
     ) as string;
     this.colegioSvc.seccion = this.activatedRoute.snapshot.paramMap.get(
       'seccion'
     ) as string;
+
     // console.log(this.colegioSvc.seccion);
   }
 

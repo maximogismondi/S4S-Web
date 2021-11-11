@@ -95,7 +95,6 @@ export class Materia {
   curso: string = '';
   profesoresCapacitados: Array<string> = [];
   aulasMateria: Array<string> = [];
-
   constructor() {
     this.profesoresCapacitados = [];
     this.aulasMateria = [];
