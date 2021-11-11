@@ -1,7 +1,7 @@
 {
   "hosting": [
     {
-      "site":"proyectos4s-89b8a"
+      "site":"proyectos4s-89b8a",
       "public": "dist/proyectoS4S",
       "ignore": [
         "firebase.json",
