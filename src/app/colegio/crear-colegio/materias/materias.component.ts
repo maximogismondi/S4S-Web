@@ -46,11 +46,9 @@ export class MateriasComponent implements OnInit {
     this.colegioSvc.selectedMateria = materia;
   }
 
-  profesorSimultaneoCheck(){
-    console.log(this.colegioSvc.selectedMateria.profesorSimultaneo)
-    this.colegioSvc.selectedMateria.profesorSimultaneo = !this.colegioSvc.selectedMateria.profesorSimultaneo;
-    console.log(this.colegioSvc.selectedMateria.profesorSimultaneo)
-
+  profesorSimultaneoCheck() {
+    this.colegioSvc.selectedMateria.profesorSimultaneo =
+      !this.colegioSvc.selectedMateria.profesorSimultaneo;
   }
 
   addOrEditMateria() {
@@ -92,7 +90,6 @@ export class MateriasComponent implements OnInit {
                   );
                 }
                 this.colegioSvc.updateDBMateria();
-                this.colegioSvc.selectedMateria.profesorSimultaneo = !this.colegioSvc.selectedMateria.profesorSimultaneo;
               } else {
                 alert('Coloque por lo menos un aula para la materia creada');
               }
