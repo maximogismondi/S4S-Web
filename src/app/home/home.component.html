@@ -54,13 +54,13 @@
         respecto.
       </p>
       <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-        <button
+        <a
           type="button"
-          (click)="gotoLogin()"
+          href="/{{ authSvc.dirigir }}"
           class="btn btn-primary btn-lg px-5 me-md-2"
         >
           Empezar
-        </button>
+        </a>
         <a
           type="button"
           class="btn btn-light btn-lg px-4 mx-3"
@@ -99,17 +99,17 @@
         loading="lazy"
       />
       <p>
-        Asi se vera el horario escolar, hecho en nuestra pagina. Si desea crear un
-        horario, presione el boton "EMPEZAR".
+        Asi se vera el horario escolar, hecho en nuestra pagina. Si desea crear
+        un horario, presione el boton "EMPEZAR".
       </p>
       <div class="mb-5 py-3">
-        <button
+        <a
           type="button"
-          (click)="gotoLogin()"
+          href="/{{ authSvc.dirigir }}"
           class="btn btn-primary btn-lg w-100"
         >
           Empezar
-        </button>
+        </a>
       </div>
     </div>
   </div>
@@ -255,13 +255,13 @@
     </div>
     <div class="py-5" style="text-align: center">
       <h2>Empieza ahora mismo con tan solo un click</h2>
-      <button
+      <a
         type="button"
-        (click)="gotoLogin()"
+        href="/{{ authSvc.dirigir }}"
         class="btn btn-primary btn-lg px-5 me-md-2"
       >
         Empezar
-      </button>
+      </a>
     </div>
   </div>
 </div>

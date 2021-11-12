@@ -22,8 +22,9 @@ export class AuthService {
   public userData: any;
   ingresoEmailCompleto: boolean = false;
   nombresDeEscuelas: Array<any> = [];
-  // idsDeEscuelas: Array<any> = [];
   existeEscuela: boolean = false;
+  dirigir: string = '';
+  // idsDeEscuelas: Array<any> = [];
   // mostrarSpinner: boolean = true;
 
   constructor(
@@ -53,6 +54,21 @@ export class AuthService {
           .then((res) => {
             this.userData = res.data();
             this.spinnerSvc.mostrarSpinnerUser = false;
+            if (this.userData && this.userData.emailVerified) {
+              this.dirigir = 'menu-principal';
+              // this.router.navigate(['menu-principal']);
+            } else if (
+              this.userData &&
+              this.userData.emailVerified == false
+            ) {
+              this.dirigir = 'verificacion-email';
+        
+              // this.router.navigate(['verificacion-email']);
+            } else {
+              this.dirigir = 'login';
+        
+              // this.router.navigate(['login']);
+            }
           });
       } else {
         this.userData = null;
