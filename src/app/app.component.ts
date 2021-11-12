@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './auth/services/auth.service';
+import { ServiceSpinnerService } from './shared/loading-spinner/service-spinner.service';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,5 @@ import { AuthService } from './auth/services/auth.service';
 export class AppComponent {
   title = 'proyectoS4S';
 
-  constructor(public authSvc: AuthService) {}
+  constructor(public spinnerSvc: ServiceSpinnerService) {}
 }

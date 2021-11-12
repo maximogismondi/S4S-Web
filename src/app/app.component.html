@@ -1,3 +1,3 @@
-<app-navbar *ngIf="!authSvc.mostrarSpinner"></app-navbar>
-<app-loading-spinner *ngIf="authSvc.mostrarSpinner"></app-loading-spinner>
-<router-outlet *ngIf="!authSvc.mostrarSpinner"></router-outlet>
+<app-navbar></app-navbar>
+<app-loading-spinner *ngIf="spinnerSvc.mostrarSpinnerUser || spinnerSvc.mostrarSpinnerColegio "></app-loading-spinner>
+<router-outlet ></router-outlet>

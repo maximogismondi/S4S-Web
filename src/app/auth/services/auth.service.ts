@@ -14,6 +14,7 @@ import {
 import { Observable, of } from 'rxjs';
 import firebase from 'firebase/app';
 import { Router } from '@angular/router';
+import { ServiceSpinnerService } from 'src/app/shared/loading-spinner/service-spinner.service';
 // import { Time } from '@angular/common';
 
 @Injectable()
@@ -23,13 +24,16 @@ export class AuthService {
   nombresDeEscuelas: Array<any> = [];
   // idsDeEscuelas: Array<any> = [];
   existeEscuela: boolean = false;
-  mostrarSpinner: boolean = true;
+  // mostrarSpinner: boolean = true;
 
   constructor(
     public afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router, 
+    private spinnerSvc: ServiceSpinnerService
   ) {
+    this.spinnerSvc.mostrarSpinnerUser = true;
+
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.afs.firestore
@@ -48,11 +52,11 @@ export class AuthService {
           .toPromise()
           .then((res) => {
             this.userData = res.data();
-            this.mostrarSpinner = false;
+            this.spinnerSvc.mostrarSpinnerUser = false;
           });
       } else {
         this.userData = null;
-        this.mostrarSpinner = false;
+        this.spinnerSvc.mostrarSpinnerUser = false;
       }
     });
   }
