@@ -19,11 +19,12 @@ import { ProfesoresComponent } from './colegio/crear-colegio/profesores/profesor
 import { MateriasComponent } from './colegio/crear-colegio/materias/materias.component';
 import { FinalizarComponent } from './colegio/crear-colegio/finalizar/finalizar.component';
 import { CrearColegioModule } from './colegio/crear-colegio/crear-colegio.module';
-import {ExcelService} from './colegio/crear-colegio/finalizar/services/excel.service'
+import {ExcelService} from './colegio/crear-colegio/finalizar/services/excel.service';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component'
 // import { ProcesarPagoComponent } from './mercado-pago/procesar-pago/procesar-pago.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, SendEmailComponent, ],
+  declarations: [AppComponent, NavbarComponent, SendEmailComponent, LoadingSpinnerComponent, ],
   // ProcesarPagoComponent
   imports: [
     BrowserModule,

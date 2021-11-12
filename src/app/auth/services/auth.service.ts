@@ -23,6 +23,7 @@ export class AuthService {
   nombresDeEscuelas: Array<any> = [];
   // idsDeEscuelas: Array<any> = [];
   existeEscuela: boolean = false;
+  mostrarSpinner: boolean = false;
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -47,6 +48,7 @@ export class AuthService {
           .toPromise()
           .then((res) => {
             this.userData = res.data();
+            this.mostrarSpinner = false;
           });
       } else {
         this.userData = null;
@@ -224,26 +226,7 @@ export class AuthService {
       alert(
         'El numero de telefono no es igual a los 8 digitos, recuerda que no debe contener ningun espacio, ningun signo y debe ser de tamaño 8'
       );
-    }
-    // else if (school.duracionModulo > 60 || school.duracionModulo < 20) {
-    //   // console.log(school.duracionModulo)
-    //   alert(
-    //     'La duracion de cada modulo debe estar entre 20 a 60 min (incluidos los extremos)'
-    //   );
-    // } else if (
-    //   school.inicioHorario > school.finalizacionHorario &&
-    //   school.finalizacionHorario != ' 00:00'
-    // ) {
-    //   alert('El horario de finalizacion es mas chico que el de inicio');
-    // } else if (
-    //   (school.inicioHorario < '05:00' && school.inicioHorario >= '00:00') ||
-    //   school.inicioHorario > '12:05'
-    // ) {
-    //   alert('El horario de inicio debe ser entre 05:00 - 12:05 pm');
-    // } else if (school.finalizacionHorario < '12:05') {
-    //   alert('El horario de finalizacion debe ser mayor que las 12:05 pm');
-    // }
-    else {
+    } else {
       let existe: boolean = false;
       this.nombresDeEscuelas.forEach((nombreEscuela) => {
         if (school.nombre.toLowerCase() == nombreEscuela.toLowerCase()) {
@@ -253,7 +236,7 @@ export class AuthService {
       });
       if (!existe) {
         this.SchoolData(school);
-        this.router.navigate([school.nombre,'crear-colegio','turnos']);
+        this.router.navigate([school.nombre, 'crear-colegio', 'turnos']);
       }
 
       // confirm("Poner los valores que se piden");

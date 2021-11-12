@@ -45,6 +45,7 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['verificacion-email']);
     } else {
       this.router.navigate(['login']);
+      
     }
     //revisar
     // else if (this.aServ.userData.emailVerified) {

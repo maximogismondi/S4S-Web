@@ -9,6 +9,6 @@ import { AuthService } from './auth/services/auth.service';
 })
 export class AppComponent {
   title = 'proyectoS4S';
+
+  constructor(public authSvc: AuthService) {}
 }
-
-
