@@ -1,0 +1,21 @@
+pipeline {
+    agent {
+        label 'master'
+    }
+
+    environment { 
+        FIREBASE_DEPLOY_TOKEN = credentials('firebase-deploy-token')
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'npm ci --ignore-engines'
+            }
+        }
+        stage('Production') { 
+            steps {
+                sh './jenkins/scripts/production.sh' 
+            }
+        }
+    }
+}

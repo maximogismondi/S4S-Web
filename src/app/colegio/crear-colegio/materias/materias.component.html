@@ -48,10 +48,20 @@
                   type="number"
                   min="1"
                   [(ngModel)]="
+                    colegioSvc.selectedMateria.cantidadMinimaDeModulosPorDia
+                  "
+                  placeholder="Cantidad minima de modulos por dia"
+                  class="form-control mt-2"
+                />
+
+                <input
+                  type="number"
+                  min="1"
+                  [(ngModel)]="
                     colegioSvc.selectedMateria.cantidadMaximaDeModulosPorDia
                   "
                   placeholder="Cantidad maxima de modulos por dia"
-                  class="form-control mt-2"
+                  class="form-control d-inline mt-2"
                 />
 
                 <table class="table mt-2">
@@ -91,6 +101,25 @@
                           >
                             {{ profesor.nombre }} {{ profesor.apellido }}
                           </label>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check form-switch">
+                          <input
+                            class="form-check-input mt-1"
+                            type="checkbox"
+                            role="switch"
+                            id="flexSwitchCheckDefault"
+                            [ngModel]="colegioSvc.selectedMateria.profesorSimultaneo"
+                            (click)="profesorSimultaneoCheck()"
+                          />
+                          <label
+                            class="form-check-label mx-2"
+                            for="flexSwitchCheckDefault"
+                            >Profesores simultaneos</label
+                          >
                         </div>
                       </td>
                     </tr>

@@ -20,21 +20,10 @@ import {
   providedIn: 'root',
 })
 export class ColegioService {
-  nombreColegio: any;
-  // nombreColegio: string;
+  nombreColegio: string;
   duracionModulo: number;
-  inicioHorario: string;
-  finalizacionHorario: string;
-  // turnos: number;
-  // aulas: number;
-  // materias: number;
-  // cursos: number;
-  // profesores: number;
-  horaInicial: number;
-  horaFinal: number;
   inicioModuloSeleccionado: Array<string> = [];
-  botonesCrearColegio: number = 1;
-  // botonesCrearColegio: number;
+  seccion: string = 'turnos';
   disponibilidadProfesor: boolean = false;
   disponibilidadProfesorSemana: Array<Array<Array<boolean>>> = [];
   turnoArray: Array<Turno> = [
@@ -44,7 +33,6 @@ export class ColegioService {
   ];
   profesorArray: Profesor[] = [];
   selectedProfesor: Profesor;
-  // usuariosExtensionesArray: string[] = [];
   aulaArray: Aula[] = [];
   cursoArray: Curso[] = [];
   materiaArray: Materia[] = [];
@@ -52,10 +40,7 @@ export class ColegioService {
   horariosFinal: Array<string> = [];
   nombreMateria: string;
   aulaMateria: string;
-  cursoActual: string;
   dias: Array<string> = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes'];
-  botonPresionado: boolean = false;
-  horarioGenerado: boolean = false;
   cursoMateriaArray: Curso[];
   tiposAulas: Array<Aula[]> = new Array();
   pagoFinalizado: boolean = false;
@@ -70,117 +55,115 @@ export class ColegioService {
     private http: HttpClient,
     private activatedRoute: ActivatedRoute
   ) {
-    authSvc.afAuth.authState.subscribe((user) => {
+    authSvc.afAuth.authState.subscribe(async (user) => {
       if (user) {
-        this.afs
+        let escuelasPerteneceUsuario: Array<string> = [];
+
+        await this.afs.firestore
           .collection('schools')
-          .doc(this.nombreColegio)
-          .snapshotChanges()
-          .subscribe((colegio) => {
-            this.school = colegio.payload.data() as Colegio;
-
-            this.duracionModulo = this.school.duracionModulo;
-            // this.inicioHorario = school.inicioHorario;
-            // this.finalizacionHorario = school.finalizacionHorario;
-
-            this.horaInicial = Number(String(this.inicioHorario).split(':')[0]);
-
-            this.horaFinal = Number(
-              String(this.finalizacionHorario).split(':')[0]
-            );
-            // this.turnos =
-            //   this.school.turnos[0].modulos.length +
-            //   this.school.turnos[1].modulos.length +
-            //   this.school.turnos[2].modulos.length;
-
-            // this.aulas = this.school.aulas.length;
-            // this.materias = this.school.materias.length;
-            // this.cursos = this.school.cursos.length;
-            // this.profesores = this.school.profesores.length;
-
-            this.botonesCrearColegio = this.school.botonesCrearColegio;
-
-            this.turnoArray[0] = Object.assign(
-              new Turno('manana'),
-              this.school.turnos[0]
-            ) as Turno;
-            this.turnoArray[1] = Object.assign(
-              new Turno('tarde'),
-              this.school.turnos[1]
-            ) as Turno;
-            this.turnoArray[2] = Object.assign(
-              new Turno('noche'),
-              this.school.turnos[2]
-            ) as Turno;
-
-            if (this.inicioModuloSeleccionado.length == 0) {
-              this.inicioModuloSeleccionado.push(
-                this.school.turnos[0].inicio,
-                this.school.turnos[1].inicio,
-                this.school.turnos[2].inicio
-              );
-            }
-            this.aulaArray = this.school.aulas;
-
-            this.cursoArray = this.school.cursos;
-
-            this.profesorArray = this.school.profesores;
-
-            this.materiaArray = this.school.materias;
-
-            // this.usuariosExtensionesArray = school.usuariosExtensiones;
-
-            this.cursoArray.forEach((curso) => {
-              curso.materias = [];
-              this.materiaArray.forEach((materia) => {
-                if (materia.curso == curso.nombre) {
-                  curso.materias.push(materia.nombre);
-                }
-              });
-            });
-            this.cursoMateriaArray = this.cursoArray.filter(
-              (curso) => curso.materias.length > 0
-            );
-
-            if (!this.selectedProfesor) {
-              this.selectedProfesor = new Profesor(this.turnoArray);
-            }
-            if (!this.selectedMateria) {
-              this.selectedMateria = new Materia();
-            }
-            if (this.cursoArray.length > 0) {
-              this.cursoActual = this.cursoArray[0].nombre;
-            }
-
-            this.botonPresionado = false;
-            this.horarioGenerado = false;
-
-            this.tiposAulas = [];
-
-            this.aulaArray.forEach((aula) => {
-              let agregado: boolean = false;
-              this.tiposAulas.forEach((tipoAulas) => {
-                if (aula.otro == tipoAulas[0].otro) {
-                  agregado = true;
-                  tipoAulas.push(aula);
-                }
-              });
-              if (!agregado) {
-                this.tiposAulas.push([aula]);
-              }
-            });
-            this.cursoArray.forEach((curso) => {
-              this.materiasArrayValidas[curso.nombre] = {};
-              this.materiaArray.forEach((materia) => {
-                if (materia.curso == curso.nombre) {
-                  this.materiasArrayValidas[curso.nombre][materia.nombre] =
-                    materia.profesoresCapacitados.length > 0 &&
-                    materia.aulasMateria.length > 0 &&
-                    materia.curso != '';
-                }
-              });
+          .where('userAdmin', '==', user.uid)
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              escuelasPerteneceUsuario.push(doc.data().nombre);
             });
           });
+        await this.afs.firestore
+          .collection('schools')
+          .where('usuariosExtensiones', 'array-contains', user.uid)
+
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              escuelasPerteneceUsuario.push(doc.data().nombre);
+            });
+          });
+        if (!escuelasPerteneceUsuario.includes(this.nombreColegio)) {
+          this.router.navigate(['/menu-principal']);
+        } else {
+          this.afs
+            .collection('schools')
+            .doc(this.nombreColegio)
+            .snapshotChanges()
+            .subscribe((colegio) => {
+              this.school = colegio.payload.data() as Colegio;
+
+              this.duracionModulo = this.school.duracionModulo;
+
+              this.turnoArray[0] = Object.assign(
+                new Turno('manana'),
+                this.school.turnos[0]
+              ) as Turno;
+              this.turnoArray[1] = Object.assign(
+                new Turno('tarde'),
+                this.school.turnos[1]
+              ) as Turno;
+              this.turnoArray[2] = Object.assign(
+                new Turno('noche'),
+                this.school.turnos[2]
+              ) as Turno;
+
+              if (this.inicioModuloSeleccionado.length == 0) {
+                this.inicioModuloSeleccionado.push(
+                  this.school.turnos[0].inicio,
+                  this.school.turnos[1].inicio,
+                  this.school.turnos[2].inicio
+                );
+              }
+              this.aulaArray = this.school.aulas;
+
+              this.cursoArray = this.school.cursos;
+
+              this.profesorArray = this.school.profesores;
+
+              this.materiaArray = this.school.materias;
+
+              this.cursoArray.forEach((curso) => {
+                curso.materias = [];
+                this.materiaArray.forEach((materia) => {
+                  if (materia.curso == curso.nombre) {
+                    curso.materias.push(materia.nombre);
+                  }
+                });
+              });
+              this.cursoMateriaArray = this.cursoArray.filter(
+                (curso) => curso.materias.length > 0
+              );
+
+              if (!this.selectedProfesor) {
+                this.selectedProfesor = new Profesor(this.turnoArray);
+              }
+              if (!this.selectedMateria) {
+                this.selectedMateria = new Materia();
+              }
+
+              this.tiposAulas = [];
+
+              this.aulaArray.forEach((aula) => {
+                let agregado: boolean = false;
+                this.tiposAulas.forEach((tipoAulas) => {
+                  if (aula.otro == tipoAulas[0].otro) {
+                    agregado = true;
+                    tipoAulas.push(aula);
+                  }
+                });
+                if (!agregado) {
+                  this.tiposAulas.push([aula]);
+                }
+              });
+              this.cursoArray.forEach((curso) => {
+                this.materiasArrayValidas[curso.nombre] = {};
+                this.materiaArray.forEach((materia) => {
+                  if (materia.curso == curso.nombre) {
+                    this.materiasArrayValidas[curso.nombre][materia.nombre] =
+                      materia.profesoresCapacitados.length > 0 &&
+                      materia.aulasMateria.length > 0 &&
+                      materia.curso != '';
+                  }
+                });
+              });
+            });
+        }
       }
     });
   }
@@ -191,11 +174,13 @@ export class ColegioService {
     this.materiaArray.forEach((materia) => {
       materiaArrayDiccionario.push({
         nombre: materia.nombre,
-        cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
         curso: materia.curso,
+        profesorSimultaneo: materia.profesorSimultaneo,
+        cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
+        cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
+        cantidadMinimaDeModulosPorDia: materia.cantidadMinimaDeModulosPorDia,
         profesoresCapacitados: materia.profesoresCapacitados,
         aulasMateria: materia.aulasMateria,
-        cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
       });
     });
     this.afs.collection('schools').doc(this.nombreColegio).update({
@@ -212,10 +197,6 @@ export class ColegioService {
         apellido: profesor.apellido,
         dni: profesor.dni,
         disponibilidad: profesor.disponibilidad,
-        // id: profesor.id,
-        // 'materias capacitado': profesor.materiasCapacitado,
-        //  turnoPreferido: profesor.turnoPreferido,
-        // condiciones: profesor.condiciones,
       });
     });
     this.afs.collection('schools').doc(this.nombreColegio).update({

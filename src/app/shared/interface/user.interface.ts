@@ -18,7 +18,6 @@ export class Colegio {
   provincia: string;
   telefono: string;
   duracionModulo: number;
-  botonesCrearColegio: number;
   usuariosExtensiones: Array<string>;
   aulas: Array<Aula>;
   turnos: Array<Turno>;
@@ -89,12 +88,13 @@ export class Profesor {
 export class Materia {
   id: number = 0;
   nombre: string = '';
-  cantidadDeModulosTotal: string = '';
-  cantidadMaximaDeModulosPorDia: string = '';
+  cantidadDeModulosTotal: number;
+  cantidadMaximaDeModulosPorDia: number;
+  cantidadMinimaDeModulosPorDia: number;
+  profesorSimultaneo: boolean = false;
   curso: string = '';
   profesoresCapacitados: Array<string> = [];
   aulasMateria: Array<string> = [];
-
   constructor() {
     this.profesoresCapacitados = [];
     this.aulasMateria = [];

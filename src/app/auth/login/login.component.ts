@@ -49,9 +49,9 @@ export class LoginComponent implements OnInit {
       const user = await this.authSvc.login(email, password);
 
       if (user && user.emailVerified) {
-        this.router.navigate(['/menu-principal']);
+        this.router.navigate(['menu-principal']);
       } else if (user && !user.emailVerified) {
-        this.router.navigate(['/verificacion-email']);
+        this.router.navigate(['verificacion-email']);
       }
       // else {
       //   alert('No existe una cuenta con ese email, por favor registrese');
@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
 
   async onGoogleLogin() {
     if (await this.authSvc.loginGoogle()) {
-      this.router.navigate(['/menu-principal']);
+      this.router.navigate(['menu-principal']);
     }
   }
 

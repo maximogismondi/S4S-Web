@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
     if(email.length > 5 && password.length > 5) {
       const user = await this.authSvc.register(email, password);
       if (user) {
-        this.router.navigate(['/verificacion-email']);
+        this.router.navigate(['verificacion-email']);
       }
     }
     else{

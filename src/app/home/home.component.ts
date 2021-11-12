@@ -10,6 +10,8 @@ import { AuthService } from '../auth/services/auth.service';
   providers: [AuthService],
 })
 export class HomeComponent implements OnInit {
+  windowScrollInY: number = 0;
+
   // noVerificado: boolean = true;
 
   constructor(
@@ -24,21 +26,25 @@ export class HomeComponent implements OnInit {
     // });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    window.onscroll = () => {
+      this.windowScrollInY = window.scrollY;
+    };
+  }
 
   gotoLogin() {
     // if (!this.noVerificado) {
     //   this.router.navigate(['/verificacion-email']);
     // } else
     if (this.authSvc.userData && this.authSvc.userData.emailVerified) {
-      this.router.navigate(['/menu-principal']);
+      this.router.navigate(['menu-principal']);
     } else if (
       this.authSvc.userData &&
       this.authSvc.userData.emailVerified == false
     ) {
-      this.router.navigate(['/verificacion-email']);
+      this.router.navigate(['verificacion-email']);
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['login']);
     }
     //revisar
     // else if (this.aServ.userData.emailVerified) {
