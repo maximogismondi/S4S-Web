@@ -25,9 +25,9 @@ export class HorariosGeneradosComponent implements OnInit {
     private excelService: ExcelService,
     private activatedRoute: ActivatedRoute
   ) {
-    this.colegioSvc.nombreColegio = this.activatedRoute.snapshot.paramMap.get(
-      'nombreColegio'
-    ) as string;
+    activatedRoute.params.subscribe((params) => {
+      this.colegioSvc.nombreColegio = params.nombreColegio;
+    });
 
     this.afs
       .collection('schools')

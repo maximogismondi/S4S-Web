@@ -18,14 +18,10 @@ export class CrearColegioComponent implements OnInit {
     private router: Router,
     private authSvc: AuthService
   ) {
-
-    this.colegioSvc.nombreColegio = this.activatedRoute.snapshot.paramMap.get(
-      'nombreColegio'
-    ) as string;
-    this.colegioSvc.seccion = this.activatedRoute.snapshot.paramMap.get(
-      'seccion'
-    ) as string;
-
+    activatedRoute.params.subscribe((params) => {
+      this.colegioSvc.nombreColegio = params.nombreColegio;
+      this.colegioSvc.seccion = params.seccion;
+    });
     // console.log(this.colegioSvc.seccion);
   }
 

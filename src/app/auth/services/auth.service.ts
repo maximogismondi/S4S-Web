@@ -23,7 +23,7 @@ export class AuthService {
   nombresDeEscuelas: Array<any> = [];
   // idsDeEscuelas: Array<any> = [];
   existeEscuela: boolean = false;
-  mostrarSpinner: boolean = false;
+  mostrarSpinner: boolean = true;
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -52,6 +52,7 @@ export class AuthService {
           });
       } else {
         this.userData = null;
+        this.mostrarSpinner = false;
       }
     });
   }
