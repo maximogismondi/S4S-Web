@@ -288,13 +288,14 @@
             colegioSvc.aulaArray.length > 0 &&
             colegioSvc.cursoArray.length > 0 &&
             colegioSvc.profesorArray.length > 0 &&
-            colegioSvc.materiaArray.length > 0 && ((
-            colegioSvc.turnoArray[0].habilitado &&
-            colegioSvc.turnoArray[0].modulos.length > 0) ||
-            (colegioSvc.turnoArray[1].habilitado &&
-              colegioSvc.turnoArray[1].modulos.length > 0) || (
-            colegioSvc.turnoArray[2].habilitado &&
-            colegioSvc.turnoArray[2].modulos.length > 0)); else creaColegio
+            colegioSvc.materiaArray.length > 0 &&
+            ((colegioSvc.turnoArray[0].habilitado &&
+              colegioSvc.turnoArray[0].modulos.length > 0) ||
+              (colegioSvc.turnoArray[1].habilitado &&
+                colegioSvc.turnoArray[1].modulos.length > 0) ||
+              (colegioSvc.turnoArray[2].habilitado &&
+                colegioSvc.turnoArray[2].modulos.length > 0));
+          else creaColegio
         "
         class="d-grid"
       >
@@ -366,7 +367,7 @@
         </ng-template>
       </div>
       <ng-template #creaColegio>
-        <h3 class="text-center mt-2">
+        <h3 *ngIf="!botonPresionado" class="text-center mt-2">
           Ingresa como minimo un valor de cada seccion
         </h3>
       </ng-template>
