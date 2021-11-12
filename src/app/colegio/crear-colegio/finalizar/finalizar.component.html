@@ -69,17 +69,17 @@
                     >
                       <li class="list-group-item">
                         <span>{{
-                          horariosAulasHechos[this.cursoActual][dia][
-                            "manana"
-                          ][modulo.inicio]
+                          horariosAulasHechos[this.cursoActual][dia]["manana"][
+                            modulo.inicio
+                          ]
                         }}</span>
                       </li>
                       <li class="list-group-item">
                         <span>{{
                           materiasProfesoresHechos[
-                            horariosHechos[this.cursoActual][dia][
-                              "manana"
-                            ][modulo.inicio] +
+                            horariosHechos[this.cursoActual][dia]["manana"][
+                              modulo.inicio
+                            ] +
                               "-" +
                               this.cursoActual
                           ]
@@ -135,17 +135,17 @@
                     >
                       <li class="list-group-item">
                         <span>{{
-                          horariosAulasHechos[this.cursoActual][dia][
-                            "tarde"
-                          ][modulo.inicio]
+                          horariosAulasHechos[this.cursoActual][dia]["tarde"][
+                            modulo.inicio
+                          ]
                         }}</span>
                       </li>
                       <li class="list-group-item">
                         <span>{{
                           materiasProfesoresHechos[
-                            horariosHechos[this.cursoActual][dia][
-                              "tarde"
-                            ][modulo.inicio] +
+                            horariosHechos[this.cursoActual][dia]["tarde"][
+                              modulo.inicio
+                            ] +
                               "-" +
                               this.cursoActual
                           ]
@@ -201,17 +201,17 @@
                     >
                       <li class="list-group-item">
                         <span>{{
-                          horariosAulasHechos[this.cursoActual][dia][
-                            "noche"
-                          ][modulo.inicio]
+                          horariosAulasHechos[this.cursoActual][dia]["noche"][
+                            modulo.inicio
+                          ]
                         }}</span>
                       </li>
                       <li class="list-group-item">
                         <span>{{
                           materiasProfesoresHechos[
-                            horariosHechos[this.cursoActual][dia][
-                              "noche"
-                            ][modulo.inicio] +
+                            horariosHechos[this.cursoActual][dia]["noche"][
+                              modulo.inicio
+                            ] +
                               "-" +
                               this.cursoActual
                           ]
@@ -282,7 +282,22 @@
         </div>
       </div>
 
-      <div *ngIf="!botonPresionado" class="d-grid">
+      <div
+        *ngIf="
+          !botonPresionado &&
+            colegioSvc.aulaArray.length > 0 &&
+            colegioSvc.cursoArray.length > 0 &&
+            colegioSvc.profesorArray.length > 0 &&
+            colegioSvc.materiaArray.length > 0 && ((
+            colegioSvc.turnoArray[0].habilitado &&
+            colegioSvc.turnoArray[0].modulos.length > 0) ||
+            (colegioSvc.turnoArray[1].habilitado &&
+              colegioSvc.turnoArray[1].modulos.length > 0) || (
+            colegioSvc.turnoArray[2].habilitado &&
+            colegioSvc.turnoArray[2].modulos.length > 0)); else creaColegio
+        "
+        class="d-grid"
+      >
         <!-- *ngIf="colegioSvc.pagoFinalizado else pagar" -->
         <div class="d-grid">
           <button (click)="finalizar()" class="btn btn-primary btn-lg mt-2">
@@ -350,6 +365,11 @@
           <div class="mercadoPagoBoton mt-5"></div>
         </ng-template>
       </div>
+      <ng-template #creaColegio>
+        <h3 class="text-center mt-2">
+          Ingresa como minimo un valor de cada seccion
+        </h3>
+      </ng-template>
     </div>
   </div>
 </div>
