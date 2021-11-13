@@ -48,6 +48,7 @@ export class EleccionComponent implements OnInit {
   ngOnInit(): void {
     this.crearColegioForm = this.fb.group({
       nombre: ['', Validators.required],
+      color: ['', Validators.required],
       provincia: ['', Validators.required],
       localidad: ['', Validators.required],
       telefono: ['', Validators.required],
@@ -80,6 +81,7 @@ export class EleccionComponent implements OnInit {
   async onCrear() {
     const {
       nombre,
+      color,
       provincia,
       localidad,
       telefono,
@@ -89,6 +91,7 @@ export class EleccionComponent implements OnInit {
     } = this.crearColegioForm.value;
     const school = await this.authSvc.createSchool(
       nombre,
+      color,
       provincia,
       localidad,
       telefono,
@@ -135,7 +138,9 @@ export class EleccionComponent implements OnInit {
                             usuariosExtensiones: usuariosExtensionesArray,
                           });
                         this.router.navigate([
-nombreColegio,'crear-colegio','turnos'
+                          nombreColegio,
+                          'crear-colegio',
+                          'turnos',
                         ]);
                       } else {
                         alert('Ya perteneces a ' + nombreColegio + '.');
@@ -212,7 +217,7 @@ nombreColegio,'crear-colegio','turnos'
   seleccionaColegio(colegio: string) {
     this.unirseColegioForm = this.fb.group({
       nombreColegio: [colegio, Validators.required],
-      idColegio: ['', Validators.required]
+      idColegio: ['', Validators.required],
     });
     this.colegioElegido = colegio;
     this.seleccionoColegio = true;

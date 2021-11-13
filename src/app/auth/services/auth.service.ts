@@ -30,7 +30,7 @@ export class AuthService {
   constructor(
     public afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router, 
+    private router: Router,
     private spinnerSvc: ServiceSpinnerService
   ) {
     this.spinnerSvc.mostrarSpinnerUser = true;
@@ -57,22 +57,22 @@ export class AuthService {
             if (this.userData && this.userData.emailVerified) {
               this.dirigir = 'menu-principal';
               // this.router.navigate(['menu-principal']);
-            } else if (
-              this.userData &&
-              this.userData.emailVerified == false
-            ) {
-              this.dirigir = 'verificacion-email';
-        
-              // this.router.navigate(['verificacion-email']);
             } else {
-              this.dirigir = 'login';
-        
-              // this.router.navigate(['login']);
-            }
+              // if (this.userData && this.userData.emailVerified == false) 
+              this.dirigir = 'verificacion-email';
+
+              // this.router.navigate(['verificacion-email']);
+            } 
+            // else {
+            //   this.dirigir = 'login';
+
+            //   // this.router.navigate(['login']);
+            // }
           });
       } else {
         this.userData = null;
         this.spinnerSvc.mostrarSpinnerUser = false;
+        this.dirigir = 'login';
       }
     });
   }
@@ -198,6 +198,7 @@ export class AuthService {
   //joya
   async createSchool(
     nombre: string,
+    color: string,
     provincia: string,
     localidad: string,
     telefono: string,
@@ -210,6 +211,7 @@ export class AuthService {
       id: id,
       userAdmin: this.userData.uid,
       nombre: nombre,
+      color: color,
       // ejecutado: "no",
       localidad: localidad,
       provincia: provincia,
@@ -328,6 +330,7 @@ export class AuthService {
       id: school.id,
       userAdmin: school.userAdmin,
       nombre: school.nombre,
+      color: school.color,
       // ejecutado: school.ejecutado,
       provincia: school.provincia,
       localidad: school.localidad,
