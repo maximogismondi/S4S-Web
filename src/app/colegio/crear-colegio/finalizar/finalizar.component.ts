@@ -43,6 +43,8 @@ export class FinalizarComponent implements OnInit {
   botonPresionado: boolean = false;
   horarioGenerado: boolean = false;
 
+  keys = Object.keys;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -52,11 +54,7 @@ export class FinalizarComponent implements OnInit {
     private afs: AngularFirestore,
     private _mercadopago: MercadopagoService,
     private excelService: ExcelService
-  ) {
-    if (this.colegioSvc.cursoArray.length > 0) {
-      this.cursoActual = this.colegioSvc.cursoArray[0].nombre;
-    }
-  }
+  ) {}
 
   ngOnInit(): void {
     // this._mercadopago
@@ -173,87 +171,14 @@ export class FinalizarComponent implements OnInit {
                     horariosReady.get('horariosAulas') &&
                     horariosReady.get('materiasProfesores')
                   ) {
-                    let horariosHechos = horariosReady.get('horarios');
-                    let horariosAulasHechos =
+                    this.cursoActual = this.colegioSvc.cursoArray[0].nombre;
+                    this.horariosHechos = horariosReady.get('horarios');
+                    this.horariosAulasHechos =
                       horariosReady.get('horariosAulas');
-                    let materiasProfesoresHechos =
+                    this.materiasProfesoresHechos =
                       horariosReady.get('materiasProfesores');
-
-                    this.colegioSvc.cursoArray.forEach((curso) => {
-                      this.horariosHechos[curso.nombre] = {};
-                      this.colegioSvc.dias.forEach((dia) => {
-                        this.horariosHechos[curso.nombre][dia] = {};
-                        this.colegioSvc.turnoArray.forEach((turno) => {
-                          if (turno.habilitado == true) {
-                            this.horariosHechos[curso.nombre][dia][
-                              turno.turno
-                            ] = {};
-                            turno.modulos.forEach((modulo) => {
-                              if (
-                                horariosHechos[curso.nombre][dia][turno.turno][
-                                  turno.modulos.indexOf(modulo) + 1
-                                ].split('-')[0] == 'Hueco'
-                              ) {
-                                this.horariosHechos[curso.nombre][dia][
-                                  turno.turno
-                                ][modulo.inicio] = '';
-                              } else {
-                                this.horariosHechos[curso.nombre][dia][
-                                  turno.turno
-                                ][modulo.inicio] =
-                                  horariosHechos[curso.nombre][dia][
-                                    turno.turno
-                                  ][turno.modulos.indexOf(modulo) + 1].split(
-                                    '-'
-                                  )[0];
-                              }
-                            });
-                          }
-                        });
-                      });
-                    });
-
-                    this.colegioSvc.cursoArray.forEach((curso) => {
-                      this.horariosAulasHechos[curso.nombre] = {};
-                      this.colegioSvc.dias.forEach((dia) => {
-                        this.horariosAulasHechos[curso.nombre][dia] = {};
-                        this.colegioSvc.turnoArray.forEach((turno) => {
-                          if (turno.habilitado == true) {
-                            this.horariosAulasHechos[curso.nombre][dia][
-                              turno.turno
-                            ] = {};
-                            turno.modulos.forEach((modulo) => {
-                              if (
-                                horariosAulasHechos[curso.nombre][dia][
-                                  turno.turno
-                                ][turno.modulos.indexOf(modulo) + 1] == 'Hueco'
-                              ) {
-                                this.horariosAulasHechos[curso.nombre][dia][
-                                  turno.turno
-                                ][modulo.inicio] = '';
-                              } else {
-                                this.horariosAulasHechos[curso.nombre][dia][
-                                  turno.turno
-                                ][modulo.inicio] =
-                                  horariosAulasHechos[curso.nombre][dia][
-                                    turno.turno
-                                  ][turno.modulos.indexOf(modulo) + 1];
-                              }
-                            });
-                          }
-                        });
-                      });
-                    });
-
-                    this.colegioSvc.materiaArray.forEach((materia) => {
-                      this.materiasProfesoresHechos[
-                        materia.nombre + '-' + materia.curso
-                      ] =
-                        materiasProfesoresHechos[
-                          materia.nombre + '-' + materia.curso
-                        ];
-                    });
-
+                      console.log(this.materiasProfesoresHechos);
+                                            
                     this.horarioGenerado = true;
                   }
                 });
