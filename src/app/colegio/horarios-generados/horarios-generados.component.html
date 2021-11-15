@@ -67,7 +67,9 @@
                   "
                   class="bg-white"
                 >
-                  <td colspan="2" class="text-black">{{ modulo }} -</td>
+                  <td colspan="2" class="text-black">
+                    {{ modulo }} - {{ sumarDuracionModulo(modulo) }}
+                  </td>
                   <td
                     *ngFor="
                       let dia of ordenarDias(

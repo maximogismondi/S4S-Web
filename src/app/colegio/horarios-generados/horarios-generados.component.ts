@@ -78,7 +78,7 @@ export class HorariosGeneradosComponent implements OnInit {
           this.materiasProfesoresHechos =
             horariosReady.get('materiasProfesores');
 
-          this.cursoActual = Object.keys(this.horariosHechos)[0];
+          this.cursoActual = this.ordenarCursos(Object.keys(this.horariosHechos))[0];
         }
       });
   }
@@ -145,6 +145,28 @@ export class HorariosGeneradosComponent implements OnInit {
       return a.localeCompare(b);
     });
     return modulosOrdenados;
+  }
+
+  sumarDuracionModulo(modulo: string) {
+    let horasAux: number = Number(modulo.split(':')[0]);
+    let minutosAux: number =
+      Number(modulo.split(':')[1]) + this.colegioSvc.duracionModulo;
+
+    while (minutosAux >= 60) {
+      minutosAux = minutosAux - 60;
+      horasAux++;
+      if (horasAux == 24) {
+        horasAux = 0;
+      }
+    }
+
+    let horaFinal: string = String(horasAux);
+    let minutoFinal: string = String(minutosAux);
+
+    if (horaFinal.length == 1) horaFinal = '0' + horaFinal;
+    if (minutoFinal.length == 1) minutoFinal = '0' + minutoFinal;
+
+    return horaFinal + ':' + minutoFinal;
   }
 
   exportAsExcelFile() {

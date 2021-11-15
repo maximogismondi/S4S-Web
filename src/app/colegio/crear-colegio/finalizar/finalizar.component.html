@@ -5,10 +5,10 @@
         <label class="mt-2">Cursos</label>
         <select class="form-select" [(ngModel)]="cursoActual">
           <option
-            *ngFor="let curso of colegioSvc.cursoArray"
-            value="{{ curso.nombre }}"
+            *ngFor="let curso of ordenarCursos(keys(horariosHechos))"
+            value="{{ curso }}"
           >
-            {{ curso.nombre }}
+            {{ curso }}
           </option>
         </select>
       </ng-container>
@@ -27,24 +27,32 @@
         </thead>
         <tbody>
           <ng-container
-            *ngFor="let turno of keys(horariosHechos[this.cursoActual]['Lunes'])"
+            *ngFor="
+              let turno of ordenarTurnos(
+                keys(horariosHechos[this.cursoActual]['Lunes'])
+              )
+            "
           >
             <tr>
               <td colspan="7" class="table-active">INICIO ACTIVIDADES</td>
             </tr>
             <tr
               *ngFor="
-                let modulo of keys(
-                  horariosHechos[this.cursoActual]['Lunes'][turno]
+                let modulo of odenarModulos(
+                  keys(horariosHechos[this.cursoActual]['Lunes'][turno])
                 );
                 let m = index
               "
               class="bg-white"
             >
-              <td colspan="2" class="text-black">{{ modulo }} -</td>
+              <td colspan="2" class="text-black">
+                {{ modulo }} - {{ sumarDuracionModulo(modulo) }}
+              </td>
               <td
                 *ngFor="
-                  let dia of keys(horariosHechos[this.cursoActual]);
+                  let dia of ordenarDias(
+                    keys(horariosHechos[this.cursoActual])
+                  );
                   let d = index
                 "
                 colspan="1"
@@ -52,7 +60,9 @@
               >
                 <li
                   *ngIf="
-                    horariosHechos[this.cursoActual][dia][turno][modulo].split('-')[0] != 'Hueco'
+                    horariosHechos[this.cursoActual][dia][turno][modulo].split(
+                      '-'
+                    )[0] != 'Hueco'
                   "
                   class="list-group-item list-group-item-action"
                   data-bs-toggle="collapse"
@@ -60,7 +70,11 @@
                   aria-expanded="false"
                 >
                   <div>
-                    {{ horariosHechos[this.cursoActual][dia][turno][modulo].split("-")[0] }}
+                    {{
+                      horariosHechos[this.cursoActual][dia][turno][
+                        modulo
+                      ].split("-")[0]
+                    }}
                     <div
                       class="collapse"
                       [attr.id]="'collapse' + turno + d + m"
@@ -75,9 +89,7 @@
                       <li class="list-group-item">
                         <span>{{
                           materiasProfesoresHechos[
-                            horariosHechos[this.cursoActual][dia][turno][
-                              modulo
-                            ]
+                            horariosHechos[this.cursoActual][dia][turno][modulo]
                           ]
                         }}</span>
                       </li>
@@ -89,7 +101,7 @@
           </ng-container>
         </tbody>
       </table>
-
+      
       <button
         *ngIf="horarioGenerado"
         class="btn btn-primary my-2"

@@ -171,14 +171,13 @@ export class FinalizarComponent implements OnInit {
                     horariosReady.get('horariosAulas') &&
                     horariosReady.get('materiasProfesores')
                   ) {
-                    this.cursoActual = this.colegioSvc.cursoArray[0].nombre;
                     this.horariosHechos = horariosReady.get('horarios');
                     this.horariosAulasHechos =
                       horariosReady.get('horariosAulas');
                     this.materiasProfesoresHechos =
                       horariosReady.get('materiasProfesores');
-                      console.log(this.materiasProfesoresHechos);
-                                            
+                      this.cursoActual = this.ordenarCursos(Object.keys(this.horariosHechos))[0];
+
                     this.horarioGenerado = true;
                   }
                 });
@@ -190,36 +189,122 @@ export class FinalizarComponent implements OnInit {
 
     // console.log(res);
   }
-  exportAsExcelFile() {
-    let jsonMaterias: any = [];
-    this.colegioSvc.cursoArray.forEach((curso) => {
-      this.colegioSvc.turnoArray.forEach((turno) => {
-        if (turno.habilitado == true) {
-          if (turno.modulos.length > 0) {
-            jsonMaterias.push({
-              Curso: curso.nombre,
-              Modulo: turno.turno,
-            });
-          }
-          turno.modulos.forEach((modulo) => {
-            jsonMaterias.push({
-              Modulo: modulo.inicio + ' - ' + modulo.final,
-            });
 
-            this.colegioSvc.dias.forEach((dia) => {
-              jsonMaterias[jsonMaterias.length - 1][dia] =
-                this.horariosHechos[curso.nombre][dia][turno.turno][
-                  modulo.inicio
-                ];
-            });
-          });
-          if (turno.modulos.length > 0) {
-            jsonMaterias.push({});
-          }
-        }
-      });
-      jsonMaterias.push({});
+  ordenarCursos(cursos: Array<string>) {
+    //ordenar string alfabéticamente
+    let cursosOrdenados: Array<string> = [];
+    cursos.forEach((curso) => {
+      cursosOrdenados.push(curso);
     });
-    this.excelService.exportAsExcelFile(jsonMaterias, 'export-to-excel');
+    cursosOrdenados.sort((a, b) => {
+      if (a < b) {
+        return -1;
+      }
+      if (a > b) {
+        return 1;
+      }
+      return 0;
+    });
+    return cursosOrdenados;
+  }
+
+  ordenarDias(dias: Array<string>) {
+    //ordenar por Lunes, Martes, Miercoles, Jueves, Viernes
+    let diasOrdenados: string[] = [];
+    dias.forEach((dia) => {
+      if (dia === 'Lunes') {
+        diasOrdenados.push(dia);
+      } else if (dia === 'Martes') {
+        diasOrdenados.push(dia);
+      } else if (dia === 'Miercoles') {
+        diasOrdenados.push(dia);
+      } else if (dia === 'Jueves') {
+        diasOrdenados.push(dia);
+      } else if (dia === 'Viernes') {
+        diasOrdenados.push(dia);
+      }
+    });
+    return diasOrdenados;
+  }
+
+  ordenarTurnos(turnos: Array<string>) {
+    //ordenar por manana, tarde, noche
+    let turnosOrdenados: Array<string> = [];
+    turnos.forEach((turno) => {
+      if (turno.includes('manana')) {
+        turnosOrdenados.push(turno);
+      } else if (turno.includes('tarde')) {
+        turnosOrdenados.push(turno);
+      } else if (turno.includes('noche')) {
+        turnosOrdenados.push(turno);
+      }
+    });
+    return turnosOrdenados;
+  }
+
+  odenarModulos(modulos: Array<string>) {
+    //ordenar string de menor a mayor
+    let modulosOrdenados: Array<string> = [];
+    modulos.forEach((modulo) => {
+      modulosOrdenados.push(modulo);
+    });
+    modulosOrdenados.sort((a, b) => {
+      return a.localeCompare(b);
+    });
+    return modulosOrdenados;
+  }
+
+  sumarDuracionModulo(modulo: string) {
+    let horasAux: number = Number(modulo.split(':')[0]);
+    let minutosAux: number =
+      Number(modulo.split(':')[1]) + this.colegioSvc.duracionModulo;
+
+    while (minutosAux >= 60) {
+      minutosAux = minutosAux - 60;
+      horasAux++;
+      if (horasAux == 24) {
+        horasAux = 0;
+      }
+    }
+
+    let horaFinal: string = String(horasAux);
+    let minutoFinal: string = String(minutosAux);
+
+    if (horaFinal.length == 1) horaFinal = '0' + horaFinal;
+    if (minutoFinal.length == 1) minutoFinal = '0' + minutoFinal;
+
+    return horaFinal + ':' + minutoFinal;
+  }
+
+  exportAsExcelFile() {
+    // let jsonMaterias: any = [];
+    // this.colegioSvc.cursoArray.forEach((curso) => {
+    //   this.colegioSvc.turnoArray.forEach((turno) => {
+    //     if (turno.habilitado == true) {
+    //       if (turno.modulos.length > 0) {
+    //         jsonMaterias.push({
+    //           Curso: curso.nombre,
+    //           Modulo: turno.turno,
+    //         });
+    //       }
+    //       turno.modulos.forEach((modulo) => {
+    //         jsonMaterias.push({
+    //           Modulo: modulo.inicio + ' - ' + modulo.final,
+    //         });
+    //         this.colegioSvc.dias.forEach((dia) => {
+    //           jsonMaterias[jsonMaterias.length - 1][dia] =
+    //             this.horariosHechos[curso.nombre][dia][turno.turno][
+    //               modulo.inicio
+    //             ];
+    //         });
+    //       });
+    //       if (turno.modulos.length > 0) {
+    //         jsonMaterias.push({});
+    //       }
+    //     }
+    //   });
+    //   jsonMaterias.push({});
+    // });
+    // this.excelService.exportAsExcelFile(jsonMaterias, 'export-to-excel');
   }
 }
