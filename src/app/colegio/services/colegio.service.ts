@@ -50,7 +50,6 @@ export class ColegioService {
   school: Colegio;
   // mostrarSpinner: boolean = true;
 
-  
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -59,10 +58,10 @@ export class ColegioService {
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
     private spinnerSvc: ServiceSpinnerService
-    ) {
+  ) {
     this.spinnerSvc.mostrarSpinnerColegio = true;
     // console.log(this.authSvc.mostrarSpinner);
-    
+
     authSvc.afAuth.authState.subscribe(async (user) => {
       if (user) {
         let escuelasPerteneceUsuario: Array<string> = [];

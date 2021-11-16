@@ -127,11 +127,17 @@ export class HorariosGeneradosComponent implements OnInit {
     //ordenar por manana, tarde, noche
     let turnosOrdenados: Array<string> = [];
     turnos.forEach((turno) => {
-      if (turno.includes('manana')) {
+      if (turno == 'manana') {
         turnosOrdenados.push(turno);
-      } else if (turno.includes('tarde')) {
+      }
+    });
+    turnos.forEach((turno) => {
+      if (turno == 'tarde') {
         turnosOrdenados.push(turno);
-      } else if (turno.includes('noche')) {
+      }
+    });
+    turnos.forEach((turno) => {
+      if (turno == 'noche') {
         turnosOrdenados.push(turno);
       }
     });
