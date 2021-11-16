@@ -46,7 +46,7 @@ export class ColegioService {
   cursoMateriaArray: Curso[];
   tiposAulas: Array<Aula[]> = new Array();
   pagoFinalizado: boolean = false;
-  materiasArrayValidas: any = {};
+  materiasArrayInValidas: any = {};
   school: Colegio;
   // mostrarSpinner: boolean = true;
 
@@ -162,10 +162,10 @@ export class ColegioService {
                 }
               });
               this.cursoArray.forEach((curso) => {
-                this.materiasArrayValidas[curso.nombre] = {};
+                this.materiasArrayInValidas[curso.nombre] = {};
                 this.materiaArray.forEach((materia) => {
                   if (materia.curso == curso.nombre) {
-                    this.materiasArrayValidas[curso.nombre][materia.nombre] =
+                    this.materiasArrayInValidas[curso.nombre][materia.nombre] =
                       materia.profesoresCapacitados.length > 0 &&
                       materia.aulasMateria.length > 0 &&
                       materia.curso != '';

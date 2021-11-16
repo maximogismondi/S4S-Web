@@ -121,149 +121,57 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <ng-container *ngIf="colegioSvc.turnoArray[0].habilitado">
-                      <tr>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td colspan="7" class="table-active">
-                          TURNO MAÑANA ({{ colegioSvc.turnoArray[0].inicio }} -
-                          {{ colegioSvc.turnoArray[0].finalizacion }})
-                        </td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                      </tr>
-                      <tr
-                        *ngFor="let modulo of colegioSvc.turnoArray[0].modulos"
-                        class="bg-secondary"
+                    <ng-container *ngFor="let turno of colegioSvc.turnoArray">
+                      <ng-container
+                        *ngIf="turno.habilitado && turno.modulos.length > 0"
                       >
-                        <td colspan="2" class="bg-light text-black">
-                          {{ modulo.inicio }} - {{ modulo.final }}
-                        </td>
-                        <td
-                          class="bg-light"
-                          *ngFor="let dia of colegioSvc.dias"
+                        <tr>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td colspan="7" class="table-active">
+                            TURNO {{ turno.turno }} ({{ turno.inicio }} -
+                            {{ turno.finalizacion }})
+                          </td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                        </tr>
+                        <tr
+                          *ngFor="let modulo of turno.modulos"
+                          class="bg-secondary"
                         >
-                          <div
-                            class="form-check mx-5"
-                            (click)="
-                              clickDisponibilidadCheck(
-                                dia,
-                                'manana',
-                                modulo.inicio
-                              )
-                            "
+                          <td colspan="2" class="bg-light text-black">
+                            {{ modulo.inicio }} - {{ modulo.final }}
+                          </td>
+                          <td
+                            class="bg-light"
+                            *ngFor="let dia of colegioSvc.dias"
                           >
-                            <input
-                              checked
-                              class="form-check-input"
-                              type="checkbox"
-                              [(ngModel)]="
-                                colegioSvc.selectedProfesor.disponibilidad[dia][
-                                  'manana'
-                                ][modulo.inicio]
+                            <div
+                              class="form-check mx-5"
+                              (click)="
+                                clickDisponibilidadCheck(
+                                  dia,
+                                  turno.turno,
+                                  modulo.inicio
+                                )
                               "
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                    </ng-container>
-                    <ng-container *ngIf="colegioSvc.turnoArray[1].habilitado">
-                      <tr>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td colspan="7" class="table-active">
-                          TURNO TARDE ({{ colegioSvc.turnoArray[1].inicio }} -
-                          {{ colegioSvc.turnoArray[1].finalizacion }})
-                        </td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                      </tr>
-                      <tr
-                        *ngFor="let modulo of colegioSvc.turnoArray[1].modulos"
-                        class="bg-secondary"
-                      >
-                        <td colspan="2" class="bg-light text-black">
-                          {{ modulo.inicio }} - {{ modulo.final }}
-                        </td>
-                        <td
-                          class="bg-light"
-                          *ngFor="let dia of colegioSvc.dias"
-                        >
-                          <div
-                            class="form-check mx-5"
-                            (click)="
-                              clickDisponibilidadCheck(
-                                dia,
-                                'tarde',
-                                modulo.inicio
-                              )
-                            "
-                          >
-                            <input
-                              checked
-                              class="form-check-input"
-                              type="checkbox"
-                              [(ngModel)]="
-                                colegioSvc.selectedProfesor.disponibilidad[dia][
-                                  'tarde'
-                                ][modulo.inicio]
-                              "
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                    </ng-container>
-                    <ng-container *ngIf="colegioSvc.turnoArray[2].habilitado">
-                      <tr>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td colspan="7" class="table-active">
-                          TURNO NOCHE ({{ colegioSvc.turnoArray[2].inicio }} -
-                          {{ colegioSvc.turnoArray[2].finalizacion }})
-                        </td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                      </tr>
-                      <tr
-                        *ngFor="let modulo of colegioSvc.turnoArray[2].modulos"
-                        class="bg-secondary"
-                      >
-                        <td colspan="2" class="bg-light text-black">
-                          {{ modulo.inicio }} - {{ modulo.final }}
-                        </td>
-                        <td
-                          class="bg-light"
-                          *ngFor="let dia of colegioSvc.dias"
-                        >
-                          <div
-                            class="form-check mx-5"
-                            (click)="
-                              clickDisponibilidadCheck(
-                                dia,
-                                'noche',
-                                modulo.inicio
-                              )
-                            "
-                          >
-                            <input
-                              checked
-                              class="form-check-input"
-                              type="checkbox"
-                              [(ngModel)]="
-                                colegioSvc.selectedProfesor.disponibilidad[dia][
-                                  'noche'
-                                ][modulo.inicio]
-                              "
-                            />
-                          </div>
-                        </td>
-                      </tr>
+                            >
+                              <input
+                                checked
+                                class="form-check-input"
+                                type="checkbox"
+                                [(ngModel)]="
+                                  colegioSvc.selectedProfesor.disponibilidad[
+                                    dia
+                                  ][turno.turno][modulo.inicio]
+                                "
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-container>
                     </ng-container>
                   </tbody>
                 </table>

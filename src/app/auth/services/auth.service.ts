@@ -58,11 +58,11 @@ export class AuthService {
               this.dirigir = 'menu-principal';
               // this.router.navigate(['menu-principal']);
             } else {
-              // if (this.userData && this.userData.emailVerified == false) 
+              // if (this.userData && this.userData.emailVerified == false)
               this.dirigir = 'verificacion-email';
 
               // this.router.navigate(['verificacion-email']);
-            } 
+            }
             // else {
             //   this.dirigir = 'login';
 
@@ -110,9 +110,7 @@ export class AuthService {
       })
       .catch((error) => {
         alert('No existe una cuenta con ese email, por favor registrese');
-        this.router.navigate(['register']);
         return null;
-
         // console.log(error.code);
         // console.log(error.message);
       });

@@ -36,14 +36,17 @@ export class FinalizarComponent implements OnInit {
   indiceProgreso: number = 1;
 
   cursoActual: string = '';
+
   horariosHechos: any = {};
   horariosAulasHechos: any = {};
   materiasProfesoresHechos: any = {};
+  duracionModulosHecho: any = {};
 
   botonPresionado: boolean = false;
   horarioGenerado: boolean = false;
 
   keys = Object.keys;
+  values = Object.values;
 
   constructor(
     private router: Router,
@@ -57,10 +60,6 @@ export class FinalizarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(
-      this.colegioSvc.materiasArrayValidas.length,
-      this.colegioSvc.materiaArray.length
-    );
 
     // this._mercadopago
     //   .createPreference(
@@ -181,7 +180,11 @@ export class FinalizarComponent implements OnInit {
                       horariosReady.get('horariosAulas');
                     this.materiasProfesoresHechos =
                       horariosReady.get('materiasProfesores');
-                      this.cursoActual = this.ordenarCursos(Object.keys(this.horariosHechos))[0];
+                    this.duracionModulosHecho =
+                      horariosReady.get('duracionModulos');
+                    this.cursoActual = this.ordenarCursos(
+                      Object.keys(this.horariosHechos)
+                    )[0];
 
                     this.horarioGenerado = true;
                   }
@@ -262,7 +265,7 @@ export class FinalizarComponent implements OnInit {
   sumarDuracionModulo(modulo: string) {
     let horasAux: number = Number(modulo.split(':')[0]);
     let minutosAux: number =
-      Number(modulo.split(':')[1]) + this.colegioSvc.duracionModulo;
+      Number(modulo.split(':')[1]) + this.duracionModulosHecho;
 
     while (minutosAux >= 60) {
       minutosAux = minutosAux - 60;

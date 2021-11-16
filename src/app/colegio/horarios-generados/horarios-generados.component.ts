@@ -20,6 +20,7 @@ export class HorariosGeneradosComponent implements OnInit {
   horariosHechos: any = {};
   horariosAulasHechos: any = {};
   materiasProfesoresHechos: any = {};
+  duracionModulosHecho: any;
 
   keys = Object.keys;
 
@@ -76,8 +77,11 @@ export class HorariosGeneradosComponent implements OnInit {
           this.horariosAulasHechos = horariosReady.get('horariosAulas');
           this.materiasProfesoresHechos =
             horariosReady.get('materiasProfesores');
+          this.duracionModulosHecho = horariosReady.get('duracionModulos');
 
-          this.cursoActual = this.ordenarCursos(Object.keys(this.horariosHechos))[0];
+          this.cursoActual = this.ordenarCursos(
+            Object.keys(this.horariosHechos)
+          )[0];
         }
       });
   }
@@ -149,7 +153,7 @@ export class HorariosGeneradosComponent implements OnInit {
   sumarDuracionModulo(modulo: string) {
     let horasAux: number = Number(modulo.split(':')[0]);
     let minutosAux: number =
-      Number(modulo.split(':')[1]) + this.colegioSvc.duracionModulo;
+      Number(modulo.split(':')[1]) + this.duracionModulosHecho;
 
     while (minutosAux >= 60) {
       minutosAux = minutosAux - 60;

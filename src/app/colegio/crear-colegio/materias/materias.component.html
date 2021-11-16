@@ -221,7 +221,7 @@
                 "
                 [ngClass]="{
                   '': objectValues(
-                    colegioSvc.materiasArrayValidas[curso.nombre]
+                    colegioSvc.materiasArrayInValidas[curso.nombre]
                   ).includes(false)
                 }"
                 class="list-group-item list-group-item-action"
@@ -233,7 +233,7 @@
                   <svg
                     *ngIf="
                       objectValues(
-                        colegioSvc.materiasArrayValidas[curso.nombre]
+                        colegioSvc.materiasArrayInValidas[curso.nombre]
                       ).includes(false)
                     "
                     xmlns="http://www.w3.org/2000/svg"
@@ -253,7 +253,7 @@
                   <span
                     class="badge badge-primary float-end badge-pill bg-primary"
                     >{{
-                      objectKeys(colegioSvc.materiasArrayValidas[curso.nombre])
+                      objectKeys(colegioSvc.materiasArrayInValidas[curso.nombre])
                         .length
                     }}</span
                   >
@@ -266,7 +266,7 @@
                     <li
                       *ngIf="curso.nombre == materia.curso"
                       [ngClass]="{
-                        '': !colegioSvc.materiasArrayValidas[curso.nombre][
+                        '': !colegioSvc.materiasArrayInValidas[curso.nombre][
                           materia.nombre
                         ]
                       }"
@@ -277,7 +277,7 @@
                       <svg
                         *ngIf="
                           objectValues(
-                            colegioSvc.materiasArrayValidas[curso.nombre]
+                            colegioSvc.materiasArrayInValidas[curso.nombre]
                           ).includes(false)
                         "
                         xmlns="http://www.w3.org/2000/svg"
