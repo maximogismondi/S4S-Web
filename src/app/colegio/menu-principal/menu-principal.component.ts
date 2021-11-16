@@ -13,6 +13,7 @@ import { ColegioService } from '../services/colegio.service';
 })
 export class MenuPrincipalComponent implements OnInit {
   escuelasUsuario: Array<any> = [];
+  dirigirColegio: string;
 
   constructor(
     private router: Router,
@@ -64,7 +65,8 @@ export class MenuPrincipalComponent implements OnInit {
   }
 
   irCrearColegio(nombreEscuela: string) {
-    this.router.navigate([nombreEscuela,'crear-colegio','turnos']);
+    this.dirigirColegio = nombreEscuela + "/crear-colegio/turnos";
+    // this.router.navigate([nombreEscuela,'crear-colegio','turnos']);
   }
 
   async deleteSchool(escuela: any) {

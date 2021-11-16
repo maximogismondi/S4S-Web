@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { ServiceSpinnerService } from 'src/app/shared/loading-spinner/service-spinner.service';
 
 @Component({
   selector: 'app-eleccion',
@@ -26,7 +27,8 @@ export class EleccionComponent implements OnInit {
     private fb: FormBuilder,
     private authSvc: AuthService,
     private afs: AngularFirestore,
-    private http: HttpClient
+    private http: HttpClient,
+    private spinnerSvc: ServiceSpinnerService
   ) {
     authSvc.afAuth.authState.subscribe(() => {
       this.http
@@ -137,11 +139,14 @@ export class EleccionComponent implements OnInit {
                           .update({
                             usuariosExtensiones: usuariosExtensionesArray,
                           });
-                        this.router.navigate([
-                          nombreColegio,
-                          'crear-colegio',
-                          'turnos',
-                        ]);
+                        console.log(this.spinnerSvc.mostrarSpinnerColegio);
+                        // this.router.navigate([
+                        //   nombreColegio,
+                        //   'crear-colegio',
+                        //   'turnos',
+                        // ]);
+
+                        this.router.navigate(['menu-principal']);
                       } else {
                         alert('Ya perteneces a ' + nombreColegio + '.');
                       }

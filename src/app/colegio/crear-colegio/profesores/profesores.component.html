@@ -53,21 +53,20 @@
                   <button
                     *ngIf="colegioSvc.selectedProfesor.id == 0"
                     (click)="addOrEditProfesor()"
-                    class="btn btn-primary mt-4 w-100"
+                    class="btn btn-primary mt-4 d-block w-100"
                   >
                     Añadir
                   </button>
                   <button
                     *ngIf="colegioSvc.selectedProfesor.id != 0"
                     (click)="addOrEditProfesor()"
-                    class="btn btn-primary mt-4"
-                    style="width: 70%"
+                    class="btn btn-primary mt-4 d-block w-100"
                   >
                     Editar
                   </button>
                   <button
                     *ngIf="colegioSvc.selectedProfesor.id != 0"
-                    class="btn btn-danger mt-4 ms-4 w-25"
+                    class="btn btn-danger mt-4 d-block w-100"
                     (click)="deleteProfesor()"
                   >
                     Eliminar

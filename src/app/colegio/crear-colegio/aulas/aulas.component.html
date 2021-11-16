@@ -163,21 +163,20 @@
                   <button
                     *ngIf="selectedAula.id == 0"
                     (click)="addOrEditAula()"
-                    class="btn btn-primary mt-4 w-100"
+                    class="btn btn-primary d-block mt-4 w-100"
                   >
                     Añadir
                   </button>
                   <button
                     *ngIf="selectedAula.id != 0"
                     (click)="addOrEditAula()"
-                    class="btn btn-primary mt-4"
-                    style="width: 69%"
+                    class="btn btn-primary d-block mt-4 w-100"
                   >
                     Editar
                   </button>
                   <button
                     *ngIf="selectedAula.id != 0"
-                    class="btn btn-danger mt-4 ms-4 w-25"
+                    class="btn btn-danger mt-4 d-block w-100"
                     (click)="deleteAula()"
                   >
                     Eliminar
