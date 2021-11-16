@@ -10,6 +10,7 @@ import { CursosComponent } from './cursos/cursos.component';
 import { ProfesoresComponent } from './profesores/profesores.component';
 import { MateriasComponent } from './materias/materias.component';
 import { FinalizarComponent } from './finalizar/finalizar.component';
+import { DinosaurioComponent } from 'src/app/dinosaurio/dinosaurio.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { FinalizarComponent } from './finalizar/finalizar.component';
     CursosComponent,
     ProfesoresComponent,
     MateriasComponent,
-    FinalizarComponent
+    FinalizarComponent,
+    DinosaurioComponent
   ],
   imports: [
     CommonModule,

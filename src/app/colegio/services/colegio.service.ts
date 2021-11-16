@@ -99,6 +99,8 @@ export class ColegioService {
 
               this.color = this.school.color;
 
+              // console.log(this.color);
+              
               this.turnoArray[0] = Object.assign(
                 new Turno('manana'),
                 this.school.turnos[0]
