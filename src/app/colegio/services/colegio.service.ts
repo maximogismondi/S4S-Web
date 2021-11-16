@@ -238,9 +238,12 @@ export class ColegioService {
     let arregloAux: Array<any> = []
     Object.assign(arregloAux, arreglo)
     //filter selected of arregloAux
-    
+    arregloAux = arregloAux.filter((dato) => {
+      return dato.nombre != selected.nombre;
+    });
+
     if ('apellido' in selected) {
-      arreglo.forEach((dato) => {
+      arregloAux.forEach((dato) => {
         if (
           selected.nombre + selected.apellido == dato.nombre + dato.apellido
         ) {
@@ -251,7 +254,7 @@ export class ColegioService {
         }
       });
     } else if ('curso' in selected) {
-      arreglo.forEach((dato) => {
+      arregloAux.forEach((dato) => {
         if (
           selected.nombre + selected.curso == dato.nombre + dato.curso
         ) {
@@ -262,7 +265,7 @@ export class ColegioService {
         }
       });
     } else {
-      arreglo.forEach((dato) => {
+      arregloAux.forEach((dato) => {
         if (selected.nombre == dato.nombre) {
           existeDato = true;
           alert(
