@@ -237,11 +237,17 @@ export class ColegioService {
 
   chequearRepeticionEnSubidaDatos(selected: any, arreglo: Array<any>): boolean {
     let existeDato: boolean = false;
+    let arregloAux: Array<any> = []
+    Object.assign(arregloAux, arreglo)
+    //filter selected of arregloAux
+    arregloAux = arregloAux.filter((dato) => {
+      return dato.nombre != selected.nombre;
+    });
+
     if ('apellido' in selected) {
-      arreglo.forEach((dato) => {
+      arregloAux.forEach((dato) => {
         if (
-          selected.nombre + selected.apellido == dato.nombre + dato.apellido &&
-          selected != dato
+          selected.nombre + selected.apellido == dato.nombre + dato.apellido
         ) {
           existeDato = true;
           alert(
@@ -250,10 +256,9 @@ export class ColegioService {
         }
       });
     } else if ('curso' in selected) {
-      arreglo.forEach((dato) => {
+      arregloAux.forEach((dato) => {
         if (
-          selected.nombre + selected.curso == dato.nombre + dato.curso &&
-          selected != dato
+          selected.nombre + selected.curso == dato.nombre + dato.curso
         ) {
           existeDato = true;
           alert(
@@ -262,8 +267,8 @@ export class ColegioService {
         }
       });
     } else {
-      arreglo.forEach((dato) => {
-        if (selected.nombre == dato.nombre && selected != dato) {
+      arregloAux.forEach((dato) => {
+        if (selected.nombre == dato.nombre) {
           existeDato = true;
           alert(
             'El nombre ya esta utilizado, edite el elemento creado o cree uno con distinto nombre.'
