@@ -89,6 +89,10 @@ export class MateriasComponent implements OnInit {
                     this.colegioSvc.selectedMateria
                   );
                 }
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth',
+                });
                 this.colegioSvc.updateDBMateria();
               } else {
                 alert('Coloque por lo menos un aula para la materia creada');
@@ -182,6 +186,11 @@ export class MateriasComponent implements OnInit {
       this.colegioSvc.materiaArray = this.colegioSvc.materiaArray.filter(
         (x) => x != this.colegioSvc.selectedMateria
       );
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
       this.colegioSvc.updateDBMateria();
     }
   }

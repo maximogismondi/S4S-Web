@@ -97,6 +97,10 @@ export class AulasComponent implements OnInit {
         if (this.selectedAula.tipo == 'normal') {
           this.selectedAula.otro = 'normal';
         }
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
         this.colegioSvc.updateDBMateria();
         this.updateDBAula();
       }
@@ -121,6 +125,10 @@ export class AulasComponent implements OnInit {
             1
           );
         }
+      });
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
       });
       this.colegioSvc.updateDBMateria();
       this.updateDBAula();

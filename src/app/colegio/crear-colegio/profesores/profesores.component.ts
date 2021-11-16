@@ -142,6 +142,11 @@ export class ProfesoresComponent implements OnInit {
               }
             });
           }
+
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
           this.colegioSvc.updateDBMateria();
           this.colegioSvc.updateDBProfesor();
 
@@ -187,6 +192,11 @@ export class ProfesoresComponent implements OnInit {
       this.colegioSvc.profesorArray = this.colegioSvc.profesorArray.filter(
         (x) => x != this.colegioSvc.selectedProfesor
       );
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
       this.colegioSvc.updateDBMateria();
       this.colegioSvc.updateDBProfesor();
     }

@@ -86,6 +86,11 @@ export class CursosComponent implements OnInit {
           });
           this.colegioSvc.updateDBMateria();
         }
+
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
         this.updateDBCurso();
       }
     } else {
@@ -98,7 +103,11 @@ export class CursosComponent implements OnInit {
   }
 
   deleteCurso() {
-    if (confirm('¿Estas seguro/a que quieres eliminar este curso? Esto eliminará todas las materias pertenecientes al mismo')) {
+    if (
+      confirm(
+        '¿Estas seguro/a que quieres eliminar este curso? Esto eliminará todas las materias pertenecientes al mismo'
+      )
+    ) {
       this.colegioSvc.cursoArray = this.colegioSvc.cursoArray.filter(
         (x) => x != this.selectedCurso
       );
@@ -108,6 +117,11 @@ export class CursosComponent implements OnInit {
             (x) => x != materia
           );
         }
+      });
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
       });
       this.colegioSvc.updateDBMateria();
       this.updateDBCurso();

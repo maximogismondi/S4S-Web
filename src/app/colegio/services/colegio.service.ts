@@ -125,6 +125,22 @@ export class ColegioService {
               this.cursoArray = this.school.cursos;
 
               this.profesorArray = this.school.profesores;
+              //ordenar profesores alfabéticamente
+              this.profesorArray.sort((a, b) => {
+                if (a.apellido < b.apellido) {
+                  return -1;
+                }
+                if (a.apellido > b.apellido) {
+                  return 1;
+                }
+                if (a.nombre < b.nombre) {
+                  return -1;
+                }
+                if (a.nombre > b.nombre) {
+                  return 1;
+                }
+                return 0;
+              });
 
               this.materiaArray = this.school.materias;
 
