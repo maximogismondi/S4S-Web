@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -17,7 +20,7 @@ export class NavbarComponent {
   // user = this.authSvc.userData;
   // verificado: boolean = true;
   public userData: any;
-  nombreUsuario:string;
+  nombreUsuario: string;
 
   constructor(
     private authSvc: AuthService,
@@ -25,30 +28,13 @@ export class NavbarComponent {
     private afs: AngularFirestore,
     public afAuth: AngularFireAuth
   ) {
-    // authSvc.afAuth.authState.subscribe((user) => {
-    //   if (!user) {
-    //     this.verificado = false;
-    //   }
-    // });
-
-    // this.afAuth.authState.subscribe((user) => {
-    //   if (user) {
-    //     this.afs
-    //       .doc<User>(`users/${user.uid}`)
-    //       .get()
-    //       .toPromise()
-    //       .then((res) => {
-    //         this.userData = res.data();
-    //       });
-    //   } else {
-    //     this.userData = null;
-    //   }
-    // });
-
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.afs
-          .doc<User>(`users/${user.uid}`).snapshotChanges().pipe().subscribe( res => {
+          .doc<User>(`users/${user.uid}`)
+          .snapshotChanges()
+          .pipe()
+          .subscribe((res) => {
             this.userData = res.payload.data();
           });
       } else {
@@ -61,7 +47,7 @@ export class NavbarComponent {
     await this.authSvc.logout();
   }
 
-  async changeTheme(){
+  async changeTheme() {
     alert('Bromita 🤙🤙🤙');
   }
 

@@ -57,6 +57,11 @@ export class FinalizarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(
+      this.colegioSvc.materiasArrayValidas.length,
+      this.colegioSvc.materiaArray.length
+    );
+
     // this._mercadopago
     //   .createPreference(
     //     this.colegioSvc.cursoArray.length,

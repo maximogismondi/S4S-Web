@@ -17,6 +17,7 @@ export class MenuPrincipalComponent implements OnInit {
   constructor(
     private router: Router,
     private authSvc: AuthService,
+    public colegioSvc: ColegioService,
     private afs: AngularFirestore
   ) {
     authSvc.afAuth.authState.subscribe((user) => {

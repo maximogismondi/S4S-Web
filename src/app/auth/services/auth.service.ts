@@ -14,6 +14,7 @@ import {
 import { Observable, of } from 'rxjs';
 import firebase from 'firebase/app';
 import { Router } from '@angular/router';
+import { ServiceSpinnerService } from 'src/app/shared/loading-spinner/service-spinner.service';
 // import { Time } from '@angular/common';
 
 @Injectable()
@@ -21,14 +22,19 @@ export class AuthService {
   public userData: any;
   ingresoEmailCompleto: boolean = false;
   nombresDeEscuelas: Array<any> = [];
-  // idsDeEscuelas: Array<any> = [];
   existeEscuela: boolean = false;
+  dirigir: string = '';
+  // idsDeEscuelas: Array<any> = [];
+  // mostrarSpinner: boolean = true;
 
   constructor(
     public afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private spinnerSvc: ServiceSpinnerService
   ) {
+    this.spinnerSvc.mostrarSpinnerUser = true;
+
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.afs.firestore
@@ -47,9 +53,26 @@ export class AuthService {
           .toPromise()
           .then((res) => {
             this.userData = res.data();
+            this.spinnerSvc.mostrarSpinnerUser = false;
+            if (this.userData && this.userData.emailVerified) {
+              this.dirigir = 'menu-principal';
+              // this.router.navigate(['menu-principal']);
+            } else {
+              // if (this.userData && this.userData.emailVerified == false) 
+              this.dirigir = 'verificacion-email';
+
+              // this.router.navigate(['verificacion-email']);
+            } 
+            // else {
+            //   this.dirigir = 'login';
+
+            //   // this.router.navigate(['login']);
+            // }
           });
       } else {
         this.userData = null;
+        this.spinnerSvc.mostrarSpinnerUser = false;
+        this.dirigir = 'login';
       }
     });
   }
@@ -175,6 +198,7 @@ export class AuthService {
   //joya
   async createSchool(
     nombre: string,
+    color: string,
     provincia: string,
     localidad: string,
     telefono: string,
@@ -187,6 +211,7 @@ export class AuthService {
       id: id,
       userAdmin: this.userData.uid,
       nombre: nombre,
+      color: color,
       // ejecutado: "no",
       localidad: localidad,
       provincia: provincia,
@@ -224,26 +249,7 @@ export class AuthService {
       alert(
         'El numero de telefono no es igual a los 8 digitos, recuerda que no debe contener ningun espacio, ningun signo y debe ser de tamaño 8'
       );
-    }
-    // else if (school.duracionModulo > 60 || school.duracionModulo < 20) {
-    //   // console.log(school.duracionModulo)
-    //   alert(
-    //     'La duracion de cada modulo debe estar entre 20 a 60 min (incluidos los extremos)'
-    //   );
-    // } else if (
-    //   school.inicioHorario > school.finalizacionHorario &&
-    //   school.finalizacionHorario != ' 00:00'
-    // ) {
-    //   alert('El horario de finalizacion es mas chico que el de inicio');
-    // } else if (
-    //   (school.inicioHorario < '05:00' && school.inicioHorario >= '00:00') ||
-    //   school.inicioHorario > '12:05'
-    // ) {
-    //   alert('El horario de inicio debe ser entre 05:00 - 12:05 pm');
-    // } else if (school.finalizacionHorario < '12:05') {
-    //   alert('El horario de finalizacion debe ser mayor que las 12:05 pm');
-    // }
-    else {
+    } else {
       let existe: boolean = false;
       this.nombresDeEscuelas.forEach((nombreEscuela) => {
         if (school.nombre.toLowerCase() == nombreEscuela.toLowerCase()) {
@@ -253,7 +259,7 @@ export class AuthService {
       });
       if (!existe) {
         this.SchoolData(school);
-        this.router.navigate([school.nombre,'crear-colegio','turnos']);
+        this.router.navigate([school.nombre, 'crear-colegio', 'turnos']);
       }
 
       // confirm("Poner los valores que se piden");
@@ -324,6 +330,7 @@ export class AuthService {
       id: school.id,
       userAdmin: school.userAdmin,
       nombre: school.nombre,
+      color: school.color,
       // ejecutado: school.ejecutado,
       provincia: school.provincia,
       localidad: school.localidad,

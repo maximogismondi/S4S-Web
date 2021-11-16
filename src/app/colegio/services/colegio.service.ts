@@ -15,12 +15,14 @@ import {
   Turno,
   Modulo,
 } from 'src/app/shared/interface/user.interface';
+import { ServiceSpinnerService } from 'src/app/shared/loading-spinner/service-spinner.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ColegioService {
   nombreColegio: string;
+  colorColegio: string;
   duracionModulo: number;
   inicioModuloSeleccionado: Array<string> = [];
   seccion: string = 'turnos';
@@ -46,15 +48,21 @@ export class ColegioService {
   pagoFinalizado: boolean = false;
   materiasArrayValidas: any = {};
   school: Colegio;
+  // mostrarSpinner: boolean = true;
 
+  
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private authSvc: AuthService,
     private afs: AngularFirestore,
     private http: HttpClient,
-    private activatedRoute: ActivatedRoute
-  ) {
+    private activatedRoute: ActivatedRoute,
+    private spinnerSvc: ServiceSpinnerService
+    ) {
+    this.spinnerSvc.mostrarSpinnerColegio = true;
+    // console.log(this.authSvc.mostrarSpinner);
+    
     authSvc.afAuth.authState.subscribe(async (user) => {
       if (user) {
         let escuelasPerteneceUsuario: Array<string> = [];
@@ -89,6 +97,8 @@ export class ColegioService {
               this.school = colegio.payload.data() as Colegio;
 
               this.duracionModulo = this.school.duracionModulo;
+
+              this.colorColegio = this.school.color;
 
               this.turnoArray[0] = Object.assign(
                 new Turno('manana'),
@@ -164,6 +174,10 @@ export class ColegioService {
               });
             });
         }
+
+        this.spinnerSvc.mostrarSpinnerColegio = false;
+        // this.mostrarSpinnerColegio = false;
+        // console.log(this.authSvc.mostrarSpinner);
       }
     });
   }

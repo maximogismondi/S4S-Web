@@ -14,6 +14,7 @@ export class Colegio {
   id: string;
   userAdmin: string;
   nombre: string;
+  color: string;
   localidad: string;
   provincia: string;
   telefono: string;

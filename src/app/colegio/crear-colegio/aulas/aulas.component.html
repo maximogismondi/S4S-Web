@@ -159,16 +159,30 @@
                   </div>
                 </div>
 
-                <button (click)="addOrEditAula()" class="btn btn-primary mt-4">
-                  Añadir / Editar
-                </button>
-                <button
-                  *ngIf="selectedAula.id != 0"
-                  class="btn btn-danger mt-4 ms-4"
-                  (click)="deleteAula()"
-                >
-                  Eliminar
-                </button>
+                <div class="text-center">
+                  <button
+                    *ngIf="selectedAula.id == 0"
+                    (click)="addOrEditAula()"
+                    class="btn btn-primary mt-4 w-100"
+                  >
+                    Añadir
+                  </button>
+                  <button
+                    *ngIf="selectedAula.id != 0"
+                    (click)="addOrEditAula()"
+                    class="btn btn-primary mt-4"
+                    style="width: 69%"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    *ngIf="selectedAula.id != 0"
+                    class="btn btn-danger mt-4 ms-4 w-25"
+                    (click)="deleteAula()"
+                  >
+                    Eliminar
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -212,35 +226,6 @@
           </ul>
         </td>
       </tr>
-      <!-- <tr>
-        <td colspan="2">
-          <div class="d-grid">
-            <button
-              *ngIf="
-                colegioSvc.botonesCrearColegio <= 2 &&
-                colegioSvc.aulaArray.length != 0
-              "
-              (click)="goFormCurso()"
-              class="btn btn-primary btn-lg mt-4"
-            >
-              SIGUIENTE
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1.10em"
-                height="1.10em"
-                fill="currentColor"
-                class="bi bi-arrow-right"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                />
-              </svg>
-            </button>
-          </div>
-        </td>
-      </tr> -->
     </tbody>
   </table>
 </div>

@@ -37,16 +37,30 @@
                   class="form-control mt-2"
                 />
 
-                <button (click)="addOrEditCurso()" class="btn btn-primary mt-4">
-                  Añadir / Editar
-                </button>
-                <button
-                  *ngIf="selectedCurso.id != 0"
-                  class="btn btn-danger mt-4 ms-4"
-                  (click)="deleteCurso()"
-                >
-                  Eliminar
-                </button>
+                <div class="text-center">
+                  <button
+                    *ngIf="selectedCurso.id == 0"
+                    (click)="addOrEditCurso()"
+                    class="btn btn-primary mt-4 w-100"
+                  >
+                    Añadir
+                  </button>
+                  <button
+                    *ngIf="selectedCurso.id != 0"
+                    (click)="addOrEditCurso()"
+                    class="btn btn-primary mt-4"
+                    style="width: 70%"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    *ngIf="selectedCurso.id != 0"
+                    class="btn btn-danger mt-4 ms-4 w-25"
+                    (click)="deleteCurso()"
+                  >
+                    Eliminar
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -12,19 +12,11 @@ import { AuthService } from '../auth/services/auth.service';
 export class HomeComponent implements OnInit {
   windowScrollInY: number = 0;
 
-  // noVerificado: boolean = true;
-
   constructor(
     private router: Router,
-    private authSvc: AuthService,
+    public authSvc: AuthService,
     private afs: AngularFirestore
-  ) {
-    // authSvc.afAuth.authState.subscribe((user) => {
-    //   if (!user) {
-    //     this.noVerificado = false;
-    //   }
-    // });
-  }
+  ) {}
 
   ngOnInit(): void {
     window.onscroll = () => {
@@ -32,57 +24,7 @@ export class HomeComponent implements OnInit {
     };
   }
 
-  gotoLogin() {
-    // if (!this.noVerificado) {
-    //   this.router.navigate(['/verificacion-email']);
-    // } else
-    if (this.authSvc.userData && this.authSvc.userData.emailVerified) {
-      this.router.navigate(['menu-principal']);
-    } else if (
-      this.authSvc.userData &&
-      this.authSvc.userData.emailVerified == false
-    ) {
-      this.router.navigate(['verificacion-email']);
-    } else {
-      this.router.navigate(['login']);
-    }
-    //revisar
-    // else if (this.aServ.userData.emailVerified) {
-    //   this.router.navigate(['/verificacion-email']);
-    // }
-
-    /*else if(user ya eligio){
-        if(){}
-        else{}
-      this.router.navigate(['/paginaPrincipal']);
-    } */
-  }
-
-  // get isLoggedIn(): boolean {
-  //   const user = this.aServ.userData;
-  //   if(user === null || user === undefined) return false
-  //   return user.emailVerified;
-  // }
-
-  // functionScrollToDownMoreInfo() {
-  //   window.scrollTo({
-  //     top: 1350,
-  //     left: 0,
-  //     behavior: 'smooth',
-  //   });
-  // }
-
-  // functionScrollToDown() {
-  //   //window.scrollTo(0,0);
-
-  //   window.scrollTo({
-  //     top: 623,
-  //     left: 0,
-  //     behavior: 'smooth',
-  //   });
-
-  //   //$("button","#buttonScrollToDown").animate({scrollTop: 50},"slow");
-  // }
+  // gotoLogin() {}
 
   functionScrollToUp() {
     window.scrollTo({

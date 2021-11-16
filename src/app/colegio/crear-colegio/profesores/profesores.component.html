@@ -49,19 +49,30 @@
                   Disponibilidad
                 </button>
 
-                <button
-                  (click)="addOrEditProfesor()"
-                  class="btn btn-primary mt-4"
-                >
-                  Añadir / Editar
-                </button>
-                <button
-                  *ngIf="colegioSvc.selectedProfesor.id != 0"
-                  class="btn btn-danger mt-4 ms-4"
-                  (click)="deleteProfesor()"
-                >
-                  Eliminar
-                </button>
+                <div class="text-center">
+                  <button
+                    *ngIf="colegioSvc.selectedProfesor.id == 0"
+                    (click)="addOrEditProfesor()"
+                    class="btn btn-primary mt-4 w-100"
+                  >
+                    Añadir
+                  </button>
+                  <button
+                    *ngIf="colegioSvc.selectedProfesor.id != 0"
+                    (click)="addOrEditProfesor()"
+                    class="btn btn-primary mt-4"
+                    style="width: 70%"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    *ngIf="colegioSvc.selectedProfesor.id != 0"
+                    class="btn btn-danger mt-4 ms-4 w-25"
+                    (click)="deleteProfesor()"
+                  >
+                    Eliminar
+                  </button>
+                </div>
               </div>
               <ng-template #disponibilidadTabla>
                 <div class="text-black text-center mb-2">
@@ -70,8 +81,9 @@
                 <table class="table text-center">
                   <thead>
                     <tr class="table-light">
-                      <th class="rounded-start" scope="col">Horarios</th>
-                      <th scope="col"></th>
+                      <th class="rounded-start" colspan="2" scope="col">
+                        Horarios
+                      </th>
                       <th scope="col">Lunes</th>
                       <th scope="col">Martes</th>
                       <th scope="col">Miercoles</th>
@@ -81,7 +93,7 @@
                     <tr>
                       <td>
                         <div
-                          class="form-check ms-3"
+                          class="form-check mx-5"
                           (click)="clickDisponibilidadCheck(null, '', null)"
                         >
                           <input
@@ -95,7 +107,7 @@
                       <td></td>
                       <td *ngFor="let dia of colegioSvc.dias">
                         <div
-                          class="form-check ms-3"
+                          class="form-check mx-5"
                           (click)="clickDisponibilidadCheck(dia, '', null)"
                         >
                           <input
@@ -109,15 +121,19 @@
                     </tr>
                   </thead>
                   <tbody>
-
                     <ng-container *ngIf="colegioSvc.turnoArray[0].habilitado">
-                      <td
-                        colspan="7"
-                        class="table-active"
-                      >
-                        TURNO MAÑANA ({{ colegioSvc.turnoArray[0].inicio }} -
-                        {{ colegioSvc.turnoArray[0].finalizacion }})
-                      </td>
+                      <tr>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td colspan="7" class="table-active">
+                          TURNO MAÑANA ({{ colegioSvc.turnoArray[0].inicio }} -
+                          {{ colegioSvc.turnoArray[0].finalizacion }})
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                      </tr>
                       <tr
                         *ngFor="let modulo of colegioSvc.turnoArray[0].modulos"
                         class="bg-secondary"
@@ -125,9 +141,12 @@
                         <td colspan="2" class="bg-light text-black">
                           {{ modulo.inicio }} - {{ modulo.final }}
                         </td>
-                        <td *ngFor="let dia of colegioSvc.dias">
+                        <td
+                          class="bg-light"
+                          *ngFor="let dia of colegioSvc.dias"
+                        >
                           <div
-                            class="form-check ms-3"
+                            class="form-check mx-5"
                             (click)="
                               clickDisponibilidadCheck(
                                 dia,
@@ -151,13 +170,18 @@
                       </tr>
                     </ng-container>
                     <ng-container *ngIf="colegioSvc.turnoArray[1].habilitado">
-                      <td
-                        colspan="7"
-                        class="table-active"
-                      >
-                        TURNO TARDE ({{ colegioSvc.turnoArray[1].inicio }} -
-                        {{ colegioSvc.turnoArray[1].finalizacion }})
-                      </td>
+                      <tr>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td colspan="7" class="table-active">
+                          TURNO TARDE ({{ colegioSvc.turnoArray[1].inicio }} -
+                          {{ colegioSvc.turnoArray[1].finalizacion }})
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                      </tr>
                       <tr
                         *ngFor="let modulo of colegioSvc.turnoArray[1].modulos"
                         class="bg-secondary"
@@ -165,9 +189,12 @@
                         <td colspan="2" class="bg-light text-black">
                           {{ modulo.inicio }} - {{ modulo.final }}
                         </td>
-                        <td *ngFor="let dia of colegioSvc.dias">
+                        <td
+                          class="bg-light"
+                          *ngFor="let dia of colegioSvc.dias"
+                        >
                           <div
-                            class="form-check ms-3"
+                            class="form-check mx-5"
                             (click)="
                               clickDisponibilidadCheck(
                                 dia,
@@ -191,13 +218,18 @@
                       </tr>
                     </ng-container>
                     <ng-container *ngIf="colegioSvc.turnoArray[2].habilitado">
-                      <td
-                        colspan="7"
-                        class="table-active"
-                      >
-                        TURNO NOCHE ({{ colegioSvc.turnoArray[2].inicio }} -
-                        {{ colegioSvc.turnoArray[2].finalizacion }})
-                      </td>
+                      <tr>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td colspan="7" class="table-active">
+                          TURNO NOCHE ({{ colegioSvc.turnoArray[2].inicio }} -
+                          {{ colegioSvc.turnoArray[2].finalizacion }})
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                      </tr>
                       <tr
                         *ngFor="let modulo of colegioSvc.turnoArray[2].modulos"
                         class="bg-secondary"
@@ -205,9 +237,12 @@
                         <td colspan="2" class="bg-light text-black">
                           {{ modulo.inicio }} - {{ modulo.final }}
                         </td>
-                        <td *ngFor="let dia of colegioSvc.dias">
+                        <td
+                          class="bg-light"
+                          *ngFor="let dia of colegioSvc.dias"
+                        >
                           <div
-                            class="form-check ms-3"
+                            class="form-check mx-5"
                             (click)="
                               clickDisponibilidadCheck(
                                 dia,
@@ -230,7 +265,6 @@
                         </td>
                       </tr>
                     </ng-container>
-
                   </tbody>
                 </table>
                 <button
@@ -259,34 +293,6 @@
           </ul>
         </td>
       </tr>
-      <!-- <tr>
-        <td colspan="2">
-          <div class="d-grid">
-            <button
-              *ngIf="
-                colegioSvc.botonesCrearColegio <= 4 && colegioSvc.profesorArray.length != 0
-              "
-              (click)="goFormMateria()"
-              class="btn btn-primary btn-lg mt-4"
-            >
-              SIGUIENTE
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1.10em"
-                height="1.10em"
-                fill="currentColor"
-                class="bi bi-arrow-right"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                />
-              </svg>
-            </button>
-          </div>
-        </td>
-      </tr> -->
     </tbody>
   </table>
 </div>

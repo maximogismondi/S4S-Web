@@ -180,19 +180,30 @@
                   </tbody>
                 </table>
 
-                <button
-                  (click)="addOrEditMateria()"
-                  class="btn btn-primary mt-4"
-                >
-                  Añadir / Editar
-                </button>
-                <button
-                  *ngIf="colegioSvc.selectedMateria.id != 0"
-                  class="btn btn-danger mt-4 ms-4"
-                  (click)="deleteMateria()"
-                >
-                  Eliminar
-                </button>
+                <div class="text-center">
+                  <button
+                    *ngIf="colegioSvc.selectedMateria.id == 0"
+                    (click)="addOrEditMateria()"
+                    class="btn btn-primary mt-4 w-100"
+                  >
+                    Añadir
+                  </button>
+                  <button
+                    *ngIf="colegioSvc.selectedMateria.id != 0"
+                    (click)="addOrEditMateria()"
+                    class="btn btn-primary mt-4"
+                    style="width: 70%"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    *ngIf="colegioSvc.selectedMateria.id != 0"
+                    class="btn btn-danger mt-4 ms-4 w-25"
+                    (click)="deleteMateria()"
+                  >
+                    Eliminar
+                  </button>
+                </div>
               </div>
             </div>
           </div>
