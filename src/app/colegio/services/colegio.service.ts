@@ -22,7 +22,7 @@ import { ServiceSpinnerService } from 'src/app/shared/loading-spinner/service-sp
 })
 export class ColegioService {
   nombreColegio: string;
-  colorColegio: string;
+  color: string;
   duracionModulo: number;
   inicioModuloSeleccionado: Array<string> = [];
   seccion: string = 'turnos';
@@ -97,7 +97,7 @@ export class ColegioService {
 
               this.duracionModulo = this.school.duracionModulo;
 
-              this.colorColegio = this.school.color;
+              this.color = this.school.color;
 
               this.turnoArray[0] = Object.assign(
                 new Turno('manana'),

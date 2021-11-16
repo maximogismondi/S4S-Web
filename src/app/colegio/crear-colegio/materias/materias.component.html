@@ -67,7 +67,26 @@
                 <table class="table mt-2">
                   <thead>
                     <tr class="table-light">
-                      <th scope="col">Profesores</th>
+                      <th scope="col">
+                        Profesores
+                        <div class="form-check float-end form-switch">
+                          <input
+                            class="form-check-input mt-1"
+                            type="checkbox"
+                            role="switch"
+                            id="flexSwitchCheckDefault"
+                            [ngModel]="
+                              colegioSvc.selectedMateria.profesorSimultaneo
+                            "
+                            (click)="profesorSimultaneoCheck()"
+                          />
+                          <label
+                            class="form-check-label mx-2"
+                            for="flexSwitchCheckDefault"
+                            >Profesores simultaneos</label
+                          >
+                        </div>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -104,7 +123,7 @@
                         </div>
                       </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                       <td>
                         <div class="form-check form-switch">
                           <input
@@ -112,7 +131,9 @@
                             type="checkbox"
                             role="switch"
                             id="flexSwitchCheckDefault"
-                            [ngModel]="colegioSvc.selectedMateria.profesorSimultaneo"
+                            [ngModel]="
+                              colegioSvc.selectedMateria.profesorSimultaneo
+                            "
                             (click)="profesorSimultaneoCheck()"
                           />
                           <label
@@ -122,7 +143,7 @@
                           >
                         </div>
                       </td>
-                    </tr>
+                    </tr> -->
                   </tbody>
                 </table>
 
@@ -184,21 +205,20 @@
                   <button
                     *ngIf="colegioSvc.selectedMateria.id == 0"
                     (click)="addOrEditMateria()"
-                    class="btn btn-primary mt-4 w-100"
+                    class="btn btn-primary mt-4 d-block w-100"
                   >
                     Añadir
                   </button>
                   <button
                     *ngIf="colegioSvc.selectedMateria.id != 0"
                     (click)="addOrEditMateria()"
-                    class="btn btn-primary mt-4"
-                    style="width: 70%"
+                    class="btn btn-primary mt-4 d-block w-100"
                   >
                     Editar
                   </button>
                   <button
                     *ngIf="colegioSvc.selectedMateria.id != 0"
-                    class="btn btn-danger mt-4 ms-4 w-25"
+                    class="btn btn-danger mt-4 d-block w-100"
                     (click)="deleteMateria()"
                   >
                     Eliminar
@@ -253,8 +273,9 @@
                   <span
                     class="badge badge-primary float-end badge-pill bg-primary"
                     >{{
-                      objectKeys(colegioSvc.materiasArrayInValidas[curso.nombre])
-                        .length
+                      objectKeys(
+                        colegioSvc.materiasArrayInValidas[curso.nombre]
+                      ).length
                     }}</span
                   >
 
@@ -301,35 +322,6 @@
           </ul>
         </td>
       </tr>
-      <!-- <tr>
-        <td colspan="2">
-          <div class="d-grid">
-            <button
-              *ngIf="
-                colegioSvc.botonesCrearColegio <= 5 &&
-                colegioSvc.materiaArray.length != 0
-              "
-              (click)="goFormFinalizar()"
-              class="btn btn-primary btn-lg mt-4"
-            >
-              SIGUIENTE
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1.10em"
-                height="1.10em"
-                fill="currentColor"
-                class="bi bi-arrow-right"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                />
-              </svg>
-            </button>
-          </div>
-        </td>
-      </tr> -->
     </tbody>
   </table>
 </div>
