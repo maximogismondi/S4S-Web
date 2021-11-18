@@ -256,6 +256,9 @@ export class AuthService {
         }
       });
       if (!existe) {
+        if (String(school.color) == "") {
+          school.color = "#2196f3"
+        }
         this.SchoolData(school);
         this.router.navigate(['menu-principal']);
 

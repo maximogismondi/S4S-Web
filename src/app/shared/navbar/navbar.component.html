@@ -3,7 +3,7 @@
   style="box-shadow: none; border: none; background-image: none"
 >
   <div class="container-fluid">
-    <a class="navbar-brand" href="/home">S4Schools</a>
+    <a class="navbar-brand" (click)="goToHome()" href="/home">S4Schools</a>
     <button
       *ngIf="userData && userData.emailVerified"
       class="navbar-toggler"

@@ -31,6 +31,7 @@ export class MenuPrincipalComponent implements OnInit {
             querySnapshot.forEach((doc) => {
               this.escuelasUsuario.push({
                 nombre: doc.data().nombre,
+                color: doc.data().color,
                 id: doc.data().id,
                 tipoUsuario: 'admin',
               });
@@ -45,6 +46,7 @@ export class MenuPrincipalComponent implements OnInit {
             querySnapshot.forEach((doc) => {
               this.escuelasUsuario.push({
                 nombre: doc.data().nombre,
+                color: doc.data().color,
                 id: doc.data().id,
                 tipoUsuario: 'extension',
               });
@@ -61,12 +63,21 @@ export class MenuPrincipalComponent implements OnInit {
   }
 
   irHorariosGenerados(nombreEscuela: string) {
-    this.router.navigate([nombreEscuela,'horarios-generados']);
+    this.router.navigate([nombreEscuela, 'horarios-generados']);
   }
 
   irCrearColegio(nombreEscuela: string) {
-    this.dirigirColegio = nombreEscuela + "/crear-colegio/turnos";
+    this.dirigirColegio = nombreEscuela + '/crear-colegio/turnos';
     // this.router.navigate([nombreEscuela,'crear-colegio','turnos']);
+  }
+
+  setMyStyles(color: string) {
+    // console.log(color);
+
+    let styles = {
+      background: color,
+    };
+    return styles;
   }
 
   async deleteSchool(escuela: any) {

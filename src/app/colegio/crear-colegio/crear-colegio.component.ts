@@ -37,6 +37,15 @@ export class CrearColegioComponent implements OnInit {
     // });
   }
 
+  setMyStyles(color: string) {
+    // console.log(color);
+
+    let styles = {
+      background: color,
+    };
+    return styles;
+  }
+
   clickeoBotones(seccion: string) {
     this.router.navigate([
       this.colegioSvc.nombreColegio,

@@ -48,7 +48,7 @@ export class ColegioService {
   pagoFinalizado: boolean = false;
   materiasArrayInValidas: any = {};
   school: Colegio;
-  // mostrarSpinner: boolean = true;
+  irAHome: boolean = false;
 
   constructor(
     private router: Router,
@@ -78,14 +78,19 @@ export class ColegioService {
         await this.afs.firestore
           .collection('schools')
           .where('usuariosExtensiones', 'array-contains', user.uid)
-
           .get()
           .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
               escuelasPerteneceUsuario.push(doc.data().nombre);
             });
           });
-        if (!escuelasPerteneceUsuario.includes(this.nombreColegio)) {
+        if (this.irAHome) {
+          this.router.navigate(['/home']);
+        } else if (
+          !escuelasPerteneceUsuario.includes(this.nombreColegio) &&
+          !this.irAHome
+        ) {
+          //error solucionar problema de redireccionamiento
           this.router.navigate(['/menu-principal']);
         } else {
           this.afs
@@ -100,7 +105,7 @@ export class ColegioService {
               this.color = this.school.color;
 
               // console.log(this.color);
-              
+
               this.turnoArray[0] = Object.assign(
                 new Turno('manana'),
                 this.school.turnos[0]
@@ -238,8 +243,8 @@ export class ColegioService {
 
   chequearRepeticionEnSubidaDatos(selected: any, arreglo: Array<any>): boolean {
     let existeDato: boolean = false;
-    let arregloAux: Array<any> = []
-    Object.assign(arregloAux, arreglo)
+    let arregloAux: Array<any> = [];
+    Object.assign(arregloAux, arreglo);
     //filter selected of arregloAux
     arregloAux = arregloAux.filter((dato) => {
       return dato.nombre != selected.nombre;
@@ -248,7 +253,8 @@ export class ColegioService {
     if ('apellido' in selected) {
       arregloAux.forEach((dato) => {
         if (
-          selected.nombre + selected.apellido == dato.nombre + dato.apellido
+          selected.nombre + selected.apellido ==
+          dato.nombre + dato.apellido
         ) {
           existeDato = true;
           alert(
@@ -258,9 +264,7 @@ export class ColegioService {
       });
     } else if ('curso' in selected) {
       arregloAux.forEach((dato) => {
-        if (
-          selected.nombre + selected.curso == dato.nombre + dato.curso
-        ) {
+        if (selected.nombre + selected.curso == dato.nombre + dato.curso) {
           existeDato = true;
           alert(
             'El nombre ya esta utilizado en este curso, edite el elemento creado o cree uno con distinto nombre.'

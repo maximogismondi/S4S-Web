@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <div class="row">
-    <div class="col-md-8 mx-auto">
+    <div class="col-md-8 mx-auto" [ngStyle]="setMyStyles(colegioSvc.color)">
       <div class="card">
         <div class="card-body">
           <h3 class="text-center mt-2">{{ colegioSvc.nombreColegio }}</h3>
@@ -13,9 +13,13 @@
       <div class="card-body">
         <div class="row align-items-end">
           <!-- *ngIf="colegioSvc.botonesCrearColegio >= 1; else bloquearBoton" -->
+          <!-- [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'turnos' }" -->
 
           <button
-            [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'turnos' }"
+            [ngStyle]="{
+              background:
+                colegioSvc.seccion == 'turnos' ? colegioSvc.color : 'white'
+            }"
             class="col btn mx-2"
             (click)="clickeoBotones('turnos')"
           >
@@ -24,8 +28,13 @@
             colegioSvc.botonesCrearColegio >= 2 && colegioSvc.turnos != 0;
               else bloquearBoton0
             " -->
+          <!-- [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'aulas' }" -->
+
           <button
-            [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'aulas' }"
+            [ngStyle]="{
+              background:
+                colegioSvc.seccion == 'aulas' ? colegioSvc.color : 'white'
+            }"
             class="col btn me-2"
             (click)="clickeoBotones('aulas')"
           >
@@ -35,8 +44,13 @@
             colegioSvc.botonesCrearColegio >= 3 && colegioSvc.turnos != 0 && colegioSvc.aulas != 0;
               else bloquearBoton1
             " -->
+          <!-- [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'cursos' }" -->
+
           <button
-            [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'cursos' }"
+            [ngStyle]="{
+              background:
+                colegioSvc.seccion == 'cursos' ? colegioSvc.color : 'white'
+            }"
             class="col btn me-2"
             (click)="clickeoBotones('cursos')"
           >
@@ -48,8 +62,13 @@
                 colegioSvc.cursos != 0;
               else bloquearBoton2
             " -->
+          <!-- [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'profesores' }" -->
+
           <button
-            [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'profesores' }"
+            [ngStyle]="{
+              background:
+                colegioSvc.seccion == 'profesores' ? colegioSvc.color : 'white'
+            }"
             class="col btn me-2"
             (click)="clickeoBotones('profesores')"
           >
@@ -62,8 +81,13 @@
                 colegioSvc.profesores != 0;
               else bloquearBoton3
             " -->
+          <!-- [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'materias' }" -->
+
           <button
-            [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'materias' }"
+            [ngStyle]="{
+              background:
+                colegioSvc.seccion == 'materias' ? colegioSvc.color : 'white'
+            }"
             class="col btn me-2"
             (click)="clickeoBotones('materias')"
           >
@@ -78,8 +102,13 @@
                 colegioSvc.materias != 0;
               else bloquearBoton4
             " -->
+          <!-- [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'finalizar' }" -->
+
           <button
-            [ngClass]="{ 'btn-primary': colegioSvc.seccion == 'finalizar' }"
+            [ngStyle]="{
+              background:
+                colegioSvc.seccion == 'finalizar' ? colegioSvc.color : 'white'
+            }"
             class="col btn me-2"
             (click)="clickeoBotones('finalizar')"
           >

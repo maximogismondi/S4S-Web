@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { ColegioService } from 'src/app/colegio/services/colegio.service';
 import { User } from '../interface/user.interface';
 
 @Component({
@@ -24,6 +25,7 @@ export class NavbarComponent {
 
   constructor(
     private authSvc: AuthService,
+    private colegioSvc: ColegioService,
     private router: Router,
     private afs: AngularFirestore,
     public afAuth: AngularFireAuth
@@ -47,8 +49,15 @@ export class NavbarComponent {
     await this.authSvc.logout();
   }
 
-  async changeTheme() {
+  changeTheme() {
     alert('Bromita 🤙🤙🤙');
+  }
+
+  goToHome() {
+    console.log(this.colegioSvc.irAHome);
+
+    this.colegioSvc.irAHome = !this.colegioSvc.irAHome;
+    console.log(this.colegioSvc.irAHome);
   }
 
   // navbarCollapse(){

@@ -33,7 +33,7 @@
     </div>
 
     <div class="col" *ngFor="let escuela of escuelasUsuario; let i = index">
-      <div class="card h-100" [ngStyle]="{ background: colegioSvc.color }">
+      <div class="card h-100" [ngStyle]="setMyStyles(escuela.color)">
         <div class="card-body">
           <p>
             <button
@@ -45,6 +45,7 @@
                 border: none;
                 background-image: none;
               "
+              [ngStyle]="setMyStyles(escuela.color)"
               data-bs-toggle="collapse"
               [attr.data-bs-target]="'#collapseExample' + i"
               aria-expanded="false"
