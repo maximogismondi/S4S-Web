@@ -207,6 +207,7 @@ export class ColegioService {
         nombre: materia.nombre,
         curso: materia.curso,
         profesorSimultaneo: materia.profesorSimultaneo,
+        materiaEspecial: materia.materiaEspecial,
         cantidadDeModulosTotal: materia.cantidadDeModulosTotal,
         cantidadMaximaDeModulosPorDia: materia.cantidadMaximaDeModulosPorDia,
         cantidadMinimaDeModulosPorDia: materia.cantidadMinimaDeModulosPorDia,

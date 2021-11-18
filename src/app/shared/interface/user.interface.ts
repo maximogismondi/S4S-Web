@@ -94,6 +94,7 @@ export class Materia {
   cantidadMaximaDeModulosPorDia: number;
   cantidadMinimaDeModulosPorDia: number;
   profesorSimultaneo: boolean = false;
+  materiaEspecial: boolean = false;
   curso: string = '';
   profesoresCapacitados: Array<string> = [];
   aulasMateria: Array<string> = [];

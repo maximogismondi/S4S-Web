@@ -51,6 +51,11 @@ export class MateriasComponent implements OnInit {
       !this.colegioSvc.selectedMateria.profesorSimultaneo;
   }
 
+  materiaEspecialCheck() {
+    this.colegioSvc.selectedMateria.materiaEspecial =
+      !this.colegioSvc.selectedMateria.materiaEspecial;
+  }
+
   addOrEditMateria() {
     if (
       this.colegioSvc.selectedMateria.nombre != '' &&
