@@ -98,9 +98,7 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container >
-
-        </ng-container>
+        <ng-container> </ng-container>
 
         <tr
           *ngIf="colegioSvc.turnoArray[0].habilitado; else mananaDeshabilitado"
@@ -177,7 +175,18 @@
             class="text-black"
             *ngIf="colegioSvc.turnoArray[0].habilitado"
           >
-            CLASE
+            <!-- ng-model="colegioSvc.turnoArray[0][turno.tipo]" -->
+            <label>{{ turno.tipo }}</label>
+
+            <select
+              class="form-select"
+              ngModel
+              (ngModelChange)="editModulo($event, turno.inicio, 0)"
+            >
+              <!-- [(ngModel)]="{{turno.tipo}}" -->
+              <option value="clase">Clase</option>
+              <option value="especial">Especial</option>
+            </select>
           </td>
           <td class="bg-light" *ngIf="colegioSvc.turnoArray[0].habilitado">
             <svg
@@ -309,7 +318,17 @@
             class="text-black"
             *ngIf="colegioSvc.turnoArray[1].habilitado"
           >
-            CLASE
+            <label>{{ turno.tipo }}</label>
+
+            <select
+              class="form-select"
+              ngModel
+              (ngModelChange)="editModulo($event, turno.inicio, 1)"
+            >
+              <!-- [(ngModel)]="{{turno.tipo}}" -->
+              <option value="clase">Clase</option>
+              <option value="especial">Especial</option>
+            </select>
           </td>
           <td class="bg-light" *ngIf="colegioSvc.turnoArray[1].habilitado">
             <svg
@@ -440,7 +459,17 @@
             class="text-black"
             *ngIf="colegioSvc.turnoArray[2].habilitado"
           >
-            CLASE
+            <label>{{ turno.tipo }}</label>
+
+            <select
+              class="form-select"
+              ngModel
+              (ngModelChange)="editModulo($event, turno.inicio, 2)"
+            >
+              <!-- [(ngModel)]="{{turno.tipo}}" -->
+              <option value="clase">Clase</option>
+              <option value="especial">Especial</option>
+            </select>
           </td>
           <td class="bg-light" *ngIf="colegioSvc.turnoArray[2].habilitado">
             <svg

@@ -41,6 +41,7 @@ export class Turno {
 export class Modulo {
   inicio: string;
   final: string;
+  tipo: string = "clase";
   constructor(inicio: string, final: string) {
     this.inicio = inicio;
     this.final = final;

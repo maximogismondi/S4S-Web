@@ -108,45 +108,6 @@
                     <!-- onkeydown="return false" -->
                   </div>
                 </div>
-                <!-- <div class="form-group mt-3">
-                  <label
-                    >Duracion de cada modulo (en minutos)
-                    <h6 class="text-danger d-inline-block">*</h6></label
-                  >
-                  <input
-                    type="number"
-                    placeholder="Ej: 40"
-                    min="20"
-                    max="60"
-                    required
-                    class="form-control"
-                    formControlName="duracionModulo"
-                  />
-                </div>
-                <div class="form-group mt-3">
-                  <label
-                    >Hora inicio del primer Modulo del dia
-                    <h6 class="text-danger d-inline-block">*</h6></label
-                  >
-                  <input
-                    type="Time"
-                    required
-                    class="form-control"
-                    formControlName="inicioHorario"
-                  />
-                </div>
-                <div class="form-group mt-3">
-                  <label
-                    >Hora final del ultimo modulo del dia
-                    <h6 class="text-danger d-inline-block">*</h6></label
-                  >
-                  <input
-                    type="Time"
-                    required
-                    class="form-control"
-                    formControlName="finalizacionHorario"
-                  />
-                </div> -->
 
                 <div class="d-grid">
                   <button
@@ -200,19 +161,6 @@
                     {{ colegioElegido }}
                   </button>
                 </div>
-
-                <!-- <ng-template #colegioSeleccionado>
-                  
-                  <div class="card">
-                    <div class="card-body">
-                      {{ colegioElegido }}
-                      <button type="button" (click)="seleccionaColegio(colegioElegido)" class="btn-close btn-close-white" aria-label="Close"></button>
-                    
-                    </div>
-                    
-                  </div>
-                </ng-template> -->
-
                 <div class="form-group mt-4" *ngIf="seleccionoColegio">
                   <label
                     >Codigo del Colegio

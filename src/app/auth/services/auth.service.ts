@@ -257,7 +257,9 @@ export class AuthService {
       });
       if (!existe) {
         this.SchoolData(school);
-        this.router.navigate([school.nombre, 'crear-colegio', 'turnos']);
+        this.router.navigate(['menu-principal']);
+
+        // this.router.navigate([school.nombre, 'crear-colegio', 'turnos']);
       }
 
       // confirm("Poner los valores que se piden");
@@ -294,6 +296,7 @@ export class AuthService {
           modulosTurno.push({
             inicio: modulo.inicio,
             final: modulo.final,
+            tipo: modulo.tipo,
           });
         });
         if (turno.turno == 'manana') {

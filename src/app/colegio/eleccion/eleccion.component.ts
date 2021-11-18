@@ -139,7 +139,7 @@ export class EleccionComponent implements OnInit {
                           .update({
                             usuariosExtensiones: usuariosExtensionesArray,
                           });
-                        console.log(this.spinnerSvc.mostrarSpinnerColegio);
+                        // console.log(this.spinnerSvc.mostrarSpinnerColegio);
                         // this.router.navigate([
                         //   nombreColegio,
                         //   'crear-colegio',

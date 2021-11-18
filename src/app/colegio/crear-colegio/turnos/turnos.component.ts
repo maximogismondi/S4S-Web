@@ -22,13 +22,8 @@ import { ColegioService } from '../../services/colegio.service';
   styleUrls: ['./turnos.component.scss'],
 })
 export class TurnosComponent implements OnInit {
-  // ingresoDuracion: boolean = false;
-  // habilitoManana: boolean = false;
-  // habilitoTarde: boolean = false;
-  // habilitoNoche: boolean = false;
-  // ingresoDuracion: boolean = false;
-  // ingresoDuracion: boolean = false;
   turnoSeleccionado: string;
+  selectedModulo: Modulo;
 
   constructor(
     private router: Router,
@@ -41,6 +36,16 @@ export class TurnosComponent implements OnInit {
   ngOnInit(): void {}
 
   // _______________________________________TURNOS______________________________________________________________
+
+  editModulo(tipoModulo: string, inicioModulo: string, turno: number) {
+    this.colegioSvc.turnoArray[turno].modulos.forEach((modulo) => {
+      if (modulo.inicio == inicioModulo) {
+        modulo.tipo = tipoModulo;
+      }
+    });
+
+    this.updateDBTurnos();
+  }
 
   cambiarDuracionModulo() {
     if (
@@ -143,6 +148,7 @@ export class TurnosComponent implements OnInit {
         arregloModulos.push({
           inicio: modulo.inicio,
           final: modulo.final,
+          tipo: modulo.tipo,
         });
       });
       arrayTurnos.push({
@@ -240,7 +246,8 @@ export class TurnosComponent implements OnInit {
       });
       this.colegioSvc.profesorArray.forEach((profesor) => {
         this.colegioSvc.dias.forEach((dia) => {
-          profesor.disponibilidad[dia][turnoSeleccionado][nuevoModulo.inicio] = false;
+          profesor.disponibilidad[dia][turnoSeleccionado][nuevoModulo.inicio] =
+            false;
         });
       });
       this.colegioSvc.updateDBProfesor();
