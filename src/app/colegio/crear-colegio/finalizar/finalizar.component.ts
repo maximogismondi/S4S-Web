@@ -122,7 +122,6 @@ export class FinalizarComponent implements OnInit {
             if (progreso && progreso.length > 0) {
               this.indiceProgreso = progreso.length;
 
-              // console.log(this.indiceProgreso);
               switch (this.indiceProgreso) {
                 case 1:
                   this.progresoSeccion = Math.round(
@@ -202,7 +201,6 @@ export class FinalizarComponent implements OnInit {
         .subscribe();
     }
 
-    // console.log(res);
   }
 
   ordenarCursos(cursos: Array<string>) {

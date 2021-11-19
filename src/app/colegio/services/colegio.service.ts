@@ -60,7 +60,6 @@ export class ColegioService {
     private spinnerSvc: ServiceSpinnerService
   ) {
     this.spinnerSvc.mostrarSpinnerColegio = true;
-    // console.log(this.authSvc.mostrarSpinner);
 
     authSvc.afAuth.authState.subscribe(async (user) => {
       if (user) {
@@ -87,117 +86,114 @@ export class ColegioService {
         // if (this.irAHome) {
         //   this.router.navigate(['/home']);
         // } else && !this.irAHome
-        // if (!escuelasPerteneceUsuario.includes(this.nombreColegio)) {
-        //   //error solucionar problema de redireccionamiento
-        //   // this.router.navigate(['/menu-principal']);
-        // } else {
-        this.afs
-          .collection('schools')
-          .doc(this.nombreColegio)
-          .snapshotChanges()
-          .subscribe((colegio) => {
-            this.school = colegio.payload.data() as Colegio;
+        if (!escuelasPerteneceUsuario.includes(this.nombreColegio)) {
+          //error solucionar problema de redireccionamiento
+          this.router.navigate(['/menu-principal']);
+        } else {
+          this.afs
+            .collection('schools')
+            .doc(this.nombreColegio)
+            .snapshotChanges()
+            .subscribe((colegio) => {
+              this.school = colegio.payload.data() as Colegio;
 
-            this.duracionModulo = this.school.duracionModulo;
+              this.duracionModulo = this.school.duracionModulo;
 
-            this.color = this.school.color;
+              this.color = this.school.color;
 
-            // console.log(this.color);
+              this.turnoArray[0] = Object.assign(
+                new Turno('manana'),
+                this.school.turnos[0]
+              ) as Turno;
+              this.turnoArray[1] = Object.assign(
+                new Turno('tarde'),
+                this.school.turnos[1]
+              ) as Turno;
+              this.turnoArray[2] = Object.assign(
+                new Turno('noche'),
+                this.school.turnos[2]
+              ) as Turno;
 
-            this.turnoArray[0] = Object.assign(
-              new Turno('manana'),
-              this.school.turnos[0]
-            ) as Turno;
-            this.turnoArray[1] = Object.assign(
-              new Turno('tarde'),
-              this.school.turnos[1]
-            ) as Turno;
-            this.turnoArray[2] = Object.assign(
-              new Turno('noche'),
-              this.school.turnos[2]
-            ) as Turno;
+              if (this.inicioModuloSeleccionado.length == 0) {
+                this.inicioModuloSeleccionado.push(
+                  this.school.turnos[0].inicio,
+                  this.school.turnos[1].inicio,
+                  this.school.turnos[2].inicio
+                );
+              }
+              this.aulaArray = this.school.aulas;
 
-            if (this.inicioModuloSeleccionado.length == 0) {
-              this.inicioModuloSeleccionado.push(
-                this.school.turnos[0].inicio,
-                this.school.turnos[1].inicio,
-                this.school.turnos[2].inicio
+              this.cursoArray = this.school.cursos;
+
+              this.profesorArray = this.school.profesores;
+              //ordenar profesores alfabéticamente
+              this.profesorArray.sort((a, b) => {
+                if (a.apellido < b.apellido) {
+                  return -1;
+                }
+                if (a.apellido > b.apellido) {
+                  return 1;
+                }
+                if (a.nombre < b.nombre) {
+                  return -1;
+                }
+                if (a.nombre > b.nombre) {
+                  return 1;
+                }
+                return 0;
+              });
+
+              this.materiaArray = this.school.materias;
+
+              this.cursoArray.forEach((curso) => {
+                curso.materias = [];
+                this.materiaArray.forEach((materia) => {
+                  if (materia.curso == curso.nombre) {
+                    curso.materias.push(materia.nombre);
+                  }
+                });
+              });
+              this.cursoMateriaArray = this.cursoArray.filter(
+                (curso) => curso.materias.length > 0
               );
-            }
-            this.aulaArray = this.school.aulas;
 
-            this.cursoArray = this.school.cursos;
+              if (!this.selectedProfesor) {
+                this.selectedProfesor = new Profesor(this.turnoArray);
+              }
+              if (!this.selectedMateria) {
+                this.selectedMateria = new Materia();
+              }
 
-            this.profesorArray = this.school.profesores;
-            //ordenar profesores alfabéticamente
-            this.profesorArray.sort((a, b) => {
-              if (a.apellido < b.apellido) {
-                return -1;
-              }
-              if (a.apellido > b.apellido) {
-                return 1;
-              }
-              if (a.nombre < b.nombre) {
-                return -1;
-              }
-              if (a.nombre > b.nombre) {
-                return 1;
-              }
-              return 0;
-            });
+              this.tiposAulas = [];
 
-            this.materiaArray = this.school.materias;
-
-            this.cursoArray.forEach((curso) => {
-              curso.materias = [];
-              this.materiaArray.forEach((materia) => {
-                if (materia.curso == curso.nombre) {
-                  curso.materias.push(materia.nombre);
+              this.aulaArray.forEach((aula) => {
+                let agregado: boolean = false;
+                this.tiposAulas.forEach((tipoAulas) => {
+                  if (aula.otro == tipoAulas[0].otro) {
+                    agregado = true;
+                    tipoAulas.push(aula);
+                  }
+                });
+                if (!agregado) {
+                  this.tiposAulas.push([aula]);
                 }
               });
-            });
-            this.cursoMateriaArray = this.cursoArray.filter(
-              (curso) => curso.materias.length > 0
-            );
-
-            if (!this.selectedProfesor) {
-              this.selectedProfesor = new Profesor(this.turnoArray);
-            }
-            if (!this.selectedMateria) {
-              this.selectedMateria = new Materia();
-            }
-
-            this.tiposAulas = [];
-
-            this.aulaArray.forEach((aula) => {
-              let agregado: boolean = false;
-              this.tiposAulas.forEach((tipoAulas) => {
-                if (aula.otro == tipoAulas[0].otro) {
-                  agregado = true;
-                  tipoAulas.push(aula);
-                }
-              });
-              if (!agregado) {
-                this.tiposAulas.push([aula]);
-              }
-            });
-            this.cursoArray.forEach((curso) => {
-              this.materiasArrayInValidas[curso.nombre] = {};
-              this.materiaArray.forEach((materia) => {
-                if (materia.curso == curso.nombre) {
-                  this.materiasArrayInValidas[curso.nombre][materia.nombre] =
-                    materia.profesoresCapacitados.length > 0 &&
-                    materia.aulasMateria.length > 0 &&
-                    materia.curso != '';
-                }
+              this.cursoArray.forEach((curso) => {
+                this.materiasArrayInValidas[curso.nombre] = {};
+                this.materiaArray.forEach((materia) => {
+                  if (materia.curso == curso.nombre) {
+                    this.materiasArrayInValidas[curso.nombre][materia.nombre] =
+                      materia.profesoresCapacitados.length > 0 &&
+                      materia.aulasMateria.length > 0 &&
+                      materia.curso != '';
+                  }
+                });
               });
             });
-          });
-        // }
+        }
 
         this.spinnerSvc.mostrarSpinnerColegio = false;
         // this.mostrarSpinnerColegio = false;
-        // console.log(this.authSvc.mostrarSpinner);
       }
     });
   }

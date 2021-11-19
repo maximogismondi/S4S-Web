@@ -102,7 +102,6 @@ export class EleccionComponent implements OnInit {
   }
 
   async onUnirse() {
-    // console.log(await this.unirseColegioForm.value)
     const { nombreColegio, idColegio } = await this.unirseColegioForm.value;
 
     if (nombreColegio) {
@@ -139,7 +138,6 @@ export class EleccionComponent implements OnInit {
                           .update({
                             usuariosExtensiones: usuariosExtensionesArray,
                           });
-                        // console.log(this.spinnerSvc.mostrarSpinnerColegio);
                         // this.router.navigate([
                         //   nombreColegio,
                         //   'crear-colegio',

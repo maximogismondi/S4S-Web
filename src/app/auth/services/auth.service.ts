@@ -15,7 +15,6 @@ import { Observable, of } from 'rxjs';
 import firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { ServiceSpinnerService } from 'src/app/shared/loading-spinner/service-spinner.service';
-// import { Time } from '@angular/common';
 
 @Injectable()
 export class AuthService {
@@ -24,8 +23,6 @@ export class AuthService {
   nombresDeEscuelas: Array<any> = [];
   existeEscuela: boolean = false;
   dirigir: string = '';
-  // idsDeEscuelas: Array<any> = [];
-  // mostrarSpinner: boolean = true;
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -43,7 +40,6 @@ export class AuthService {
           .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
               this.nombresDeEscuelas.push(doc.data().nombre);
-              // this.idsDeEscuelas.push(doc.data().id);
             });
           });
 
@@ -56,39 +52,30 @@ export class AuthService {
             this.spinnerSvc.mostrarSpinnerUser = false;
             if (this.userData && this.userData.emailVerified) {
               this.dirigir = 'menu-principal';
-              // this.router.navigate(['menu-principal']);
             } else {
-              // if (this.userData && this.userData.emailVerified == false)
               this.dirigir = 'verificacion-email';
-
-              // this.router.navigate(['verificacion-email']);
             }
-            // else {
-            //   this.dirigir = 'login';
-
-            //   // this.router.navigate(['login']);
-            // }
           });
       } else {
+        console.log(this.spinnerSvc.mostrarSpinnerUser);
+
         this.userData = null;
         this.spinnerSvc.mostrarSpinnerUser = false;
         this.dirigir = 'login';
+        console.log(this.dirigir);
       }
     });
   }
 
   async isLoggedIn(): Promise<boolean> {
     let user = await this.afAuth.authState.toPromise();
-    // console.log(user);
     if (!user) {
       return false;
     }
-    // console.log('dsdsds');
     let userData = await this.afs
       .doc<User>(`users/${user.uid}`)
       .get()
       .toPromise();
-    // console.log(userData.data()?.emailVerified);
     if (userData.data()?.emailVerified) {
       return true;
     }
@@ -111,8 +98,6 @@ export class AuthService {
       .catch((error) => {
         alert('No existe una cuenta con ese email, por favor registrese');
         return null;
-        // console.log(error.code);
-        // console.log(error.message);
       });
 
     // if (user?.emailVerified) {
@@ -155,10 +140,7 @@ export class AuthService {
         alert(
           'El email que esta ingresando ya esta siendo utilizado, por favor pruebe otro'
         );
-        // console.log(error)
         return null;
-        // console.log(error.code);
-        // console.log(error.message);
       });
 
     // const { user } = await this.afAuth.createUserWithEmailAndPassword(
@@ -256,8 +238,8 @@ export class AuthService {
         }
       });
       if (!existe) {
-        if (String(school.color) == "") {
-          school.color = "#2196f3"
+        if (String(school.color) == '') {
+          school.color = '#2196f3';
         }
         this.SchoolData(school);
         this.router.navigate(['menu-principal']);

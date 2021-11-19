@@ -54,12 +54,10 @@ export class NavbarComponent {
   }
 
   // goToHome() {
-  //   // console.log(this.colegioSvc.irAHome);
 
   //   // this.colegioSvc.irAHome = !this.colegioSvc.irAHome;
   //   this.router.navigate(['/home']);
 
-  //   // console.log(this.colegioSvc.irAHome);
   // }
 
   // navbarCollapse(){

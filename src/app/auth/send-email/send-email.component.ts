@@ -62,9 +62,6 @@ export class SendEmailComponent implements OnInit {
             });
             this.router.navigate(['menu-principal']);
           } 
-          // else {
-          //   // console.log('B');
-          // }
         });
     }, 1000);
   }

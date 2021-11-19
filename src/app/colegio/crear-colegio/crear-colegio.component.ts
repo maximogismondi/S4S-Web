@@ -22,7 +22,6 @@ export class CrearColegioComponent implements OnInit {
       this.colegioSvc.nombreColegio = params.nombreColegio;
       this.colegioSvc.seccion = params.seccion;
     });
-    // console.log(this.colegioSvc.seccion);
   }
 
   ngOnInit(): void {
@@ -38,8 +37,6 @@ export class CrearColegioComponent implements OnInit {
   }
 
   setMyStyles(color: string) {
-    // console.log(color);
-
     let styles = {
       background: color,
     };

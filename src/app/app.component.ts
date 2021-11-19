@@ -18,7 +18,6 @@ export class AppComponent {
   ) {}
   
   setMyStyles(color: string) {
-    // console.log(color);
 
     let styles = {
       background: color,
