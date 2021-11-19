@@ -72,8 +72,6 @@ export class MenuPrincipalComponent implements OnInit {
   }
 
   setMyStyles(color: string) {
-    // console.log(color);
-
     let styles = {
       background: color,
     };

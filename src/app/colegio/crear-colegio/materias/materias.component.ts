@@ -56,6 +56,13 @@ export class MateriasComponent implements OnInit {
       !this.colegioSvc.selectedMateria.materiaEspecial;
   }
 
+  setMyStyles(color: string) {
+    let styles = {
+      background: color,
+    };
+    return styles;
+  }
+
   addOrEditMateria() {
     if (
       this.colegioSvc.selectedMateria.nombre != '' &&

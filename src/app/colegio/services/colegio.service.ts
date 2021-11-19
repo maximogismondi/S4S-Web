@@ -48,7 +48,7 @@ export class ColegioService {
   pagoFinalizado: boolean = false;
   materiasArrayInValidas: any = {};
   school: Colegio;
-  irAHome: boolean = false;
+  // irAHome: boolean = false;
 
   constructor(
     private router: Router,
@@ -84,12 +84,10 @@ export class ColegioService {
               escuelasPerteneceUsuario.push(doc.data().nombre);
             });
           });
-        if (this.irAHome) {
-          this.router.navigate(['/home']);
-        } else if (
-          !escuelasPerteneceUsuario.includes(this.nombreColegio) &&
-          !this.irAHome
-        ) {
+        // if (this.irAHome) {
+        //   this.router.navigate(['/home']);
+        // } else && !this.irAHome
+        if (!escuelasPerteneceUsuario.includes(this.nombreColegio)) {
           //error solucionar problema de redireccionamiento
           this.router.navigate(['/menu-principal']);
         } else {

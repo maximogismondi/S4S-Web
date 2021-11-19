@@ -86,6 +86,14 @@ export class FinalizarComponent implements OnInit {
   }
 
   // _______________________________________FINALIZAR____________________________________________________________
+  
+  setMyStyles(color: string) {
+    let styles = {
+      background: color,
+    };
+    return styles;
+  }
+  
   async finalizar() {
     this.botonPresionado = true;
     const token: any = (

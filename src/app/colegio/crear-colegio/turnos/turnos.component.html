@@ -17,7 +17,8 @@
         mins
 
         <button
-          class="btn btn-primary float-end mx-2"
+          [ngStyle]="setMyStyles(colegioSvc.color)"
+          class="btn float-end mx-2"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#collapseExample"
@@ -223,7 +224,11 @@
                 class="form-control"
                 [(ngModel)]="colegioSvc.inicioModuloSeleccionado[0]"
               />
-              <button class="btn btn-primary" (click)="addModulo('manana')">
+              <button
+                class="btn"
+                [ngStyle]="setMyStyles(colegioSvc.color)"
+                (click)="addModulo('manana')"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -365,7 +370,11 @@
                 class="form-control"
                 [(ngModel)]="colegioSvc.inicioModuloSeleccionado[1]"
               />
-              <button class="btn btn-primary" (click)="addModulo('tarde')">
+              <button
+                [ngStyle]="setMyStyles(colegioSvc.color)"
+                class="btn"
+                (click)="addModulo('tarde')"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -506,7 +515,7 @@
                 class="form-control"
                 [(ngModel)]="colegioSvc.inicioModuloSeleccionado[2]"
               />
-              <button class="btn btn-primary" (click)="addModulo('noche')">
+              <button  [ngStyle]="setMyStyles(colegioSvc.color)" class="btn" (click)="addModulo('noche')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"

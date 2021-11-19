@@ -200,14 +200,16 @@
                   <button
                     *ngIf="colegioSvc.selectedMateria.id == 0"
                     (click)="addOrEditMateria()"
-                    class="btn btn-primary mt-4 d-block w-100"
+                    [ngStyle]="setMyStyles(colegioSvc.color)"
+                    class="btn mt-4 d-block w-100"
                   >
                     Añadir
                   </button>
                   <button
                     *ngIf="colegioSvc.selectedMateria.id != 0"
                     (click)="addOrEditMateria()"
-                    class="btn btn-primary mt-4 d-block w-100"
+                    [ngStyle]="setMyStyles(colegioSvc.color)"
+                    class="btn mt-4 d-block w-100"
                   >
                     Editar
                   </button>
@@ -266,7 +268,8 @@
                   <!-- aria-controls="'collapseExample' + i" -->
                   {{ curso.nombre }}
                   <span
-                    class="badge badge-primary float-end badge-pill bg-primary"
+                  [ngStyle]="setMyStyles(colegioSvc.color)"
+                    class="badge badge-primary float-end badge-pill"
                     >{{
                       objectKeys(
                         colegioSvc.materiasArrayInValidas[curso.nombre]

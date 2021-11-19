@@ -57,6 +57,13 @@ export class CursosComponent implements OnInit {
     });
   }
 
+  setMyStyles(color: string) {
+    let styles = {
+      background: color,
+    };
+    return styles;
+  }
+
   openForEditCurso(curso: Curso) {
     this.selectedCurso = curso;
     Object.assign(this.temporalCurso, curso);

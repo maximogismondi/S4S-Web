@@ -41,14 +41,16 @@
                   <button
                     *ngIf="selectedCurso.id == 0"
                     (click)="addOrEditCurso()"
-                    class="btn btn-primary mt-4 d-block w-100"
+                    [ngStyle]="setMyStyles(colegioSvc.color)"
+                    class="btn mt-4 d-block w-100"
                   >
                     Añadir
                   </button>
                   <button
                     *ngIf="selectedCurso.id != 0"
                     (click)="addOrEditCurso()"
-                    class="btn btn-primary mt-4 d-block w-100"
+                    [ngStyle]="setMyStyles(colegioSvc.color)"
+                    class="btn mt-4 d-block w-100"
                   >
                     Editar
                   </button>

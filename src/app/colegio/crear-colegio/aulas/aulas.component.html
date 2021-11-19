@@ -163,14 +163,16 @@
                   <button
                     *ngIf="selectedAula.id == 0"
                     (click)="addOrEditAula()"
-                    class="btn btn-primary d-block mt-4 w-100"
+                    [ngStyle]="setMyStyles(colegioSvc.color)"
+                    class="btn d-block mt-4 w-100"
                   >
                     Añadir
                   </button>
                   <button
                     *ngIf="selectedAula.id != 0"
                     (click)="addOrEditAula()"
-                    class="btn btn-primary d-block mt-4 w-100"
+                    [ngStyle]="setMyStyles(colegioSvc.color)"
+                    class="btn d-block mt-4 w-100"
                   >
                     Editar
                   </button>
@@ -203,7 +205,8 @@
                   <!-- aria-controls="'collapseExample' + i" -->
                   {{ tipoAulas[0].otro }}
                   <span
-                    class="badge badge-primary badge-pill bg-primary float-end"
+                    [ngStyle]="setMyStyles(colegioSvc.color)"
+                    class="badge badge-primary badge-pill float-end"
                     >{{ tipoAulas.length }}</span
                   >
                   <div

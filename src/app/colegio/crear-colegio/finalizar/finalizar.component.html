@@ -139,6 +139,7 @@
         <label>Paso {{ indiceProgreso }}/7</label>
         <div class="progress h-50 mt-4">
           <div
+          [ngStyle]="setMyStyles(colegioSvc.color)"
             class="progress-bar progress-bar-striped progress-bar-animated"
             role="progressbar"
             [ngStyle]="{ width: progresoSeccion + '%' }"
@@ -149,6 +150,7 @@
 
         <div class="progress h-50 mt-4">
           <div
+          [ngStyle]="setMyStyles(colegioSvc.color)"
             class="progress-bar progress-bar-striped progress-bar-animated"
             role="progressbar"
             [ngStyle]="{ width: progresoTotal + '%' }"
@@ -177,12 +179,12 @@
       >
         <!-- *ngIf="colegioSvc.pagoFinalizado else pagar" -->
         <div class="d-grid">
-          <button (click)="finalizar()" class="btn btn-primary btn-lg mt-2">
+          <button (click)="finalizar()" [ngStyle]="setMyStyles(colegioSvc.color)" class="btn btn-lg mt-2">
             Generar mis horarios ya!
           </button>
         </div>
 
-        <ng-template #pagar>
+        <!-- <ng-template #pagar>
           <h5 class="my-3">Usted esta por pagar un procesamiento de:</h5>
           <ul class="list-group">
             <li
@@ -240,8 +242,10 @@
           </ul>
 
           <div class="mercadoPagoBoton mt-5"></div>
-        </ng-template>
+        </ng-template> -->
       </div>
+
+
       <ng-template #creaColegio>
         <h3 *ngIf="!botonPresionado" class="text-center mt-2">
           Ingresa como minimo un valor de cada seccion

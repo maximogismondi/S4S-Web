@@ -33,7 +33,7 @@
     </div>
 
     <div class="col" *ngFor="let escuela of escuelasUsuario; let i = index">
-      <div class="card h-100" [ngStyle]="setMyStyles(escuela.color)">
+      <div class="card h-100">
         <div class="card-body">
           <p>
             <button
@@ -45,7 +45,6 @@
                 border: none;
                 background-image: none;
               "
-              [ngStyle]="setMyStyles(escuela.color)"
               data-bs-toggle="collapse"
               [attr.data-bs-target]="'#collapseExample' + i"
               aria-expanded="false"
@@ -161,7 +160,8 @@
             <a
               (click)="irCrearColegio(escuela.nombre)"
               href="/{{ dirigirColegio }}"
-              class="btn btn-primary py-5 mx-auto ms-4"
+              [ngStyle]="setMyStyles(escuela.color)"
+              class="btn py-5 mx-auto ms-4"
               style="width: 90%"
             >
               <svg

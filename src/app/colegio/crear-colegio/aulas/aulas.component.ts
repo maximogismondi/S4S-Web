@@ -58,6 +58,13 @@ export class AulasComponent implements OnInit {
     });
   }
 
+  setMyStyles(color: string) {
+    let styles = {
+      background: color,
+    };
+    return styles;
+  }
+
   executeUsecase() {
     let isClicked: boolean = false;
     isClicked = true;

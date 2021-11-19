@@ -65,6 +65,13 @@ export class ProfesoresComponent implements OnInit {
     });
   }
 
+  setMyStyles(color: string) {
+    let styles = {
+      background: color,
+    };
+    return styles;
+  }
+
   addOrEditProfesor() {
     if (
       this.colegioSvc.selectedProfesor.nombre != '' &&

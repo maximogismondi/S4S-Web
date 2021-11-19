@@ -53,14 +53,16 @@
                   <button
                     *ngIf="colegioSvc.selectedProfesor.id == 0"
                     (click)="addOrEditProfesor()"
-                    class="btn btn-primary mt-4 d-block w-100"
+                    [ngStyle]="setMyStyles(colegioSvc.color)"
+                    class="btn mt-4 d-block w-100"
                   >
                     Añadir
                   </button>
                   <button
                     *ngIf="colegioSvc.selectedProfesor.id != 0"
                     (click)="addOrEditProfesor()"
-                    class="btn btn-primary mt-4 d-block w-100"
+                    [ngStyle]="setMyStyles(colegioSvc.color)"
+                    class="btn mt-4 d-block w-100"
                   >
                     Editar
                   </button>
@@ -175,7 +177,8 @@
                   </tbody>
                 </table>
                 <button
-                  class="col btn btn-primary me-2"
+                  [ngStyle]="setMyStyles(colegioSvc.color)"
+                  class="col btn me-2"
                   (click)="availabilityProfesor()"
                 >
                   LISTO

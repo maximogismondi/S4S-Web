@@ -47,6 +47,13 @@ export class TurnosComponent implements OnInit {
     this.updateDBTurnos();
   }
 
+  setMyStyles(color: string) {
+    let styles = {
+      background: color,
+    };
+    return styles;
+  }
+
   cambiarDuracionModulo() {
     if (
       this.colegioSvc.duracionModulo > 60 ||
