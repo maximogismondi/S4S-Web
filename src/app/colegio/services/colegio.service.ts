@@ -88,7 +88,8 @@ export class ColegioService {
         // } else && !this.irAHome
         if (!escuelasPerteneceUsuario.includes(this.nombreColegio)) {
           //error solucionar problema de redireccionamiento
-          this.router.navigate(['/menu-principal']);
+          // alert("Usted no esta unido a este colegio, por favor unase para acceder")
+          // this.router.navigate(['/menu-principal']);
         } else {
           this.afs
             .collection('schools')

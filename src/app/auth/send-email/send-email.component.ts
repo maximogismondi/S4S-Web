@@ -66,47 +66,37 @@ export class SendEmailComponent implements OnInit {
     }, 1000);
   }
 
-  async changeEmail() {
-    if (this.cambiarEmail == 0) {
-      this.cambiarEmail = 1;
-    } else {
-      this.emailsDeUsuarios.forEach((email) =>{
-        if( this.usuarioEmail == email){
-          this.emailExistente = true;
-        }
-      });
-      if(this.emailExistente){
-        alert('El email ya esta utilizado');
-        this.emailExistente = false;
-      }
-      else{
-        this.afs
-        .collection('users')
-        .doc(this.userData.uid)
-        .update({
-          email: this.usuarioEmail,
-          displayName: this.usuarioEmail.split('@')[0],
-        });
+  // async changeEmail() {
+  //   if (this.cambiarEmail == 0) {
+  //     this.cambiarEmail = 1;
+  //   } else {
+  //     this.emailsDeUsuarios.forEach((email) =>{
+  //       if( this.usuarioEmail == email){
+  //         this.emailExistente = true;
+  //       }
+  //     });
+  //     if(this.emailExistente){
+  //       alert('El email ya esta utilizado');
+  //       this.emailExistente = false;
+  //     }
+  //     else{
+  //       this.afs
+  //       .collection('users')
+  //       .doc(this.userData.uid)
+  //       .update({
+  //         email: this.usuarioEmail,
+  //         displayName: this.usuarioEmail.split('@')[0],
+  //       });
 
-        (await this.afAuth.currentUser)?.updateEmail(this.usuarioEmail);
-        this.cambiarEmail = 2;
+  //       (await this.afAuth.currentUser)?.updateEmail(this.usuarioEmail);
+  //       this.cambiarEmail = 2;
 
-        setTimeout(() => {
-          this.onSendEmail();
-        }, 1000);
-      }
-      
-
-        // .updateCurrentUser(this.userData.uid);
-        // const userNuevoEmail = this.afAuth.currentUser;
-        // if((await this.afAuth.currentUser)?.emailVerified){
-        //   alert('Ya existe una cuenta con ese email');
-        //   this.router.navigate(['/crear-colegio']);
-        // }
-        // else{}
-        // await this.router.navigate(['/verificacion-email']);
-    }
-  }
+  //       setTimeout(() => {
+  //         this.onSendEmail();
+  //       }, 1000);
+  //     }
+  //   }
+  // }
 
   ngOnInit(): void {}
 

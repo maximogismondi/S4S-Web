@@ -4,8 +4,8 @@
       <h3 class="card-title text-center">¡GRACIAS POR REGISTRARSE!</h3>
       <div class="form-group mt-3">
         <p class="text-center">
-          Le enviamos un mensaje a <strong>{{ this.usuarioEmail }}</strong> para que
-          confirme su email.
+          Le enviamos un mensaje a <strong>{{ this.usuarioEmail }}</strong> para
+          que confirme su email.
         </p>
         <p class="text-center">
           Por favor revise su bandeja de entrada y clickee en el link de
@@ -21,21 +21,22 @@
           REENVIAR VERIFICACION DE EMAIL
         </button>
       </div>
-      <div class="text-center mt-3">
-        <button *ngIf="cambiarEmail != 2; else bloquearBoton" class="btn btn-secondary" type="button" (click)="changeEmail()">Cambiar direccion de correo electronico</button>
+      <!-- <div class="text-center mt-3">
+        <!-- *ngIf="cambiarEmail != 2; else bloquearBoton" 
+        <button  class="btn btn-secondary" type="button" (click)="changeEmail()">Cambiar direccion de correo electronico</button>
         <!-- <a href="/login">Volver a la pagina de iniciar sesion</a> -->
-        <!-- <button class="btn btn-primary mx-3" (click)="goToPage()">
+      <!-- <button class="btn btn-primary mx-3" (click)="goToPage()">
           ACCEDER A LA PAGINA
         </button> -->
-        <ng-template #bloquearBoton>
+      <!-- <ng-template #bloquearBoton>
           <button class="btn btn-secondary mb-3 disabled" type="button">Cambiar direccion de correo electronico</button>
           <br>
           <span class="text-center"> Modo pausado, si desea cambiar de email recargue la pagina </span>
         </ng-template>
-      </div>
+      </div> 
+    </div>-->
     </div>
-  </div>
-  <div class="col-md-6 mx-auto mt-5">
+    <!-- <div class="col-md-6 mx-auto mt-5">
     <div
       *ngIf="cambiarEmail == 1"
       class="form-group card-body"
@@ -45,6 +46,6 @@
       <button class="btn btn-primary mt-3" (click)="changeEmail()">
         Cambiar email
       </button>
-    </div>
+    </div>-->
   </div>
 </div>

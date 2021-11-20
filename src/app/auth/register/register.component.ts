@@ -32,31 +32,38 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.registerForm = this.fb.group({
       email: ['', Validators.required],
+      confirmarEmail: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
 
   async onRegister() {
-    const { email, password } = this.registerForm.value;
-    if(email.length > 5 && password.length > 5) {
+    const { email, password, confirmarEmail } = this.registerForm.value;
+    if(email.length > 5 && password.length > 5 && confirmarEmail.length > 5) {
       const user = await this.authSvc.register(email, password);
       if (user) {
         this.router.navigate(['verificacion-email']);
       }
     }
     else{
-      if(email.length == 0 && password.length == 0){
+      if(email.length == 0 && password.length == 0 && confirmarEmail.length == 0){
         alert("Rellene los campos vacios");
+      }
+      else if(email == confirmarEmail){
+        alert("Los emails son distintos");
       }
       else if(email.length < 5){
         alert("El email debe ser mayor a los 5 digitos");
       }
+      else if(confirmarEmail.length < 5){
+        alert("El email a confirmar debe ser mayor a los 5 digitos");
+      }
       else if(password.length < 5){
         alert("La contraseña debe ser mayor a los 5 digitos");
       }
-      else{
-        alert("El email debe ser mayor a los 5 digitos y la contraseña debe ser mayor a los 5 digitos");
-      } 
+      // else{
+      //   alert("El email debe ser mayor a los 5 digitos y la contraseña debe ser mayor a los 5 digitos");
+      // } 
     }
     
   }
