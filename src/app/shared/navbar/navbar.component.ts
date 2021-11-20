@@ -53,12 +53,12 @@ export class NavbarComponent {
     alert('Bromita 🤙🤙🤙');
   }
 
-  // goToHome() {
+  goToHome() {
 
-  //   // this.colegioSvc.irAHome = !this.colegioSvc.irAHome;
-  //   this.router.navigate(['/home']);
+    // this.colegioSvc.irAHome = !this.colegioSvc.irAHome;
+    this.router.navigate(['/home']);
 
-  // }
+  }
 
   // navbarCollapse(){
   //   document.getElementById('buttonNavbarColor02')?.getAttribute('aria-expanded');

@@ -49,20 +49,22 @@ export class AuthService {
           .toPromise()
           .then((res) => {
             this.userData = res.data();
-            this.spinnerSvc.mostrarSpinnerUser = false;
             if (this.userData && this.userData.emailVerified) {
               this.dirigir = 'menu-principal';
             } else {
               this.dirigir = 'verificacion-email';
             }
+            this.spinnerSvc.mostrarSpinnerUser = false;
           });
       } else {
-        console.log(this.spinnerSvc.mostrarSpinnerUser);
+        // console.log(this.spinnerSvc.mostrarSpinnerUser);
 
         this.userData = null;
         this.spinnerSvc.mostrarSpinnerUser = false;
+        // console.log(this.spinnerSvc.mostrarSpinnerUser);
+
         this.dirigir = 'login';
-        console.log(this.dirigir);
+        // console.log(this.dirigir);
       }
     });
   }

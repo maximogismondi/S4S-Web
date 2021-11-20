@@ -15,13 +15,10 @@ export class AppComponent {
   constructor(
     public spinnerSvc: ServiceSpinnerService,
     public colegioSvc: ColegioService
-  ) {}
-  
-  setMyStyles(color: string) {
-
-    let styles = {
-      background: color,
-    };
-    return styles;
+  ) {
+    // setInterval(() => {
+    //   console.log(this.spinnerSvc.mostrarSpinnerColegio);
+    //   console.log(this.spinnerSvc.mostrarSpinnerUser);
+    // }, 1000);
   }
 }
