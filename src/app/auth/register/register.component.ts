@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
 
   async onRegister() {
     const { email, password, confirmarEmail } = this.registerForm.value;
-    if(email.length > 10 && password.length > 5 && confirmarEmail.length > 10 && password == confirmarEmail) {
+    if(email.length > 10 && password.length > 5 && confirmarEmail.length > 10 && String(email) == String(confirmarEmail)) {
       const user = await this.authSvc.register(email, password);
       if (user) {
         this.router.navigate(['verificacion-email']);
@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
       if(email.length == 0 && password.length == 0 && confirmarEmail.length == 0){
         alert("Rellene los campos vacios");
       }
-      else if(email != confirmarEmail){
+      else if(String(email) != String(confirmarEmail)){
         alert("Los emails son distintos");
       }
       else if(email.length < 10){

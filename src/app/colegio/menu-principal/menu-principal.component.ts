@@ -58,9 +58,9 @@ export class MenuPrincipalComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  irEleccion() {
-    this.router.navigate(['eleccion']);
-  }
+  // irEleccion() {
+  //   this.router.navigate(['eleccion']);
+  // }
 
   irHorariosGenerados(nombreEscuela: string) {
     this.router.navigate([nombreEscuela, 'horarios-generados']);
