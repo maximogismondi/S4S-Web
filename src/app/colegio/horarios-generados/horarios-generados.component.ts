@@ -56,7 +56,12 @@ export class HorariosGeneradosComponent implements OnInit {
       });
     this.cambiarDocumento();
   }
-
+  setMyStyles(color: string) {
+    let styles = {
+      background: color,
+    };
+    return styles;
+  }
   cambiarDocumento() {
     this.afs
       .doc(
