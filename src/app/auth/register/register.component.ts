@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
 
   async onRegister() {
     const { email, password, confirmarEmail } = this.registerForm.value;
-    if(email.length > 5 && password.length > 5 && confirmarEmail.length > 5) {
+    if(email.length > 10 && password.length > 5 && confirmarEmail.length > 10 && password == confirmarEmail) {
       const user = await this.authSvc.register(email, password);
       if (user) {
         this.router.navigate(['verificacion-email']);
@@ -49,14 +49,14 @@ export class RegisterComponent implements OnInit {
       if(email.length == 0 && password.length == 0 && confirmarEmail.length == 0){
         alert("Rellene los campos vacios");
       }
-      else if(email == confirmarEmail){
+      else if(email != confirmarEmail){
         alert("Los emails son distintos");
       }
-      else if(email.length < 5){
-        alert("El email debe ser mayor a los 5 digitos");
+      else if(email.length < 10){
+        alert("El email debe ser mayor a los 10 digitos");
       }
-      else if(confirmarEmail.length < 5){
-        alert("El email a confirmar debe ser mayor a los 5 digitos");
+      else if(confirmarEmail.length < 10){
+        alert("El email a confirmar debe ser mayor a los 10 digitos");
       }
       else if(password.length < 5){
         alert("La contraseña debe ser mayor a los 5 digitos");
