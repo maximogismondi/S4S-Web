@@ -66,6 +66,10 @@ export class SendEmailComponent implements OnInit {
     }, 1000);
   }
 
+  // closeVerifiedEmail(){
+
+  // }
+
   // async changeEmail() {
   //   if (this.cambiarEmail == 0) {
   //     this.cambiarEmail = 1;

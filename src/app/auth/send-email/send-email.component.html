@@ -1,6 +1,8 @@
 <div class="col-md-6 mx-auto mt-5">
   <div class="card mt-5" *ngIf="user$ | async as user">
     <div class="card-body">
+      <a type="button" href="/login" class="btn-close bg-dark float-end" aria-label="Close"></a>
+      <!-- (click)="closeVerifiedEmail()" -->
       <h3 class="card-title text-center">¡GRACIAS POR REGISTRARSE!</h3>
       <div class="form-group mt-3">
         <p class="text-center">
