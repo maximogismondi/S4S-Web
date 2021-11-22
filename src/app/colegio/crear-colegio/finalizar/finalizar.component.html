@@ -139,7 +139,7 @@
         <label>Paso {{ indiceProgreso }}/7</label>
         <div class="progress h-50 mt-4">
           <div
-          [ngStyle]="setMyStyles(colegioSvc.color)"
+            [ngStyle]="setMyStyles(colegioSvc.color)"
             class="progress-bar progress-bar-striped progress-bar-animated"
             role="progressbar"
             [ngStyle]="{ width: progresoSeccion + '%' }"
@@ -150,7 +150,7 @@
 
         <div class="progress h-50 mt-4">
           <div
-          [ngStyle]="setMyStyles(colegioSvc.color)"
+            [ngStyle]="setMyStyles(colegioSvc.color)"
             class="progress-bar progress-bar-striped progress-bar-animated"
             role="progressbar"
             [ngStyle]="{ width: progresoTotal + '%' }"
@@ -163,23 +163,27 @@
       <div
         *ngIf="
           !botonPresionado &&
-            colegioSvc.aulaArray.length > 0 &&
-            colegioSvc.cursoArray.length > 0 &&
-            colegioSvc.profesorArray.length > 0 &&
-            colegioSvc.materiaArray.length > 0 &&
             ((colegioSvc.turnoArray[0].habilitado &&
               colegioSvc.turnoArray[0].modulos.length > 0) ||
               (colegioSvc.turnoArray[1].habilitado &&
                 colegioSvc.turnoArray[1].modulos.length > 0) ||
               (colegioSvc.turnoArray[2].habilitado &&
-                colegioSvc.turnoArray[2].modulos.length > 0));
+                colegioSvc.turnoArray[2].modulos.length > 0 &&
+                colegioSvc.aulaArray.length > 0 &&
+                colegioSvc.cursoArray.length > 0 &&
+                colegioSvc.profesorArray.length > 0 &&
+                colegioSvc.materiaArray.length > 0));
           else creaColegio
         "
         class="d-grid"
       >
         <!-- *ngIf="colegioSvc.pagoFinalizado else pagar" -->
         <div class="d-grid">
-          <button (click)="finalizar()" [ngStyle]="setMyStyles(colegioSvc.color)" class="btn btn-lg mt-2">
+          <button
+            (click)="finalizar()"
+            [ngStyle]="setMyStyles(colegioSvc.color)"
+            class="btn btn-lg mt-2"
+          >
             Generar mis horarios ya!
           </button>
         </div>
@@ -244,7 +248,6 @@
           <div class="mercadoPagoBoton mt-5"></div>
         </ng-template> -->
       </div>
-
 
       <ng-template #creaColegio>
         <h3 *ngIf="!botonPresionado" class="text-center mt-2">
