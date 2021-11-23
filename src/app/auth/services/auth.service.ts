@@ -283,7 +283,7 @@ export class AuthService {
           modulosTurno.push({
             inicio: modulo.inicio,
             final: modulo.final,
-            tipo: modulo.tipo,
+            // tipo: modulo.tipo,
           });
         });
         if (turno.turno == 'manana') {

@@ -51,10 +51,10 @@ export class MateriasComponent implements OnInit {
       !this.colegioSvc.selectedMateria.profesorSimultaneo;
   }
 
-  materiaEspecialCheck() {
-    this.colegioSvc.selectedMateria.materiaEspecial =
-      !this.colegioSvc.selectedMateria.materiaEspecial;
-  }
+  // materiaEspecialCheck() {
+  //   this.colegioSvc.selectedMateria.materiaEspecial =
+  //     !this.colegioSvc.selectedMateria.materiaEspecial;
+  // }
 
   setMyStyles(color: string) {
     let styles = {

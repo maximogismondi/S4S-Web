@@ -37,15 +37,15 @@ export class TurnosComponent implements OnInit {
 
   // _______________________________________TURNOS______________________________________________________________
 
-  editModulo(tipoModulo: string, inicioModulo: string, turno: number) {
-    this.colegioSvc.turnoArray[turno].modulos.forEach((modulo) => {
-      if (modulo.inicio == inicioModulo) {
-        modulo.tipo = tipoModulo;
-      }
-    });
+  // editModulo(tipoModulo: string, inicioModulo: string, turno: number) {
+  //   this.colegioSvc.turnoArray[turno].modulos.forEach((modulo) => {
+  //     if (modulo.inicio == inicioModulo) {
+  //       modulo.tipo = tipoModulo;
+  //     }
+  //   });
 
-    this.updateDBTurnos();
-  }
+  //   this.updateDBTurnos();
+  // }
 
   setMyStyles(color: string) {
     let styles = {
@@ -155,7 +155,7 @@ export class TurnosComponent implements OnInit {
         arregloModulos.push({
           inicio: modulo.inicio,
           final: modulo.final,
-          tipo: modulo.tipo,
+          // tipo: modulo.tipo,
         });
       });
       arrayTurnos.push({

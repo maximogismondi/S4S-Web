@@ -41,7 +41,7 @@ export class Turno {
 export class Modulo {
   inicio: string;
   final: string;
-  tipo: string = "clase";
+  // tipo: string = "clase";
   constructor(inicio: string, final: string) {
     this.inicio = inicio;
     this.final = final;
@@ -94,7 +94,7 @@ export class Materia {
   cantidadMaximaDeModulosPorDia: number;
   cantidadMinimaDeModulosPorDia: number;
   profesorSimultaneo: boolean = false;
-  materiaEspecial: boolean = false;
+  // materiaEspecial: boolean = false;
   curso: string = '';
   profesoresCapacitados: Array<string> = [];
   aulasMateria: Array<string> = [];
