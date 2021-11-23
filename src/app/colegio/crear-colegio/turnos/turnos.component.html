@@ -133,6 +133,7 @@
               (click)="estadoTurno('manana')"
             >
               <input
+                [ngStyle]="setMyStyles(colegioSvc.color)"
                 class="form-check-input"
                 type="checkbox"
                 role="switch"
@@ -515,7 +516,11 @@
                 class="form-control"
                 [(ngModel)]="colegioSvc.inicioModuloSeleccionado[2]"
               />
-              <button  [ngStyle]="setMyStyles(colegioSvc.color)" class="btn" (click)="addModulo('noche')">
+              <button
+                [ngStyle]="setMyStyles(colegioSvc.color)"
+                class="btn"
+                (click)="addModulo('noche')"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"

@@ -69,8 +69,15 @@
                     <tr class="table-light">
                       <th scope="col">
                         Profesores
-                        <div class="form-check float-end form-switch">
+                        <div
+                          class="form-check float-end form-switch"
+                          *ngIf="
+                            colegioSvc.selectedMateria.profesorSimultaneo;
+                            else profesorSimultaneoDeshabilitado
+                          "
+                        >
                           <input
+                            [ngStyle]="setMyStyles(colegioSvc.color)"
                             class="form-check-input mt-1"
                             type="checkbox"
                             role="switch"
@@ -86,6 +93,26 @@
                             >Profesores simultaneos</label
                           >
                         </div>
+
+                        <ng-template #profesorSimultaneoDeshabilitado>
+                          <div class="form-check float-end form-switch">
+                            <input
+                              class="form-check-input mt-1"
+                              type="checkbox"
+                              role="switch"
+                              id="flexSwitchCheckDefault"
+                              [ngModel]="
+                                colegioSvc.selectedMateria.profesorSimultaneo
+                              "
+                              (click)="profesorSimultaneoCheck()"
+                            />
+                            <label
+                              class="form-check-label mx-2"
+                              for="flexSwitchCheckDefault"
+                              >Profesores simultaneos</label
+                            >
+                          </div>
+                        </ng-template>
                       </th>
                     </tr>
                   </thead>
@@ -180,8 +207,15 @@
                   </tbody>
                 </table>
 
-                <div class="form-check mb-2 form-switch">
+                <div
+                  class="form-check mb-2 form-switch"
+                  *ngIf="
+                    colegioSvc.selectedMateria.materiaEspecial;
+                    else materiaEspecialDeshabilitado
+                  "
+                >
                   <input
+                    [ngStyle]="setMyStyles(colegioSvc.color)"
                     class="form-check-input mt-1"
                     type="checkbox"
                     role="switch"
@@ -195,6 +229,24 @@
                     >Materia Especial</label
                   >
                 </div>
+
+                <ng-template #materiaEspecialDeshabilitado>
+                  <div class="form-check mb-2 form-switch">
+                    <input
+                      class="form-check-input mt-1"
+                      type="checkbox"
+                      role="switch"
+                      id="flexSwitchCheckDefault"
+                      [ngModel]="colegioSvc.selectedMateria.materiaEspecial"
+                      (click)="materiaEspecialCheck()"
+                    />
+                    <label
+                      class="form-check-label mx-2"
+                      for="flexSwitchCheckDefault"
+                      >Materia Especial</label
+                    >
+                  </div>
+                </ng-template>
 
                 <div class="text-center">
                   <button
@@ -268,7 +320,7 @@
                   <!-- aria-controls="'collapseExample' + i" -->
                   {{ curso.nombre }}
                   <span
-                  [ngStyle]="setMyStyles(colegioSvc.color)"
+                    [ngStyle]="setMyStyles(colegioSvc.color)"
                     class="badge badge-primary float-end badge-pill"
                     >{{
                       objectKeys(
