@@ -184,34 +184,34 @@ export class HorariosGeneradosComponent implements OnInit {
   }
 
   exportAsExcelFile() {
-    //   let jsonMaterias: any = [];
-    //   this.colegioSvc.cursoArray.forEach((curso) => {
-    //     this.colegioSvc.turnoArray.forEach((turno) => {
-    //       if (turno.habilitado == true) {
-    //         if (turno.modulos.length > 0) {
-    //           jsonMaterias.push({
-    //             Curso: curso.nombre,
-    //             Modulo: turno.turno,
-    //           });
-    //         }
-    //         turno.modulos.forEach((modulo) => {
-    //           jsonMaterias.push({
-    //             Modulo: modulo.inicio + ' - ' + modulo.final,
-    //           });
-    //           this.colegioSvc.dias.forEach((dia) => {
-    //             jsonMaterias[jsonMaterias.length - 1][dia] =
-    //               this.horariosHechos[curso.nombre][dia][turno.turno][
-    //                 modulo.inicio
-    //               ];
-    //           });
-    //         });
-    //         if (turno.modulos.length > 0) {
-    //           jsonMaterias.push({});
-    //         }
-    //       }
-    //     });
-    //     jsonMaterias.push({});
-    //   });
-    //   this.excelService.exportAsExcelFile(jsonMaterias, 'export-to-excel');
+      let jsonMaterias: any = [];
+      this.colegioSvc.cursoArray.forEach((curso) => {
+        this.colegioSvc.turnoArray.forEach((turno) => {
+          if (turno.habilitado == true) {
+            if (turno.modulos.length > 0) {
+              jsonMaterias.push({
+                Curso: curso.nombre,
+                Modulo: turno.turno,
+              });
+            }
+            turno.modulos.forEach((modulo) => {
+              jsonMaterias.push({
+                Modulo: modulo.inicio + ' - ' + modulo.final,
+              });
+              this.colegioSvc.dias.forEach((dia) => {
+                jsonMaterias[jsonMaterias.length - 1][dia] =
+                  this.horariosHechos[curso.nombre][dia][turno.turno][
+                    modulo.inicio
+                  ];
+              });
+            });
+            if (turno.modulos.length > 0) {
+              jsonMaterias.push({});
+            }
+          }
+        });
+        jsonMaterias.push({});
+      });
+      this.excelService.exportAsExcelFile(jsonMaterias, 'export-to-excel');
   }
 }

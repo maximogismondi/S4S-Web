@@ -132,14 +132,15 @@
         <h5 class="my-3">
           <p>
             Gracias por utilizar S4S. Generando Horarios (Esto podria
-            demorar)...
+            demorar)
           </p>
         </h5>
 
         <label>Paso {{ indiceProgreso }}/7</label>
         <div class="progress h-50 mt-4">
+          <!-- [ngStyle]="setMyStyles(colegioSvc.color)" -->
           <div
-            [ngStyle]="setMyStyles(colegioSvc.color)"
+            
             class="progress-bar progress-bar-striped progress-bar-animated"
             role="progressbar"
             [ngStyle]="{ width: progresoSeccion + '%' }"
@@ -149,8 +150,8 @@
         </div>
 
         <div class="progress h-50 mt-4">
+          <!-- [ngStyle]="setMyStyles(colegioSvc.color)" -->
           <div
-            [ngStyle]="setMyStyles(colegioSvc.color)"
             class="progress-bar progress-bar-striped progress-bar-animated"
             role="progressbar"
             [ngStyle]="{ width: progresoTotal + '%' }"
@@ -257,5 +258,3 @@
     </div>
   </div>
 </div>
-
-<!-- <app-dinosaurio></app-dinosaurio> -->

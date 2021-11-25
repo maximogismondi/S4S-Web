@@ -60,6 +60,8 @@ export class ColegioService {
     private spinnerSvc: ServiceSpinnerService
   ) {
     this.spinnerSvc.mostrarSpinnerColegio = true;
+    this.spinnerSvc.mostrarSpinnerUser = true;
+
 
     authSvc.afAuth.authState.subscribe(async (user) => {
       if (user) {
@@ -194,7 +196,6 @@ export class ColegioService {
         }
 
         this.spinnerSvc.mostrarSpinnerColegio = false;
-        // this.mostrarSpinnerColegio = false;
       }
     });
   }

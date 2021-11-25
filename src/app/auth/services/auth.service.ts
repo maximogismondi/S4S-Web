@@ -31,6 +31,7 @@ export class AuthService {
     private spinnerSvc: ServiceSpinnerService
   ) {
     this.spinnerSvc.mostrarSpinnerUser = true;
+    this.spinnerSvc.mostrarSpinnerColegio = true;
 
     this.afAuth.authState.subscribe((user) => {
       if (user) {
