@@ -104,6 +104,7 @@
 
       <button
         *ngIf="horarioGenerado"
+        [ngStyle]="setMyStyles(colegioSvc.color)"
         class="btn btn-primary my-2"
         (click)="exportAsExcelFile()"
       >
