@@ -127,7 +127,7 @@
           </table>
         </ng-container>
 
-        <button class="btn btn-primary my-2" (click)="exportAsExcelFile()">
+        <button [ngStyle]="setMyStyles(colegioSvc.color)" class="btn btn-primary my-2" (click)="exportAsExcelFile()">
           Descargar Horarios
           <svg
             xmlns="http://www.w3.org/2000/svg"

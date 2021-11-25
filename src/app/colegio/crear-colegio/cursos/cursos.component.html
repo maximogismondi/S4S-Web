@@ -42,7 +42,7 @@
                     *ngIf="selectedCurso.id == 0"
                     (click)="addOrEditCurso()"
                     [ngStyle]="setMyStyles(colegioSvc.color)"
-                    class="btn mt-4 d-block w-100"
+                    class="btn btn-primary mt-4 d-block w-100"
                   >
                     Añadir
                   </button>
@@ -50,7 +50,7 @@
                     *ngIf="selectedCurso.id != 0"
                     (click)="addOrEditCurso()"
                     [ngStyle]="setMyStyles(colegioSvc.color)"
-                    class="btn mt-4 d-block w-100"
+                    class="btn btn-primary mt-4 d-block w-100"
                   >
                     Editar
                   </button>
